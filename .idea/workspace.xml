@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dde73d08-7346-4411-b0a2-d74fd4cf7197" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Scrumbe/FrontOfficeBundle/Controller/HomeController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/Scrumbe.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Scrumbe/FrontOfficeBundle/Resources/views/Home/index.html.twig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="C:\Users\SUPINTERNET\Scrumbe\www\Scrumbe\src\Scrumbe\FrontOfficeBundle\Controller\DefaultController.php" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\SUPINTERNET\Scrumbe\www\Scrumbe\src\Scrumbe\FrontOfficeBundle\Resources\views\Default\index.html.twig" afterPath="" />
-      <change type="MOVED" beforePath="C:\Users\SUPINTERNET\Scrumbe\www\Scrumbe\src\Scrumbe\FrontOfficeBundle\Tests\Controller\DefaultControllerTest.php" afterPath="$PROJECT_DIR$/src/Scrumbe/FrontOfficeBundle/Tests/Controller/HomeControllerTest.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/config.yml" afterPath="$PROJECT_DIR$/app/config/config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/parameters.yml.dist" afterPath="$PROJECT_DIR$/app/config/parameters.yml.dist" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Scrumbe/FrontOfficeBundle/Resources/config/routing.yml" afterPath="$PROJECT_DIR$/src/Scrumbe/FrontOfficeBundle/Resources/config/routing.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Scrumbe.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -455,6 +439,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Scrumbe/FrontOfficeBundle/Tests/Controller/HomeControllerTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
           <folding />
