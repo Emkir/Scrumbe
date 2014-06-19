@@ -5,21 +5,21 @@ COMPOSER INSTALL :
 
 VHOST :
 
-	$ sudo nano /etc/apache2/sites-available/scrumbe
+	$ sudo nano /etc/apache2/sites-available/scrumbe.loc.com
 
 
 
         <VirtualHost *:80>
                 ServerAdmin webmaster@localhost
-                ServerName scrumbe
-                ServerAlias www.scrumbe
+                ServerName scrumbe.loc.com
+                ServerAlias www.scrumbe.loc.com
 
-                DocumentRoot /var/www/scrumbe/web
-                <Directory /var/www/scrumbe/web>
+                DocumentRoot /var/www/Scrumbe/web
+                <Directory /var/www/Scrumbe/web>
                         Options Indexes FollowSymLinks MultiViews
                         AllowOverride All
                         Order allow,deny
-                        allow from allsu
+                        allow from all
                 </Directory>
 
                 ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
@@ -35,11 +35,11 @@ VHOST :
 
 ___
 
-	$ sudo a2ensite scrumbe
+	$ sudo a2ensite scrumbe.loc.com
 	$ sudo service apache2 reload
 
 
 
 Host à rajouter (Windows ou Mac + Vagrant) :
 
-    127.0.0.1       scrumbe
+    127.0.0.1       scrumbe.loc.com
