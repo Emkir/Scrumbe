@@ -1,24 +1,131 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <title>Scrumbe - {% block title %}Home{% endblock %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <!-- start: CSS -->
-        <link href="/assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/app.min.css" rel="stylesheet">
+        <link href="assets/css/reset.min.css" rel="stylesheet">
+
+        <!-- JS -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
         <!-- The HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <script src="assets/js/respond.min.js"></script><![endif]-->
+        <script src="assets/js/libs/respond.js"></script>
+        <script src="assets/js/libs/selectivizr.js"></script>
+
         <!-- start: Favicon and Touch Icons -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/img/ico/fav-icon144.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/img/ico/fav-icon114.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/img/ico/fav-icon72.png">
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/img/ico/fav-icon57.png">
         <link rel="shortcut icon" href="/assets/img/ico/fav-icon16.png">
-        <!-- end: Favicon and Touch Icons -->
+
+        <!-- Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
     </head>
 
     <body>
+        <nav>
+            <div class="wrapper-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="pull-left">
+                            <img src="assets/img/logo.svg">
+                        </a>
+                        <a href="#">FEATURES</a>
+                        <a href="#">WHAT'S SCRUM ?</a>
+                        <a href="#">ABOUT US</a>
+                        <a href="#">PRICING</a>
+                        <a href="#">LOGIN</a>
+                        <a href="#" class="button-green">FREE TRIAL</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <header class="header">
+            <div class="wrapper-header">
+                <div class="contain-title">
+                    <h1><span class="openBold">Manage</span> and <span class="openBold">organize</span> your projects</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,.</p>
+                </div>
+            </div>
+        </header>
+        <article>
+            <section>
+                <div class="wrapper-section">
+                    <div class="contain-article">
+                        <h2><span class="openBold">Smart</span> project management</h2>
+                        <p>Maecenas sed diam eget risus varius blandit sit
+                            amet non magna. Cras mattis consectetur purus sit
+                            amet fermentum. Praesent commodo cursus
+                            magna, vel scelerisque nisl consectetur et.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="odd-section">
+                <div class="wrapper-section">
+                    <div class="contain-article">
+                        <h2>An <span class="openBold">Easy-to-use</span> solution</h2>
+                        <p>Maecenas sed diam eget risus varius blandit sit
+                            amet non magna. Cras mattis consectetur purus sit
+                            amet fermentum. Praesent commodo cursus
+                            magna, vel scelerisque nisl consectetur et.</p>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="wrapper-section">
+                    <div class="contain-article">
+                        <h2><span class="openBold">Beautiful</span> and <span class="openBold">ergonomic</span> interface</h2>
+                        <p>Maecenas sed diam eget risus varius blandit sit
+                            amet non magna. Cras mattis consectetur purus sit
+                            amet fermentum. Praesent commodo cursus
+                            magna, vel scelerisque nisl consectetur et.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="odd-section">
+                <div class="wrapper-section">
+                    <div class="contain-article">
+                        <h2><span class="openBold">Mutiple devices </span>access</h2>
+                        <p>Maecenas sed diam eget risus varius blandit sit
+                            amet non magna. Cras mattis consectetur purus sit
+                            amet fermentum. Praesent commodo cursus
+                            magna, vel scelerisque nisl consectetur et.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="final-section">
+                <div class="wrapper-final">
+                    <div class="contain-final">
+                        <h2>Give a <span class="openBold">free trial</span> now</h2>
+                        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Curabitur blandit tempus porttitor.</p>
+                        <a href="#" class="button-green">GET STARTED !</a>
+                    </div>
+                </div>
+            </section>
+        </article>
+        <footer>
+            <div class="wrapper-nav">
+                <ul>
+                    <li>
+                        <span class="copyright">Srumbe © 2013-2014 — All Rights Reserved</span>
+                        <a href="#">FEATURES</a>
+                        <a href="#">WHAT'S SCRUM ?</a>
+                        <a href="#">ABOUT US</a>
+                        <a href="#">PRICING</a>
+                        <a href="#">SIGNIN</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+
+        <script src="assets/js/script.js"></script>
 
     </body>
 </html>
