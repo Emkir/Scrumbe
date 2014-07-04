@@ -2,66 +2,52 @@
 <!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Scrumbe" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 691.6 185.4" enable-background="new 0 0 691.6 185.4" xml:space="preserve">
-<font horiz-adv-x="1000">
-<!-- Copyright &#xC2;&#xA9; 2011 by Jan Tonellato. All rights reserved. -->
-<!-- Copyright: Copyright 2014 Adobe System Incorporated. All rights reserved. -->
-<font-face font-family="Novecentowide-Bold" units-per-em="1000" underline-position="-206" underline-thickness="152"/>
-<missing-glyph horiz-adv-x="656" d="M163,700C114,700 78,668 78,615l0,-530C78,30 114,0 163,0l330,0C542,0 578,30 578,85l0,530C578,668 542,700 493,700M555,96C555,40 530,20 481,20l-306,0C128,20 101,40 101,96l0,508C101,660 122,680 185,680l286,0C528,680 555,660 555,604l0,-147l-111,111l-116,-116l-115,114l-112,-112l115,-114l-114,-114l112,-112l114,114l115,-116l112,112l-115,116l115,115z"/>
-<glyph unicode="B" horiz-adv-x="660" d="M78,700l0,-700l302,0C553,0 630,95 630,212C630,283 573,359 507,377l0,1C549,393 594,449 594,515C594,617 507,700 382,700M246,427l0,132l101,0C392,559 425,531 425,493C425,455 392,427 347,427M246,141l0,158l117,0C416,299 454,269 454,220C454,174 419,141 363,141z"/>
-<glyph unicode="C" horiz-adv-x="754" d="M716,528C654,640 536,714 398,714C197,714 35,561 35,350C35,139 197,-14 398,-14C545,-14 670,68 728,192l-170,44C529,188 465,154 398,154C289,154 210,229 210,350C210,465 282,548 398,548C453,548 513,523 545,483z"/>
-<glyph unicode="E" horiz-adv-x="663" d="M246,157l0,124l267,0l0,147l-267,0l0,115l341,0l0,157l-509,0l0,-700l515,0l0,157z"/>
-<glyph unicode="M" horiz-adv-x="855" d="M619,700l-131,-212C437,405 429,387 428,387l-1,0C426,387 418,405 367,488l-131,212l-158,0l0,-700l165,0l0,171C243,337 237,419 238,419l1,0C240,419 296,323 302,313l82,-140l87,0l82,140C559,323 615,419 616,419l1,0C618,419 612,337 612,171l0,-171l165,0l0,700z"/>
-<glyph unicode="R" horiz-adv-x="680" d="M650,0l-155,258C576,296 621,366 621,460C621,604 515,700 339,700l-261,0l0,-700l168,0l0,228l86,0l130,-228M246,543l116,0C422,543 446,498 446,460C446,422 422,377 362,377l-116,0z"/>
-<glyph unicode="S" horiz-adv-x="614" d="M583,522C550,632 444,714 310,714C158,714 48,615 48,506C48,383 145,337 229,305C329,267 411,253 411,197C411,163 383,135 323,135C249,135 199,188 181,241l-161,-43C66,67 170,-14 316,-14C479,-14 589,77 589,205C589,325 480,384 376,422C291,453 221,470 221,516C221,544 250,569 300,569C350,569 404,540 421,478z"/>
-<glyph unicode="U" horiz-adv-x="748" d="M515,700l0,-385C515,195 466,143 374,143C282,143 233,195 233,315l0,385l-168,0l0,-389C65,101 188,-14 374,-14C559,-14 683,101 683,311l0,389z"/>
-</font>
-
-	<g id="Logo_1_">
+	 viewBox="0 282.6 1920 514.8" enable-background="new 0 282.6 1920 514.8" xml:space="preserve">
+<g id="Logo_1_">
 	<g id="Vert_1_">
 		<g>
-			<polygon fill="#78BF6C" points="152.6,13.1 111.1,26.2 69.7,13.1 111.1,0 			"/>
+			<polygon fill="#78BF6C" points="423.6,319 308.4,355.4 193.5,319 308.4,282.6 			"/>
 		</g>
 		<g>
-			<polygon fill="#78BF6C" points="164.2,36.2 116.1,51.3 116.1,35.1 164.2,19.9 			"/>
+			<polygon fill="#78BF6C" points="455.8,383.1 322.3,425.1 322.3,380.1 455.8,337.9 			"/>
 		</g>
 		<g>
-			<polygon fill="#78BF6C" points="106.1,51.3 58.1,36.2 58.1,19.9 106.1,35.1 			"/>
+			<polygon fill="#78BF6C" points="294.6,425.1 161.3,383.1 161.3,337.9 294.6,380.1 			"/>
 		</g>
 	</g>
 	<g id="Jaune_1_">
 		<g>
-			<polygon fill="#FAEA75" points="53.1,45 94.5,58.1 53.1,71.2 11.6,58.1 			"/>
+			<polygon fill="#FAEA75" points="147.4,407.6 262.3,443.9 147.4,480.3 32.2,443.9 			"/>
 		</g>
 		<g>
-			<polygon fill="#FAEA75" points="58.1,80.1 106.1,64.9 106.1,82 58.1,97.2 			"/>
+			<polygon fill="#FAEA75" points="161.3,505 294.6,462.8 294.6,510.3 161.3,552.5 			"/>
 		</g>
 		<g>
-			<polygon fill="#FAEA75" points="48.1,80.1 48.1,167.1 0,151.9 0,64.9 			"/>
+			<polygon fill="#FAEA75" points="133.5,505 133.5,746.5 0,704.3 0,462.8 			"/>
 		</g>
 	</g>
 	<g id="Bleu_1_">
 		<g>
-			<polygon fill="#2CB6DD" points="210.7,58.1 169.2,71.2 127.8,58.1 169.2,45 			"/>
+			<polygon fill="#2CB6DD" points="584.9,443.9 469.7,480.3 354.8,443.9 469.7,407.6 			"/>
 		</g>
 		<g>
-			<polygon fill="#2CB6DD" points="222.3,64.9 222.3,151.9 174.2,167.1 174.2,80.1 			"/>
+			<polygon fill="#2CB6DD" points="617.1,462.8 617.1,704.3 483.6,746.5 483.6,505 			"/>
 		</g>
 		<g>
-			<polygon fill="#2CB6DD" points="164.2,80.1 164.2,97.2 116.1,82 116.1,64.9 			"/>
+			<polygon fill="#2CB6DD" points="455.8,505 455.8,552.5 322.3,510.3 322.3,462.8 			"/>
 		</g>
 	</g>
 	<g id="rose_1_">
 		<g>
-			<polygon fill="#EF668F" points="152.6,104 111.1,117.1 69.7,104 111.1,91 			"/>
+			<polygon fill="#EF668F" points="423.6,571.4 308.4,607.7 193.5,571.4 308.4,535.3 			"/>
 		</g>
 		<g>
-			<polygon fill="#EF668F" points="164.2,110.9 164.2,170.3 116.1,185.4 116.1,126 			"/>
+			<polygon fill="#EF668F" points="455.8,590.5 455.8,755.4 322.3,797.4 322.3,632.4 			"/>
 		</g>
 		<g>
-			<polygon fill="#EF668F" points="106.1,126 106.1,185.4 58.1,170.3 58.1,110.9 			"/>
+			<polygon fill="#EF668F" points="294.6,632.4 294.6,797.4 161.3,755.4 161.3,590.5 			"/>
 		</g>
 	</g>
 </g>
-<text transform="matrix(1 0 0 1 285.8784 115.7921)" fill="#3F3F3F" font-family="'Novecentowide-Bold'" font-size="82.5495">SCRUMBE</text>
+<text transform="matrix(1 0 0 1 793.646 604.1083)" fill="#C1C1C1" font-family="'Novecentowide-Bold'" font-size="229.1715">SCRUMBE</text>
 </svg>

@@ -10,5 +10,4 @@ class HomeController extends Controller
     {
         return $this->render('ScrumbeFrontOfficeBundle:Home:index.html.twig');
     }
-
 }
