@@ -175,7 +175,8 @@ article {
           font-family: 'proxima_nova_rgbold';
           text-decoration: none; }
         article .final-section .wrapper-final .contain-final .button-green:hover {
-          background-color: #4e9b56; }
+          background-color: #4e9b56;
+          cursor: pointer; }
 
 footer {
   width: 100%;
