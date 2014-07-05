@@ -13,24 +13,54 @@ $( window ).resize(function() {
 });
 
 
-//Popup Sign in
-
-$(".signIn").click(function(){
-    $(".login").fadeIn("100",function(){
+//Popup Sign In
+$(".sign-in-btn").click(function(){
+    $(".sign-in").fadeIn("fast",function(){
         $(this).show();
     });
-    $(".login-back").fadeIn("100",function(){
+    $(".sign-back").fadeIn("fast",function(){
         $(this).show();
     });
     $("body").css("overflow","hidden");
 });
-
-$(".close-login").click(function(){
-    $(".login").fadeOut("100",function(){
+$(".close-sign-in").click(function(){
+    $(".sign-in").fadeOut("fast",function(){
         $(this).hide();
     });
-    $(".login-back").fadeOut("100",function(){
+    $(".sign-back").fadeOut("fast",function(){
         $(this).hide();
     });
     $("body").css("overflow","");
+});
+
+$(".sign-in-lk").click(function(){
+    console.log("toto");
+    $(".sign-up").fadeOut("fast",function(){$(this).hide();});
+    $(".sign-in").fadeIn("fast",function(){$(this).show();});
+});
+
+//Popup Sign Up
+$(".sign-up-btn").click(function(){
+    $(".sign-up").fadeIn("fast",function(){
+        $(this).show();
+    });
+    $(".sign-back").fadeIn("fast",function(){
+        $(this).show();
+    });
+    $("body").css("overflow","hidden");
+});
+$(".close-sign-up").click(function(){
+    $(".sign-up").fadeOut("fast",function(){
+        $(this).hide();
+    });
+    $(".sign-back").fadeOut("fast",function(){
+        $(this).hide();
+    });
+    $("body").css("overflow","");
+});
+
+$(".sign-up-lk").click(function(){
+    console.log("toto");
+    $(".sign-in").fadeOut("fast",function(){$(this).hide();});
+    $(".sign-up").fadeIn("fast",function(){$(this).show();});
 });

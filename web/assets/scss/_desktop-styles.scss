@@ -26,12 +26,13 @@ nav {
             line-height: $height-nav;
             cursor: default;
 
-            a {
+            a,span {
                 font-family: 'proxima_nova_rgbold';
                 font-size: rem-calc(11px);
                 color: $font-nav;
                 text-decoration: none;
                 vertical-align: middle;
+                cursor: pointer;
 
                 img {
                     vertical-align: middle;
@@ -39,12 +40,12 @@ nav {
                 }
             }
 
-            a:nth-child(n+2) {
+            a:nth-child(n+2),span {
                 margin-left: 35px;
                 padding: 10px 0;
             }
 
-            a:nth-child(n+2):hover {
+            a:nth-child(n+2):hover, span:hover {
                 color: $hover-nav;
             }
 
@@ -278,12 +279,16 @@ footer {
                 cursor: pointer;
             }
 
+            span:last-child:hover {
+                color: $a-hover-footer;
+            }
+
 
         }
     }
 }
 
-.login-back {
+.sign-back {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.75);
@@ -294,7 +299,7 @@ footer {
     line-height: 699px;
 }
 
-.login {
+.sign-in {
     width: 100%;
     position: fixed;
     top: 0;
@@ -303,7 +308,7 @@ footer {
     line-height: 699px;
     display: none;
 
-    .container-login {
+    .container-sign-in {
         background-color: #fff;
         width: 420px;
         border-radius: 4px;
@@ -313,7 +318,7 @@ footer {
         line-height: normal;
         font-family: "Open Sans";
 
-        .header-login {
+        .header-sign-in {
             background-color: #161e25;
             padding: 20px 30px;
             text-align: left;
@@ -329,7 +334,7 @@ footer {
                 position: absolute;
                 right: 30px;
                 text-decoration: none;
-                color: #0b0f12;
+                color: #cdcdcd;
                 font-family: "Open Sans";
                 font-size: rem-calc(20px);
                 font-weight: 800;
@@ -337,7 +342,7 @@ footer {
             }
         }
 
-        .contain-login {
+        .contain-sign-in {
             padding: 30px;
             text-align: left;
 
@@ -346,7 +351,7 @@ footer {
                 input:not([type="submit"]) {
                     display: block;
                     margin-bottom: 15px;
-                    width: 92%;
+                    width: 91.3%;
                     padding: 15px;
                     box-shadow: none;
                     outline: none;
@@ -386,26 +391,143 @@ footer {
 
         }
 
-        .footer-login {
+        .footer-sign-in {
             background-color: #f0f4fc;
             padding: 20px 30px;
             text-align: left;
 
-            a {
+            span {
+                text-decoration: none;
+                color: #a8b5c4;
+                font-family: "Open Sans";
+                font-weight: 400;
+                font-size: rem-calc(11px);
+            }
+
+            .sign-up-lk {
+                color: #5cad66;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.sign-up {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 20;
+    text-align: center;
+    line-height: 699px;
+    display: none;
+
+    .container-sign-up {
+        background-color: #fff;
+        width: 420px;
+        border-radius: 4px;
+        overflow: hidden;
+        vertical-align: middle;
+        display: inline-block;
+        line-height: normal;
+        font-family: "Open Sans";
+
+        .header-sign-up {
+            background-color: #161e25;
+            padding: 20px 30px;
+            text-align: left;
+            position: relative;
+
+            span:first-child {
+                font-weight: 700;
+                font-size: rem-calc(15px);
+                color: #fff;
+            }
+
+            span:last-child {
+                position: absolute;
+                right: 30px;
+                text-decoration: none;
+                color: #cdcdcd;
+                font-family: "Open Sans";
+                font-size: rem-calc(20px);
+                font-weight: 800;
+                cursor: pointer;
+            }
+        }
+
+        .contain-sign-up {
+            padding: 30px;
+            text-align: left;
+
+            form {
+
+                input:not([type="submit"]) {
+                    display: block;
+                    margin-bottom: 15px;
+                    width: 91.3%;
+                    padding: 15px;
+                    box-shadow: none;
+                    outline: none;
+                    border-radius: 2px;
+                    border: 1px solid #e8ebf0;
+                    background-color: #FBFCFE;
+                }
+
+                input[type="submit"] {
+                    width: 100%;
+                    padding: 15px;
+                    margin-bottom: 20px;
+                    background-color: #6ECF7B;
+                    border: none;
+                    border-radius: 2px;
+                    font-family: "Open Sans";
+                    font-weight: 700;
+                    color: #fff;
+                    cursor: pointer;
+                    -webkit-transition: 0.1s ease;-moz-transition: 0.1s ease;-ms-transition: 0.1s ease;-o-transition: 0.1s ease;transition: 0.1s ease;
+
+                }
+
+                input[type="submit"]:hover {
+                    background-color: #4e9b56;
+                    -webkit-transition: 0.1s ease;-moz-transition: 0.1s ease;-ms-transition: 0.1s ease;-o-transition: 0.1s ease;transition: 0.1s ease;
+                }
+            }
+
+            span {
                 text-decoration: none;
                 color: #a8b5c4;
                 font-family: "Open Sans";
                 font-weight: 400;
                 font-size: rem-calc(11px);
 
-                span {
-                    color: #5cad66;
+            }
+
+            .sign-in-lk {
+                text-decoration: none;
+                color: #5cad66;
+                cursor: pointer;
+            }
+
+        }
+
+        .footer-sign-up {
+            background-color: #f0f4fc;
+            padding: 20px 30px;
+            text-align: left;
+
+            span {
+                text-decoration: none;
+                color: #a8b5c4;
+                font-family: "Open Sans";
+                font-weight: 400;
+                font-size: rem-calc(11px);
+
+                a {
+                    color: inherit;
                 }
             }
         }
     }
-}
-
-:required {
-    border: 2px solid red;
 }
