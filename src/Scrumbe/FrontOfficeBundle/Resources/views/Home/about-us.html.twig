@@ -1,0 +1,130 @@
+{% extends "ScrumbeFrontOfficeBundle:Home:index.html.twig" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block nav %}
+    <nav class="black-nav">
+        <div class="wrapper-nav">
+            <ul>
+                <li>
+                    <a href="{{ path('index') }}" class="pull-left">
+                        <img src="/assets/img/logo.svg">
+                    </a>
+                    <a href="#">FEATURES</a>
+                    <a href="#">WHAT'S SCRUM ?</a>
+                    <a href="{{ path('about') }}">ABOUT US</a>
+                    <a href="#">PRICING</a>
+                    <span class="sign-in-btn">SIGN IN</span>
+                    <span class="button-green sign-up-btn">FREE TRIAL</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <header class="header-about">
+        <div class="wrapper-header-fix">
+            <div class="contain-title-fix">
+                <h1><span class="openBold">Fusce dapibus</span>, tellus ac cursus commodo</h1>
+                <p>Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+            </div>
+        </div>
+    </header>
+
+    <article class="article-about">
+        <section class="odd-section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">Thomas</span> Sanson</h2>
+                    <h3>Project Manager</h3>
+                    <div class="divider"></div>
+                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. </p>
+                </div>
+                <img src="/assets/img/Thomas-Sanson.png">
+            </div>
+        </section>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">Kerem</span> Suer</h2>
+                    <h3>Lead UI & UX Designer</h3>
+                    <div class="divider"></div>
+                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. </p>
+                </div>
+                <img src="/assets/img/Kerem-Suer.png">
+            </div>
+        </section>
+        <section class="odd-section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">Thomas</span> Sanson</h2>
+                    <h3>Project Manager</h3>
+                    <div class="divider"></div>
+                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. </p>
+                </div>
+                <img src="/assets/img/Anthony-Ribeiro.png">
+            </div>
+        </section>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">Kerem</span> Suer</h2>
+                    <h3>Lead UI & UX Designer</h3>
+                    <div class="divider"></div>
+                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. </p>
+                </div>
+                <img src="/assets/img/Christophe-Tauziet.png">
+            </div>
+        </section>
+        <section class="odd-section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">Thomas</span> Sanson</h2>
+                    <h3>Project Manager</h3>
+                    <div class="divider"></div>
+                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. </p>
+                </div>
+                <img src="/assets/img/Jeremy-Thomas.png">
+            </div>
+        </section>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">Kerem</span> Suer</h2>
+                    <h3>Lead UI & UX Designer</h3>
+                    <div class="divider"></div>
+                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam. </p>
+                </div>
+                <img src="/assets/img/Claude-Guglieri.png">
+            </div>
+        </section>
+        <section class="contact">
+            <h1>Contact Us</h1>
+            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Integer posuere erat a ante.</p>
+            <form action="#" method="post">
+                <input type="text" placeholder="Full name">
+                <input type="email" placeholder="Email">
+                <textarea placeholder="Your message" rows="10"></textarea>
+                <input type="submit" value="GET IN TOUCH!">
+            </form>
+        </section>
+    </article>
+{% endblock %}
+
+{% block footer %}
+    <footer class="trans-footer">
+        <div class="wrapper-nav">
+            <ul>
+                <li>
+                    <span class="copyright">Scrumbe © 2013-2014 — All Rights Reserved</span>
+                    <a href="#">FEATURES</a>
+                    <a href="#">WHAT'S SCRUM ?</a>
+                    <a href="#">ABOUT US</a>
+                    <a href="#">PRICING</a>
+                    <span class="sign-up-btn">SIGN UP</span>
+                </li>
+            </ul>
+        </div>
+    </footer>
+{% endblock %}

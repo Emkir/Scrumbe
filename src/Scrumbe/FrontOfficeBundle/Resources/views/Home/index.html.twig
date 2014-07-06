@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- start: CSS -->
-        <link href="assets/css/app.min.css" rel="stylesheet">
-        <link href="assets/css/reset.min.css" rel="stylesheet">
+        <link href="/assets/css/app.min.css" rel="stylesheet">
+        <link href="/assets/css/reset.min.css" rel="stylesheet">
 
         <!-- JS -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -30,25 +30,27 @@
     </head>
 
     <body>
-        <nav>
-            <div class="wrapper-nav">
-                <ul>
-                    <li>
-                        <a href="#" class="pull-left">
-                            <img src="assets/img/logo.svg">
-                        </a>
-                        <a href="#">FEATURES</a>
-                        <a href="#">WHAT'S SCRUM ?</a>
-                        <a href="#">ABOUT US</a>
-                        <a href="#">PRICING</a>
-                        <span class="sign-in-btn">SIGN IN</span>
-                        <span class="button-green sign-up-btn">FREE TRIAL</span>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        {% block nav %}
+            <nav>
+                <div class="wrapper-nav">
+                    <ul>
+                        <li>
+                            <a href="{{ path('index') }}" class="pull-left">
+                                <img src="/assets/img/logo.svg">
+                            </a>
+                            <a href="#">FEATURES</a>
+                            <a href="#">WHAT'S SCRUM ?</a>
+                            <a href="{{ path('about') }}">ABOUT US</a>
+                            <a href="#">PRICING</a>
+                            <span class="sign-in-btn">SIGN IN</span>
+                            <span class="button-green sign-up-btn">FREE TRIAL</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        {% endblock %}
         {% block body %}
-            <header class="header row clear">
+            <header class="header-home">
                 <div class="wrapper-header">
                     <div class="contain-title">
                         <h1><span class="openBold">Manage</span> and <span class="openBold">organize</span> your projects</h1>
@@ -56,7 +58,7 @@
                     </div>
                 </div>
             </header>
-            <article>
+            <article class="article-home">
                 <section>
                     <div class="wrapper-section">
                         <div class="contain-article">
@@ -112,20 +114,22 @@
                 </section>
             </article>
         {% endblock %}
-        <footer>
-            <div class="wrapper-nav">
-                <ul>
-                    <li>
-                        <span class="copyright">Scrumbe © 2013-2014 — All Rights Reserved</span>
-                        <a href="#">FEATURES</a>
-                        <a href="#">WHAT'S SCRUM ?</a>
-                        <a href="#">ABOUT US</a>
-                        <a href="#">PRICING</a>
-                        <span class="sign-up-btn">SIGN UP</span>
-                    </li>
-                </ul>
-            </div>
-        </footer>
+        {% block footer %}
+            <footer>
+                <div class="wrapper-nav">
+                    <ul>
+                        <li>
+                            <span class="copyright">Scrumbe © 2013-2014 — All Rights Reserved</span>
+                            <a href="#">FEATURES</a>
+                            <a href="#">WHAT'S SCRUM ?</a>
+                            <a href="#">ABOUT US</a>
+                            <a href="#">PRICING</a>
+                            <span class="sign-up-btn">SIGN UP</span>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+        {% endblock %}
         <div class="sign-back"></div>
         <div class="sign-in">
             <div class="container-sign-in">
@@ -166,7 +170,7 @@
                 </div>
             </div>
         </div>
-        <script src="assets/js/script.js"></script>
+        <script src="/assets/js/script.js"></script>
     </body>
 </html>
 

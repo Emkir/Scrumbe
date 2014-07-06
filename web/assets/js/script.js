@@ -1,12 +1,12 @@
 // Set height of article to the window height
 var screenHeight = window.innerHeight;
-$(".header").css("height",screenHeight);
+$(".header-home").css("height",screenHeight);
 $(".wrapper-header").css("height",screenHeight);
 $(".wrapper-header").css("line-height",screenHeight + "px");
 $(".login").css("line-height",screenHeight + "px");
 $( window ).resize(function() {
     var screenHeight = window.innerHeight;
-    $(".header").css("height",screenHeight);
+    $(".header-home").css("height",screenHeight);
     $(".wrapper-header").css("height",screenHeight);
     $(".wrapper-header").css("line-height",screenHeight + "px");
     $(".login").css("line-height",screenHeight + "px");
@@ -32,7 +32,6 @@ $(".close-sign-in").click(function(){
     });
     $("body").css("overflow","");
 });
-
 $(".sign-in-lk").click(function(){
     console.log("toto");
     $(".sign-up").fadeOut("fast",function(){$(this).hide();});
@@ -58,7 +57,6 @@ $(".close-sign-up").click(function(){
     });
     $("body").css("overflow","");
 });
-
 $(".sign-up-lk").click(function(){
     console.log("toto");
     $(".sign-in").fadeOut("fast",function(){$(this).hide();});
