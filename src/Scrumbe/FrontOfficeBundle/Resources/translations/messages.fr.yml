@@ -1,0 +1,83 @@
+nav:
+    items:
+        1: FONCTIONNALITÉS
+        2: SCRUM ?
+        3: A PROPOS
+        4: OFFRES
+        5: SE CONNECTER
+        6: ESSAI GRATUIT
+
+header:
+    title:
+        word1: Organisez
+        word2: et
+        word3: gérez
+        lastword: vos projets
+
+    parag: Scrumbe est une plate-forme en ligne qui permet à des groupes de travail de gérer des projets en utilisant des méthodes agiles.
+
+section:
+    item1:
+        title:
+            word1: Astucieux
+            lastword: gestionnaire de projets
+        parag: La méthode agile SCRUM permet d’impliquer l’ensemble des collaborateurs ainsi que le client dans le développement du projet. Cette méthode permet alors de mieux répondre aux attentes du client. Elle amène un gain de productivité ainsi qu’un avantage compétitif.
+
+    item2:
+        title:
+            word1:
+            word2:
+            lastword:
+        parag:
+
+    item3:
+        title:
+            word1: Facile
+            word2: et
+            word3: ergonomique
+            lastword: d'utilisation
+        parag: Scrumbe est accessible et facile à prendre en main, nous vous donnons toutes les clés pour gérer votre projet de A à Z.
+
+    item4:
+        title:
+            word1: Multi
+            lastword: plate-forme
+        parag: Accédez à vos données et suivez l’avancement de votre projet partout où vous allez sur votre mobile ou tablette.
+
+    final-item:
+        title:
+            word1: Venez
+            word2: l'essayer
+            lastword: maintenant
+        parag: Remplissez le formulaire et commencez à utiliser Scrumbe.
+        button: COMMENCER
+
+footer:
+    nav:
+        item5: S'INSCRIRE
+    copy: Scrumbe © 2013-2014 — Tous droits réservé
+
+signin:
+    title: SE CONNECTER
+    mailPH: Email
+    pwdPH: Mot de passe
+    button: CONNEXION
+    forgetpwd: Mot de passe oublié?
+    footer:
+        word1: Pas encore de compte?
+        lastword: Commencer
+
+signup:
+    title: INSCRIPTION GRATUITE
+    namePH: Nom
+    mailPH: Email
+    pwdPH: Mot de passe
+    button: VALIDER
+    signin:
+        word1: Déjà un compte?
+        lastword: Connexion.
+    footer:
+        word1: By signing up, you agree to our
+        word2: Terms of use,
+        word3: and
+        lastword: Privacy Policy

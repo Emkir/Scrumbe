@@ -3,12 +3,16 @@ var screenHeight = window.innerHeight;
 $(".header-home").css("height",screenHeight);
 $(".wrapper-header").css("height",screenHeight);
 $(".wrapper-header").css("line-height",screenHeight + "px");
+$(".sign-in").css("line-height",screenHeight + "px");
+$(".sign-up").css("line-height",screenHeight + "px");
 $(".login").css("line-height",screenHeight + "px");
 $( window ).resize(function() {
     var screenHeight = window.innerHeight;
     $(".header-home").css("height",screenHeight);
     $(".wrapper-header").css("height",screenHeight);
     $(".wrapper-header").css("line-height",screenHeight + "px");
+    $(".sign-in").css("line-height",screenHeight + "px");
+    $(".sign-up").css("line-height",screenHeight + "px");
     $(".login").css("line-height",screenHeight + "px");
 });
 
