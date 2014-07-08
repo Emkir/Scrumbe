@@ -66,3 +66,8 @@ $(".sign-up-lk").click(function(){
     $(".sign-in").fadeOut("fast",function(){$(this).hide();});
     $(".sign-up").fadeIn("fast",function(){$(this).show();});
 });
+
+//Initialisation SelectOrDie
+$(".language-select").selectOrDie({
+    links: true,
+});

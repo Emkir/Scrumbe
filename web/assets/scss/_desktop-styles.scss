@@ -115,7 +115,7 @@ footer {
                 left: 0;
             }
 
-            span:last-child {
+            span:nth-child(6) {
                 font-family: 'proxima_nova_rgbold';
                 font-size: rem-calc(11px);
                 color: $a-footer;
@@ -128,10 +128,9 @@ footer {
                 cursor: pointer;
             }
 
-            span:last-child:hover {
+            span:nth-child(6):hover {
                 color: $a-hover-footer;
             }
-
 
         }
     }

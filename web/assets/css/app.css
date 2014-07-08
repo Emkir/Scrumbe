@@ -106,7 +106,7 @@ footer {
         text-align: left;
         position: absolute;
         left: 0; }
-      footer .wrapper-nav li span:last-child {
+      footer .wrapper-nav li span:nth-child(6) {
         font-family: 'proxima_nova_rgbold';
         font-size: 0.6875rem;
         color: #b1bad0;
@@ -117,7 +117,7 @@ footer {
         position: relative;
         right: 0;
         cursor: pointer; }
-      footer .wrapper-nav li span:last-child:hover {
+      footer .wrapper-nav li span:nth-child(6):hover {
         color: white; }
 
 .trans-footer {

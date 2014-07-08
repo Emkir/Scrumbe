@@ -8,9 +8,11 @@
         <!-- start: CSS -->
         <link href="/assets/css/app.min.css" rel="stylesheet">
         <link href="/assets/css/reset.min.css" rel="stylesheet">
+        <link href="/assets/css/selectordie.css" rel="stylesheet">
 
         <!-- JS -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="/assets/js/libs/selectordie.min.js"></script>
 
         <!-- The HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
                 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -113,6 +115,10 @@
                             <a href="#">{{ 'nav.items.3'|trans }}</a>
                             <a href="#">{{ 'nav.items.4'|trans }}</a>
                             <span class="sign-up-btn">{{ 'footer.nav.item5'|trans }}</span>
+                            <select class="language-select">
+                                <option value="http://scrumbe.loc.com:8080/app_dev.php/fr/">{{ 'footer.nav.lang.fr'|trans }}</option>
+                                <option value="http://scrumbe.loc.com:8080/app_dev.php/en/">{{ 'footer.nav.lang.en'|trans }}</option>
+                            </select>
                         </li>
                     </ul>
                 </div>

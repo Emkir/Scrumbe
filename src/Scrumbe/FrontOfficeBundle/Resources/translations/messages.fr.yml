@@ -55,6 +55,9 @@ section:
 footer:
     nav:
         item5: S'INSCRIRE
+        lang:
+            en: English
+            fr: Français
     copy: Scrumbe © 2013-2014 — Tous droits réservé
 
 signin:

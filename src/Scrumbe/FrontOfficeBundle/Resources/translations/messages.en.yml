@@ -55,6 +55,9 @@ section:
 footer:
     nav:
         item5: SIGN UP
+        lang:
+            en: English
+            fr: Français
     copy: Scrumbe © 2013-2014 — All Rights Reserved
 
 signin:
