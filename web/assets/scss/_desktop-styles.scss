@@ -7,6 +7,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: $body;
+    -webkit-font-smoothing: antialiased;
 }
 
 nav {
@@ -134,9 +135,6 @@ footer {
 
         }
     }
-}
-.trans-footer {
-    background-color: #121a1f;
 }
 
 .sign-back {
@@ -416,8 +414,8 @@ footer {
 
             p {
                 font-weight: 300;
-                font-size: rem-calc(18px);
-                line-height: normal;
+                font-size: rem-calc(16px);
+                line-height: 24px;
                 margin: 20px auto 0 auto;
                 width: 70%;
                 position: relative;
@@ -459,11 +457,13 @@ footer {
                 }
 
                 p {
-                    color: $p-section;
                     font-size: rem-calc(13px);
                     margin-top: 15px;
                     width: 400px;
-                    line-height: 22px;
+                    line-height: 24px;
+                    color: #6c7180;
+                    font-family: "Open Sans";
+                    font-weight: 300;
                 }
             }
 
@@ -629,7 +629,7 @@ footer {
                 .divider {
                     width: 50px;
                     height: 1px;
-                    background: #00c853;
+                    background: #5cad66;
                     margin: 20px 0 17px 0;
                 }
             }
@@ -686,7 +686,7 @@ footer {
                 .divider {
                     width: 50px;
                     height: 1px;
-                    background: #00c853;
+                    background: #5cad66;
                     margin: 20px 0 10px 0;
                     display: inline-block;
                 }

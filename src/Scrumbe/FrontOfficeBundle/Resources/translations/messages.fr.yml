@@ -7,16 +7,50 @@ nav:
         5: SE CONNECTER
         6: ESSAI GRATUIT
 
-header:
-    title:
-        word1: Organisez
-        word2: et
-        word3: gérez
-        lastword: vos projets
+footer:
+    nav:
+        item5: S'INSCRIRE
+        lang:
+            en: English
+            fr: Français
+    copy: Scrumbe © 2013-2014 — Tous droits réservé
 
-    parag: Scrumbe est une plate-forme en ligne qui permet à des groupes de travail de gérer des projets en utilisant des méthodes agiles.
+signin:
+    title: SE CONNECTER
+    mailPH: Email
+    pwdPH: Mot de passe
+    button: CONNEXION
+    forgetpwd: Mot de passe oublié?
+    footer:
+        word1: Pas encore de compte?
+        lastword: Commencer
 
-section:
+signup:
+    title: INSCRIPTION GRATUITE
+    namePH: Nom
+    mailPH: Email
+    pwdPH: Mot de passe
+    button: VALIDER
+    signin:
+        word1: Déjà un compte?
+        lastword: Connexion.
+    footer:
+        word1: By signing up, you agree to our
+        word2: Terms of use,
+        word3: and
+        lastword: Privacy Policy
+
+#HOME
+home:
+    header:
+        title:
+            word1: Organisez
+            word2: et
+            word3: gérez
+            lastword: vos projets
+
+        parag: Scrumbe est une plate-forme en ligne qui permet à des groupes de travail de gérer des projets en utilisant des méthodes agiles.
+
     item1:
         title:
             word1: Astucieux
@@ -52,35 +86,56 @@ section:
         parag: Remplissez le formulaire et commencez à utiliser Scrumbe.
         button: COMMENCER
 
-footer:
-    nav:
-        item5: S'INSCRIRE
-        lang:
-            en: English
-            fr: Français
-    copy: Scrumbe © 2013-2014 — Tous droits réservé
 
-signin:
-    title: SE CONNECTER
-    mailPH: Email
-    pwdPH: Mot de passe
-    button: CONNEXION
-    forgetpwd: Mot de passe oublié?
-    footer:
-        word1: Pas encore de compte?
-        lastword: Commencer
+#ABOUT-US
+aboutus:
+    header:
+        title:
+            word1: Fusce dapibus
+            lastword: tellus ac cursus commodo
 
-signup:
-    title: INSCRIPTION GRATUITE
-    namePH: Nom
-    mailPH: Email
-    pwdPH: Mot de passe
-    button: VALIDER
-    signin:
-        word1: Déjà un compte?
-        lastword: Connexion.
-    footer:
-        word1: By signing up, you agree to our
-        word2: Terms of use,
-        word3: and
-        lastword: Privacy Policy
+        parag: Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+
+    item1:
+        firstname: François-Xavier
+        lastname: Costanzo
+        job: Developpeur front-end
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item2:
+        firstname: Adrien
+        lastname: Thomas
+        job: UX/UI Designer
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item3:
+        firstname: Emmeric
+        lastname: Royer
+        job: Developpeur Back-end
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item4:
+        firstname: Nicolas
+        lastname: Foubart
+        job: Developpeur back-end
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item5:
+        firstname: Phillipe
+        lastname: Cwik
+        job: Web-marketeur
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item6:
+        firstname: Maxime
+        lastname: Andrieu
+        job: Web-marketeur
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    form:
+        title: Contactez-nous
+        parag: Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Integer posuere erat a ante.
+        fullname: Nom complet
+        email: Email
+        message: Votre message
+        button: Valider

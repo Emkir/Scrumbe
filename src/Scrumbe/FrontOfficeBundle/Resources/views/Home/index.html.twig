@@ -30,7 +30,6 @@
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
     </head>
-
     <body>
         {% block nav %}
             <nav>
@@ -55,8 +54,8 @@
             <header class="header-home">
                 <div class="wrapper-header">
                     <div class="contain-title">
-                        <h1><span class="openBold"> {{ "header.title.word1"|trans }}</span> {{ "header.title.word2"|trans }} <span class="openBold"> {{ "header.title.word3"|trans }} </span> {{ "header.title.lastword"|trans }}</h1>
-                        <p>{{ "header.parag"|trans }}</p>
+                        <h1><span class="openBold"> {{ "home.header.title.word1"|trans }}</span> {{ "home.header.title.word2"|trans }} <span class="openBold"> {{ "home.header.title.word3"|trans }} </span> {{ "home.header.title.lastword"|trans }}</h1>
+                        <p>{{ "home.header.parag"|trans }}</p>
                     </div>
                 </div>
             </header>
@@ -64,41 +63,41 @@
                 <section>
                     <div class="wrapper-section">
                         <div class="contain-article">
-                            <h2><span class="openBold">{{ 'section.item1.title.word1'|trans }}</span> {{ 'section.item1.title.lastword'|trans }}</h2>
-                            <p>{{ 'section.item1.parag'|trans }}</p>
+                            <h2><span class="openBold">{{ 'home.item1.title.word1'|trans }}</span> {{ 'home.item1.title.lastword'|trans }}</h2>
+                            <p>{{ 'home.item1.parag'|trans }}</p>
                         </div>
                     </div>
                 </section>
                 <section class="odd-section">
                     <div class="wrapper-section">
                         <div class="contain-article">
-                            <h2>{{ 'section.item2.title.word1'|trans }} <span class="openBold">{{ 'section.item2.title.word2'|trans }}</span> {{ 'section.item2.title.lastword'|trans }}</h2>
-                            <p>{{ 'section.item2.parag'|trans }}</p>
+                            <h2>{{ 'home.item2.title.word1'|trans }} <span class="openBold">{{ 'home.item2.title.word2'|trans }}</span> {{ 'home.item2.title.lastword'|trans }}</h2>
+                            <p>{{ 'home.item2.parag'|trans }}</p>
                         </div>
                     </div>
                 </section>
                 <section>
                     <div class="wrapper-section">
                         <div class="contain-article">
-                            <h2><span class="openBold">{{ 'section.item3.title.word1'|trans }}</span> {{ 'section.item3.title.word2'|trans }} <span class="openBold">{{ 'section.item3.title.word3'|trans }}</span> {{ 'section.item3.title.lastword'|trans }}</h2>
-                            <p>{{ 'section.item3.parag'|trans }}</p>
+                            <h2><span class="openBold">{{ 'home.item3.title.word1'|trans }}</span> {{ 'home.item3.title.word2'|trans }} <span class="openBold">{{ 'home.item3.title.word3'|trans }}</span> {{ 'home.item3.title.lastword'|trans }}</h2>
+                            <p>{{ 'home.item3.parag'|trans }}</p>
                         </div>
                     </div>
                 </section>
                 <section class="odd-section">
                     <div class="wrapper-section">
                         <div class="contain-article">
-                            <h2><span class="openBold">{{ 'section.item4.title.word1'|trans }} </span>{{ 'section.item4.title.lastword'|trans }}</h2>
-                            <p>{{ 'section.item4.parag'|trans }}</p>
+                            <h2><span class="openBold">{{ 'home.item4.title.word1'|trans }} </span>{{ 'home.item4.title.lastword'|trans }}</h2>
+                            <p>{{ 'home.item4.parag'|trans }}</p>
                         </div>
                     </div>
                 </section>
                 <section class="final-section">
                     <div class="wrapper-final">
                         <div class="contain-final">
-                            <h2>{{ 'section.final-item.title.word1'|trans }} <span class="openBold">{{ 'section.final-item.title.word2'|trans }}</span> {{ 'section.final-item.title.lastword'|trans }}</h2>
-                            <p>{{ 'section.final-item.parag'|trans }}</p>
-                            <span class="button-green sign-up-btn">{{ 'section.final-item.button'|trans }}</span>
+                            <h2>{{ 'home.final-item.title.word1'|trans }} <span class="openBold">{{ 'home.final-item.title.word2'|trans }}</span> {{ 'home.final-item.title.lastword'|trans }}</h2>
+                            <p>{{ 'home.final-item.parag'|trans }}</p>
+                            <span class="button-green sign-up-btn">{{ 'home.final-item.button'|trans }}</span>
                         </div>
                     </div>
                 </section>
@@ -112,7 +111,7 @@
                             <span class="copyright">{{ 'footer.copy'|trans }}</span>
                             <a href="#">{{ 'nav.items.1'|trans }}</a>
                             <a href="#">{{ 'nav.items.2'|trans }}</a>
-                            <a href="#">{{ 'nav.items.3'|trans }}</a>
+                            <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
                             <a href="#">{{ 'nav.items.4'|trans }}</a>
                             <span class="sign-up-btn">{{ 'footer.nav.item5'|trans }}</span>
                             <select class="language-select">
@@ -129,7 +128,7 @@
             <div class="container-sign-in">
                 <div class="header-sign-in">
                     <span>{{ 'signin.title'|trans }}</span>
-                    <span class="close-sign-in">X</span>
+                    <span class="close-sign-in"><img src="/assets/img/Close_icon.png"></span>
                 </div>
                 <div class="contain-sign-in">
                     <form action="#" method="post">
@@ -148,7 +147,7 @@
             <div class="container-sign-up">
                 <div class="header-sign-up">
                     <span>{{ 'signup.title'|trans }}</span>
-                    <span class="close-sign-up">X</span>
+                    <span class="close-sign-up"><img src="/assets/img/Close_icon.png"></span>
                 </div>
                 <div class="contain-sign-up">
                     <form action="#" method="post">

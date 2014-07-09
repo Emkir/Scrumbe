@@ -7,16 +7,50 @@ nav:
         5: SIGN IN
         6: FREE TRIAL
 
-header:
-    title:
-        word1: Manage
-        word2: and
-        word3: organize
-        lastword: your projects
 
-    parag: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.
+footer:
+    nav:
+        item5: SIGN UP
+        lang:
+            en: English
+            fr: Français
+    copy: Scrumbe © 2013-2014 — All Rights Reserved
 
-section:
+signin:
+    title: SIGN IN
+    mailPH: Email
+    pwdPH: Password
+    button: SIGN IN
+    forgetpwd: Forget your password?
+    footer:
+        word1: Don't have an account?
+        lastword: Get started
+
+signup:
+    title: SIGN UP FOR FREE
+    namePH: Name
+    mailPH: Email
+    pwdPH: Password
+    button: SIGN UP FOR FREE
+    signin:
+        word1: Already have an account?
+        lastword: Sign in.
+    footer:
+        word1: By signing up, you agree to our
+        word2: Terms of use,
+        word3: and
+        lastword: Privacy Policy
+
+#HOME
+home:
+    header:
+        title:
+            word1: Manage
+            word2: and
+            word3: organize
+            lastword: your projects
+
+        parag: Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.
     item1:
         title:
             word1: SMART
@@ -52,35 +86,55 @@ section:
         parag: Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Curabitur blandit tempus porttitor.
         button: GET STARTED !
 
-footer:
-    nav:
-        item5: SIGN UP
-        lang:
-            en: English
-            fr: Français
-    copy: Scrumbe © 2013-2014 — All Rights Reserved
+#ABOUT-US
+aboutus:
+    header:
+        title:
+            word1: Fusce dapibus
+            lastword: tellus ac cursus commodo
 
-signin:
-    title: SIGN IN
-    mailPH: Email
-    pwdPH: Password
-    button: SIGN IN
-    forgetpwd: Forget your password?
-    footer:
-        word1: Don't have an account?
-        lastword: Get started
+        parag: Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
 
-signup:
-    title: SIGN UP FOR FREE
-    namePH: Name
-    mailPH: Email
-    pwdPH: Password
-    button: SIGN UP FOR FREE
-    signin:
-        word1: Already have an account?
-        lastword: Sign in.
-    footer:
-        word1: By signing up, you agree to our
-        word2: Terms of use,
-        word3: and
-        lastword: Privacy Policy
+    item1:
+        firstname: François-Xavier
+        lastname: Costanzo
+        job: Developpeur front-end
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item2:
+        firstname: Adrien
+        lastname: Thomas
+        job: UX/UI Designer
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item3:
+        firstname: Emmeric
+        lastname: Royer
+        job: Developpeur Back-end
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item4:
+        firstname: Nicolas
+        lastname: Foubart
+        job: Developpeur back-end
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item5:
+        firstname: Phillipe
+        lastname: Cwik
+        job: Web-marketeur
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item6:
+        firstname: Maxime
+        lastname: Andrieu
+        job: Web-marketeur
+        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    form:
+        title: Contact Us
+        parag: Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Integer posuere erat a ante.
+        fullname: Full name
+        email: Email
+        message: Your message
+        button: GET IN TOUCH!
