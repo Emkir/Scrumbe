@@ -139,3 +139,46 @@ aboutus:
         email: Email
         message: Votre message
         button: Valider
+
+#SCRUM
+scrum:
+    header:
+        title:
+            word1: Qu'est ce que
+            lastword: la méthode SCRUM?
+        parag: Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+    item1:
+        title:
+            word1: Time
+            lastword: Saving
+        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+
+    item2:
+        title:
+            word1: Better
+            lastword: Workflow
+        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+
+    item3:
+        title:
+            word1: Permanent
+            lastword: Follow
+        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+
+    item4:
+        title:
+            word1: Secure
+            lastword: Advancement
+        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+
+    item5:
+        title:
+            word1: Predict
+            lastword: Risks
+        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+
+    item6:
+        title:
+            word1: Quick
+            lastword: Progression
+        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.

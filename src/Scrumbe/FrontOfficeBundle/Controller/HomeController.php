@@ -15,4 +15,9 @@ class HomeController extends Controller
     {
         return $this->render('ScrumbeFrontOfficeBundle:Home:about-us.html.twig');
     }
+
+    public function scrumAction()
+    {
+        return $this->render('ScrumbeFrontOfficeBundle:Home:scrum.html.twig');
+    }
 }

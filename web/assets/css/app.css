@@ -69,7 +69,7 @@ nav {
         padding: 10px 20px !important;
         color: white !important; }
       nav .wrapper-nav li .button-green:hover {
-        background-color: #4e9b56; }
+        background-color: #5eb169; }
 
 .black-nav {
   background-color: #121a1f; }
@@ -413,7 +413,7 @@ footer {
           font-family: 'proxima_nova_rgbold';
           text-decoration: none; }
         .article-home .final-section .wrapper-final .contain-final .button-green:hover {
-          background-color: #4e9b56;
+          background-color: #5eb169;
           cursor: pointer; }
 
 /*  ABOUT US    */
@@ -591,3 +591,108 @@ footer {
       background-color: #4e9b56;
       -webkit-transition: 0.1s ease;
       transition: 0.1s ease; }
+
+/*  SCRUM PAGE   */
+.header-scrum {
+  width: 100%;
+  height: 450px;
+  position: relative;
+  z-index: 5;
+  background-color: #fff; }
+  .header-scrum .wrapper-header-fix {
+    max-width: 960px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    font-family: "proxima_novalight";
+    color: white;
+    line-height: 550px;
+    height: 450px; }
+    .header-scrum .wrapper-header-fix .contain-title-fix {
+      vertical-align: middle;
+      display: inline-block; }
+      .header-scrum .wrapper-header-fix .contain-title-fix h1 {
+        font-size: 2.3125rem;
+        font-weight: 300;
+        line-height: normal;
+        color: #6c7180; }
+        .header-scrum .wrapper-header-fix .contain-title-fix h1 .openBold {
+          font-family: "proxima_nova_rgbold"; }
+      .header-scrum .wrapper-header-fix .contain-title-fix p {
+        font-family: "Open Sans";
+        font-weight: 300;
+        font-size: 0.875rem;
+        line-height: 28px;
+        margin: 20px auto 0 auto;
+        width: 60%;
+        position: relative;
+        color: #636875; }
+
+.article-scrum {
+  position: relative;
+  width: 100%;
+  font-family: "Open Sans"; }
+  .article-scrum .wrapper-scrum {
+    max-width: 960px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    padding: 100px 0; }
+  .article-scrum .item-scrum {
+    background-color: #f5f8f9; }
+    .article-scrum .item-scrum li {
+      text-align: center;
+      width: 26%;
+      display: inline-block;
+      font-family: "Open Sans";
+      margin: 0 25px 25px 25px; }
+      .article-scrum .item-scrum li img {
+        width: 50px; }
+      .article-scrum .item-scrum li h2 {
+        font-size: 1.25rem;
+        color: #6c7180;
+        font-weight: 700;
+        margin: 15px 0; }
+        .article-scrum .item-scrum li h2 .green {
+          color: #5cad66; }
+      .article-scrum .item-scrum li p {
+        font-size: 0.6875rem;
+        font-weight: 300;
+        line-height: 17px;
+        color: #636875; }
+  .article-scrum .text1-scrum {
+    background-color: white; }
+    .article-scrum .text1-scrum h1 {
+      font-size: 2.3125rem;
+      color: #6c7180;
+      font-family: "proxima_nova_rgregular"; }
+      .article-scrum .text1-scrum h1 .openBold {
+        font-family: "proxima_nova_rgbold"; }
+    .article-scrum .text1-scrum p {
+      font-family: "Open Sans";
+      font-weight: 300;
+      font-size: 0.875rem;
+      line-height: 28px;
+      margin: 20px auto 0 auto;
+      width: 60%;
+      position: relative;
+      color: #636875;
+      text-align: justify; }
+  .article-scrum .text2-scrum {
+    background-color: #f5f8f9; }
+    .article-scrum .text2-scrum h1 {
+      font-size: 2.3125rem;
+      color: #6c7180;
+      font-family: "proxima_nova_rgregular"; }
+      .article-scrum .text2-scrum h1 .openBold {
+        font-family: "proxima_nova_rgbold"; }
+    .article-scrum .text2-scrum p {
+      font-family: "Open Sans";
+      font-weight: 300;
+      font-size: 0.875rem;
+      line-height: 28px;
+      margin: 20px auto 0 auto;
+      width: 60%;
+      position: relative;
+      color: #636875;
+      text-align: justify; }
