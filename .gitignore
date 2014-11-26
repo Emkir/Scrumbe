@@ -9,6 +9,12 @@
 /vendor/
 /bin/
 /composer.phar
+/web/assets/css/app.css
+/web/assets/css/app.min.css
+/web/assets/css/app.css.map
 .idea
 .DS_STORE
-.sass-cache
+node_modules/*
+.sass-cache/*
+*.swp
+npm-debug.log
