@@ -1,7 +1,0 @@
-parameters:
-#    scrumbe_front_office.example.class: Scrumbe\FrontOfficeBundle\Example
-
-services:
-#    scrumbe_front_office.example:
-#        class: %scrumbe_front_office.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
