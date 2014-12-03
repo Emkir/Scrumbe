@@ -1,0 +1,113 @@
+{% extends "ScrumbeFrontOfficeBundle:Home:index.html.twig" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block nav %}
+    <nav class="black-nav">
+        <div class="wrapper-nav">
+            <ul>
+                <li>
+                    <a href="{{ path('index') }}" class="pull-left">
+                        <img src="/assets/img/logo.svg">
+                    </a>
+                    <a href="#">{{ 'nav.items.1'|trans }}</a>
+                    <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
+                    <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
+                    <a href="#">{{ 'nav.items.4'|trans }}</a>
+                    <span class="sign-in-btn">{{ 'nav.items.5'|trans }}</span>
+                    <span class="button-green sign-up-btn">{{ 'nav.items.6'|trans }}</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block body %}
+    <header class="header-about">
+        <div class="wrapper-header-fix">
+            <div class="contain-title-fix">
+                <h1><span class="openBold">{{ 'aboutus.header.title.word1'|trans }}</span> {{ 'aboutus.header.title.lastword'|trans }}</h1>
+                <p>{{ 'aboutus.header.parag'|trans }}</p>
+            </div>
+        </div>
+    </header>
+
+    <article class="article-about">
+        <section class="odd-section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item1.firstname'|trans }}</span> {{ 'aboutus.item1.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item1.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item1.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Thomas-Sanson.png">
+            </div>
+        </section>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item2.firstname'|trans }}</span> {{ 'aboutus.item2.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item2.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item2.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Kerem-Suer.png">
+            </div>
+        </section>
+        <section class="odd-section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item3.firstname'|trans }}</span> {{ 'aboutus.item3.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item3.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item3.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Anthony-Ribeiro.png">
+            </div>
+        </section>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item4.firstname'|trans }}</span> {{ 'aboutus.item4.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item4.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item4.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Christophe-Tauziet.png">
+            </div>
+        </section>
+        <section class="odd-section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item5.firstname'|trans }}</span> {{ 'aboutus.item5.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item5.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item5.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Jeremy-Thomas.png">
+            </div>
+        </section>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item6.firstname'|trans }}</span> {{ 'aboutus.item6.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item6.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item6.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Claude-Guglieri.png">
+            </div>
+        </section>
+        <section class="contact">
+            <h1>{{ 'aboutus.form.title'|trans }}</h1>
+            <p>{{ 'aboutus.form.parag'|trans }}</p>
+            <form action="#" method="post">
+                <input type="text" placeholder="{{ 'aboutus.form.fullname'|trans }}">
+                <input type="email" placeholder="{{ 'aboutus.form.email'|trans }}">
+                <textarea placeholder="{{ 'aboutus.form.message'|trans }}" rows="10"></textarea>
+                <input type="submit" value="{{ 'aboutus.form.button'|trans }}">
+            </form>
+        </section>
+    </article>
+{% endblock %}

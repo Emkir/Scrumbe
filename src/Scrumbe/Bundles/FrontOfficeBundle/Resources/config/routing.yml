@@ -1,0 +1,11 @@
+index:
+    pattern: /
+    defaults: { _controller: ScrumbeFrontOfficeBundle:Home:index }
+
+about:
+    pattern: /about-us
+    defaults: { _controller: ScrumbeFrontOfficeBundle:Home:about }
+
+scrum:
+    pattern: /scrum
+    defaults: { _controller: ScrumbeFrontOfficeBundle:Home:scrum }
