@@ -1,3 +1,12 @@
-scrumbe_project_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: ScrumbeProjectBundle:Default:index }
+scrumbe_get_projects:
+    pattern:  /projects
+    defaults: { _controller: ScrumbeProjectBundle:Project:getProjects }
+    requirements:
+        _method: GET
+
+scrumbe_get_project:
+    pattern:  /projects/{projectId}
+    defaults: { _controller: ScrumbeProjectBundle:Project:getProject }
+    requirements:
+        id: \d+
+        _method: GET
