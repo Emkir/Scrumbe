@@ -1,3 +1,7 @@
+scrumbe_project:
+    resource: "@ScrumbeProjectBundle/Resources/config/routing.yml"
+    prefix:   /
+
 scrumbe_front_office:
     resource: "@ScrumbeFrontOfficeBundle/Resources/config/routing.yml"
     prefix:   /
