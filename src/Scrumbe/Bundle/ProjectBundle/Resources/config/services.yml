@@ -1,0 +1,7 @@
+parameters:
+#    scrumbe_project.example.class: Scrumbe\Bundle\ProjectBundle\Example
+
+services:
+#    scrumbe_project.example:
+#        class: %scrumbe_project.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
