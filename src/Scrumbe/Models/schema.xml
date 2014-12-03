@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="default" namespace="Scrumbe\Models" defaultIdMethod="native">
     <table name="project">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
         <column name="name" type="varchar" size="255"/>
         <column name="description" type="longvarchar"/>
@@ -10,6 +15,11 @@
     </table>
 
     <table name="user_story">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
 
         <column name="project_id" type="integer"/>
@@ -26,6 +36,11 @@
     </table>
 
     <table name="task">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
 
         <column name="user_story_id" type="integer"/>

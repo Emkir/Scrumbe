@@ -19,7 +19,7 @@ CREATE TABLE `project`
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 -- ---------------------------------------------------------------------
 -- user_story
@@ -43,7 +43,7 @@ CREATE TABLE `user_story`
     CONSTRAINT `user_story_FK_1`
         FOREIGN KEY (`project_id`)
         REFERENCES `project` (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 -- ---------------------------------------------------------------------
 -- task
@@ -64,7 +64,7 @@ CREATE TABLE `task`
     CONSTRAINT `task_FK_1`
         FOREIGN KEY (`user_story_id`)
         REFERENCES `user_story` (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
