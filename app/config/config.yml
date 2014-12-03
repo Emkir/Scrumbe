@@ -52,8 +52,8 @@ propel:
         propel.defaultTimeFormat: null
         propel.defaultDateFormat: null
         propel.mysql.tableType: InnoDB
-        propel.schema.dir : "%kernel.root_dir%/../src/Vamos/Models"
-        propel.php.dir : "%kernel.root_dir%/../src/Vamos/Models"
+        propel.schema.dir : "%kernel.root_dir%/../src/Scrumbe/Models"
+        propel.php.dir : "%kernel.root_dir%/../src/Scrumbe/Models"
 
     # db connections
     dbal:

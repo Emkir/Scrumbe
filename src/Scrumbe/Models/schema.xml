@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="Scrumbe\Models" defaultIdMethod="native">
+    <table name="project">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="name" type="varchar" size="255"/>
+        <column name="description" type="longvarchar"/>
+        <column name="start_date" type="date"/>
+        <column name="end_date" type="date"/>
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="user_story">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+
+        <column name="project_id" type="integer"/>
+        <foreign-key foreignTable="project">
+            <reference local="project_id" foreign="id" />
+        </foreign-key>
+
+        <column name="numero" type="varchar" size="255"/>
+        <column name="description" type="longvarchar"/>
+        <column name="value" type="integer"/>
+        <column name="complexity" type="integer"/>
+        <column name="ratio" type="float"/>
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="task">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+
+        <column name="user_story_id" type="integer"/>
+        <foreign-key foreignTable="user_story">
+            <reference local="user_story_id" foreign="id" />
+        </foreign-key>
+
+        <column name="time" type="varchar" size="255"/>
+        <column name="description" type="longvarchar"/>
+        <behavior name="timestampable" />
+    </table>
+
+</database>
