@@ -49,4 +49,4 @@ Quelques alias utiles (~/.bashrc):
 	alias pac='php app/console'
 	alias resetDB='php app/console propel:database:drop --force && php app/console propel:database:create && php app/console propel:build --insert-sql && php app/console propel:fixtures:load'
 	alias updateDB='php app/console propel:migration:generate-diff && php app/console propel:migration:migrate'
-	alias vamosfront='cd /var/www/Scrumbe'
+	alias scrumbe='cd /var/www/Scrumbe'
