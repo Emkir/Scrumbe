@@ -8,5 +8,23 @@ scrumbe_get_project:
     pattern:  /projects/{projectId}
     defaults: { _controller: ScrumbeProjectBundle:Project:getProject }
     requirements:
-        id: \d+
+        projectId: \d+
         _method: GET
+
+scrumbe_post_project:
+    pattern:  /projects/create
+    defaults: { _controller: ScrumbeProjectBundle:Project:postProject }
+
+scrumbe_put_project:
+    pattern:  /projects/{projectId}
+    defaults: { _controller: ScrumbeProjectBundle:Project:putProject }
+    requirements:
+        projectId: \d+
+        _method: PUT
+
+scrumbe_delete_project:
+    pattern:  /projects/{projectId}
+    defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }
+    requirements:
+        projectId: \d+
+        _method: DELETE

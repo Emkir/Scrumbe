@@ -1,30 +1,13 @@
 <?php
-namespace Scrumbe\Bundle\ProjectBundle\Services;
+namespace Scrumbe\Bundle\FrontOfficeBundle\Services;
 
 use Scrumbe\Models\ProjectQuery;
 use BasePeer;
 
-class ProjectService {
+class ValidatorService {
 
-    public function getProjects()
+    public function objectExists($objectId, $entityName)
     {
-        $projectsArray = array();
 
-        $projects = ProjectQuery::create()->find();
-
-        foreach($projects as $key=>$project)
-        {
-            $projectsArray[$key] = $this->getProject($project->getId());
-        }
-
-        return $projectsArray;
-    }
-
-    public function getProject($projectId)
-    {
-        $project = ProjectQuery::create()->findPk($projectId);
-        $projectArray = $project->toArray(BasePeer::TYPE_FIELDNAME);
-
-        return $projectArray;
     }
 } 

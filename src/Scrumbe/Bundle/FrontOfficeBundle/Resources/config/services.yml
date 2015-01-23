@@ -1,7 +1,7 @@
 parameters:
-#    scrumbe_front_office.example.class: Scrumbe\FrontOfficeBundle\Example
+    scrumbe.validator_service.class: Scrumbe\FrontOfficeBundle\Services\ValidatorService
 
 services:
-#    scrumbe_front_office.example:
-#        class: %scrumbe_front_office.example.class%
+    scrumbe.validator_service:
+        class: %scrumbe.validator_service.class%
 #        arguments: [@service_id, "plain_value", %parameter%]

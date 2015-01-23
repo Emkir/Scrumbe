@@ -1,6 +1,12 @@
 parameters:
-    project_service.class: Scrumbe\Bundle\ProjectBundle\Services\ProjectService
+    project_service.class:    Scrumbe\Bundle\ProjectBundle\Services\ProjectService
+    form.type.project.class:  Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType
 
 services:
     project_service:
         class: %project_service.class%
+
+    form.type.project:
+            class: %form.type.project.class%
+            tags:
+                - { name: form.type, alias: project }
