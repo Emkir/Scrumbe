@@ -2,6 +2,7 @@
 namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
 use Scrumbe\Models\Project;
+use Scrumbe\Models\ProjectQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,9 +32,9 @@ class ProjectController extends Controller
     public function getProjectAction($projectId)
     {
         $projectService     = $this->container->get('project_service');
-//        $validatorService   = $this->container->get('scrumbe.validator_service');
+        $validatorService   = $this->container->get('scrumbe.validator_service');
 
-//        $validatorService->objectExists($projectId, 'Project');
+        $validatorService->objectExists($projectId, ProjectQuery::create());
 
         $project = $projectService->getProject($projectId);
 

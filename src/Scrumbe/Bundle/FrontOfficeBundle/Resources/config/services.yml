@@ -1,7 +1,6 @@
 parameters:
-    scrumbe.validator_service.class: Scrumbe\FrontOfficeBundle\Services\ValidatorService
+    scrumbe.validator_service.class: Scrumbe\Bundle\FrontOfficeBundle\Services\ValidatorService
 
 services:
     scrumbe.validator_service:
         class: %scrumbe.validator_service.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
