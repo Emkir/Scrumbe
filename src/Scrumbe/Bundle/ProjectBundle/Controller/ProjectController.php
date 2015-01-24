@@ -43,33 +43,41 @@ class ProjectController extends Controller
         );
     }
 
-    public function postProjectAction(Request $request)
+    public function postProjectAction()
     {
-        $project = new Project();
-        $form = $this->createForm('project', $project);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid())
+        $projectService = $this->container->get('project_service');
+        $project = $projectService->createProject();
+        
+        if ($project instanceof Project)
         {
-            $project = $form->getData();
-            $project->save();
-
             return $this->redirect($this->generateUrl('scrumbe_get_project', array('projectId' => $project->getId())));
         }
 
         return $this->render('ScrumbeProjectBundle:projects:createProject.html.twig', array(
-            'form' => $form->createView(),
-        ));
+            'form' => $project->createView(),
+        ));    
     }
 
     public function putProjectAction($projectId, Request $request)
     {
+        $projectService = $this->container->get('project_service');
+        $project = $projectService->updateProject($projectId);
 
+        if ($project instanceof Project)
+        {
+            return $this->redirect($this->generateUrl('scrumbe_get_project', array('projectId' => $project->getId())));
+        }
+
+        return $this->render('ScrumbeProjectBundle:projects:createProject.html.twig', array(
+            'form' => $project->createView(),
+        ));    
     }
 
     public function deleteProjectAction($projectId)
     {
-
+        $projectService = $this->container->get('project_service');
+        $project = $projectService->deleteProject($projectId);
+        
+        return $this->redirect($this->generateUrl('scrumbe_get_projects'));
     }
 }

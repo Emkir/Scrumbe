@@ -5,6 +5,7 @@ parameters:
 services:
     project_service:
         class: %project_service.class%
+        arguments: [@form.factory,@service_container]
 
     form.type.project:
             class: %form.type.project.class%

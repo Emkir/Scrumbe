@@ -16,15 +16,14 @@ scrumbe_post_project:
     defaults: { _controller: ScrumbeProjectBundle:Project:postProject }
 
 scrumbe_put_project:
-    pattern:  /projects/{projectId}
+    pattern:  /projects/{projectId}/update
     defaults: { _controller: ScrumbeProjectBundle:Project:putProject }
     requirements:
         projectId: \d+
-        _method: PUT
 
 scrumbe_delete_project:
-    pattern:  /projects/{projectId}
+    pattern:  /projects/{projectId}/delete
     defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }
     requirements:
         projectId: \d+
-        _method: DELETE
+        _method: GET
