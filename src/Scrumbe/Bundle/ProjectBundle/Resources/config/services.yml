@@ -1,10 +1,15 @@
 parameters:
     project_service.class:    Scrumbe\Bundle\ProjectBundle\Services\ProjectService
+    userstory_service.class:  Scrumbe\Bundle\ProjectBundle\Services\UserstoryService
     form.type.project.class:  Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType
 
 services:
     project_service:
         class: %project_service.class%
+        arguments: [@form.factory,@service_container]
+
+    userstory_service:
+        class: %userstory_service.class%
         arguments: [@form.factory,@service_container]
 
     form.type.project:

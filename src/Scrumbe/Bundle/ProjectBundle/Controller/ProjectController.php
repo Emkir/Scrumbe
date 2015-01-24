@@ -4,7 +4,6 @@ namespace Scrumbe\Bundle\ProjectBundle\Controller;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProjectController extends Controller
 {
@@ -58,7 +57,7 @@ class ProjectController extends Controller
         ));    
     }
 
-    public function putProjectAction($projectId, Request $request)
+    public function putProjectAction($projectId)
     {
         $projectService = $this->container->get('project_service');
         $project = $projectService->updateProject($projectId);

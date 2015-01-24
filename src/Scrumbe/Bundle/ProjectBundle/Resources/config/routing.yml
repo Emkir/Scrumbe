@@ -27,3 +27,40 @@ scrumbe_delete_project:
     requirements:
         projectId: \d+
         _method: GET
+
+scrumbe_get_uss:
+    pattern: /projects/{projectId}/us
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUss}
+    requirements:
+        projectId: \d+
+        _method: GET
+
+
+scrumbe_get_us:
+    pattern: /projects/{projectId}/us/{usId}
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUs}
+    requirements:
+        projectId: \d+
+        usId: \d+
+        _method: GET
+
+scrumbe_post_us:
+    pattern: /projects/{projectId}/us/create
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:postUs}
+    requirements:
+        projectId: \d+
+
+scrumbe_put_us:
+    pattern: /projects/{projectId}/us/{usId}/update
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:putUs}
+    requirements:
+        projectId: \d+
+        usId: \d+
+
+scrumbe_delete_us:
+    pattern: /projects/{projectId}/us/{usId}/delete
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:deleteUs}
+    requirements:
+        projectId: \d+
+        usId: \d+
+        _method: GET
