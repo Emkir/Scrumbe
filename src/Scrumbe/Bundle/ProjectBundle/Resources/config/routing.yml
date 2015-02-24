@@ -64,3 +64,44 @@ scrumbe_delete_us:
         projectId: \d+
         usId: \d+
         _method: GET
+
+scrumbe_get_tasks:
+   pattern: /projects/{projectId}/us/{usId}/tasks
+   defaults: {_controller: ScrumbeProjectBundle:Task:getTasks}
+   requirements:
+        projectId: \d+
+        usId: \d+
+        _method: GET
+
+scrumbe_get_task:
+   pattern: /projects/{projectId}/us/{usId}/tasks/{taskId}
+   defaults: {_controller: ScrumbeProjectBundle:Task:getTask}
+   requirements:
+        projectId: \d+
+        usId: \d+
+        taskId: \d+
+        _method: GET
+
+scrumbe_post_task:
+   pattern: /projects/{projectId}/us/{usId}/tasks/create
+   defaults: {_controller: ScrumbeProjectBundle:Task:postTask}
+   requirements:
+        projectId: \d+
+        usId: \d+
+
+scrumbe_put_task:
+   pattern: /projects/{projectId}/us/{usId}/tasks/{taskId}/update
+   defaults: {_controller: ScrumbeProjectBundle:Task:putTask}
+   requirements:
+        projectId: \d+
+        usId: \d+
+        taskId: \d+
+
+scrumbe_delete_task:
+   pattern: /projects/{projectId}/us/{usId}/tasks/{taskId}/delete
+   defaults: {_controller: ScrumbeProjectBundle:Task:deleteTask}
+   requirements:
+        projectId: \d+
+        usId: \d+
+        taskId: \d+
+        _method: GET

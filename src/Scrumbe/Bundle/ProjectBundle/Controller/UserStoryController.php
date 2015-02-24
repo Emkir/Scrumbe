@@ -41,7 +41,7 @@ class UserStoryController extends Controller
 
     public function postUsAction($projectId)
     {
-        $usService = $this->container->get('userstory_servic	e');
+        $usService = $this->container->get('userstory_service');
         $us = $usService->createUs($projectId);
 
         if ($us instanceof UserStory)
