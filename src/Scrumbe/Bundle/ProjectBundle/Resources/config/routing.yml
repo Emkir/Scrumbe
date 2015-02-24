@@ -14,6 +14,8 @@ scrumbe_get_project:
 scrumbe_post_project:
     pattern:  /projects/create
     defaults: { _controller: ScrumbeProjectBundle:Project:postProject }
+    requirements:
+        _method: POST
 
 scrumbe_put_project:
     pattern:  /projects/{projectId}/update
