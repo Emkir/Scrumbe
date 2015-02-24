@@ -1,6 +1,7 @@
 <?php
 namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
+use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -16,9 +17,15 @@ class ProjectController extends Controller
     {
         $projectService     = $this->container->get('project_service');
         $projects           = $projectService->getProjects();
+        $projectForm        = $this->createForm(new ProjectType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_project')
+        ));
 
         return $this->render('ScrumbeProjectBundle:projects:projects.html.twig',
-            array('projects' => $projects)
+            array(
+                'projects' => $projects,
+                'projectForm' => $projectForm->createView()
+            )
         );
     }
 
