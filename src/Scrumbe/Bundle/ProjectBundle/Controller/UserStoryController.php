@@ -9,72 +9,105 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class UserStoryController extends Controller
 {
 	/**
-     * Get all us
+     * Get all user strories
      *
-     * @return \Symfony\Component\HttpFoundation\Response       Twig view with all uss in JSON
+     * @param  Integer   $projectId     Project's id
+     * @return Response                 Twig view with all uss in JSON
      */
-    public function getUssAction($projectId)
+    public function getUserStoriesAction($projectId)
     {
         $usService     = $this->container->get('userstory_service');
-        $us            = $usService->getUss($projectId);
+        $userStories   = $usService->getUserStories($projectId);
 
-        return $this->render('ScrumbeProjectBundle:userstories:userstories.html.twig',
-            array('uss' => $us)
+        return $this->render('ScrumbeProjectBundle:userstories:userStories.html.twig',
+            array('user_stories' => $userStories)
         );
     }
 
     /**
-     * Get single us
+     * Get single user story
      *
-     * @return \Symfony\Component\HttpFoundation\Response       Twig view with all us in JSON
+     * @param  Integer      $projectId      Project's id
+     * @param  Integer      $userStoryId    User story's id
+     * @return Response                     Twig view with all us in JSON
      */
-    public function getUsAction($projectId, $usId)
+    public function getUserStoryAction($projectId, $userStoryId)
     {
         $usService     = $this->container->get('userstory_service');
-        $us           = $usService->getUs($projectId, $usId);
+        $validatorService   = $this->container->get('scrumbe.validator_service');
 
-        return $this->render('ScrumbeProjectBundle:userstories:userstories.html.twig',
-            array('uss' => $us)
+        $validatorService->objectExists($userStoryId, UserStoryQuery::create());
+        $userStory     = $usService->getUserStory($projectId, $userStoryId);
+
+        return $this->render('ScrumbeProjectBundle:userstories:userStory.html.twig',
+            array('user_story' => $userStory)
         );
     }
 
-
-    public function postUsAction($projectId)
+    /**
+     * Create a user story
+     *
+     * @param  Integer             $projectId      Project's id
+     * @return RedirectResponse                    Get to the created user story page
+     *         Response                            Twig view with form
+     */
+    public function postUserStoryAction($projectId)
     {
         $usService = $this->container->get('userstory_service');
-        $us = $usService->createUs($projectId);
+        $userStory = $usService->createUserStory($projectId);
 
-        if ($us instanceof UserStory)
+        if ($userStory instanceof UserStory)
         {
-            return $this->redirect($this->generateUrl('scrumbe_get_us',array('projectId' => $projectId, 'usId' => $us->getId())));
+            return $this->redirect($this->generateUrl('scrumbe_get_user_story',array('projectId' => $projectId, 'userStoryId' => $userStory->getId())));
         }
 
-        return $this->render('ScrumbeProjectBundle:userstories:createUS.html.twig', array(
-            'form' => $us->createView()
+        return $this->render('ScrumbeProjectBundle:userstories:createUserStory.html.twig', array(
+            'form' => $userStory->createView()
         ));    
     }
 
-	public function putUsAction($projectId, $usId)
+    /**
+     * Update a user story
+     *
+     * @param  Integer                          $projectId      Project's id
+     * @param  Integer          $userStoryId    User story's id
+     * @return RedirectResponse                 Get to the updated user story page
+     *         Response                         Twig view with form
+     */
+	public function putUserStoryAction($projectId, $userStoryId)
     {
         $usService = $this->container->get('userstory_service');
-        $us = $usService->updateUs($projectId,$usId);
+        $validatorService   = $this->container->get('scrumbe.validator_service');
 
-        if ($us instanceof UserStory)
+        $validatorService->objectExists($userStoryId, UserStoryQuery::create());
+        $userStory = $usService->updateUserStory($projectId, $userStoryId);
+
+        if ($userStory instanceof UserStory)
         {
-            return $this->redirect($this->generateUrl('scrumbe_get_us',array('projectId' => $projectId, 'usId' => $us->getId())));
+            return $this->redirect($this->generateUrl('scrumbe_get_user_story',array('projectId' => $projectId, 'userStoryId' => $userStory->getId())));
         }
 
-        return $this->render('ScrumbeProjectBundle:userstories:createUS.html.twig', array(
-            'form' => $us->createView(),
+        return $this->render('ScrumbeProjectBundle:userstories:createUserStory.html.twig', array(
+            'form' => $userStory->createView(),
         ));    
     }
 
-    public function deleteUsAction($projectId, $usId)
+    /**
+     * Delete a user story
+     *
+     * @param  Integer                          $projectId      Project's id
+     * @param  Integer          $userStoryId    User story's id
+     * @return RedirectResponse                 Get to the user story list of the project
+     */
+    public function deleteUserStoryAction($projectId, $userStoryId)
     {
         $usService = $this->container->get('userstory_service');
-        $us = $usService->deleteUs($projectId,$usId);
+        $validatorService   = $this->container->get('scrumbe.validator_service');
+
+        $validatorService->objectExists($userStoryId, UserStoryQuery::create());
+        $usService->deleteUs($projectId, $userStoryId);
         
-        return $this->redirect($this->generateUrl('scrumbe_get_uss',array('projectId' => $projectId)));
+        return $this->redirect($this->generateUrl('scrumbe_get_user_stories',array('projectId' => $projectId)));
     }
 
 

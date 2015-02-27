@@ -1,3 +1,5 @@
+###PROJECTS###
+
 scrumbe_get_projects:
     pattern:  /projects
     defaults: { _controller: ScrumbeProjectBundle:Project:getProjects }
@@ -30,42 +32,45 @@ scrumbe_delete_project:
         projectId: \d+
         _method: GET
 
-scrumbe_get_uss:
-    pattern: /projects/{projectId}/us
-    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUss}
+###USER STORIES###
+
+scrumbe_get_user_stories:
+    pattern: /projects/{projectId}/user-stories
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUserStories}
     requirements:
         projectId: \d+
         _method: GET
 
-
-scrumbe_get_us:
-    pattern: /projects/{projectId}/us/{usId}
-    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUs}
+scrumbe_get_user_story:
+    pattern: /projects/{projectId}/user-stories/{userStoryId}
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUserStory}
     requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
         _method: GET
 
-scrumbe_post_us:
-    pattern: /projects/{projectId}/us/create
-    defaults: {_controller: ScrumbeProjectBundle:UserStory:postUs}
+scrumbe_post_user_story:
+    pattern: /projects/{projectId}/user-stories/create
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:postUserStory}
     requirements:
         projectId: \d+
 
-scrumbe_put_us:
-    pattern: /projects/{projectId}/us/{usId}/update
-    defaults: {_controller: ScrumbeProjectBundle:UserStory:putUs}
+scrumbe_put_user_story:
+    pattern: /projects/{projectId}/user-stories/{userStoryId}/update
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:putUserStory}
     requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
 
-scrumbe_delete_us:
-    pattern: /projects/{projectId}/us/{usId}/delete
-    defaults: {_controller: ScrumbeProjectBundle:UserStory:deleteUs}
+scrumbe_delete_user_story:
+    pattern: /projects/{projectId}/user-stories/{userStoryId}/delete
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:deleteUserStory}
     requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
         _method: GET
+
+###TASKS###
 
 scrumbe_get_tasks:
    pattern: /projects/{projectId}/us/{usId}/tasks

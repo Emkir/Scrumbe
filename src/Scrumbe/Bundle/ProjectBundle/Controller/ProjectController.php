@@ -66,7 +66,10 @@ class ProjectController extends Controller
 
     public function putProjectAction($projectId)
     {
-        $projectService = $this->container->get('project_service');
+        $projectService     = $this->container->get('project_service');
+        $validatorService   = $this->container->get('scrumbe.validator_service');
+
+        $validatorService->objectExists($projectId, ProjectQuery::create());
         $project = $projectService->updateProject($projectId);
 
         if ($project instanceof Project)
@@ -81,8 +84,11 @@ class ProjectController extends Controller
 
     public function deleteProjectAction($projectId)
     {
-        $projectService = $this->container->get('project_service');
-        $project = $projectService->deleteProject($projectId);
+        $projectService     = $this->container->get('project_service');
+        $validatorService   = $this->container->get('scrumbe.validator_service');
+
+        $validatorService->objectExists($projectId, ProjectQuery::create());
+        $projectService->deleteProject($projectId);
         
         return $this->redirect($this->generateUrl('scrumbe_get_projects'));
     }

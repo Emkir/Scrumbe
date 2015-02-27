@@ -16,70 +16,71 @@ class UserstoryService {
         $this->container = $container;
     }
 
-    public function getUss($projectId)
+    public function getUserStories($projectId)
     {
-        $ussArray = array();
+        $userStoriesArray = array();
 
-        $uss = UserStoryQuery::create()->filterByProjectId($projectId)->find();
+        $userStories = UserStoryQuery::create()->filterByProjectId($projectId)->find();
 
-        foreach($uss as $key=>$us)
+        foreach($userStories as $key => $userStory)
         {
-            $ussArray[$key] = $this->getUs($projectId,$us->getId());
+            $userStoriesArray[$key] = $this->getUs($projectId,$userStory->getId());
         }
 
-        return $ussArray;
+        return $userStoriesArray;
     }
 
-    public function getUs($projectId, $usId)
+    public function getUserStory($projectId, $userStoryId)
     {
-        $us = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($usId);
-        $usArray = $us->toArray(BasePeer::TYPE_FIELDNAME);
+        $userStory      = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($userStoryId);
+        $userStoryArray = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
 
-        return $usArray;
+        return $userStoryArray;
     }
 
-    public function createUs($projectId)
-     {
-        $us = new UserStory;
-        $form = $this->form->create(new UserStoryType, $us);
-        $request = $this->container->get('request');
+    public function createUserStory($projectId)
+    {
+        $userStory  = new UserStory;
+        $form       = $this->form->create(new UserStoryType, $userStory);
+        $request    = $this->container->get('request');
+
         $form->get('project_id')->setData($projectId);
         $form->handleRequest($request);
 
         if ($form->isValid())
         {
-            $us = $form->getData();
-            $us->save();
+            $userStory = $form->getData();
+            $userStory->save();
 
-            return $us;
+            return $userStory;
         }
 
         return $form;
     }
 
-    public function updateUs($projectId, $usId)
+    public function updateUserStory($projectId, $userStoryId)
     {
-        $us = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($usId);
-    	$form = $this->form->create(new UserStoryType, $us);
+        $userStory  = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($userStoryId);
+    	$form       = $this->form->create(new UserStoryType, $userStory);
 
         $request = $this->container->get('request');
         $form->handleRequest($request);
 
         if ($form->isValid())
         {
-            $us = $form->getData();
-            $us->save();
+            $userStory = $form->getData();
+            $userStory->save();
 
-            return $us;
+            return $userStory;
         }
 
         return $form;
     }
 
-    public function deleteUs($projectId, $usId)
+    public function deleteUserStory($projectId, $userStoryId)
     {
-        $us = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($usId);
-        $us->delete();
+        $userStory = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($userStoryId);
+        $userStory->delete();
 
         return true;
     }
