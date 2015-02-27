@@ -1,3 +1,5 @@
+###PROJECTS###
+
 scrumbe_get_projects:
     pattern:  /projects
     defaults: { _controller: ScrumbeProjectBundle:Project:getProjects }
@@ -14,17 +16,99 @@ scrumbe_get_project:
 scrumbe_post_project:
     pattern:  /projects/create
     defaults: { _controller: ScrumbeProjectBundle:Project:postProject }
+    requirements:
+        _method: POST
 
 scrumbe_put_project:
-    pattern:  /projects/{projectId}
+    pattern:  /projects/{projectId}/update
     defaults: { _controller: ScrumbeProjectBundle:Project:putProject }
     requirements:
         projectId: \d+
-        _method: PUT
 
 scrumbe_delete_project:
-    pattern:  /projects/{projectId}
+    pattern:  /projects/{projectId}/delete
     defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }
     requirements:
         projectId: \d+
-        _method: DELETE
+        _method: GET
+
+###USER STORIES###
+
+scrumbe_get_user_stories:
+    pattern: /projects/{projectId}/user-stories
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUserStories}
+    requirements:
+        projectId: \d+
+        _method: GET
+
+scrumbe_get_user_story:
+    pattern: /projects/{projectId}/user-stories/{userStoryId}
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:getUserStory}
+    requirements:
+        projectId: \d+
+        userStoryId: \d+
+        _method: GET
+
+scrumbe_post_user_story:
+    pattern: /projects/{projectId}/user-stories/create
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:postUserStory}
+    requirements:
+        projectId: \d+
+
+scrumbe_put_user_story:
+    pattern: /projects/{projectId}/user-stories/{userStoryId}/update
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:putUserStory}
+    requirements:
+        projectId: \d+
+        userStoryId: \d+
+
+scrumbe_delete_user_story:
+    pattern: /projects/{projectId}/user-stories/{userStoryId}/delete
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:deleteUserStory}
+    requirements:
+        projectId: \d+
+        userStoryId: \d+
+        _method: GET
+
+###TASKS###
+
+scrumbe_get_tasks:
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks
+   defaults: {_controller: ScrumbeProjectBundle:Task:getTasks}
+   requirements:
+        projectId: \d+
+        userStoryId: \d+
+        _method: GET
+
+scrumbe_get_task:
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}
+   defaults: {_controller: ScrumbeProjectBundle:Task:getTask}
+   requirements:
+        projectId: \d+
+        userStoryId: \d+
+        taskId: \d+
+        _method: GET
+
+scrumbe_post_task:
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/create
+   defaults: {_controller: ScrumbeProjectBundle:Task:postTask}
+   requirements:
+        projectId: \d+
+        userStoryId: \d+
+
+scrumbe_put_task:
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}/update
+   defaults: {_controller: ScrumbeProjectBundle:Task:putTask}
+   requirements:
+        projectId: \d+
+        userStoryId: \d+
+        taskId: \d+
+
+scrumbe_delete_task:
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}/delete
+   defaults: {_controller: ScrumbeProjectBundle:Task:deleteTask}
+   requirements:
+        projectId: \d+
+        userStoryId: \d+
+        taskId: \d+
+        _method: GET

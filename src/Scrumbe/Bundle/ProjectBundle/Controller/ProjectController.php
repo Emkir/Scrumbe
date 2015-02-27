@@ -1,10 +1,10 @@
 <?php
 namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
+use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class ProjectController extends Controller
 {
@@ -17,9 +17,15 @@ class ProjectController extends Controller
     {
         $projectService     = $this->container->get('project_service');
         $projects           = $projectService->getProjects();
+        $projectForm        = $this->createForm(new ProjectType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_project')
+        ));
 
         return $this->render('ScrumbeProjectBundle:projects:projects.html.twig',
-            array('projects' => $projects)
+            array(
+                'projects' => $projects,
+                'projectForm' => $projectForm->createView()
+            )
         );
     }
 
@@ -43,33 +49,47 @@ class ProjectController extends Controller
         );
     }
 
-    public function postProjectAction(Request $request)
+    public function postProjectAction()
     {
-        $project = new Project();
-        $form = $this->createForm('project', $project);
-
-        $form->handleRequest($request);
-
-        if ($form->isValid())
+        $projectService = $this->container->get('project_service');
+        $project = $projectService->createProject();
+        
+        if ($project instanceof Project)
         {
-            $project = $form->getData();
-            $project->save();
-
             return $this->redirect($this->generateUrl('scrumbe_get_project', array('projectId' => $project->getId())));
         }
 
         return $this->render('ScrumbeProjectBundle:projects:createProject.html.twig', array(
-            'form' => $form->createView(),
-        ));
+            'form' => $project->createView(),
+        ));    
     }
 
-    public function putProjectAction($projectId, Request $request)
+    public function putProjectAction($projectId)
     {
+        $projectService     = $this->container->get('project_service');
+        $validatorService   = $this->container->get('scrumbe.validator_service');
 
+        $validatorService->objectExists($projectId, ProjectQuery::create());
+        $project = $projectService->updateProject($projectId);
+
+        if ($project instanceof Project)
+        {
+            return $this->redirect($this->generateUrl('scrumbe_get_project', array('projectId' => $project->getId())));
+        }
+
+        return $this->render('ScrumbeProjectBundle:projects:createProject.html.twig', array(
+            'form' => $project->createView(),
+        ));    
     }
 
     public function deleteProjectAction($projectId)
     {
+        $projectService     = $this->container->get('project_service');
+        $validatorService   = $this->container->get('scrumbe.validator_service');
 
+        $validatorService->objectExists($projectId, ProjectQuery::create());
+        $projectService->deleteProject($projectId);
+        
+        return $this->redirect($this->generateUrl('scrumbe_get_projects'));
     }
 }
