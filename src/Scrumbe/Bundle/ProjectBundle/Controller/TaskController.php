@@ -13,10 +13,10 @@ class TaskController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response       Twig view with all tasks in JSON
      */
-    public function getTasksAction($projectId, $usId)
+    public function getTasksAction($projectId, $userStoryId)
     {
         $taskService     = $this->container->get('task_service');
-        $task            = $taskService->getTasks($usId);
+        $task            = $taskService->getTasks($userStoryId);
 
         return $this->render('ScrumbeProjectBundle:tasks:tasks.html.twig',
             array('tasks' => $task)
@@ -28,12 +28,12 @@ class TaskController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response       Twig view with all task in JSON
      */
-    public function getTaskAction($projectId, $usId, $taskId)
+    public function getTaskAction($projectId, $userStoryId, $taskId)
     {
         $validatorService   = $this->container->get('scrumbe.validator_service');
         $validatorService->objectExists($taskId, TaskQuery::create());
         $taskService    = $this->container->get('task_service');
-        $task           = $taskService->getTask($usId, $taskId);
+        $task           = $taskService->getTask($userStoryId, $taskId);
 
         return $this->render('ScrumbeProjectBundle:tasks:tasks.html.twig',
             array('tasks' => $task)
@@ -41,14 +41,14 @@ class TaskController extends Controller
     }
 
 
-    public function postTaskAction($projectId, $usId)
+    public function postTaskAction($projectId, $userStoryId)
     {
         $taskService = $this->container->get('task_service');
-        $task = $taskService->createtask($usId);
+        $task = $taskService->createtask($userStoryId);
 
         if ($task instanceof task)
         {
-            return $this->redirect($this->generateUrl('scrumbe_get_task',array('projectId' => $projectId, 'usId' => $usId, 'taskId' => $task->getId())));
+            return $this->redirect($this->generateUrl('scrumbe_get_task',array('projectId' => $projectId, 'usId' => $userStoryId, 'taskId' => $task->getId())));
         }
 
         return $this->render('ScrumbeProjectBundle:tasks:createTask.html.twig', array(
@@ -56,16 +56,16 @@ class TaskController extends Controller
         ));    
     }
 
-	public function putTaskAction($projectId, $usId, $taskId)
+	public function putTaskAction($projectId, $userStoryId, $taskId)
     {
         $validatorService   = $this->container->get('scrumbe.validator_service');
         $validatorService->objectExists($taskId, TaskQuery::create());
         $taskService = $this->container->get('task_service');
-        $task = $taskService->updatetask( $usId, $taskId);
+        $task = $taskService->updatetask( $userStoryId, $taskId);
 
         if ($task instanceof task)
         {
-            return $this->redirect($this->generateUrl('scrumbe_get_task',array('projectId' => $projectId, 'usId' => $usId, 'taskId' => $task->getId())));
+            return $this->redirect($this->generateUrl('scrumbe_get_task',array('projectId' => $projectId, 'usId' => $userStoryId, 'taskId' => $task->getId())));
         }
 
         return $this->render('ScrumbeProjectBundle:tasks:createTask.html.twig', array(
@@ -73,14 +73,14 @@ class TaskController extends Controller
         ));    
     }
 
-    public function deleteTaskAction($projectId, $usId, $taskId)
+    public function deleteTaskAction($projectId, $userStoryId, $taskId)
     {
         $validatorService   = $this->container->get('scrumbe.validator_service');
         $validatorService->objectExists($taskId, TaskQuery::create());
         $taskService = $this->container->get('task_service');
-        $task = $taskService->deletetask($usId, $taskId);
+        $task = $taskService->deletetask($userStoryId, $taskId);
         
-        return $this->redirect($this->generateUrl('scrumbe_get_tasks',array('projectId' => $projectId, 'usId' => $usId)));
+        return $this->redirect($this->generateUrl('scrumbe_get_tasks',array('projectId' => $projectId, 'usId' => $userStoryId)));
     }
 
 

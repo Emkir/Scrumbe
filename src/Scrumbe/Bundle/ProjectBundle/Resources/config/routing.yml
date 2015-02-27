@@ -73,42 +73,42 @@ scrumbe_delete_user_story:
 ###TASKS###
 
 scrumbe_get_tasks:
-   pattern: /projects/{projectId}/us/{usId}/tasks
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks
    defaults: {_controller: ScrumbeProjectBundle:Task:getTasks}
    requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
         _method: GET
 
 scrumbe_get_task:
-   pattern: /projects/{projectId}/us/{usId}/tasks/{taskId}
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}
    defaults: {_controller: ScrumbeProjectBundle:Task:getTask}
    requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
         taskId: \d+
         _method: GET
 
 scrumbe_post_task:
-   pattern: /projects/{projectId}/us/{usId}/tasks/create
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/create
    defaults: {_controller: ScrumbeProjectBundle:Task:postTask}
    requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
 
 scrumbe_put_task:
-   pattern: /projects/{projectId}/us/{usId}/tasks/{taskId}/update
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}/update
    defaults: {_controller: ScrumbeProjectBundle:Task:putTask}
    requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
         taskId: \d+
 
 scrumbe_delete_task:
-   pattern: /projects/{projectId}/us/{usId}/tasks/{taskId}/delete
+   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}/delete
    defaults: {_controller: ScrumbeProjectBundle:Task:deleteTask}
    requirements:
         projectId: \d+
-        usId: \d+
+        userStoryId: \d+
         taskId: \d+
         _method: GET
