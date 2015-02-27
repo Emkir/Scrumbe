@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="15px" height="16px" viewBox="0 0 15 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon_Magnifier</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Global-View-of-Projects" sketch:type="MSArtboardGroup" transform="translate(-413.000000, -27.000000)" fill="#FFFFFF">
+            <g id="Header" sketch:type="MSLayerGroup">
+                <path d="M427.619294,42.3286184 C427.067765,42.9069079 426.174588,42.9069079 425.623059,42.3286184 L423.130824,39.7164474 C422.106824,40.4042763 420.895529,40.8157895 419.588235,40.8157895 C415.949647,40.8157895 413,37.7230263 413,33.9078947 C413,30.0927632 415.949647,27 419.588235,27 C423.226824,27 426.176471,30.0927632 426.176471,33.9078947 C426.176471,35.2786184 425.784,36.5486842 425.128,37.6223684 L427.619294,40.2355263 C428.170824,40.8138158 428.170824,41.7513158 427.619294,42.3286184 L427.619294,42.3286184 Z M419.588235,28.9736842 C416.989647,28.9736842 414.882353,31.1832237 414.882353,33.9078947 C414.882353,36.6325658 416.989647,38.8421053 419.588235,38.8421053 C422.187765,38.8421053 424.294118,36.6325658 424.294118,33.9078947 C424.294118,31.1832237 422.187765,28.9736842 419.588235,28.9736842 L419.588235,28.9736842 Z" id="Icon_Magnifier" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

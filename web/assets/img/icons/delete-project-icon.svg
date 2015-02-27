@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="52px" height="52px" viewBox="0 0 52 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval 73 + Delete_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0851619112 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Global-View-of-Projects" sketch:type="MSArtboardGroup" transform="translate(-898.000000, -270.000000)">
+            <g id="Project-:settings" sketch:type="MSLayerGroup" transform="translate(740.000000, 210.000000)">
+                <g id="Delete" transform="translate(160.000000, 61.000000)" sketch:type="MSShapeGroup">
+                    <g id="Oval-73-+-Delete_icon">
+                        <circle id="Oval-73" fill="#FB3C54" filter="url(#filter-1)" cx="24" cy="24" r="24"></circle>
+                        <path d="M26,17.7777778 L31.1169798,17.7777778 C31.6046584,17.7777778 32,18.1723243 32,18.6666667 C32,19.1575864 31.6044922,19.5555556 31.1169798,19.5555556 L29.9871772,19.5555556 L29.9871772,19.5555556 C29.9956484,19.6308877 30,19.7075469 30,19.7853103 L30,29.9924675 C30,31.1011971 29.0980496,32 27.9914698,32 L20.0085302,32 C18.8992496,32 18,31.1103363 18,29.9924675 L18,19.7853103 C18,19.7076155 18.0044291,19.6309516 18.0130473,19.5555556 L16.8830202,19.5555556 C16.3953416,19.5555556 16,19.161009 16,18.6666667 C16,18.1757469 16.3955078,17.7777778 16.8830202,17.7777778 L22,17.7777778 C22,16.7959382 22.8954305,16 24,16 C25.1045695,16 26,16.7959382 26,17.7777778 Z M20,19.5555556 L28,19.5555556 L28,30.2222222 L20,30.2222222 L20,19.5555556 Z M22,21.8333729 C22,21.5572087 22.2319336,21.3333333 22.5,21.3333333 C22.7761424,21.3333333 23,21.5539525 23,21.8333729 L23,27.9444049 C23,28.2205691 22.7680664,28.4444444 22.5,28.4444444 C22.2238576,28.4444444 22,28.2238252 22,27.9444049 L22,21.8333729 Z M25,21.8333729 C25,21.5572087 25.2319336,21.3333333 25.5,21.3333333 C25.7761424,21.3333333 26,21.5539525 26,21.8333729 L26,27.9444049 C26,28.2205691 25.7680664,28.4444444 25.5,28.4444444 C25.2238576,28.4444444 25,28.2238252 25,27.9444049 L25,21.8333729 Z" id="Delete_icon" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

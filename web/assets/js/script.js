@@ -1,18 +1,12 @@
 // Set height of article to the window height
 var screenHeight = window.innerHeight;
 $(".header-home").css("height",screenHeight);
-$(".wrapper-header").css("height",screenHeight);
-$(".wrapper-header").css("line-height",screenHeight + "px");
-$(".sign-in").css("line-height",screenHeight + "px");
-$(".sign-up").css("line-height",screenHeight + "px");
+$(".wrapper-header").css("height",screenHeight - 150).css("line-height",screenHeight - 150 + "px");
 $(".login").css("line-height",screenHeight + "px");
 $( window ).resize(function() {
     var screenHeight = window.innerHeight;
     $(".header-home").css("height",screenHeight);
-    $(".wrapper-header").css("height",screenHeight);
-    $(".wrapper-header").css("line-height",screenHeight + "px");
-    $(".sign-in").css("line-height",screenHeight + "px");
-    $(".sign-up").css("line-height",screenHeight + "px");
+    $(".wrapper-header").css("height",screenHeight - 150).css("line-height",screenHeight - 150 + "px");
     $(".login").css("line-height",screenHeight + "px");
 });
 
@@ -27,7 +21,7 @@ $(".sign-in-btn").click(function(){
     });
     $("body").css("overflow","hidden");
 });
-$(".close-sign-in").click(function(){
+$(".close-sign-in, .sign-back").click(function(){
     $(".sign-in").fadeOut("fast",function(){
         $(this).hide();
     });
@@ -37,10 +31,10 @@ $(".close-sign-in").click(function(){
     $("body").css("overflow","");
 });
 $(".sign-in-lk").click(function(){
-    console.log("toto");
     $(".sign-up").fadeOut("fast",function(){$(this).hide();});
     $(".sign-in").fadeIn("fast",function(){$(this).show();});
 });
+
 
 //Popup Sign Up
 $(".sign-up-btn").click(function(){
@@ -52,7 +46,7 @@ $(".sign-up-btn").click(function(){
     });
     $("body").css("overflow","hidden");
 });
-$(".close-sign-up").click(function(){
+$(".close-sign-up, .sign-back").click(function(){
     $(".sign-up").fadeOut("fast",function(){
         $(this).hide();
     });
@@ -62,12 +56,23 @@ $(".close-sign-up").click(function(){
     $("body").css("overflow","");
 });
 $(".sign-up-lk").click(function(){
-    console.log("toto");
     $(".sign-in").fadeOut("fast",function(){$(this).hide();});
     $(".sign-up").fadeIn("fast",function(){$(this).show();});
 });
 
+
 //Initialisation SelectOrDie
 $(".language-select").selectOrDie({
     links: true,
+});
+
+
+// Typed.jquery
+$(function(){
+    $(".typed").typed({
+        strings: ["Organize^1500", "Lead^1500", "Handle^1500", "Track^1500"],
+        typeSpeed: 80,
+        backSpeed: 100,
+        loop: true
+    });
 });

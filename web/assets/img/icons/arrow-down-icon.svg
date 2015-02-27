@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="10px" height="7px" viewBox="0 0 10 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.2.2 (9983) - http://www.bohemiancoding.com/sketch -->
+    <title>Arrow_down</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Global-View-of-Projects" sketch:type="MSArtboardGroup" transform="translate(-1370.000000, -31.000000)" fill="#FFFFFF">
+            <g id="Header" sketch:type="MSLayerGroup">
+                <path d="M1374.56859,34.3520468 C1374.67995,34.3494152 1374.79086,34.3020468 1374.87723,34.205731 L1377.48268,31.3020468 C1377.84223,30.9015205 1378.43268,30.8988889 1378.79495,31.2967836 C1379.18359,31.7236257 1379.18541,32.3994152 1378.81223,32.8136257 L1374.89723,37.1646784 C1374.80632,37.2641521 1374.68768,37.3130994 1374.56859,37.315731 C1374.56859,37.3130994 1374.30723,37.2641521 1374.21632,37.1646784 L1370.27768,32.8136257 C1369.90495,32.3994152 1369.90813,31.7236257 1370.28313,31.3115205 C1370.66177,30.8988889 1371.25859,30.9015205 1371.61813,31.3020468 L1374.23586,34.205731 C1374.32177,34.3020468 1374.56859,34.3494152 1374.56859,34.3520468 Z" id="Arrow_down" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

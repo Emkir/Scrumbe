@@ -98,5 +98,5 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('cssroutine', ['sass:css', 'newer:autoprefixer', 'newer:cssmin']);
-    grunt.registerTask('jsroutine', ['newer:uglify','newer:concat']);
+    grunt.registerTask('jsroutine', ['newer:uglify']);
 };
