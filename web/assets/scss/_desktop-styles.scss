@@ -1,39 +1,75 @@
-@import "colors";
-@import "fonts";
+//----------------------------------
+//           GENERAL CSS
+//----------------------------------
 
-
-/*  GENERAL CSS */
 body {
     width: 100%;
     height: 100%;
     background-color: $body;
     -webkit-font-smoothing: antialiased;
 }
-nav {
+.wrapper {
+//    max-width: 960px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+}
+.btn {
+    color: $txt-button;
+    border-radius: 2px;
+    padding: 10px 20px;
+    transition: .2s ease;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    position: relative;
+
+    &.violet {
+        background-color: $blue;
+
+        &:hover {
+            color: $txt-button;
+            background-color: darken($blue,10%);
+        }
+    }
+
+    &.rounded {
+        border-radius: 50px;
+    }
+}
+.nav-landing {
     width: 100%;
-    text-align: right;
     $height-nav: 80px;
     height: $height-nav;
     position: absolute;
     z-index: 10;
+    text-align: center;
 
-    .wrapper-nav {
-        max-width: 960px;
-        position: relative;
-        margin: 0 auto;
+    ul {
+        padding: 0 20px;
 
         li {
             position: relative;
             line-height: $height-nav;
             cursor: default;
+            overflow: hidden;
+            display: inline-block;
+            margin: 0 15px;
 
             a,span {
-                font-family: 'proxima_nova_rgbold';
+                font-family: 'Montserrat', sans-serif;
                 font-size: rem-calc(11px);
+                font-weight: 700;
                 color: $font-nav;
                 text-decoration: none;
                 vertical-align: middle;
                 cursor: pointer;
+                transition: .2s ease;
+                padding: 5px 10px;
+
+                &:hover {
+                    color: $blue;
+                }
 
                 img {
                     vertical-align: middle;
@@ -41,34 +77,20 @@ nav {
                 }
             }
 
-            a:nth-child(n+2),span {
-                margin-left: 35px;
-                padding: 10px 0;
+            &.logo {
+                float: left;
             }
 
-            a:nth-child(n+2):hover, span:hover {
-                color: $hover-nav;
-            }
-
-            .pull-left {
-                position: absolute;
-                left: 0;
-            }
-
-            .button-green {
-                background-color: $green-button;
-                border-radius: 2px;
-                padding: 10px 20px !important;
-                color: $color-button !important;
-            }
-
-            .button-green:hover {
-                background-color: $green-button-hover;
+            &.sign-in-btn {
+                float: right;
             }
         }
     }
+
+    &.sticki-nav {
+        background-color: $back-nav;
+    }
 }
-.black-nav {background-color: $back-nav;}
 footer {
     width: 100%;
     background-color: $background-footer;
@@ -87,7 +109,7 @@ footer {
             cursor: default;
 
             a {
-                font-family: 'proxima_nova_rgbold';
+                font-family: 'proxima_nova_rgbold', sans-serif;
                 font-size: rem-calc(11px);
                 color: $a-footer;
                 text-decoration: none;
@@ -107,7 +129,7 @@ footer {
 
             .copyright {
                 font-size: rem-calc(12px);
-                font-family: "proxima_nova_rgbold";
+                font-family: "proxima_nova_rgbold", sans-serif;
                 color: $copy-footer;
                 text-align: left;
                 position: absolute;
@@ -115,7 +137,7 @@ footer {
             }
 
             span:nth-child(6) {
-                font-family: 'proxima_nova_rgbold';
+                font-family: 'proxima_nova_rgbold', sans-serif;
                 font-size: rem-calc(11px);
                 color: $a-footer;
                 text-decoration: none;
@@ -134,33 +156,35 @@ footer {
         }
     }
 }
-.sign-back {
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.75);
-    position: fixed;
-    top: 0;
-    z-index: 19;
-    display: none;
+.modal-sign {
     line-height: 699px;
-}
-.sign-in {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 20;
-    text-align: center;
-    display: none;
+    height: 100%;
 
-    .container-sign-in {
+    .sign-back {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.75);
+        position: fixed;
+        top: 0;
+        z-index: 19;
+        display: none;
+        line-height: 699px;
+    }
+    .sign-in {
+        position: fixed;
+        top: 50%;
+        margin-top: -195px;
+        left: 50%;
+        margin-left: -210px;
+        z-index: 20;
+        text-align: center;
+        display: none;
         background-color: #fff;
         width: 420px;
         border-radius: 4px;
         overflow: hidden;
-        vertical-align: middle;
-        display: inline-block;
         line-height: normal;
-        font-family: "Open Sans";
+        font-family: "Open Sans", sans-serif;
 
         .header-sign-in {
             background-color: #161e25;
@@ -208,27 +232,27 @@ footer {
                     width: 100%;
                     padding: 15px;
                     margin-bottom: 20px;
-                    background-color: #6ECF7B;
+                    background-color: $blue;
                     border: none;
                     border-radius: 2px;
-                    font-family: "Open Sans";
+                    font-family: "Open Sans", sans-serif;
                     font-weight: 700;
                     color: #fff;
                     cursor: pointer;
-                    -webkit-transition: 0.1s ease;-moz-transition: 0.1s ease;-ms-transition: 0.1s ease;-o-transition: 0.1s ease;transition: 0.1s ease;
+                    transition: 0.1s ease;
 
                 }
 
                 input[type="submit"]:hover {
-                    background-color: #4e9b56;
-                    -webkit-transition: 0.1s ease;-moz-transition: 0.1s ease;-ms-transition: 0.1s ease;-o-transition: 0.1s ease;transition: 0.1s ease;
+                    background-color: $blue;
+                    transition: 0.1s ease;
                 }
             }
 
             a {
                 text-decoration: none;
                 color: #a8b5c4;
-                font-family: "Open Sans";
+                font-family: "Open Sans", sans-serif;
                 font-weight: 400;
                 font-size: rem-calc(11px);
             }
@@ -243,36 +267,33 @@ footer {
             span {
                 text-decoration: none;
                 color: #a8b5c4;
-                font-family: "Open Sans";
+                font-family: "Open Sans", sans-serif;
                 font-weight: 400;
                 font-size: rem-calc(11px);
             }
 
             .sign-up-lk {
-                color: #5cad66;
+                color: $blue;
                 text-decoration: none;
                 cursor: pointer;
             }
         }
     }
-}
-.sign-up {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 20;
-    text-align: center;
-    display: none;
-
-    .container-sign-up {
+    .sign-up {
+        position: fixed;
+        top: 50%;
+        margin-top: -225px;
+        left: 50%;
+        margin-left: -210px;
+        z-index: 20;
+        text-align: center;
+        display: none;
         background-color: #fff;
         width: 420px;
         border-radius: 4px;
         overflow: hidden;
-        vertical-align: middle;
-        display: inline-block;
         line-height: normal;
-        font-family: "Open Sans";
+        font-family: "Open Sans", sans-serif;
 
         .header-sign-up {
             background-color: #161e25;
@@ -291,7 +312,7 @@ footer {
                 right: 30px;
                 text-decoration: none;
                 color: #cdcdcd;
-                font-family: "Open Sans";
+                font-family: "Open Sans", sans-serif;
                 font-size: rem-calc(20px);
                 font-weight: 800;
                 cursor: pointer;
@@ -320,27 +341,27 @@ footer {
                     width: 100%;
                     padding: 15px;
                     margin-bottom: 20px;
-                    background-color: #6ECF7B;
+                    background-color: $blue;
                     border: none;
                     border-radius: 2px;
-                    font-family: "Open Sans";
+                    font-family: "Open Sans",sans-serif;
                     font-weight: 700;
                     color: #fff;
                     cursor: pointer;
-                    -webkit-transition: 0.1s ease;-moz-transition: 0.1s ease;-ms-transition: 0.1s ease;-o-transition: 0.1s ease;transition: 0.1s ease;
+                    transition: 0.1s ease;
 
                 }
 
                 input[type="submit"]:hover {
-                    background-color: #4e9b56;
-                    -webkit-transition: 0.1s ease;-moz-transition: 0.1s ease;-ms-transition: 0.1s ease;-o-transition: 0.1s ease;transition: 0.1s ease;
+                    background-color: $blue;
+                    transition: 0.1s ease;
                 }
             }
 
             span {
                 text-decoration: none;
                 color: #a8b5c4;
-                font-family: "Open Sans";
+                font-family: "Open Sans", sans-serif;
                 font-weight: 400;
                 font-size: rem-calc(11px);
 
@@ -348,7 +369,7 @@ footer {
 
             .sign-in-lk {
                 text-decoration: none;
-                color: #5cad66;
+                color: $blue;
                 cursor: pointer;
             }
 
@@ -362,7 +383,7 @@ footer {
             span {
                 text-decoration: none;
                 color: #a8b5c4;
-                font-family: "Open Sans";
+                font-family: "Open Sans", sans-serif;
                 font-weight: 400;
                 font-size: rem-calc(11px);
 
@@ -375,27 +396,31 @@ footer {
 }
 
 
-/*  HOME PAGE   */
+//----------------------------------
+//            HOME PAGE
+//----------------------------------
 .header-home {
     width: 100%;
     position: relative;
     z-index: 5;
-    background-image: url("../img/header1.jpg");
+    background: url("../img/back-home.jpg");
     background-size: cover;
 
     .wrapper-header {
-        max-width: 960px;
-        position: relative;
-        margin: 0 auto;
-        text-align: center;
-        font-family: "Open Sans";
+        max-width: 100%;
+        font-family: "Open Sans", sans-serif;
         color: $color-header;
         line-height: 699px;
         height: 699px;
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+        padding-top: 80px;
 
         .contain-title {
             vertical-align: middle;
             display: inline-block;
+            line-height: normal;
 
             h1 {
                 font-size: rem-calc(42px);
@@ -408,16 +433,19 @@ footer {
             }
 
             p {
-                font-weight: 300;
                 font-size: rem-calc(16px);
+                font-weight: 400;
                 line-height: 24px;
-                margin: 20px auto 0 auto;
+                margin: 20px auto;
                 width: 70%;
                 position: relative;
                 color: $color-header-p;
             }
-        }
 
+            .sign-up-btn {
+                display: inline-block;
+            }
+        }
     }
 }
 .article-home {
@@ -427,9 +455,9 @@ footer {
         width: 100%;
         height: 350px;
         background-color: $background-section;
-        font-family: "Open Sans";
+        font-family: "Open Sans",sans-serif;
 
-        .wrapper-section {
+        .wrapper {
             max-width: 960px;
             position: relative;
             margin: 0 auto;
@@ -479,7 +507,7 @@ footer {
         background: url("../img/section-footer.jpg") center center;
         background-size: cover;
 
-        .wrapper-final {
+        .wrapper {
             max-width: 960px;
             position: relative;
             text-align: center;
@@ -511,27 +539,39 @@ footer {
                     line-height: 20px;
                 }
 
-                .button-green {
-                    background-color: $green-button;
-                    border-radius: 2px;
-                    padding: 15px 40px !important;
-                    color: $color-button !important;
-                    font-size: rem-calc(11px);
-                    font-family: 'proxima_nova_rgbold';
-                    text-decoration: none;
-                }
-
-                .button-green:hover {
-                    background-color: $green-button-hover;
-                    cursor: pointer;
-                }
+//                .button-green {
+//                    background-color: $green-button;
+//                    border-radius: 2px;
+//                    padding: 15px 40px !important;
+//                    color: $color-button !important;
+//                    font-size: rem-calc(11px);
+//                    font-family: 'proxima_nova_rgbold';
+//                    text-decoration: none;
+//                }
+//
+//                .button-green:hover {
+//                    background-color: $green-button-hover;
+//                    cursor: pointer;
+//                }
             }
         }
     }
 }
+// Typed
+.typed-cursor{
+    opacity: 1;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
 
 
-/*  ABOUT US    */
+//----------------------------------
+//            ABOUT US
+//----------------------------------
 .header-about {
     width: 100%;
     height: 500px;
@@ -641,13 +681,13 @@ footer {
         width: 100%;
         height: 450px;
 
-        .wrapper-section {
+        .wrapper {
             max-width: 960px;
             position: relative;
             margin: 0 auto;
             line-height: 450px;
             color: #6c7180;
-            font-family: "Open Sans";
+            font-family: "Open Sans",sans-serif;
             font-weight: 300;
             text-align: right;
 
@@ -772,7 +812,9 @@ footer {
 }
 
 
-/*  SCRUM PAGE   */
+//----------------------------------
+//            SCRUM PAGE
+//----------------------------------
 .header-scrum {
     width: 100%;
     height: 450px;
@@ -780,7 +822,7 @@ footer {
     z-index: 5;
     background-color: #fff;
 
-    .wrapper-header-fix {
+    .wrapper {
         max-width: 960px;
         position: relative;
         margin: 0 auto;
@@ -822,9 +864,9 @@ footer {
 .article-scrum {
     position: relative;
     width: 100%;
-    font-family: "Open Sans";
+    font-family: "Open Sans",sans-serif;
 
-    .wrapper-scrum {
+    .wrapper {
         max-width: 960px;
         position: relative;
         margin: 0 auto;
@@ -915,6 +957,250 @@ footer {
             position: relative;
             color: #636875;
             text-align: justify;
+        }
+    }
+}
+
+
+// Projects
+
+.project {
+    background-color: #F6F7F9;
+}
+.nav-projects {
+    height: 60px;
+    width: 100%;
+    background-color: $nav;
+
+    .left-nav {
+        margin-left: 40px;
+        float: left;
+
+        li {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 60px;
+            margin-right: 20px;
+
+            a {
+                text-decoration: none;
+                font-family: "Montserrat", sans-serif;
+                font-size: rem-calc(10px);
+                color: #fff;
+                text-transform: uppercase;
+                font-weight: 400;
+                padding: 5px;
+
+                &:hover {
+                    color: $nav-selected;
+                }
+
+                img {
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+
+            &.logo {
+                height: inherit;
+
+                img {
+                    height: 30px;
+                }
+            }
+        }
+    }
+
+    .right-nav {
+        margin-right: 40px;
+        float: right;
+        height: inherit;
+
+        li {
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 60px;
+            margin-right: 20px;
+            height: inherit;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            & > img {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .avatar-ctn {
+                border-radius: 50%;
+                height: 60%;
+                overflow: hidden;
+                display: inline-block;
+                vertical-align: middle;
+                margin-top: -5px;
+
+                img {
+                    height: 100%;
+                }
+            }
+
+            .notif-ctn {
+                position: relative;
+                margin-top: 5px;
+
+                .notif-count {
+                    position: absolute;
+                    top: 9px;
+                    right: -6px;
+                    font-family: "Open Sans", sans-serif;
+                    font-weight: 700;
+                    color: #fff;
+                    background-color: #EF5361;
+                    border-radius: 50%;
+                    width: 12px;
+                    height: 12px;
+                    text-align: center;
+                    font-size: rem-calc(8px);
+                    border: 2px solid $nav;
+                    line-height: normal;
+                }
+            }
+        }
+    }
+}
+.sub-nav-projects {
+    background-color: #fff;
+    height: 70px;
+    border-bottom: 1px solid #E6EAEE;
+    clear: both;
+    line-height: 70px;
+    position: relative;
+    width: 100%;
+
+    & > .title {
+        font-family: "Open Sans", sans-serif;
+        font-weight: 300;
+        font-size: rem-calc(20px);
+        color: #7F8CA6;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 40px;
+    }
+
+    .sort-by {
+        float: right;
+        margin-right: 100px;
+
+        .title {
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            font-size: rem-calc(13px);
+            color: #7F8CA6;
+            margin-right: 10px;
+        }
+    }
+
+    .add-project {
+        position: absolute;
+        right: 40px;
+        bottom: -47px;
+        height: inherit;
+        display: block;
+
+        img {
+            height: 50%
+        }
+    }
+}
+.projects-list {
+    padding: 60px;
+    box-sizing: border-box;
+
+    li {
+        .head-ctn {
+            width: 300px;
+            height: 170px;
+            overflow: hidden;
+            position: absolute;
+
+            .option-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+            }
+
+            .upload-cover {
+                position: absolute;
+                font-weight: 300;
+                font-family: "Open Sans", sans-serif;
+                color: #fff;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                border: 1px dashed #fff;
+                left: 50%;
+                margin-left: -67px;
+                top: 50%;
+                margin-top: -19px;
+            }
+
+            .cover {
+                width: 100%;
+            }
+        }
+        .info-ctn {
+            width: 300px;
+            height: 367px;
+            border: 1px solid #E6EAEE;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+            text-align: center;
+
+            h2 {
+                font-family: "Open Sans", sans-serif;
+                font-size: rem-calc(20px);
+                font-weight: 700;
+                margin-top: 200px;
+                margin-bottom: 10px;
+            }
+
+            .update {
+                font-family: "Open Sans", sans-serif;
+                font-size: rem-calc(13px);
+                font-weight: 300;
+                color: #7F8CA6;
+                margin-bottom: 25px;
+
+                .date {
+                    font-weight: 400;
+                }
+            }
+
+            .divider {
+                width: 80px;
+                height: 1px;
+                background-color: #E6EAEE;
+                display: block;
+                margin: 0 auto 25px auto;
+            }
+
+            .add-member-btn {
+                vertical-align: middle;
+                display: block;
+                color: #7F8CA6;
+                font-family: "Open Sans", sans-serif;
+                font-size: rem-calc(13px);
+                font-weight: 300;
+                text-decoration: none;
+
+                img {
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+            }
         }
     }
 }

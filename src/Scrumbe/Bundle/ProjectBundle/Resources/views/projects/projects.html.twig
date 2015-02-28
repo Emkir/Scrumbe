@@ -1,2 +1,86 @@
-{{ dump(projects) }}
+{% extends "ScrumbeProjectBundle:Layout:layout-app.html.twig" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block nav %}
+    <nav class="nav-projects">
+        <ul class="left-nav">
+            <li class="logo">
+                <a href="">
+                    <img src="/assets/img/logo.svg" alt="search icon">
+                </a>
+            </li>
+            <li><a href="">Projects</a></li>
+            <li><a href="">Learn</a></li>
+            <li><a href="">Team</a></li>
+            <li>
+                <a href="">
+                    <img src="/assets/img/icons/search-icon.svg" alt="search icon">
+                </a>
+                {#<input type="text" placeholder="Search...">#}
+            </li>
+        </ul>
+        <ul class="right-nav">
+            <li>
+                <img src="/assets/img/icons/help-icon.svg" alt="help icon"/>
+            </li>
+            <li>
+                <div class="notif-ctn">
+                    <img src="/assets/img/icons/notification-icon.svg" alt="notification icon"/>
+                    <span class="notif-count">2</span>
+                </div>
+            </li>
+            <li>
+                <div class="avatar-ctn">
+                    <img src="/assets/img/Claude-Guglieri" alt="avatar">
+                </div>
+            </li>
+            <li>
+                <img src="/assets/img/icons/arrow-down-icon.svg" alt="arrown-down icon">
+            </li>
+        </ul>
+    </nav>
+    <div class="sub-nav-projects">
+        <span class="title">My projects</span>
+        <div class="sort-by">
+            <span class="title">Sort by</span>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+        <a href="" class="add-project">
+            <img src="/assets/img/icons/add-project-icon.svg" alt="add project icon">
+        </a>
+    </div>
+{% endblock %}
+
+{%  block body %}
+    <ul class="projects-list">
+        <li>
+            <div class="head-ctn">
+                <a href="" class="option-btn">
+                    <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
+                </a>
+                <a href="" class="upload-cover">Upload cover</a>
+                <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
+            </div>
+            <div class="info-ctn">
+                <h2>Name of your project</h2>
+                <div class="update">
+                    Last update <span class="date">January 1st, 2015</span>
+                </div>
+                <div class="divider"></div>
+                <a href="" class="add-member-btn">
+                    <img src="/assets/img/icons/add-member-icon.svg" alt="add member icon"> Add member
+                </a>
+            </div>
+        </li>
+    </ul>
+    <pre>
+        {{ dump(projects) }}
+    </pre>
+{% endblock %}
+
 {{ form(projectForm) }}

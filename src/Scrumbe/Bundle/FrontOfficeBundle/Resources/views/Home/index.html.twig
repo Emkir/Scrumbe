@@ -13,13 +13,14 @@
         <!-- JS -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="/assets/js/libs/selectordie.min.js"></script>
+        <script src="/assets/js/libs/typed.min.js"></script>
 
         <!-- The HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
-                <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-                <script src="assets/js/libs/respond.js"></script>
-                <script src="assets/js/libs/selectivizr.js"></script>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <script src="assets/js/libs/respond.js"></script>
+            <script src="assets/js/libs/selectivizr.js"></script>
 
-                <!-- start: Favicon and Touch Icons -->
+        <!-- start: Favicon and Touch Icons -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/img/ico/fav-icon144.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/img/ico/fav-icon114.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/img/ico/fav-icon72.png">
@@ -27,41 +28,49 @@
         <link rel="shortcut icon" href="/assets/img/ico/fav-icon16.png">
 
         <!-- Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
     </head>
     <body>
         {% block nav %}
-            <nav>
-                <div class="wrapper-nav">
-                    <ul>
-                        <li>
-                            <a href="{{ path('index') }}" class="pull-left">
-                                <img src="/assets/img/logo.svg">
-                            </a>
-                            <a href="#">{{ 'nav.items.1'|trans }}</a>
-                            <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
-                            <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
-                            <a href="#">{{ 'nav.items.4'|trans }}</a>
-                            <span class="sign-in-btn">{{ 'nav.items.5'|trans }}</span>
-                            <span class="button-green sign-up-btn">{{ 'nav.items.6'|trans }}</span>
-                        </li>
-                    </ul>
-                </div>
+            <nav class="nav-landing">
+                <ul class="wrapper">
+                    <li class="logo">
+                        <a href="{{ path('index') }}">
+                            <img src="/assets/img/logo.svg">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">{{ 'nav.items.1'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="#">{{ 'nav.items.4'|trans }}</a>
+                    </li>
+                    <li class="sign-in-btn">
+                        <span class="btn violet rounded">{{ 'nav.items.5'|trans }}</span>
+                    </li>
+                </ul>
             </nav>
         {% endblock %}
         {% block body %}
             <header class="header-home">
                 <div class="wrapper-header">
                     <div class="contain-title">
-                        <h1><span class="openBold"> {{ "home.header.title.word1"|trans }}</span> {{ "home.header.title.word2"|trans }} <span class="openBold"> {{ "home.header.title.word3"|trans }} </span> {{ "home.header.title.lastword"|trans }}</h1>
+                        <h1>With Scrumbe, you can <span class="openBold typed"></span></h1>
                         <p>{{ "home.header.parag"|trans }}</p>
+                        <span class="sign-up-btn btn violet rounded">{{ 'nav.items.6'|trans }}</span>
                     </div>
                 </div>
             </header>
             <article class="article-home">
                 <section>
-                    <div class="wrapper-section">
+                    <div class="wrapper">
                         <div class="contain-article">
                             <h2><span class="openBold">{{ 'home.item1.title.word1'|trans }}</span> {{ 'home.item1.title.lastword'|trans }}</h2>
                             <p>{{ 'home.item1.parag'|trans }}</p>
@@ -69,7 +78,7 @@
                     </div>
                 </section>
                 <section class="odd-section">
-                    <div class="wrapper-section">
+                    <div class="wrapper">
                         <div class="contain-article">
                             <h2>{{ 'home.item2.title.word1'|trans }} <span class="openBold">{{ 'home.item2.title.word2'|trans }}</span> {{ 'home.item2.title.lastword'|trans }}</h2>
                             <p>{{ 'home.item2.parag'|trans }}</p>
@@ -77,7 +86,7 @@
                     </div>
                 </section>
                 <section>
-                    <div class="wrapper-section">
+                    <div class="wrapper">
                         <div class="contain-article">
                             <h2><span class="openBold">{{ 'home.item3.title.word1'|trans }}</span> {{ 'home.item3.title.word2'|trans }} <span class="openBold">{{ 'home.item3.title.word3'|trans }}</span> {{ 'home.item3.title.lastword'|trans }}</h2>
                             <p>{{ 'home.item3.parag'|trans }}</p>
@@ -85,7 +94,7 @@
                     </div>
                 </section>
                 <section class="odd-section">
-                    <div class="wrapper-section">
+                    <div class="wrapper">
                         <div class="contain-article">
                             <h2><span class="openBold">{{ 'home.item4.title.word1'|trans }} </span>{{ 'home.item4.title.lastword'|trans }}</h2>
                             <p>{{ 'home.item4.parag'|trans }}</p>
@@ -93,7 +102,7 @@
                     </div>
                 </section>
                 <section class="final-section">
-                    <div class="wrapper-final">
+                    <div class="wrapper">
                         <div class="contain-final">
                             <h2>{{ 'home.final-item.title.word1'|trans }} <span class="openBold">{{ 'home.final-item.title.word2'|trans }}</span> {{ 'home.final-item.title.lastword'|trans }}</h2>
                             <p>{{ 'home.final-item.parag'|trans }}</p>
@@ -123,9 +132,9 @@
                 </div>
             </footer>
         {% endblock %}
-        <div class="sign-back"></div>
-        <div class="sign-in">
-            <div class="container-sign-in">
+        <div class="modal-sign">
+            <div class="sign-back"></div>
+            <div class="sign-in">
                 <div class="header-sign-in">
                     <span>{{ 'signin.title'|trans }}</span>
                     <span class="close-sign-in"><img src="/assets/img/Close_icon.png"></span>
@@ -139,12 +148,11 @@
                     <a href="#">{{ 'signin.forgetpwd'|trans }}</a>
                 </div>
                 <div class="footer-sign-in">
-                    <span>{{ 'signin.footer.word1'|trans }}</span> <span class="sign-up-lk">{{ 'signin.footer.lastword'|trans }}</span>
+                    <span>{{ 'signin.footer.word1'|trans }}</span>
+                    <span class="sign-up-lk">{{ 'signin.footer.lastword'|trans }}</span>
                 </div>
             </div>
-        </div>
-        <div class="sign-up">
-            <div class="container-sign-up">
+            <div class="sign-up">
                 <div class="header-sign-up">
                     <span>{{ 'signup.title'|trans }}</span>
                     <span class="close-sign-up"><img src="/assets/img/Close_icon.png"></span>
@@ -156,13 +164,16 @@
                         <input type="password" placeholder="{{ 'signup.pwdPH'|trans }}" required="required">
                         <input type="submit" value="{{ 'signup.button'|trans }}">
                     </form>
-                    <span>{{ 'signup.signin.word1'|trans }} </span><span class="sign-in-lk">{{ 'signup.signin.lastword'|trans }}</span>
+                    <span>{{ 'signup.signin.word1'|trans }} </span>
+                    <span class="sign-in-lk">{{ 'signup.signin.lastword'|trans }}</span>
                 </div>
                 <div class="footer-sign-up">
                     <span>{{ 'signup.footer.word1'|trans }} <a href="#">{{ 'signup.footer.word2'|trans }}</a>{{ 'signup.footer.word3'|trans }} <a href="#">{{ 'signup.footer.lastword'|trans }}</a></span>
                 </div>
             </div>
         </div>
+
+        <!--   SCRIPTS   -->
         <script src="/assets/js/script.js"></script>
     </body>
 </html>
