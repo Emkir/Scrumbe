@@ -8,10 +8,36 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ValidatorService {
 
-    public function objectExists($objectId, $queryClass)
+    /**
+     * Check if object exists by its id
+     *
+     * @param Integer       $objectId       Object's id toi check if exists
+     * @param ObjectQuery   $queryClass     The query class of the object to check
+     * @param String        $objectType     The object's type
+     */
+    public function objectExistsById($objectId, $queryClass, $objectType)
     {
         $object = $queryClass->findPk($objectId);
-        if ($object === null)
-            throw new NotFoundHttpException('La ressource recherchée n\'existe pas', null, Response::HTTP_NOT_FOUND);
+        if (is_null($object))
+        {
+            throw new NotFoundHttpException('object.not_found.' . $objectType, null, Response::HTTP_NOT_FOUND);
+
+        }
+    }
+
+    public function objectExistsMultipleColumns($columns, $queryClass, $objectType)
+    {
+        $object = $queryClass;
+
+        foreach ($columns as $column => $value)
+        {
+            $object = $object->filterBy($column, $value);
+        }
+
+        $object = $object->findOne();
+        if (is_null($object))
+        {
+            throw new NotFoundHttpException('object.not_found.' . $objectType, null, Response::HTTP_NOT_FOUND);
+        }
     }
 } 
