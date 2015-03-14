@@ -56,31 +56,52 @@
     </div>
 {% endblock %}
 
-{%  block body %}
-    <ul class="projects-list">
-        <li>
-            <div class="head-ctn">
-                <a href="" class="option-btn">
-                    <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
-                </a>
-                <a href="" class="upload-cover">Upload cover</a>
-                <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
-            </div>
-            <div class="info-ctn">
-                <h2>Name of your project</h2>
-                <div class="update">
-                    Last update <span class="date">January 1st, 2015</span>
+    {%  block body %}
+        <ul class="projects-list">
+            <li>
+                <div class="head-ctn">
+                    <a href="" class="option-btn">
+                        <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
+                    </a>
+                    <a href="" class="upload-cover">Upload cover</a>
+                    <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
                 </div>
-                <div class="divider"></div>
-                <a href="" class="add-member-btn">
-                    <img src="/assets/img/icons/add-member-icon.svg" alt="add member icon"> Add member
-                </a>
-            </div>
-        </li>
-    </ul>
-    <pre>
-        {{ dump(projects) }}
-    </pre>
-{% endblock %}
+                <div class="info-ctn">
+                    <h2>Name of your project</h2>
+                    <div class="update">
+                        Last update <span class="date">January 1st, 2015</span>
+                    </div>
+                    <div class="divider"></div>
+                    <a href="" class="add-member-btn">
+                        <img src="/assets/img/icons/add-member-icon.svg" alt="add member icon"> Add member
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <hr/>
+        {% for item in projects %}
+         <ul class="projects-list">
+            <li>
+                <div class="head-ctn">
+                    <a href="" class="option-btn">
+                        <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
+                    </a>
+                    <a href="" class="upload-cover">Upload cover</a>
+                    <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
+                </div>
+                <div class="info-ctn">
+                    <h2>{{item.name}}</h2>
+                    <div class="update">
+                        Last update <span class="date">{{item.updated_at.date|date('F d,Y')}}</span>
+                    </div>
+                    <div class="divider"></div>
+                    <a href="" class="add-member-btn">
+                        <img src="/assets/img/icons/add-member-icon.svg" alt="add member icon"> Add member
+                    </a>
+                </div>
+            </li>
+        </ul>
+        {% endfor %}
 
-{{ form(projectForm) }}
+    {% endblock %}
+
