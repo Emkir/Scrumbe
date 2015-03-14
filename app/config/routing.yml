@@ -1,3 +1,7 @@
+scrumbe_user:
+    resource: "@ScrumbeUserBundle/Resources/config/routing.yml"
+    prefix:   /
+
 scrumbe_project:
     resource: "@ScrumbeProjectBundle/Resources/config/routing.yml"
     prefix:   /

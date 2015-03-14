@@ -1,14 +1,14 @@
 <?php
 
-namespace Scrumbe\Bundle\FrontOfficeBundle\Controller;
+namespace Scrumbe\Bundle\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
-    public function indexAction(Request $request)
+    public function loginAction(Request $request)
     {
         if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
             return $this->redirect($this->generateUrl('scrumbe_get_projects'));
@@ -22,19 +22,10 @@ class HomeController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-        return $this->render('ScrumbeFrontOfficeBundle:Home:index.html.twig', array(
+
+        return $this->render('ScrumbeUserBundle:Security:login.html.twig', array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error
         ));
-    }
-
-    public function aboutAction()
-    {
-        return $this->render('ScrumbeFrontOfficeBundle:Home:about-us.html.twig');
-    }
-
-    public function scrumAction()
-    {
-        return $this->render('ScrumbeFrontOfficeBundle:Home:scrum.html.twig');
     }
 }

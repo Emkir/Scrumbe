@@ -66,5 +66,24 @@ CREATE TABLE `task`
         REFERENCES `user_story` (`id`)
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
+-- ---------------------------------------------------------------------
+-- user
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(255),
+    `password` VARCHAR(255),
+    `salt` VARCHAR(255),
+    `roles` TEXT,
+    `created_at` DATETIME,
+    `updated_at` DATETIME,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `user_U_1` (`username`)
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
