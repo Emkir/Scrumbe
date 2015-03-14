@@ -158,10 +158,14 @@ class ProjectController extends Controller
             'action' => $this->generateUrl($route, $routeOptions),
             'method' => $method
         ));
-        var_dump($projectForm->getChildren());die();
-        $test = $projectForm->createView();
 
+        $template = $this->render('ScrumbeProjectBundle:projects:projectForm.html.twig', array(
+            'projectCreateForm' => $projectForm->createView()
+        ))->getContent();
 
-        return new JsonResponse(array('form' => $projectForm->createView()));
+        $json = json_encode($template);
+        $response = new Response($json, 200);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }
