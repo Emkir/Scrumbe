@@ -19,7 +19,7 @@ class ProjectController extends Controller
     public function getProjectsAction()
     {
         $projectService     = $this->container->get('project_service');
-        $projects           = $projectService->getProjects();
+        $projects           = $projectService->getProjects($this->getUser());
         $projectForm        = $this->createForm(new ProjectType(), null, array(
             'action' => $this->generateUrl('scrumbe_post_project')
         ));
@@ -47,11 +47,13 @@ class ProjectController extends Controller
         $validatorService->objectExistsMultipleColumns(
             array(
                 'Id' => $projectId,
-                'Name' => $projectName
+                'UrlName' => $projectName
             ),
             ProjectQuery::create(),
             'project'
         );
+
+        $validatorService->userAccessOnObject($projectId, $this->getUser(), new ProjectQuery(), 'project');
 
         $project = $projectService->getProject($projectId);
 

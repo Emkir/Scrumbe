@@ -8,6 +8,7 @@
         </vendor>
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
         <column name="name" type="varchar" size="255"/>
+        <column name="url_name" type="varchar" size="255"/>
         <column name="description" type="longvarchar"/>
         <column name="start_date" type="date"/>
         <column name="end_date" type="date"/>
@@ -71,4 +72,26 @@
         <behavior name="timestampable" />
     </table>
 
+    <table name="link_project_user">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+
+        <column name="project_id" type="integer"/>
+        <foreign-key foreignTable="project">
+            <reference local="project_id" foreign="id" />
+        </foreign-key>
+
+        <column name="user_id" type="integer"/>
+        <foreign-key foreignTable="user">
+            <reference local="user_id" foreign="id" />
+        </foreign-key>
+
+        <column name="admin" type="boolean" />
+
+        <behavior name="timestampable" />
+    </table>
 </database>

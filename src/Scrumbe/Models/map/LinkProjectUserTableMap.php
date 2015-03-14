@@ -7,7 +7,7 @@ use \TableMap;
 
 
 /**
- * This class defines the structure of the 'project' table.
+ * This class defines the structure of the 'link_project_user' table.
  *
  *
  *
@@ -18,13 +18,13 @@ use \TableMap;
  *
  * @package    propel.generator..map
  */
-class ProjectTableMap extends TableMap
+class LinkProjectUserTableMap extends TableMap
 {
 
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.map.ProjectTableMap';
+    const CLASS_NAME = '.map.LinkProjectUserTableMap';
 
     /**
      * Initialize the table attributes, columns and validators
@@ -36,18 +36,16 @@ class ProjectTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('project');
-        $this->setPhpName('Project');
-        $this->setClassname('Scrumbe\\Models\\Project');
+        $this->setName('link_project_user');
+        $this->setPhpName('LinkProjectUser');
+        $this->setClassname('Scrumbe\\Models\\LinkProjectUser');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
-        $this->addColumn('url_name', 'UrlName', 'VARCHAR', false, 255, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('start_date', 'StartDate', 'DATE', false, null, null);
-        $this->addColumn('end_date', 'EndDate', 'DATE', false, null, null);
+        $this->addForeignKey('project_id', 'ProjectId', 'INTEGER', 'project', 'id', false, null, null);
+        $this->addForeignKey('user_id', 'UserId', 'INTEGER', 'user', 'id', false, null, null);
+        $this->addColumn('admin', 'Admin', 'BOOLEAN', false, 1, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators
@@ -58,8 +56,8 @@ class ProjectTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::ONE_TO_MANY, array('id' => 'project_id', ), null, null, 'UserStories');
-        $this->addRelation('LinkProjectUser', 'Scrumbe\\Models\\LinkProjectUser', RelationMap::ONE_TO_MANY, array('id' => 'project_id', ), null, null, 'LinkProjectUsers');
+        $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), null, null);
+        $this->addRelation('User', 'Scrumbe\\Models\\User', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), null, null);
     } // buildRelations()
 
     /**
@@ -79,4 +77,4 @@ class ProjectTableMap extends TableMap
         );
     } // getBehaviors()
 
-} // ProjectTableMap
+} // LinkProjectUserTableMap

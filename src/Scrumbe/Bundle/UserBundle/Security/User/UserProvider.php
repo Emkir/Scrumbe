@@ -22,6 +22,7 @@ class UserProvider implements UserProviderInterface
 
         if (!empty($user))
         {
+            $id = $user['id'];
             $password = $user['password'];
             if(!empty($user['salt']))
             {
@@ -33,7 +34,7 @@ class UserProvider implements UserProviderInterface
             }
             $roles = array();
 
-            return new User($username, $password, $salt, $roles);
+            return new User($id, $username, $password, $salt, $roles);
         }
 
         throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));

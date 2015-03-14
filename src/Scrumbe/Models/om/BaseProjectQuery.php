@@ -12,6 +12,7 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\LinkProjectUser;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectPeer;
 use Scrumbe\Models\ProjectQuery;
@@ -20,6 +21,7 @@ use Scrumbe\Models\UserStory;
 /**
  * @method ProjectQuery orderById($order = Criteria::ASC) Order by the id column
  * @method ProjectQuery orderByName($order = Criteria::ASC) Order by the name column
+ * @method ProjectQuery orderByUrlName($order = Criteria::ASC) Order by the url_name column
  * @method ProjectQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method ProjectQuery orderByStartDate($order = Criteria::ASC) Order by the start_date column
  * @method ProjectQuery orderByEndDate($order = Criteria::ASC) Order by the end_date column
@@ -28,6 +30,7 @@ use Scrumbe\Models\UserStory;
  *
  * @method ProjectQuery groupById() Group by the id column
  * @method ProjectQuery groupByName() Group by the name column
+ * @method ProjectQuery groupByUrlName() Group by the url_name column
  * @method ProjectQuery groupByDescription() Group by the description column
  * @method ProjectQuery groupByStartDate() Group by the start_date column
  * @method ProjectQuery groupByEndDate() Group by the end_date column
@@ -42,10 +45,15 @@ use Scrumbe\Models\UserStory;
  * @method ProjectQuery rightJoinUserStory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the UserStory relation
  * @method ProjectQuery innerJoinUserStory($relationAlias = null) Adds a INNER JOIN clause to the query using the UserStory relation
  *
+ * @method ProjectQuery leftJoinLinkProjectUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the LinkProjectUser relation
+ * @method ProjectQuery rightJoinLinkProjectUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the LinkProjectUser relation
+ * @method ProjectQuery innerJoinLinkProjectUser($relationAlias = null) Adds a INNER JOIN clause to the query using the LinkProjectUser relation
+ *
  * @method Project findOne(PropelPDO $con = null) Return the first Project matching the query
  * @method Project findOneOrCreate(PropelPDO $con = null) Return the first Project matching the query, or a new Project object populated from the query conditions when no match is found
  *
  * @method Project findOneByName(string $name) Return the first Project filtered by the name column
+ * @method Project findOneByUrlName(string $url_name) Return the first Project filtered by the url_name column
  * @method Project findOneByDescription(string $description) Return the first Project filtered by the description column
  * @method Project findOneByStartDate(string $start_date) Return the first Project filtered by the start_date column
  * @method Project findOneByEndDate(string $end_date) Return the first Project filtered by the end_date column
@@ -54,6 +62,7 @@ use Scrumbe\Models\UserStory;
  *
  * @method array findById(int $id) Return Project objects filtered by the id column
  * @method array findByName(string $name) Return Project objects filtered by the name column
+ * @method array findByUrlName(string $url_name) Return Project objects filtered by the url_name column
  * @method array findByDescription(string $description) Return Project objects filtered by the description column
  * @method array findByStartDate(string $start_date) Return Project objects filtered by the start_date column
  * @method array findByEndDate(string $end_date) Return Project objects filtered by the end_date column
@@ -164,7 +173,7 @@ abstract class BaseProjectQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `name`, `description`, `start_date`, `end_date`, `created_at`, `updated_at` FROM `project` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `name`, `url_name`, `description`, `start_date`, `end_date`, `created_at`, `updated_at` FROM `project` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -322,6 +331,35 @@ abstract class BaseProjectQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ProjectPeer::NAME, $name, $comparison);
+    }
+
+    /**
+     * Filter the query on the url_name column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUrlName('fooValue');   // WHERE url_name = 'fooValue'
+     * $query->filterByUrlName('%fooValue%'); // WHERE url_name LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $urlName The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ProjectQuery The current query, for fluid interface
+     */
+    public function filterByUrlName($urlName = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($urlName)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $urlName)) {
+                $urlName = str_replace('*', '%', $urlName);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(ProjectPeer::URL_NAME, $urlName, $comparison);
     }
 
     /**
@@ -597,6 +635,80 @@ abstract class BaseProjectQuery extends ModelCriteria
         return $this
             ->joinUserStory($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'UserStory', '\Scrumbe\Models\UserStoryQuery');
+    }
+
+    /**
+     * Filter the query by a related LinkProjectUser object
+     *
+     * @param   LinkProjectUser|PropelObjectCollection $linkProjectUser  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 ProjectQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByLinkProjectUser($linkProjectUser, $comparison = null)
+    {
+        if ($linkProjectUser instanceof LinkProjectUser) {
+            return $this
+                ->addUsingAlias(ProjectPeer::ID, $linkProjectUser->getProjectId(), $comparison);
+        } elseif ($linkProjectUser instanceof PropelObjectCollection) {
+            return $this
+                ->useLinkProjectUserQuery()
+                ->filterByPrimaryKeys($linkProjectUser->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByLinkProjectUser() only accepts arguments of type LinkProjectUser or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the LinkProjectUser relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return ProjectQuery The current query, for fluid interface
+     */
+    public function joinLinkProjectUser($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('LinkProjectUser');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'LinkProjectUser');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the LinkProjectUser relation LinkProjectUser object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \Scrumbe\Models\LinkProjectUserQuery A secondary query class using the current class as primary query
+     */
+    public function useLinkProjectUserQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinLinkProjectUser($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'LinkProjectUser', '\Scrumbe\Models\LinkProjectUserQuery');
     }
 
     /**

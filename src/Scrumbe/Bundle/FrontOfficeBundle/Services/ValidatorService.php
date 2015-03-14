@@ -1,8 +1,8 @@
 <?php
 namespace Scrumbe\Bundle\FrontOfficeBundle\Services;
 
-use Scrumbe\Models\ProjectQuery;
-use BasePeer;
+use Scrumbe\Exception\ForbiddenException;
+use Scrumbe\Exception\NotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -37,7 +37,17 @@ class ValidatorService {
         $object = $object->findOne();
         if (is_null($object))
         {
-            throw new NotFoundHttpException('object.not_found.' . $objectType, null, Response::HTTP_NOT_FOUND);
+            throw new NotFoundException('object.not_found.' . $objectType);
+        }
+    }
+
+    public function userAccessOnObject($objectId, $user, $queryClass, $objectType)
+    {
+        $objectHasAccess = $queryClass::create()->userHasAccess($objectId, $user);
+
+        if (!$objectHasAccess)
+        {
+            throw new ForbiddenException('object.forbidden.' . $objectType);
         }
     }
 } 

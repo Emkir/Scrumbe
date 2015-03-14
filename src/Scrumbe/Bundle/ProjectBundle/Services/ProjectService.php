@@ -8,11 +8,15 @@ use BasePeer;
 
 class ProjectService {
 
-    public function getProjects()
+    public function getProjects($user)
     {
         $projectsArray = array();
 
-        $projects = ProjectQuery::create()->find();
+        $projects = ProjectQuery::create()
+            ->useLinkProjectUserQuery()
+                ->filterByUserId($user->getId())
+            ->endUse()
+            ->find();
 
         foreach($projects as $key=>$project)
         {
