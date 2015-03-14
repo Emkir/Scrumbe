@@ -18,16 +18,19 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main_login:
-            pattern: ^/login$
-            anonymous: true
         main:
             pattern: ^/
-            anonymous: false
+            anonymous: true
             provider: webservice
             form_login:
-                login_path: login
+                login_path: index
                 check_path: login_check
             logout:
                 path: logout
                 target: /
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/(login$|register|resetting), role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, role: IS_AUTHENTICATED_REMEMBERED }

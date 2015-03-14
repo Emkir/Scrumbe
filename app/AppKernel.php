@@ -18,7 +18,7 @@ class AppKernel extends Kernel
             new Scrumbe\Bundle\FrontOfficeBundle\ScrumbeFrontOfficeBundle(),
             new Propel\PropelBundle\PropelBundle(),
             new Scrumbe\Bundle\ProjectBundle\ScrumbeProjectBundle(),
-            new Scrumbe\Bundle\UserBundle\ScrumbeUserBundle(),
+            new Scrumbe\Bundle\UserBundle\ScrumbeUserBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
