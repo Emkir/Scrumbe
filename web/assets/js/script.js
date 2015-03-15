@@ -66,7 +66,6 @@ $(".language-select").selectOrDie({
     links: true,
 });
 
-
 // Typed.jquery
 $(function(){
     $(".typed").typed({

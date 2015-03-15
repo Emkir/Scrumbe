@@ -39,6 +39,31 @@
 
     <!--   SCRIPTS   -->
     <!--<script src="/assets/js/script.js"></script>-->
+    <script src="/assets/js/libs/velocity.min.js"></script>
+    <script src="/assets/js/libs/velocity.ui.min.js"></script>
+    <script>
+        // Open-Close option in projects page
+        $(document).ready(function(){
+            $('.option-btn').click(function() {
+                $(this).parent().find('.option-ctn').velocity({
+                    top: "0px",
+                    opacity: 1
+                },{
+                    duration: 100,
+                    display: "block"
+                });
+            });
+            $('.close-opt-btn').click(function(){
+                $(this).parent().parent().find('.option-ctn').velocity({
+                    top: "10px",
+                    opacity: 0
+                },{
+                    duration: 100,
+                    display: "none"
+                });
+            });
+        });
+    </script>
 
     </body>
 </html>
