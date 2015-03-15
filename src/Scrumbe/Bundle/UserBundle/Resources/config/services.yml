@@ -1,0 +1,6 @@
+services:
+    user.user_service:
+        class: Scrumbe\Bundle\UserBundle\Services\UserService
+    user_provider:
+        class: Scrumbe\Bundle\UserBundle\Security\User\UserProvider
+        arguments: [@user.user_service]

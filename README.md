@@ -50,3 +50,6 @@ Quelques alias utiles (~/.bashrc):
 	alias resetDB='php app/console propel:database:drop --force && php app/console propel:database:create && php app/console propel:build --insert-sql && php app/console propel:fixtures:load'
 	alias updateDB='php app/console propel:migration:generate-diff && php app/console propel:migration:migrate'
 	alias scrumbe='cd /var/www/Scrumbe'
+
+Clear cache:
+	php app/console cache:clear

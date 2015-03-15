@@ -139,9 +139,9 @@
                     <span class="close-sign-in"><img src="/assets/img/Close_icon.png"></span>
                 </div>
                 <div class="contain-sign-in">
-                    <form action="#" method="post">
-                        <input type="email" placeholder="{{ 'signin.mailPH'|trans }}" required="required" autofocus="autofocus">
-                        <input type="password" placeholder="{{ 'signin.pwdPH'|trans }}" required="required">
+                    <form action="{{ path('login_check') }}" method="post">
+                        <input type="text" id="username" name="_username" autofocus="autofocus">
+                        <input type="password" name="_password" placeholder="{{ 'signin.pwdPH'|trans }}" required="required">
                         <input type="submit" value="{{ 'signin.button'|trans }}">
                     </form>
                     <a href="#">{{ 'signin.forgetpwd'|trans }}</a>

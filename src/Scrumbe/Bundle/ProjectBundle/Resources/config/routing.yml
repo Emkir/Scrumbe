@@ -7,7 +7,7 @@ scrumbe_get_projects:
         _method: GET
 
 scrumbe_get_project:
-    pattern:  /projects/{projectId}
+    pattern:  /{projectId}/{projectName}
     defaults: { _controller: ScrumbeProjectBundle:Project:getProject }
     requirements:
         projectId: \d+
@@ -24,10 +24,18 @@ scrumbe_put_project:
     defaults: { _controller: ScrumbeProjectBundle:Project:putProject }
     requirements:
         projectId: \d+
+        _method: PUT
 
 scrumbe_delete_project:
     pattern:  /projects/{projectId}/delete
     defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }
+    requirements:
+        projectId: \d+
+        _method: DELETE
+
+scrumbe_get_form_project:
+    pattern:  /projects/form/{projectId}
+    defaults: { _controller: ScrumbeProjectBundle:Project:getFormProject, projectId: null }
     requirements:
         projectId: \d+
         _method: GET

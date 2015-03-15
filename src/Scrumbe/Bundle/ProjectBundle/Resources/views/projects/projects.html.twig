@@ -58,35 +58,28 @@
 
 {%  block body %}
     <ul class="projects-list">
-        {% for project in projects %}
-            <li>
-                <div class="head-ctn">
-                    <span class="option-btn">
-                        <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
-                    </span>
-                    {#<a href="" class="upload-cover">Upload cover</a>#}
-                    <img src="/assets/img/photo-1.jpg" class="cover" alt="image project"/>
-                    <div class="option-ctn">
-                        <span class="close-opt-btn">
-                            <img src="/assets/img/icons/close-opt-icon.svg" alt="close icon">
-                        </span>
-                        <span class="edit-btn">
-                            <img src="/assets/img/icons/edit-project-icon.svg" alt="Éditer">
-                        </span>
-                        <span class="delete-btn">
-                            <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
-                        </span>
+        {% for item in projects %}
+            <ul class="projects-list">
+                <li>
+                    <div class="head-ctn">
+                        <a href="" class="option-btn">
+                            <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
+                        </a>
+                        <a href="" class="upload-cover">Upload cover</a>
+                        <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
                     </div>
-                </div>
-                <div class="info-ctn">
-                    <h2>{{ project.name }}</h2>
-                    <div class="update">
-                        Last update <span class="date">January 1st, 2015</span>
+                    <div class="info-ctn">
+                        <h2>{{item.name}}</h2>
+                        <div class="update">
+                            Last update <span class="date">{{item.updated_at.date|date('F d,Y')}}</span>
+                        </div>
+                        <div class="divider"></div>
+                        <a href="" class="add-member-btn">
+                            <img src="/assets/img/icons/add-member-icon.svg" alt="add member icon"> Add member
+                        </a>
                     </div>
-                    <div class="divider"></div>
-                    <a href="" class="go-to-btn">Aller sur le projet</a>
-                </div>
-            </li>
+                </li>
+            </ul>
         {% else %}
             Commencez par créer un projet !
         {% endfor %}

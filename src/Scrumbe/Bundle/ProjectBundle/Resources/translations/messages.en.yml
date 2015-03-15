@@ -1,0 +1,3 @@
+project:
+    delete:
+        success: The project was successfuly deleted

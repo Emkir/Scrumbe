@@ -15,6 +15,8 @@ use \PropelDateTime;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\LinkProjectUser;
+use Scrumbe\Models\LinkProjectUserQuery;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectPeer;
 use Scrumbe\Models\ProjectQuery;
@@ -55,6 +57,12 @@ abstract class BaseProject extends BaseObject implements Persistent
     protected $name;
 
     /**
+     * The value for the url_name field.
+     * @var        string
+     */
+    protected $url_name;
+
+    /**
      * The value for the description field.
      * @var        string
      */
@@ -91,6 +99,12 @@ abstract class BaseProject extends BaseObject implements Persistent
     protected $collUserStoriesPartial;
 
     /**
+     * @var        PropelObjectCollection|LinkProjectUser[] Collection to store aggregation of LinkProjectUser objects.
+     */
+    protected $collLinkProjectUsers;
+    protected $collLinkProjectUsersPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      * @var        boolean
@@ -117,6 +131,12 @@ abstract class BaseProject extends BaseObject implements Persistent
     protected $userStoriesScheduledForDeletion = null;
 
     /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $linkProjectUsersScheduledForDeletion = null;
+
+    /**
      * Get the [id] column value.
      *
      * @return int
@@ -136,6 +156,17 @@ abstract class BaseProject extends BaseObject implements Persistent
     {
 
         return $this->name;
+    }
+
+    /**
+     * Get the [url_name] column value.
+     *
+     * @return string
+     */
+    public function getUrlName()
+    {
+
+        return $this->url_name;
     }
 
     /**
@@ -352,6 +383,27 @@ abstract class BaseProject extends BaseObject implements Persistent
     } // setName()
 
     /**
+     * Set the value of [url_name] column.
+     *
+     * @param  string $v new value
+     * @return Project The current object (for fluent API support)
+     */
+    public function setUrlName($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->url_name !== $v) {
+            $this->url_name = $v;
+            $this->modifiedColumns[] = ProjectPeer::URL_NAME;
+        }
+
+
+        return $this;
+    } // setUrlName()
+
+    /**
      * Set the value of [description] column.
      *
      * @param  string $v new value
@@ -498,11 +550,12 @@ abstract class BaseProject extends BaseObject implements Persistent
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-            $this->description = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->start_date = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->end_date = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-            $this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+            $this->url_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->start_date = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+            $this->end_date = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+            $this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -512,7 +565,7 @@ abstract class BaseProject extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 7; // 7 = ProjectPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = ProjectPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating Project object", $e);
@@ -575,6 +628,8 @@ abstract class BaseProject extends BaseObject implements Persistent
         if ($deep) {  // also de-associate any related objects?
 
             $this->collUserStories = null;
+
+            $this->collLinkProjectUsers = null;
 
         } // if (deep)
     }
@@ -729,6 +784,24 @@ abstract class BaseProject extends BaseObject implements Persistent
                 }
             }
 
+            if ($this->linkProjectUsersScheduledForDeletion !== null) {
+                if (!$this->linkProjectUsersScheduledForDeletion->isEmpty()) {
+                    foreach ($this->linkProjectUsersScheduledForDeletion as $linkProjectUser) {
+                        // need to save related object because we set the relation to null
+                        $linkProjectUser->save($con);
+                    }
+                    $this->linkProjectUsersScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collLinkProjectUsers !== null) {
+                foreach ($this->collLinkProjectUsers as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -761,6 +834,9 @@ abstract class BaseProject extends BaseObject implements Persistent
         if ($this->isColumnModified(ProjectPeer::NAME)) {
             $modifiedColumns[':p' . $index++]  = '`name`';
         }
+        if ($this->isColumnModified(ProjectPeer::URL_NAME)) {
+            $modifiedColumns[':p' . $index++]  = '`url_name`';
+        }
         if ($this->isColumnModified(ProjectPeer::DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = '`description`';
         }
@@ -792,6 +868,9 @@ abstract class BaseProject extends BaseObject implements Persistent
                         break;
                     case '`name`':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+                        break;
+                    case '`url_name`':
+                        $stmt->bindValue($identifier, $this->url_name, PDO::PARAM_STR);
                         break;
                     case '`description`':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
@@ -915,6 +994,14 @@ abstract class BaseProject extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collLinkProjectUsers !== null) {
+                    foreach ($this->collLinkProjectUsers as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
 
             $this->alreadyInValidation = false;
         }
@@ -957,18 +1044,21 @@ abstract class BaseProject extends BaseObject implements Persistent
                 return $this->getName();
                 break;
             case 2:
-                return $this->getDescription();
+                return $this->getUrlName();
                 break;
             case 3:
-                return $this->getStartDate();
+                return $this->getDescription();
                 break;
             case 4:
-                return $this->getEndDate();
+                return $this->getStartDate();
                 break;
             case 5:
-                return $this->getCreatedAt();
+                return $this->getEndDate();
                 break;
             case 6:
+                return $this->getCreatedAt();
+                break;
+            case 7:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1002,11 +1092,12 @@ abstract class BaseProject extends BaseObject implements Persistent
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getName(),
-            $keys[2] => $this->getDescription(),
-            $keys[3] => $this->getStartDate(),
-            $keys[4] => $this->getEndDate(),
-            $keys[5] => $this->getCreatedAt(),
-            $keys[6] => $this->getUpdatedAt(),
+            $keys[2] => $this->getUrlName(),
+            $keys[3] => $this->getDescription(),
+            $keys[4] => $this->getStartDate(),
+            $keys[5] => $this->getEndDate(),
+            $keys[6] => $this->getCreatedAt(),
+            $keys[7] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1016,6 +1107,9 @@ abstract class BaseProject extends BaseObject implements Persistent
         if ($includeForeignObjects) {
             if (null !== $this->collUserStories) {
                 $result['UserStories'] = $this->collUserStories->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collLinkProjectUsers) {
+                $result['LinkProjectUsers'] = $this->collLinkProjectUsers->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1058,18 +1152,21 @@ abstract class BaseProject extends BaseObject implements Persistent
                 $this->setName($value);
                 break;
             case 2:
-                $this->setDescription($value);
+                $this->setUrlName($value);
                 break;
             case 3:
-                $this->setStartDate($value);
+                $this->setDescription($value);
                 break;
             case 4:
-                $this->setEndDate($value);
+                $this->setStartDate($value);
                 break;
             case 5:
-                $this->setCreatedAt($value);
+                $this->setEndDate($value);
                 break;
             case 6:
+                $this->setCreatedAt($value);
+                break;
+            case 7:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1098,11 +1195,12 @@ abstract class BaseProject extends BaseObject implements Persistent
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setDescription($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setStartDate($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setEndDate($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+        if (array_key_exists($keys[2], $arr)) $this->setUrlName($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setStartDate($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setEndDate($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+        if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
     }
 
     /**
@@ -1116,6 +1214,7 @@ abstract class BaseProject extends BaseObject implements Persistent
 
         if ($this->isColumnModified(ProjectPeer::ID)) $criteria->add(ProjectPeer::ID, $this->id);
         if ($this->isColumnModified(ProjectPeer::NAME)) $criteria->add(ProjectPeer::NAME, $this->name);
+        if ($this->isColumnModified(ProjectPeer::URL_NAME)) $criteria->add(ProjectPeer::URL_NAME, $this->url_name);
         if ($this->isColumnModified(ProjectPeer::DESCRIPTION)) $criteria->add(ProjectPeer::DESCRIPTION, $this->description);
         if ($this->isColumnModified(ProjectPeer::START_DATE)) $criteria->add(ProjectPeer::START_DATE, $this->start_date);
         if ($this->isColumnModified(ProjectPeer::END_DATE)) $criteria->add(ProjectPeer::END_DATE, $this->end_date);
@@ -1185,6 +1284,7 @@ abstract class BaseProject extends BaseObject implements Persistent
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setName($this->getName());
+        $copyObj->setUrlName($this->getUrlName());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setStartDate($this->getStartDate());
         $copyObj->setEndDate($this->getEndDate());
@@ -1201,6 +1301,12 @@ abstract class BaseProject extends BaseObject implements Persistent
             foreach ($this->getUserStories() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addUserStory($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getLinkProjectUsers() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addLinkProjectUser($relObj->copy($deepCopy));
                 }
             }
 
@@ -1267,6 +1373,9 @@ abstract class BaseProject extends BaseObject implements Persistent
     {
         if ('UserStory' == $relationName) {
             $this->initUserStories();
+        }
+        if ('LinkProjectUser' == $relationName) {
+            $this->initLinkProjectUsers();
         }
     }
 
@@ -1496,12 +1605,263 @@ abstract class BaseProject extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collLinkProjectUsers collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Project The current object (for fluent API support)
+     * @see        addLinkProjectUsers()
+     */
+    public function clearLinkProjectUsers()
+    {
+        $this->collLinkProjectUsers = null; // important to set this to null since that means it is uninitialized
+        $this->collLinkProjectUsersPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collLinkProjectUsers collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialLinkProjectUsers($v = true)
+    {
+        $this->collLinkProjectUsersPartial = $v;
+    }
+
+    /**
+     * Initializes the collLinkProjectUsers collection.
+     *
+     * By default this just sets the collLinkProjectUsers collection to an empty array (like clearcollLinkProjectUsers());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initLinkProjectUsers($overrideExisting = true)
+    {
+        if (null !== $this->collLinkProjectUsers && !$overrideExisting) {
+            return;
+        }
+        $this->collLinkProjectUsers = new PropelObjectCollection();
+        $this->collLinkProjectUsers->setModel('LinkProjectUser');
+    }
+
+    /**
+     * Gets an array of LinkProjectUser objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Project is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|LinkProjectUser[] List of LinkProjectUser objects
+     * @throws PropelException
+     */
+    public function getLinkProjectUsers($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collLinkProjectUsersPartial && !$this->isNew();
+        if (null === $this->collLinkProjectUsers || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collLinkProjectUsers) {
+                // return empty collection
+                $this->initLinkProjectUsers();
+            } else {
+                $collLinkProjectUsers = LinkProjectUserQuery::create(null, $criteria)
+                    ->filterByProject($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collLinkProjectUsersPartial && count($collLinkProjectUsers)) {
+                      $this->initLinkProjectUsers(false);
+
+                      foreach ($collLinkProjectUsers as $obj) {
+                        if (false == $this->collLinkProjectUsers->contains($obj)) {
+                          $this->collLinkProjectUsers->append($obj);
+                        }
+                      }
+
+                      $this->collLinkProjectUsersPartial = true;
+                    }
+
+                    $collLinkProjectUsers->getInternalIterator()->rewind();
+
+                    return $collLinkProjectUsers;
+                }
+
+                if ($partial && $this->collLinkProjectUsers) {
+                    foreach ($this->collLinkProjectUsers as $obj) {
+                        if ($obj->isNew()) {
+                            $collLinkProjectUsers[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collLinkProjectUsers = $collLinkProjectUsers;
+                $this->collLinkProjectUsersPartial = false;
+            }
+        }
+
+        return $this->collLinkProjectUsers;
+    }
+
+    /**
+     * Sets a collection of LinkProjectUser objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $linkProjectUsers A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Project The current object (for fluent API support)
+     */
+    public function setLinkProjectUsers(PropelCollection $linkProjectUsers, PropelPDO $con = null)
+    {
+        $linkProjectUsersToDelete = $this->getLinkProjectUsers(new Criteria(), $con)->diff($linkProjectUsers);
+
+
+        $this->linkProjectUsersScheduledForDeletion = $linkProjectUsersToDelete;
+
+        foreach ($linkProjectUsersToDelete as $linkProjectUserRemoved) {
+            $linkProjectUserRemoved->setProject(null);
+        }
+
+        $this->collLinkProjectUsers = null;
+        foreach ($linkProjectUsers as $linkProjectUser) {
+            $this->addLinkProjectUser($linkProjectUser);
+        }
+
+        $this->collLinkProjectUsers = $linkProjectUsers;
+        $this->collLinkProjectUsersPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related LinkProjectUser objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related LinkProjectUser objects.
+     * @throws PropelException
+     */
+    public function countLinkProjectUsers(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collLinkProjectUsersPartial && !$this->isNew();
+        if (null === $this->collLinkProjectUsers || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collLinkProjectUsers) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getLinkProjectUsers());
+            }
+            $query = LinkProjectUserQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByProject($this)
+                ->count($con);
+        }
+
+        return count($this->collLinkProjectUsers);
+    }
+
+    /**
+     * Method called to associate a LinkProjectUser object to this object
+     * through the LinkProjectUser foreign key attribute.
+     *
+     * @param    LinkProjectUser $l LinkProjectUser
+     * @return Project The current object (for fluent API support)
+     */
+    public function addLinkProjectUser(LinkProjectUser $l)
+    {
+        if ($this->collLinkProjectUsers === null) {
+            $this->initLinkProjectUsers();
+            $this->collLinkProjectUsersPartial = true;
+        }
+
+        if (!in_array($l, $this->collLinkProjectUsers->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddLinkProjectUser($l);
+
+            if ($this->linkProjectUsersScheduledForDeletion and $this->linkProjectUsersScheduledForDeletion->contains($l)) {
+                $this->linkProjectUsersScheduledForDeletion->remove($this->linkProjectUsersScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	LinkProjectUser $linkProjectUser The linkProjectUser object to add.
+     */
+    protected function doAddLinkProjectUser($linkProjectUser)
+    {
+        $this->collLinkProjectUsers[]= $linkProjectUser;
+        $linkProjectUser->setProject($this);
+    }
+
+    /**
+     * @param	LinkProjectUser $linkProjectUser The linkProjectUser object to remove.
+     * @return Project The current object (for fluent API support)
+     */
+    public function removeLinkProjectUser($linkProjectUser)
+    {
+        if ($this->getLinkProjectUsers()->contains($linkProjectUser)) {
+            $this->collLinkProjectUsers->remove($this->collLinkProjectUsers->search($linkProjectUser));
+            if (null === $this->linkProjectUsersScheduledForDeletion) {
+                $this->linkProjectUsersScheduledForDeletion = clone $this->collLinkProjectUsers;
+                $this->linkProjectUsersScheduledForDeletion->clear();
+            }
+            $this->linkProjectUsersScheduledForDeletion[]= $linkProjectUser;
+            $linkProjectUser->setProject(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Project is new, it will return
+     * an empty collection; or if this Project has previously
+     * been saved, it will retrieve related LinkProjectUsers from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Project.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|LinkProjectUser[] List of LinkProjectUser objects
+     */
+    public function getLinkProjectUsersJoinUser($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = LinkProjectUserQuery::create(null, $criteria);
+        $query->joinWith('User', $join_behavior);
+
+        return $this->getLinkProjectUsers($query, $con);
+    }
+
+    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
     {
         $this->id = null;
         $this->name = null;
+        $this->url_name = null;
         $this->description = null;
         $this->start_date = null;
         $this->end_date = null;
@@ -1534,6 +1894,11 @@ abstract class BaseProject extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collLinkProjectUsers) {
+                foreach ($this->collLinkProjectUsers as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
@@ -1542,6 +1907,10 @@ abstract class BaseProject extends BaseObject implements Persistent
             $this->collUserStories->clearIterator();
         }
         $this->collUserStories = null;
+        if ($this->collLinkProjectUsers instanceof PropelCollection) {
+            $this->collLinkProjectUsers->clearIterator();
+        }
+        $this->collLinkProjectUsers = null;
     }
 
     /**

@@ -1,0 +1,62 @@
+Scrumbe\Models\Project:
+    p1:
+        name: Projet Tous
+        url_name: projet_tous
+        description: Project accessible à tous
+        start_date: 2015-01-01
+        end_date: 2030-12-12
+    p2:
+        name: Projet Emmeric
+        url_name: projet_emmeric
+        description: Project d'Emmeric
+        start_date: 2015-01-01
+        end_date: 2030-12-12
+    p3:
+        name: Projet FX
+        url_name: projet_fx
+        description: Project de FX
+        start_date: 2015-01-01
+        end_date: 2030-12-12
+    p4:
+        name: Projet Nico
+        url_name: projet_nico
+        description: Project de Nico
+        start_date: 2015-01-01
+        end_date: 2030-12-12
+
+Scrumbe\Models\User:
+    u1:
+        username: emmeric
+        password: 5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25
+    u2:
+        username: fx
+        password: 5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25
+    u3:
+        username: nico
+        password: 5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25
+
+Scrumbe\Models\LinkProjectUser:
+    lpu1:
+        user_id: u1
+        project_id: p1
+        admin: 1
+    lpu2:
+        user_id: u2
+        project_id: p1
+        admin: 1
+    lpu3:
+        user_id: u3
+        project_id: p1
+        admin: 1
+    lpu4:
+        user_id: u1
+        project_id: p2
+        admin: 1
+    lpu5:
+        user_id: u2
+        project_id: p3
+        admin: 1
+    lpu6:
+        user_id: u3
+        project_id: p4
+        admin: 1

@@ -44,6 +44,7 @@ class ProjectTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
+        $this->addColumn('url_name', 'UrlName', 'VARCHAR', false, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('start_date', 'StartDate', 'DATE', false, null, null);
         $this->addColumn('end_date', 'EndDate', 'DATE', false, null, null);
@@ -58,6 +59,7 @@ class ProjectTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::ONE_TO_MANY, array('id' => 'project_id', ), null, null, 'UserStories');
+        $this->addRelation('LinkProjectUser', 'Scrumbe\\Models\\LinkProjectUser', RelationMap::ONE_TO_MANY, array('id' => 'project_id', ), null, null, 'LinkProjectUsers');
     } // buildRelations()
 
     /**

@@ -7,7 +7,6 @@ parameters:
 services:
     project_service:
         class: %project_service.class%
-        arguments: [@form.factory,@service_container]
 
     userstory_service:
         class: %userstory_service.class%
