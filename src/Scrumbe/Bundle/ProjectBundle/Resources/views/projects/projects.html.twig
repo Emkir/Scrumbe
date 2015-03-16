@@ -10,7 +10,7 @@
                     <img src="/assets/img/logo.svg" alt="search icon">
                 </a>
             </li>
-            <li><a href="">Projects</a></li>
+            <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
             <li><a href="">Learn</a></li>
             <li><a href="">Team</a></li>
             <li>
@@ -79,7 +79,7 @@
             </li>
         </ul>
         <hr/>
-        {% for item in projects %}
+        {% for project in projects %}
          <ul class="projects-list">
             <li>
                 <div class="head-ctn">
@@ -90,9 +90,9 @@
                     <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
                 </div>
                 <div class="info-ctn">
-                    <h2>{{item.name}}</h2>
+                    <h2>{{project.name}}</h2>
                     <div class="update">
-                        Last update <span class="date">{{item.updated_at.date|date('F d,Y')}}</span>
+                        Last update <span class="date">{{project.updated_at.date|date('F d,Y')}}</span>
                     </div>
                     <div class="divider"></div>
                     <a href="" class="add-member-btn">
