@@ -877,6 +877,8 @@ footer {
       font-size: 0.8125rem;
       color: #7F8CA6;
       margin-right: 10px; }
+    .sub-nav-projects .sort-by.hide {
+      display: none; }
   .sub-nav-projects .add-project {
     position: absolute;
     right: 40px;
@@ -885,6 +887,81 @@ footer {
     display: block; }
     .sub-nav-projects .add-project img {
       height: 50%; }
+    .sub-nav-projects .add-project.hide {
+      display: none; }
+  .sub-nav-projects .sub-nav {
+    display: inline-block; }
+    .sub-nav-projects .sub-nav li {
+      display: inline-block;
+      margin-right: 15px; }
+      .sub-nav-projects .sub-nav li.active a, .sub-nav-projects .sub-nav li:hover a {
+        color: #28CEE0; }
+      .sub-nav-projects .sub-nav li a {
+        padding: 5px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 300;
+        color: #7F8CA6;
+        text-decoration: none; }
+  .sub-nav-projects .divider {
+    width: 1px;
+    height: 40%;
+    background-color: #E7EAEE;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 30px; }
+  .sub-nav-projects .members {
+    height: 70px;
+    margin-right: 20px; }
+    .sub-nav-projects .members.right {
+      float: right; }
+    .sub-nav-projects .members ul {
+      display: inline-block; }
+      .sub-nav-projects .members ul li {
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 3px;
+        height: 45%;
+        position: relative; }
+        .sub-nav-projects .members ul li.add-member {
+          height: 27px;
+          width: 27px;
+          line-height: normal;
+          overflow: hidden;
+          border-radius: 50%;
+          border: 1px dashed #7F8CA6;
+          text-align: center; }
+          .sub-nav-projects .members ul li.add-member a {
+            text-decoration: none;
+            color: #7F8CA6;
+            line-height: 26px;
+            display: block; }
+        .sub-nav-projects .members ul li .avatar-ctn {
+          height: 27px;
+          width: 27px;
+          line-height: normal;
+          overflow: hidden;
+          border-radius: 50%; }
+          .sub-nav-projects .members ul li .avatar-ctn img {
+            width: 100%; }
+        .sub-nav-projects .members ul li .connect {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          border: 2px solid #fff;
+          display: block;
+          position: absolute;
+          top: -1px;
+          right: -2px; }
+          .sub-nav-projects .members ul li .connect.here {
+            background-color: #41CF75; }
+          .sub-nav-projects .members ul li .connect.innactive {
+            background-color: #ffab35; }
+          .sub-nav-projects .members ul li .connect.disconnect {
+            background-color: #cf2f29; }
 
 .projects-list {
   padding: 190px 60px 60px 60px;
@@ -1074,7 +1151,7 @@ footer {
         position: absolute;
         bottom: 25px;
         left: 50%;
-        margin-left: -79px; }
+        margin-left: -84px; }
         .projects-list .new-project .info-ctn .btn-ctn .cancel-projet-btn {
           vertical-align: middle;
           display: inline-block;
@@ -1086,7 +1163,8 @@ footer {
           border-radius: 50px;
           text-decoration: none;
           border: none;
-          cursor: pointer; }
+          cursor: pointer;
+          margin-right: 10px; }
         .projects-list .new-project .info-ctn .btn-ctn .valid-project-btn {
           vertical-align: middle;
           display: inline-block;
@@ -1100,5 +1178,124 @@ footer {
           background-color: #7ABE6F;
           border: none;
           cursor: pointer; }
+
+.kanban {
+  margin-top: 130px; }
+  .kanban .user-stories {
+    width: 25%;
+    float: left;
+    height: 1000px;
+    display: block;
+    border-right: 1px solid #E6EAEE;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .kanban .user-stories .header-col {
+      color: #28CEE0;
+      width: 25%;
+      background-color: #ffffff;
+      text-transform: uppercase;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #E6EAEE;
+      position: fixed;
+      z-index: 4;
+      border-right: 1px solid #E6EAEE;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
+    .kanban .user-stories .user-stories-list {
+      margin-top: 53px; }
+      .kanban .user-stories .user-stories-list li {
+        background-color: white; }
+  .kanban .to-do {
+    width: 25%;
+    float: left;
+    height: 1000px;
+    display: block;
+    border-right: 1px solid #E6EAEE;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .kanban .to-do .header-col {
+      color: #EECC6C;
+      width: 25%;
+      background-color: #ffffff;
+      text-transform: uppercase;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #E6EAEE;
+      position: fixed;
+      z-index: 3;
+      border-right: 1px solid #E6EAEE;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
+  .kanban .doing {
+    width: 25%;
+    float: left;
+    height: 1000px;
+    display: block;
+    border-right: 1px solid #E6EAEE;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .kanban .doing .header-col {
+      color: #41CF75;
+      width: 25%;
+      background-color: #ffffff;
+      text-transform: uppercase;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #E6EAEE;
+      position: fixed;
+      z-index: 2;
+      border-right: 1px solid #E6EAEE;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
+  .kanban .done {
+    width: 25%;
+    float: left;
+    height: 1000px;
+    display: block;
+    border-right: 1px solid #E6EAEE;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .kanban .done .header-col {
+      color: #FF6562;
+      width: 25%;
+      background-color: #ffffff;
+      text-transform: uppercase;
+      font-family: "Montserrat", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #E6EAEE;
+      position: fixed;
+      z-index: 1;
+      border-right: 1px solid #E6EAEE;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
 
 /*# sourceMappingURL=app.css.map */

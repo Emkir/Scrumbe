@@ -120,3 +120,10 @@ scrumbe_delete_task:
         userStoryId: \d+
         taskId: \d+
         _method: GET
+
+
+###KANBAN###
+
+kanban:
+    pattern:  /kanban
+    defaults: { _controller: ScrumbeProjectBundle:Kanban:kanban }

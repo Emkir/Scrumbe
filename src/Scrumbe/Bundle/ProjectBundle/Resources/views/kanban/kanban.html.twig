@@ -1,0 +1,140 @@
+{% extends "ScrumbeProjectBundle:Layout:layout-app.html.twig" %}
+
+{% block title %}Kanban{% endblock %}
+
+{% block nav %}
+    <nav class="nav-projects">
+        <ul class="left-nav">
+            <li class="logo">
+                <a href="">
+                    <img src="/assets/img/logo.svg" alt="search icon">
+                </a>
+            </li>
+            <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
+            <li><a href="">Learn</a></li>
+            <li><a href="">Team</a></li>
+            <li>
+                <a href="">
+                    <img src="/assets/img/icons/search-icon.svg" alt="search icon">
+                </a>
+            </li>
+        </ul>
+        <ul class="right-nav">
+            <li>
+                <img src="/assets/img/icons/help-icon.svg" alt="help icon"/>
+            </li>
+            <li>
+                <div class="notif-ctn">
+                    <img src="/assets/img/icons/notification-icon.svg" alt="notification icon"/>
+                    <span class="notif-count">2</span>
+                </div>
+            </li>
+            <li>
+                <div class="avatar-ctn">
+                    <img src="/assets/img/Claude-Guglieri.png" alt="avatar">
+                </div>
+                <img src="/assets/img/icons/arrow-down-icon.svg" alt="arrown-down icon">
+            </li>
+        </ul>
+    </nav>
+    <div class="sub-nav-projects">
+        <span class="title">Apple Watch App</span>
+        <div class="divider"></div>
+        <ul class="sub-nav">
+            <li>
+                <a href="">User Stories</a>
+            </li>
+            <li>
+                <a href="">Sprint</a>
+            </li>
+            <li class="active">
+                <a href="">Kanban</a>
+            </li>
+            <li>
+                <a href="">Backlog</a>
+            </li>
+        </ul>
+        <div class="members right">
+            <div class="divider"></div>
+            <ul>
+                <li class="add-member">
+                    <a href="">+</a>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Claude-Guglieri.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Thomas-Sanson.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Anthony-Ribeiro.png" alt=""/>
+                    </div>
+                    <div class="connect disconnect"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Christophe-Tauziet.png" alt=""/>
+                    </div>
+                    <div class="connect innactive"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Jeremy-Thomas.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="sort-by hide">
+            <span class="title">Sort by</span>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+        <a href="" class="add-project hide">
+            <img src="/assets/img/icons/add-project-icon.svg" alt="add project icon">
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <section class="kanban">
+        <div class="user-stories">
+            <div class="header-col">User stories</div>
+            <ul class="user-stories-list">
+                <li>
+                    <div class="head">
+                        <ul class="label">
+                            <li>label</li>
+                        </ul>
+                        <span class="difficulty">99</span>
+                    </div>
+                    <div class="content">
+                        <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                    </div>
+                    <div class="footer">
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="to-do">
+            <div class="header-col">A faire</div>
+        </div>
+        <div class="doing">
+            <div class="header-col">En cours</div>
+        </div>
+        <div class="done">
+            <div class="header-col">Terminées</div>
+        </div>
+    </section>
+{% endblock %}

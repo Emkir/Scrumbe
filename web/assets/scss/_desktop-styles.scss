@@ -1106,6 +1106,10 @@ footer {
             color: #7F8CA6;
             margin-right: 10px;
         }
+
+        &.hide {
+            display: none;
+        }
     }
 
     .add-project {
@@ -1117,6 +1121,115 @@ footer {
 
         img {
             height: 50%
+        }
+
+        &.hide {
+            display: none;
+        }
+    }
+
+    .sub-nav {
+        display: inline-block;
+
+        li {
+            display: inline-block;
+            margin-right: 15px;
+
+            &.active a, &:hover a {
+                color: $blue;
+            }
+
+            a {
+                padding: 5px;
+                box-sizing: border-box;
+                font-family: "Open Sans", sans-serif;
+                font-size: rem-calc(13px);
+                font-weight: 300;
+                color: #7F8CA6;
+                text-decoration: none;
+
+            }
+        }
+    }
+
+    .divider {
+        width: 1px;
+        height: 40%;
+        background-color: #E7EAEE;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 30px;
+    }
+
+    .members {
+        height: 70px;
+        margin-right: 20px;
+
+        &.right {
+            float: right;
+        }
+
+        ul {
+            display: inline-block;
+
+            li {
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 3px;
+                height: 45%;
+                position: relative;
+
+                &.add-member {
+                    height: 27px;
+                    width: 27px;
+                    line-height: normal;
+                    overflow: hidden;
+                    border-radius: 50%;
+                    border: 1px dashed #7F8CA6;
+                    text-align: center;
+
+                    a {
+                        text-decoration: none;
+                        color: #7F8CA6;
+                        line-height: 26px;
+                        display: block;
+                    }
+                }
+
+                .avatar-ctn {
+                    height: 27px;
+                    width: 27px;
+                    line-height: normal;
+                    overflow: hidden;
+                    border-radius: 50%;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                .connect {
+                    width: 7px;
+                    height: 7px;
+                    border-radius: 50%;
+                    border: 2px solid #fff;
+                    display: block;
+                    position: absolute;
+                    top: -1px;
+                    right: -2px;
+
+                    &.here {
+                        background-color: #41CF75;
+                    }
+                    &.innactive {
+                        background-color: #ffab35;
+                    }
+                    &.disconnect {
+                        background-color: #cf2f29;
+                    }
+                }
+
+            }
         }
     }
 }
@@ -1346,7 +1459,7 @@ footer {
                 position: absolute;
                 bottom: 25px;
                 left: 50%;
-                margin-left: -79px;
+                margin-left: -84px;
 
                 .cancel-projet-btn {
                     vertical-align: middle;
@@ -1360,6 +1473,7 @@ footer {
                     text-decoration: none;
                     border: none;
                     cursor: pointer;
+                    margin-right: 10px;
                 }
 
                 .valid-project-btn {
@@ -1377,6 +1491,125 @@ footer {
                     cursor: pointer;
                 }
             }
+        }
+    }
+}
+
+
+// Kanban
+.kanban {
+    margin-top: 130px;
+
+    .user-stories {
+        width: 25%;
+        float: left;
+        height: 1000px;
+        display: block;
+        border-right: 1px solid #E6EAEE;
+        box-sizing: border-box;
+
+        .header-col {
+            color: $blue;
+            width: 25%;
+            background-color: #ffffff;
+            text-transform: uppercase;
+            font-family: "Montserrat", sans-serif;
+            font-size: rem-calc(12px);
+            font-weight: 700;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #E6EAEE;
+            position: fixed;
+            z-index: 4;
+            border-right: 1px solid #E6EAEE;
+            box-sizing: border-box;
+            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-stories-list {
+            margin-top: 53px;
+
+            li {
+                background-color: white;
+            }
+        }
+    }
+    .to-do {
+        width: 25%;
+        float: left;
+        height: 1000px;
+        display: block;
+        border-right: 1px solid #E6EAEE;
+        box-sizing: border-box;
+
+        .header-col {
+            color: $yellow;
+            width: 25%;
+            background-color: #ffffff;
+            text-transform: uppercase;
+            font-family: "Montserrat", sans-serif;
+            font-size: rem-calc(12px);
+            font-weight: 700;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #E6EAEE;
+            position: fixed;
+            z-index: 3;
+            border-right: 1px solid #E6EAEE;
+            box-sizing: border-box;
+            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+        }
+    }
+    .doing {
+        width: 25%;
+        float: left;
+        height: 1000px;
+        display: block;
+        border-right: 1px solid #E6EAEE;
+        box-sizing: border-box;
+
+        .header-col {
+            color: $green;
+            width: 25%;
+            background-color: #ffffff;
+            text-transform: uppercase;
+            font-family: "Montserrat", sans-serif;
+            font-size: rem-calc(12px);
+            font-weight: 700;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #E6EAEE;
+            position: fixed;
+            z-index: 2;
+            border-right: 1px solid #E6EAEE;
+            box-sizing: border-box;
+            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+        }
+    }
+    .done {
+        width: 25%;
+        float: left;
+        height: 1000px;
+        display: block;
+        border-right: 1px solid #E6EAEE;
+        box-sizing: border-box;
+
+        .header-col {
+            color: $red;
+            width: 25%;
+            background-color: #ffffff;
+            text-transform: uppercase;
+            font-family: "Montserrat", sans-serif;
+            font-size: rem-calc(12px);
+            font-weight: 700;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #E6EAEE;
+            position: fixed;
+            z-index: 1;
+            border-right: 1px solid #E6EAEE;
+            box-sizing: border-box;
+            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
     }
 }
