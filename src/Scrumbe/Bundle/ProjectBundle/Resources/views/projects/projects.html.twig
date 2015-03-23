@@ -87,7 +87,7 @@
                         <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
                     </a>
                     <a href="" class="upload-cover">Upload cover</a>
-                    <img src="/assets/img/back-home.jpg" class="cover" alt="image project"/>
+                    <img src="{{project.cover_project}}" class="cover" alt="image project"/>
                 </div>
                 <div class="info-ctn">
                     <h2>{{project.name}}</h2>
@@ -102,6 +102,8 @@
             </li>
         </ul>
         {% endfor %}
-
+    
+        {{ form(projectCreateForm) }}
+    
     {% endblock %}
 

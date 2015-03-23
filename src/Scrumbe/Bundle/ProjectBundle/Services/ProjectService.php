@@ -39,4 +39,9 @@ class ProjectService {
         $project = ProjectQuery::create()->findPk($projectId);
         $project->delete();
     }
+
+    public function uploadCover($file)
+    {
+
+    }
 } 
