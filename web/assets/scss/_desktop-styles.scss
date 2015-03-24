@@ -1529,8 +1529,118 @@ footer {
         .user-stories-list {
             margin-top: 53px;
 
-            li {
+            & > li {
                 background-color: white;
+                padding: 10px 15px 16px 15px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #E6EAEE;
+                position: relative;
+                user-select: none;
+
+                .head {
+                    min-height: 25px;
+                    margin-bottom: 5px;
+
+                    .label {
+                        li {
+                           font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(8px);
+                            font-weight: 600;
+                            letter-spacing: 1px;
+                            padding: 3px 6px;
+                            display: inline-block;
+                            border-radius: 10px;
+                            box-sizing: border-box;
+                            color: #fff;
+                            background-color: $red;
+                            text-transform: uppercase;
+                            user-select: none;
+                        }
+                    }
+
+                    .difficulty {
+                        color: $mauve;
+                        font-family: "Open Sans", sans-serif;
+                        font-weight: 300;
+                        font-size: rem-calc(13px);
+                        width: 23px;
+                        height: 23px;
+                        text-align: center;
+                        line-height: 23px;
+                        border: 1px solid $mauve;
+                        border-radius: 50px;
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        user-select: none;
+                    }
+                }
+                .content {
+                    margin-bottom: 10px;
+
+                    p {
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(14px);
+                        font-weight: 400;
+                        color: #182740;
+                        line-height: 17px;
+                        user-select: none;
+                    }
+                }
+                .footer {
+                    .task-ctn {
+                        img {
+                            width: 10px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            user-select: none;
+                        }
+
+                        .task-done {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+                            user-select: none;
+
+                            &:after {
+                                content: " /";
+                            }
+                        }
+
+                        .all-task {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+
+                            &:after {
+                                content: " Tâches";
+                            }
+                        }
+                    }
+                    .member-list {
+                        position: absolute;
+                        bottom: 10px;
+                        right: 15px;
+
+                        li {
+                            width: 23px;
+                            height: 23px;
+                            display: inline-block;
+                            margin-right: 3px;
+                            border-radius: 50%;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                user-select: none;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -1559,6 +1669,124 @@ footer {
             box-sizing: border-box;
             box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
+
+        .to-do-list {
+            margin-top: 53px;
+
+            & > li {
+                background-color: white;
+                padding: 10px 15px 16px 15px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #E6EAEE;
+                position: relative;
+                user-select: none;
+
+                .head {
+                    min-height: 25px;
+                    margin-bottom: 5px;
+
+                    .label {
+                        li {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(8px);
+                            font-weight: 600;
+                            letter-spacing: 1px;
+                            padding: 3px 6px;
+                            display: inline-block;
+                            border-radius: 10px;
+                            box-sizing: border-box;
+                            color: #fff;
+                            background-color: $red;
+                            text-transform: uppercase;
+                            user-select: none;
+                        }
+                    }
+
+                    .difficulty {
+                        color: $mauve;
+                        font-family: "Open Sans", sans-serif;
+                        font-weight: 300;
+                        font-size: rem-calc(13px);
+                        width: 23px;
+                        height: 23px;
+                        text-align: center;
+                        line-height: 23px;
+                        border: 1px solid $mauve;
+                        border-radius: 50px;
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        user-select: none;
+                    }
+                }
+                .content {
+                    margin-bottom: 10px;
+
+                    p {
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(14px);
+                        font-weight: 400;
+                        color: #182740;
+                        line-height: 17px;
+                        user-select: none;
+                    }
+                }
+                .footer {
+                    .task-ctn {
+                        img {
+                            width: 10px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            user-select: none;
+                        }
+
+                        .task-done {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+                            user-select: none;
+
+                            &:after {
+                                content: " /";
+                            }
+                        }
+
+                        .all-task {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+
+                            &:after {
+                                content: " Tâches";
+                            }
+                        }
+                    }
+                    .member-list {
+                        position: absolute;
+                        bottom: 10px;
+                        right: 15px;
+
+                        li {
+                            width: 23px;
+                            height: 23px;
+                            display: inline-block;
+                            margin-right: 3px;
+                            border-radius: 50%;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                user-select: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     .doing {
         width: 25%;
@@ -1584,6 +1812,124 @@ footer {
             border-right: 1px solid #E6EAEE;
             box-sizing: border-box;
             box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .doing-list {
+            margin-top: 53px;
+
+            & > li {
+                background-color: white;
+                padding: 10px 15px 16px 15px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #E6EAEE;
+                position: relative;
+                user-select: none;
+
+                .head {
+                    min-height: 25px;
+                    margin-bottom: 5px;
+
+                    .label {
+                        li {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(8px);
+                            font-weight: 600;
+                            letter-spacing: 1px;
+                            padding: 3px 6px;
+                            display: inline-block;
+                            border-radius: 10px;
+                            box-sizing: border-box;
+                            color: #fff;
+                            background-color: $red;
+                            text-transform: uppercase;
+                            user-select: none;
+                        }
+                    }
+
+                    .difficulty {
+                        color: $mauve;
+                        font-family: "Open Sans", sans-serif;
+                        font-weight: 300;
+                        font-size: rem-calc(13px);
+                        width: 23px;
+                        height: 23px;
+                        text-align: center;
+                        line-height: 23px;
+                        border: 1px solid $mauve;
+                        border-radius: 50px;
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        user-select: none;
+                    }
+                }
+                .content {
+                    margin-bottom: 10px;
+
+                    p {
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(14px);
+                        font-weight: 400;
+                        color: #182740;
+                        line-height: 17px;
+                        user-select: none;
+                    }
+                }
+                .footer {
+                    .task-ctn {
+                        img {
+                            width: 10px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            user-select: none;
+                        }
+
+                        .task-done {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+                            user-select: none;
+
+                            &:after {
+                                content: " /";
+                            }
+                        }
+
+                        .all-task {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+
+                            &:after {
+                                content: " Tâches";
+                            }
+                        }
+                    }
+                    .member-list {
+                        position: absolute;
+                        bottom: 10px;
+                        right: 15px;
+
+                        li {
+                            width: 23px;
+                            height: 23px;
+                            display: inline-block;
+                            margin-right: 3px;
+                            border-radius: 50%;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                user-select: none;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     .done {
@@ -1611,5 +1957,132 @@ footer {
             box-sizing: border-box;
             box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
+
+        .done-list {
+            margin-top: 53px;
+
+            & > li {
+                background-color: white;
+                padding: 10px 15px 16px 15px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #E6EAEE;
+                position: relative;
+                user-select: none;
+
+                .head {
+                    min-height: 25px;
+                    margin-bottom: 5px;
+
+                    .label {
+                        li {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(8px);
+                            font-weight: 600;
+                            letter-spacing: 1px;
+                            padding: 3px 6px;
+                            display: inline-block;
+                            border-radius: 10px;
+                            box-sizing: border-box;
+                            color: #fff;
+                            background-color: $red;
+                            text-transform: uppercase;
+                            user-select: none;
+                        }
+                    }
+
+                    .difficulty {
+                        color: $mauve;
+                        font-family: "Open Sans", sans-serif;
+                        font-weight: 300;
+                        font-size: rem-calc(13px);
+                        width: 23px;
+                        height: 23px;
+                        text-align: center;
+                        line-height: 23px;
+                        border: 1px solid $mauve;
+                        border-radius: 50px;
+                        position: absolute;
+                        top: 10px;
+                        right: 15px;
+                        user-select: none;
+                    }
+                }
+                .content {
+                    margin-bottom: 10px;
+
+                    p {
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(14px);
+                        font-weight: 400;
+                        color: #182740;
+                        line-height: 17px;
+                        user-select: none;
+                    }
+                }
+                .footer {
+                    .task-ctn {
+                        img {
+                            width: 10px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            user-select: none;
+                        }
+
+                        .task-done {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+                            user-select: none;
+
+                            &:after {
+                                content: " /";
+                            }
+                        }
+
+                        .all-task {
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(13px);
+                            font-weight: 400;
+                            color: $mauve;
+                            vertical-align: middle;
+
+                            &:after {
+                                content: " Tâches";
+                            }
+                        }
+                    }
+                    .member-list {
+                        position: absolute;
+                        bottom: 10px;
+                        right: 15px;
+
+                        li {
+                            width: 23px;
+                            height: 23px;
+                            display: inline-block;
+                            margin-right: 3px;
+                            border-radius: 50%;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                user-select: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
+
+    .column {
+        height: inherit;
+    }
+}
+
+.drop-block {
+    background-color: #E8E8E8 !important;
+    display: block;
 }

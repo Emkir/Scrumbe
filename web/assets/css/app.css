@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**************IMPORTS**************/
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
@@ -1211,8 +1212,114 @@ footer {
       box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
     .kanban .user-stories .user-stories-list {
       margin-top: 53px; }
-      .kanban .user-stories .user-stories-list li {
-        background-color: white; }
+      .kanban .user-stories .user-stories-list > li {
+        background-color: white;
+        padding: 10px 15px 16px 15px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: 1px solid #E6EAEE;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none; }
+        .kanban .user-stories .user-stories-list > li .head {
+          min-height: 25px;
+          margin-bottom: 5px; }
+          .kanban .user-stories .user-stories-list > li .head .label li {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 3px 6px;
+            display: inline-block;
+            border-radius: 10px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #fff;
+            background-color: #FF6562;
+            text-transform: uppercase;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+          .kanban .user-stories .user-stories-list > li .head .difficulty {
+            color: #7F8CA6;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            font-size: 0.8125rem;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+            line-height: 23px;
+            border: 1px solid #7F8CA6;
+            border-radius: 50px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .user-stories .user-stories-list > li .content {
+          margin-bottom: 10px; }
+          .kanban .user-stories .user-stories-list > li .content p {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: #182740;
+            line-height: 17px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .user-stories .user-stories-list > li .footer .task-ctn img {
+          width: 10px;
+          display: inline-block;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+        .kanban .user-stories .user-stories-list > li .footer .task-ctn .task-done {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+          .kanban .user-stories .user-stories-list > li .footer .task-ctn .task-done:after {
+            content: " /"; }
+        .kanban .user-stories .user-stories-list > li .footer .task-ctn .all-task {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle; }
+          .kanban .user-stories .user-stories-list > li .footer .task-ctn .all-task:after {
+            content: " Tâches"; }
+        .kanban .user-stories .user-stories-list > li .footer .member-list {
+          position: absolute;
+          bottom: 10px;
+          right: 15px; }
+          .kanban .user-stories .user-stories-list > li .footer .member-list li {
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 50%;
+            overflow: hidden; }
+            .kanban .user-stories .user-stories-list > li .footer .member-list li img {
+              width: 100%;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none; }
   .kanban .to-do {
     width: 25%;
     float: left;
@@ -1241,6 +1348,116 @@ footer {
       box-sizing: border-box;
       -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
       box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
+    .kanban .to-do .to-do-list {
+      margin-top: 53px; }
+      .kanban .to-do .to-do-list > li {
+        background-color: white;
+        padding: 10px 15px 16px 15px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: 1px solid #E6EAEE;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none; }
+        .kanban .to-do .to-do-list > li .head {
+          min-height: 25px;
+          margin-bottom: 5px; }
+          .kanban .to-do .to-do-list > li .head .label li {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 3px 6px;
+            display: inline-block;
+            border-radius: 10px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #fff;
+            background-color: #FF6562;
+            text-transform: uppercase;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+          .kanban .to-do .to-do-list > li .head .difficulty {
+            color: #7F8CA6;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            font-size: 0.8125rem;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+            line-height: 23px;
+            border: 1px solid #7F8CA6;
+            border-radius: 50px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .to-do .to-do-list > li .content {
+          margin-bottom: 10px; }
+          .kanban .to-do .to-do-list > li .content p {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: #182740;
+            line-height: 17px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .to-do .to-do-list > li .footer .task-ctn img {
+          width: 10px;
+          display: inline-block;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+        .kanban .to-do .to-do-list > li .footer .task-ctn .task-done {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+          .kanban .to-do .to-do-list > li .footer .task-ctn .task-done:after {
+            content: " /"; }
+        .kanban .to-do .to-do-list > li .footer .task-ctn .all-task {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle; }
+          .kanban .to-do .to-do-list > li .footer .task-ctn .all-task:after {
+            content: " Tâches"; }
+        .kanban .to-do .to-do-list > li .footer .member-list {
+          position: absolute;
+          bottom: 10px;
+          right: 15px; }
+          .kanban .to-do .to-do-list > li .footer .member-list li {
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 50%;
+            overflow: hidden; }
+            .kanban .to-do .to-do-list > li .footer .member-list li img {
+              width: 100%;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none; }
   .kanban .doing {
     width: 25%;
     float: left;
@@ -1269,6 +1486,116 @@ footer {
       box-sizing: border-box;
       -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
       box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
+    .kanban .doing .doing-list {
+      margin-top: 53px; }
+      .kanban .doing .doing-list > li {
+        background-color: white;
+        padding: 10px 15px 16px 15px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: 1px solid #E6EAEE;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none; }
+        .kanban .doing .doing-list > li .head {
+          min-height: 25px;
+          margin-bottom: 5px; }
+          .kanban .doing .doing-list > li .head .label li {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 3px 6px;
+            display: inline-block;
+            border-radius: 10px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #fff;
+            background-color: #FF6562;
+            text-transform: uppercase;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+          .kanban .doing .doing-list > li .head .difficulty {
+            color: #7F8CA6;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            font-size: 0.8125rem;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+            line-height: 23px;
+            border: 1px solid #7F8CA6;
+            border-radius: 50px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .doing .doing-list > li .content {
+          margin-bottom: 10px; }
+          .kanban .doing .doing-list > li .content p {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: #182740;
+            line-height: 17px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .doing .doing-list > li .footer .task-ctn img {
+          width: 10px;
+          display: inline-block;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+        .kanban .doing .doing-list > li .footer .task-ctn .task-done {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+          .kanban .doing .doing-list > li .footer .task-ctn .task-done:after {
+            content: " /"; }
+        .kanban .doing .doing-list > li .footer .task-ctn .all-task {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle; }
+          .kanban .doing .doing-list > li .footer .task-ctn .all-task:after {
+            content: " Tâches"; }
+        .kanban .doing .doing-list > li .footer .member-list {
+          position: absolute;
+          bottom: 10px;
+          right: 15px; }
+          .kanban .doing .doing-list > li .footer .member-list li {
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 50%;
+            overflow: hidden; }
+            .kanban .doing .doing-list > li .footer .member-list li img {
+              width: 100%;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none; }
   .kanban .done {
     width: 25%;
     float: left;
@@ -1297,5 +1624,121 @@ footer {
       box-sizing: border-box;
       -webkit-box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
       box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1); }
+    .kanban .done .done-list {
+      margin-top: 53px; }
+      .kanban .done .done-list > li {
+        background-color: white;
+        padding: 10px 15px 16px 15px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        border-bottom: 1px solid #E6EAEE;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none; }
+        .kanban .done .done-list > li .head {
+          min-height: 25px;
+          margin-bottom: 5px; }
+          .kanban .done .done-list > li .head .label li {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding: 3px 6px;
+            display: inline-block;
+            border-radius: 10px;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            color: #fff;
+            background-color: #FF6562;
+            text-transform: uppercase;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+          .kanban .done .done-list > li .head .difficulty {
+            color: #7F8CA6;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 300;
+            font-size: 0.8125rem;
+            width: 23px;
+            height: 23px;
+            text-align: center;
+            line-height: 23px;
+            border: 1px solid #7F8CA6;
+            border-radius: 50px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .done .done-list > li .content {
+          margin-bottom: 10px; }
+          .kanban .done .done-list > li .content p {
+            font-family: "Open Sans", sans-serif;
+            font-size: 0.875rem;
+            font-weight: 400;
+            color: #182740;
+            line-height: 17px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none; }
+        .kanban .done .done-list > li .footer .task-ctn img {
+          width: 10px;
+          display: inline-block;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+        .kanban .done .done-list > li .footer .task-ctn .task-done {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
+          .kanban .done .done-list > li .footer .task-ctn .task-done:after {
+            content: " /"; }
+        .kanban .done .done-list > li .footer .task-ctn .all-task {
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 400;
+          color: #7F8CA6;
+          vertical-align: middle; }
+          .kanban .done .done-list > li .footer .task-ctn .all-task:after {
+            content: " Tâches"; }
+        .kanban .done .done-list > li .footer .member-list {
+          position: absolute;
+          bottom: 10px;
+          right: 15px; }
+          .kanban .done .done-list > li .footer .member-list li {
+            width: 23px;
+            height: 23px;
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 50%;
+            overflow: hidden; }
+            .kanban .done .done-list > li .footer .member-list li img {
+              width: 100%;
+              -webkit-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none; }
+  .kanban .column {
+    height: inherit; }
+
+.drop-block {
+  background-color: #E8E8E8 !important;
+  display: block; }
 
 /*# sourceMappingURL=app.css.map */
