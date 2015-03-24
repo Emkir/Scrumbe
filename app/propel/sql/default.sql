@@ -12,7 +12,6 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `user_id` INTEGER NOT NULL,
     `name` VARCHAR(255),
     `url_name` VARCHAR(255),
     `description` TEXT,

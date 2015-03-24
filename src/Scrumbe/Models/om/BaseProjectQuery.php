@@ -20,7 +20,6 @@ use Scrumbe\Models\UserStory;
 
 /**
  * @method ProjectQuery orderById($order = Criteria::ASC) Order by the id column
- * @method ProjectQuery orderByUserId($order = Criteria::ASC) Order by the user_id column
  * @method ProjectQuery orderByName($order = Criteria::ASC) Order by the name column
  * @method ProjectQuery orderByUrlName($order = Criteria::ASC) Order by the url_name column
  * @method ProjectQuery orderByDescription($order = Criteria::ASC) Order by the description column
@@ -31,7 +30,6 @@ use Scrumbe\Models\UserStory;
  * @method ProjectQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method ProjectQuery groupById() Group by the id column
- * @method ProjectQuery groupByUserId() Group by the user_id column
  * @method ProjectQuery groupByName() Group by the name column
  * @method ProjectQuery groupByUrlName() Group by the url_name column
  * @method ProjectQuery groupByDescription() Group by the description column
@@ -56,7 +54,6 @@ use Scrumbe\Models\UserStory;
  * @method Project findOne(PropelPDO $con = null) Return the first Project matching the query
  * @method Project findOneOrCreate(PropelPDO $con = null) Return the first Project matching the query, or a new Project object populated from the query conditions when no match is found
  *
- * @method Project findOneByUserId(int $user_id) Return the first Project filtered by the user_id column
  * @method Project findOneByName(string $name) Return the first Project filtered by the name column
  * @method Project findOneByUrlName(string $url_name) Return the first Project filtered by the url_name column
  * @method Project findOneByDescription(string $description) Return the first Project filtered by the description column
@@ -67,7 +64,6 @@ use Scrumbe\Models\UserStory;
  * @method Project findOneByUpdatedAt(string $updated_at) Return the first Project filtered by the updated_at column
  *
  * @method array findById(int $id) Return Project objects filtered by the id column
- * @method array findByUserId(int $user_id) Return Project objects filtered by the user_id column
  * @method array findByName(string $name) Return Project objects filtered by the name column
  * @method array findByUrlName(string $url_name) Return Project objects filtered by the url_name column
  * @method array findByDescription(string $description) Return Project objects filtered by the description column
@@ -181,7 +177,7 @@ abstract class BaseProjectQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `user_id`, `name`, `url_name`, `description`, `cover_project`, `start_date`, `end_date`, `created_at`, `updated_at` FROM `project` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `name`, `url_name`, `description`, `cover_project`, `start_date`, `end_date`, `created_at`, `updated_at` FROM `project` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -310,48 +306,6 @@ abstract class BaseProjectQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ProjectPeer::ID, $id, $comparison);
-    }
-
-    /**
-     * Filter the query on the user_id column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByUserId(1234); // WHERE user_id = 1234
-     * $query->filterByUserId(array(12, 34)); // WHERE user_id IN (12, 34)
-     * $query->filterByUserId(array('min' => 12)); // WHERE user_id >= 12
-     * $query->filterByUserId(array('max' => 12)); // WHERE user_id <= 12
-     * </code>
-     *
-     * @param     mixed $userId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return ProjectQuery The current query, for fluid interface
-     */
-    public function filterByUserId($userId = null, $comparison = null)
-    {
-        if (is_array($userId)) {
-            $useMinMax = false;
-            if (isset($userId['min'])) {
-                $this->addUsingAlias(ProjectPeer::USER_ID, $userId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($userId['max'])) {
-                $this->addUsingAlias(ProjectPeer::USER_ID, $userId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(ProjectPeer::USER_ID, $userId, $comparison);
     }
 
     /**

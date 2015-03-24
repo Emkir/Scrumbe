@@ -29,19 +29,16 @@ abstract class BaseProjectPeer
     const TM_CLASS = 'Scrumbe\\Models\\map\\ProjectTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 9;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 10;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /** the column name for the id field */
     const ID = 'project.id';
-
-    /** the column name for the user_id field */
-    const USER_ID = 'project.user_id';
 
     /** the column name for the name field */
     const NAME = 'project.name';
@@ -86,12 +83,12 @@ abstract class BaseProjectPeer
      * e.g. ProjectPeer::$fieldNames[ProjectPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Name', 'UrlName', 'Description', 'CoverProject', 'StartDate', 'EndDate', 'CreatedAt', 'UpdatedAt', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userId', 'name', 'urlName', 'description', 'coverProject', 'startDate', 'endDate', 'createdAt', 'updatedAt', ),
-        BasePeer::TYPE_COLNAME => array (ProjectPeer::ID, ProjectPeer::USER_ID, ProjectPeer::NAME, ProjectPeer::URL_NAME, ProjectPeer::DESCRIPTION, ProjectPeer::COVER_PROJECT, ProjectPeer::START_DATE, ProjectPeer::END_DATE, ProjectPeer::CREATED_AT, ProjectPeer::UPDATED_AT, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USER_ID', 'NAME', 'URL_NAME', 'DESCRIPTION', 'COVER_PROJECT', 'START_DATE', 'END_DATE', 'CREATED_AT', 'UPDATED_AT', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'name', 'url_name', 'description', 'cover_project', 'start_date', 'end_date', 'created_at', 'updated_at', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'UrlName', 'Description', 'CoverProject', 'StartDate', 'EndDate', 'CreatedAt', 'UpdatedAt', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'urlName', 'description', 'coverProject', 'startDate', 'endDate', 'createdAt', 'updatedAt', ),
+        BasePeer::TYPE_COLNAME => array (ProjectPeer::ID, ProjectPeer::NAME, ProjectPeer::URL_NAME, ProjectPeer::DESCRIPTION, ProjectPeer::COVER_PROJECT, ProjectPeer::START_DATE, ProjectPeer::END_DATE, ProjectPeer::CREATED_AT, ProjectPeer::UPDATED_AT, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAME', 'URL_NAME', 'DESCRIPTION', 'COVER_PROJECT', 'START_DATE', 'END_DATE', 'CREATED_AT', 'UPDATED_AT', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'url_name', 'description', 'cover_project', 'start_date', 'end_date', 'created_at', 'updated_at', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -101,12 +98,12 @@ abstract class BaseProjectPeer
      * e.g. ProjectPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Name' => 2, 'UrlName' => 3, 'Description' => 4, 'CoverProject' => 5, 'StartDate' => 6, 'EndDate' => 7, 'CreatedAt' => 8, 'UpdatedAt' => 9, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userId' => 1, 'name' => 2, 'urlName' => 3, 'description' => 4, 'coverProject' => 5, 'startDate' => 6, 'endDate' => 7, 'createdAt' => 8, 'updatedAt' => 9, ),
-        BasePeer::TYPE_COLNAME => array (ProjectPeer::ID => 0, ProjectPeer::USER_ID => 1, ProjectPeer::NAME => 2, ProjectPeer::URL_NAME => 3, ProjectPeer::DESCRIPTION => 4, ProjectPeer::COVER_PROJECT => 5, ProjectPeer::START_DATE => 6, ProjectPeer::END_DATE => 7, ProjectPeer::CREATED_AT => 8, ProjectPeer::UPDATED_AT => 9, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USER_ID' => 1, 'NAME' => 2, 'URL_NAME' => 3, 'DESCRIPTION' => 4, 'COVER_PROJECT' => 5, 'START_DATE' => 6, 'END_DATE' => 7, 'CREATED_AT' => 8, 'UPDATED_AT' => 9, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'name' => 2, 'url_name' => 3, 'description' => 4, 'cover_project' => 5, 'start_date' => 6, 'end_date' => 7, 'created_at' => 8, 'updated_at' => 9, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'UrlName' => 2, 'Description' => 3, 'CoverProject' => 4, 'StartDate' => 5, 'EndDate' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'urlName' => 2, 'description' => 3, 'coverProject' => 4, 'startDate' => 5, 'endDate' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
+        BasePeer::TYPE_COLNAME => array (ProjectPeer::ID => 0, ProjectPeer::NAME => 1, ProjectPeer::URL_NAME => 2, ProjectPeer::DESCRIPTION => 3, ProjectPeer::COVER_PROJECT => 4, ProjectPeer::START_DATE => 5, ProjectPeer::END_DATE => 6, ProjectPeer::CREATED_AT => 7, ProjectPeer::UPDATED_AT => 8, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAME' => 1, 'URL_NAME' => 2, 'DESCRIPTION' => 3, 'COVER_PROJECT' => 4, 'START_DATE' => 5, 'END_DATE' => 6, 'CREATED_AT' => 7, 'UPDATED_AT' => 8, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'url_name' => 2, 'description' => 3, 'cover_project' => 4, 'start_date' => 5, 'end_date' => 6, 'created_at' => 7, 'updated_at' => 8, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -181,7 +178,6 @@ abstract class BaseProjectPeer
     {
         if (null === $alias) {
             $criteria->addSelectColumn(ProjectPeer::ID);
-            $criteria->addSelectColumn(ProjectPeer::USER_ID);
             $criteria->addSelectColumn(ProjectPeer::NAME);
             $criteria->addSelectColumn(ProjectPeer::URL_NAME);
             $criteria->addSelectColumn(ProjectPeer::DESCRIPTION);
@@ -192,7 +188,6 @@ abstract class BaseProjectPeer
             $criteria->addSelectColumn(ProjectPeer::UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.user_id');
             $criteria->addSelectColumn($alias . '.name');
             $criteria->addSelectColumn($alias . '.url_name');
             $criteria->addSelectColumn($alias . '.description');

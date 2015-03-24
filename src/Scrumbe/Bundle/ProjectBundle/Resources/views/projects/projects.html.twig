@@ -65,7 +65,7 @@
                     <span class="option-btn">
                         <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
                     </span>
-                    <a href="" class="upload-cover">Upload cover</a>
+                    {#<a href="" class="upload-cover">Upload cover</a>#}
                     <img src="{{project.cover_project}}" class="cover" alt="image project"/>
                     <div class="option-ctn">
                         <span class="close-opt-btn">
@@ -83,7 +83,7 @@
                 <div class="info-ctn">
                     <h2>{{project.name}}</h2>
                     <div class="update">
-                        Last update <span class="date">{{project.updated_at.date|date('F d,Y')}}</span>
+                        Dernière mise à jour le <span class="date">{{project.updated_at.date|date('F d,Y')}}</span>
                     </div>
 
                     <div class="divider"></div>
@@ -94,24 +94,11 @@
         {% else %}
             Commencez par créer un projet !
         {% endfor %}
-        <li class="new-project">
-            <div class="head-ctn">
-                <a href="" class="upload-cover">Upload cover</a>
-            </div>
-            <form class="info-ctn" name="{{ projectCreateForm.vars.name }}" action="{{ projectCreateForm.vars.action }}" method="{{ projectCreateForm.vars.method }}">
-                <input type="text" id="{{ projectCreateForm.name.vars.id }}" name="{{ projectCreateForm.name.vars.name }}" autocomplete="off" placeholder="Nom du projet" maxlength="{{ projectCreateForm.name.vars.max_length }}">
-                <input type="hidden" id="{{ projectCreateForm._token.vars.id }}" name="{{ projectCreateForm._token.vars.name }}" value="{{ projectCreateForm._token.vars.value }}"/>
-                <div class="btn-ctn">
-                    <span class="cancel-projet-btn">Annuler</span>
-                    <input type="submit" id="{{ projectCreateForm.save.vars.id }}" name="{{ projectCreateForm.save.vars.name }}" class="valid-project-btn" value="Valider">
-                </div>
-            </form>
-        </li>
     </ul>
 
-    {{ form(projectCreateForm) }}
-    <pre>
-        {{ dump(projectCreateForm) }}
-    </pre>
+    {#{{ form(projectCreateForm) }}#}
+    {#<pre>#}
+        {#{{ dump(projectCreateForm) }}#}
+    {#</pre>#}
 
 {% endblock %}

@@ -51,12 +51,6 @@ abstract class BaseProject extends BaseObject implements Persistent
     protected $id;
 
     /**
-     * The value for the user_id field.
-     * @var        int
-     */
-    protected $user_id;
-
-    /**
      * The value for the name field.
      * @var        string
      */
@@ -179,17 +173,6 @@ abstract class BaseProject extends BaseObject implements Persistent
     {
 
         return $this->id;
-    }
-
-    /**
-     * Get the [user_id] column value.
-     *
-     * @return int
-     */
-    public function getUserId()
-    {
-
-        return $this->user_id;
     }
 
     /**
@@ -418,27 +401,6 @@ abstract class BaseProject extends BaseObject implements Persistent
     } // setId()
 
     /**
-     * Set the value of [user_id] column.
-     *
-     * @param  int $v new value
-     * @return Project The current object (for fluent API support)
-     */
-    public function setUserId($v)
-    {
-        if ($v !== null && is_numeric($v)) {
-            $v = (int) $v;
-        }
-
-        if ($this->user_id !== $v) {
-            $this->user_id = $v;
-            $this->modifiedColumns[] = ProjectPeer::USER_ID;
-        }
-
-
-        return $this;
-    } // setUserId()
-
-    /**
      * Set the value of [name] column.
      *
      * @param  string $v new value
@@ -651,15 +613,14 @@ abstract class BaseProject extends BaseObject implements Persistent
         try {
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-            $this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-            $this->name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->url_name = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->description = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-            $this->cover_project = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->start_date = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-            $this->end_date = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-            $this->created_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-            $this->updated_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+            $this->name = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
+            $this->url_name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->cover_project = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+            $this->start_date = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->end_date = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+            $this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+            $this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -669,7 +630,7 @@ abstract class BaseProject extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 10; // 10 = ProjectPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = ProjectPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating Project object", $e);
@@ -935,9 +896,6 @@ abstract class BaseProject extends BaseObject implements Persistent
         if ($this->isColumnModified(ProjectPeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`id`';
         }
-        if ($this->isColumnModified(ProjectPeer::USER_ID)) {
-            $modifiedColumns[':p' . $index++]  = '`user_id`';
-        }
         if ($this->isColumnModified(ProjectPeer::NAME)) {
             $modifiedColumns[':p' . $index++]  = '`name`';
         }
@@ -975,9 +933,6 @@ abstract class BaseProject extends BaseObject implements Persistent
                 switch ($columnName) {
                     case '`id`':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
-                        break;
-                    case '`user_id`':
-                        $stmt->bindValue($identifier, $this->user_id, PDO::PARAM_INT);
                         break;
                     case '`name`':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
@@ -1157,30 +1112,27 @@ abstract class BaseProject extends BaseObject implements Persistent
                 return $this->getId();
                 break;
             case 1:
-                return $this->getUserId();
-                break;
-            case 2:
                 return $this->getName();
                 break;
-            case 3:
+            case 2:
                 return $this->getUrlName();
                 break;
-            case 4:
+            case 3:
                 return $this->getDescription();
                 break;
-            case 5:
+            case 4:
                 return $this->getCoverProject();
                 break;
-            case 6:
+            case 5:
                 return $this->getStartDate();
                 break;
-            case 7:
+            case 6:
                 return $this->getEndDate();
                 break;
-            case 8:
+            case 7:
                 return $this->getCreatedAt();
                 break;
-            case 9:
+            case 8:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1213,15 +1165,14 @@ abstract class BaseProject extends BaseObject implements Persistent
         $keys = ProjectPeer::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getUserId(),
-            $keys[2] => $this->getName(),
-            $keys[3] => $this->getUrlName(),
-            $keys[4] => $this->getDescription(),
-            $keys[5] => $this->getCoverProject(),
-            $keys[6] => $this->getStartDate(),
-            $keys[7] => $this->getEndDate(),
-            $keys[8] => $this->getCreatedAt(),
-            $keys[9] => $this->getUpdatedAt(),
+            $keys[1] => $this->getName(),
+            $keys[2] => $this->getUrlName(),
+            $keys[3] => $this->getDescription(),
+            $keys[4] => $this->getCoverProject(),
+            $keys[5] => $this->getStartDate(),
+            $keys[6] => $this->getEndDate(),
+            $keys[7] => $this->getCreatedAt(),
+            $keys[8] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1273,30 +1224,27 @@ abstract class BaseProject extends BaseObject implements Persistent
                 $this->setId($value);
                 break;
             case 1:
-                $this->setUserId($value);
-                break;
-            case 2:
                 $this->setName($value);
                 break;
-            case 3:
+            case 2:
                 $this->setUrlName($value);
                 break;
-            case 4:
+            case 3:
                 $this->setDescription($value);
                 break;
-            case 5:
+            case 4:
                 $this->setCoverProject($value);
                 break;
-            case 6:
+            case 5:
                 $this->setStartDate($value);
                 break;
-            case 7:
+            case 6:
                 $this->setEndDate($value);
                 break;
-            case 8:
+            case 7:
                 $this->setCreatedAt($value);
                 break;
-            case 9:
+            case 8:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1324,15 +1272,14 @@ abstract class BaseProject extends BaseObject implements Persistent
         $keys = ProjectPeer::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-        if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setName($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setUrlName($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setDescription($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setCoverProject($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setStartDate($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setEndDate($arr[$keys[7]]);
-        if (array_key_exists($keys[8], $arr)) $this->setCreatedAt($arr[$keys[8]]);
-        if (array_key_exists($keys[9], $arr)) $this->setUpdatedAt($arr[$keys[9]]);
+        if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
+        if (array_key_exists($keys[2], $arr)) $this->setUrlName($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setCoverProject($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setStartDate($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setEndDate($arr[$keys[6]]);
+        if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
+        if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
     }
 
     /**
@@ -1345,7 +1292,6 @@ abstract class BaseProject extends BaseObject implements Persistent
         $criteria = new Criteria(ProjectPeer::DATABASE_NAME);
 
         if ($this->isColumnModified(ProjectPeer::ID)) $criteria->add(ProjectPeer::ID, $this->id);
-        if ($this->isColumnModified(ProjectPeer::USER_ID)) $criteria->add(ProjectPeer::USER_ID, $this->user_id);
         if ($this->isColumnModified(ProjectPeer::NAME)) $criteria->add(ProjectPeer::NAME, $this->name);
         if ($this->isColumnModified(ProjectPeer::URL_NAME)) $criteria->add(ProjectPeer::URL_NAME, $this->url_name);
         if ($this->isColumnModified(ProjectPeer::DESCRIPTION)) $criteria->add(ProjectPeer::DESCRIPTION, $this->description);
@@ -1417,7 +1363,6 @@ abstract class BaseProject extends BaseObject implements Persistent
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUserId($this->getUserId());
         $copyObj->setName($this->getName());
         $copyObj->setUrlName($this->getUrlName());
         $copyObj->setDescription($this->getDescription());
@@ -1996,7 +1941,6 @@ abstract class BaseProject extends BaseObject implements Persistent
     public function clear()
     {
         $this->id = null;
-        $this->user_id = null;
         $this->name = null;
         $this->url_name = null;
         $this->description = null;

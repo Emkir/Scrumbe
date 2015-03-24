@@ -1239,7 +1239,7 @@ footer {
     position: relative;
     z-index: 10;
 
-    li {
+    li:not([class=new-project]) {
         display: inline-block;
         vertical-align: top;
         margin-right: 20px;
@@ -1382,11 +1382,11 @@ footer {
     }
 
     .new-project {
-        display: inline-block;
         vertical-align: top;
         margin-right: 20px;
         margin-bottom: 20px;
         transition: .3s ease;
+        display: inline-block;
 
         .head-ctn {
             width: 300px;
@@ -1407,15 +1407,18 @@ footer {
                 position: absolute;
                 font-weight: 300;
                 font-family: "Open Sans", sans-serif;
-                color: #fff;
+                color: #000;
                 text-decoration: none;
-                padding: 10px 20px;
+                padding: 10px;
                 border-radius: 50px;
                 border: 1px dashed #fff;
                 left: 50%;
-                margin-left: -67px;
+                margin-left: -85px;
                 top: 50%;
-                margin-top: -19px;
+                margin-top: -20px;
+                font-size: rem-calc(15px);
+                text-align: center;
+                outline: none;
             }
 
             .cover {
@@ -1441,17 +1444,26 @@ footer {
                 text-align: center;
                 outline: none;
                 border: none;
+                margin-bottom: 20px;
+            }
 
-                &:before {
+            .add-members {
+                display: block;
+                font-family: "Open Sans", sans-serif;
+                color: $mauve;
+                font-size: rem-calc(13px);
+                cursor: pointer;
 
-                }
-
-                &:hover:before {
-                    content: "edit";
-                    position: absolute;
-                    left: -10px;
-                    top: 0;
-                    display: block;
+                span {
+                    font-size: rem-calc(20px);
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    display: inline-block;
+                    text-align: center;
+                    border: 1px dashed $mauve;
+                    border-radius: 50px;
+                    margin-right: 5px;
                 }
             }
 
