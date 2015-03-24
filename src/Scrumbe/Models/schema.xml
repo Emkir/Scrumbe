@@ -10,6 +10,7 @@
         <column name="name" type="varchar" size="255"/>
         <column name="url_name" type="varchar" size="255"/>
         <column name="description" type="longvarchar"/>
+        <column name="cover_project" type="varchar" size="255" default="/assets/img/back-home.jpg"/>
         <column name="start_date" type="date"/>
         <column name="end_date" type="date"/>
         <behavior name="timestampable" />

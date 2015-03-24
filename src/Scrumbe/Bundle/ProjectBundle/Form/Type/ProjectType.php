@@ -11,6 +11,8 @@ class ProjectType extends AbstractType
     {
         $builder->add('name');
         $builder->add('description');
+        $builder->add('cover_project','text',array('required' => false, 'mapped' => false));
+        //$builder->add('own_cover','file',array('required' => false, 'mapped' => false));
         $builder->add('start_date');
         $builder->add('end_date');
         $builder->add('save','submit');

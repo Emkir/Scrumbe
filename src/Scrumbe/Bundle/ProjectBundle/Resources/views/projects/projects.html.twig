@@ -65,8 +65,8 @@
                     <span class="option-btn">
                         <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
                     </span>
-                    {#<a href="" class="upload-cover">Upload cover</a>#}
-                    <img src="/assets/img/photo-1.jpg" class="cover" alt="image project"/>
+                    <a href="" class="upload-cover">Upload cover</a>
+                    <img src="{{project.cover_project}}" class="cover" alt="image project"/>
                     <div class="option-ctn">
                         <span class="close-opt-btn">
                             <img src="/assets/img/icons/close-opt-icon.svg" alt="close icon">
@@ -78,6 +78,7 @@
                             <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
                         </span>
                     </div>
+                    </a>
                 </div>
                 <div class="info-ctn">
                     <h2>{{project.name}}</h2>

@@ -2,6 +2,7 @@
 namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
 use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
+use Scrumbe\Models\LinkProjectUser;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -71,6 +72,8 @@ class ProjectController extends Controller
     public function postProjectAction(Request $request)
     {
         $project = new Project;
+        $admin = new LinkProjectUser;
+
         $form = $this->createForm(new ProjectType, $project);
 
         $form->handleRequest($request);
@@ -78,12 +81,30 @@ class ProjectController extends Controller
         if ($form->isValid())
         {
             $project = $form->getData();
+
+            //GET && SET cover
+            $allData = $request->request->all();
+            $projectData = $allData['project'];
+            $cover = $projectData['cover_project'];
+            if($cover !== '')
+            {
+                $project->setCoverProject($cover);
+            }
+            
+            //Save Project            
             $project->save();
+
+            //SET Admin
+            $user = $this->getUser();
+            $admin->setProjectId($project->getId());
+            $admin->setUserId($user->getId());
+            $admin->setAdmin($user->getId());
+            $admin->save();
 
             return new JsonResponse(array('project' => $project), Response::HTTP_CREATED);
         }
 
-        return new JsonResponse(array('errors' => $form->getErrors()), Response::HTTP_CREATED);
+         return new JsonResponse(array('errors' => $form->getErrors()), Response::HTTP_CREATED);
     }
 
     /**
@@ -91,7 +112,7 @@ class ProjectController extends Controller
      *
      * @param Request       $request        The PUT request
      * @param Integer       $projectId      The project's id
-     * @return JsonResponse                 Response with updated project or errors
+     * @return JSONsonResponse                 Response with updated project or errors
      */
     public function putProjectAction(Request $request, $projectId)
     {
