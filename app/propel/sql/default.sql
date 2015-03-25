@@ -81,10 +81,17 @@ CREATE TABLE `user`
     `password` VARCHAR(255),
     `salt` VARCHAR(255),
     `roles` TEXT,
+    `email` VARCHAR(255),
+    `firstname` VARCHAR(255),
+    `lastname` VARCHAR(255),
+    `avatar` VARCHAR(255),
+    `domain` VARCHAR(255),
+    `business` VARCHAR(255),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
-    UNIQUE INDEX `user_U_1` (`username`)
+    UNIQUE INDEX `user_U_1` (`username`),
+    UNIQUE INDEX `user_U_2` (`email`)
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 -- ---------------------------------------------------------------------

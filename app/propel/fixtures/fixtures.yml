@@ -26,14 +26,29 @@ Scrumbe\Models\Project:
 
 Scrumbe\Models\User:
     u1:
-        username: emmeric
+        username: emmeric.royer@gmail.com
         password: 5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25
+        email: emmeric.royer@gmail.com
+        firstname: Emmeric
+        lastname: Royer
+        domain: Développeur Back-End
+        business: Kilix
     u2:
-        username: fx
+        username: fx.costanzo@gmail.com
         password: 5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25
+        email: fx.costanzo@gmail.com
+        firstname: François-Xavier
+        lastname: Costanzo
+        domain: Développeur Front-End
+        business: Castor & Pollux
     u3:
-        username: nico
+        username: nicolas.foubart@gmail.com
         password: 5b722b307fce6c944905d132691d5e4a2214b7fe92b738920eb3fce3a90420a19511c3010a0e7712b054daef5b57bad59ecbd93b3280f210578f547f4aed4d25
+        email: nicolas.foubart@gmail.com
+        firstname: Nicolas
+        lastname: Foubart
+        domain: Développeur Back-End
+        business: Izneo
 
 Scrumbe\Models\LinkProjectUser:
     lpu1:

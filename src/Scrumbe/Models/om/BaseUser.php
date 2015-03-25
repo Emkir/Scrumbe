@@ -73,6 +73,42 @@ abstract class BaseUser extends BaseObject implements Persistent
     protected $roles;
 
     /**
+     * The value for the email field.
+     * @var        string
+     */
+    protected $email;
+
+    /**
+     * The value for the firstname field.
+     * @var        string
+     */
+    protected $firstname;
+
+    /**
+     * The value for the lastname field.
+     * @var        string
+     */
+    protected $lastname;
+
+    /**
+     * The value for the avatar field.
+     * @var        string
+     */
+    protected $avatar;
+
+    /**
+     * The value for the domain field.
+     * @var        string
+     */
+    protected $domain;
+
+    /**
+     * The value for the business field.
+     * @var        string
+     */
+    protected $business;
+
+    /**
      * The value for the created_at field.
      * @var        string
      */
@@ -169,6 +205,72 @@ abstract class BaseUser extends BaseObject implements Persistent
     {
 
         return $this->roles;
+    }
+
+    /**
+     * Get the [email] column value.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+
+        return $this->email;
+    }
+
+    /**
+     * Get the [firstname] column value.
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+
+        return $this->firstname;
+    }
+
+    /**
+     * Get the [lastname] column value.
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+
+        return $this->lastname;
+    }
+
+    /**
+     * Get the [avatar] column value.
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+
+        return $this->avatar;
+    }
+
+    /**
+     * Get the [domain] column value.
+     *
+     * @return string
+     */
+    public function getDomain()
+    {
+
+        return $this->domain;
+    }
+
+    /**
+     * Get the [business] column value.
+     *
+     * @return string
+     */
+    public function getBusiness()
+    {
+
+        return $this->business;
     }
 
     /**
@@ -357,6 +459,132 @@ abstract class BaseUser extends BaseObject implements Persistent
     } // setRoles()
 
     /**
+     * Set the value of [email] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setEmail($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->email !== $v) {
+            $this->email = $v;
+            $this->modifiedColumns[] = UserPeer::EMAIL;
+        }
+
+
+        return $this;
+    } // setEmail()
+
+    /**
+     * Set the value of [firstname] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setFirstname($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->firstname !== $v) {
+            $this->firstname = $v;
+            $this->modifiedColumns[] = UserPeer::FIRSTNAME;
+        }
+
+
+        return $this;
+    } // setFirstname()
+
+    /**
+     * Set the value of [lastname] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setLastname($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->lastname !== $v) {
+            $this->lastname = $v;
+            $this->modifiedColumns[] = UserPeer::LASTNAME;
+        }
+
+
+        return $this;
+    } // setLastname()
+
+    /**
+     * Set the value of [avatar] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setAvatar($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->avatar !== $v) {
+            $this->avatar = $v;
+            $this->modifiedColumns[] = UserPeer::AVATAR;
+        }
+
+
+        return $this;
+    } // setAvatar()
+
+    /**
+     * Set the value of [domain] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setDomain($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->domain !== $v) {
+            $this->domain = $v;
+            $this->modifiedColumns[] = UserPeer::DOMAIN;
+        }
+
+
+        return $this;
+    } // setDomain()
+
+    /**
+     * Set the value of [business] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setBusiness($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->business !== $v) {
+            $this->business = $v;
+            $this->modifiedColumns[] = UserPeer::BUSINESS;
+        }
+
+
+        return $this;
+    } // setBusiness()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
@@ -439,8 +667,14 @@ abstract class BaseUser extends BaseObject implements Persistent
             $this->password = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
             $this->salt = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
             $this->roles = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-            $this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+            $this->email = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->firstname = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+            $this->lastname = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+            $this->avatar = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+            $this->domain = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+            $this->business = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+            $this->created_at = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+            $this->updated_at = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -450,7 +684,7 @@ abstract class BaseUser extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 7; // 7 = UserPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 13; // 13 = UserPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating User object", $e);
@@ -708,6 +942,24 @@ abstract class BaseUser extends BaseObject implements Persistent
         if ($this->isColumnModified(UserPeer::ROLES)) {
             $modifiedColumns[':p' . $index++]  = '`roles`';
         }
+        if ($this->isColumnModified(UserPeer::EMAIL)) {
+            $modifiedColumns[':p' . $index++]  = '`email`';
+        }
+        if ($this->isColumnModified(UserPeer::FIRSTNAME)) {
+            $modifiedColumns[':p' . $index++]  = '`firstname`';
+        }
+        if ($this->isColumnModified(UserPeer::LASTNAME)) {
+            $modifiedColumns[':p' . $index++]  = '`lastname`';
+        }
+        if ($this->isColumnModified(UserPeer::AVATAR)) {
+            $modifiedColumns[':p' . $index++]  = '`avatar`';
+        }
+        if ($this->isColumnModified(UserPeer::DOMAIN)) {
+            $modifiedColumns[':p' . $index++]  = '`domain`';
+        }
+        if ($this->isColumnModified(UserPeer::BUSINESS)) {
+            $modifiedColumns[':p' . $index++]  = '`business`';
+        }
         if ($this->isColumnModified(UserPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
@@ -739,6 +991,24 @@ abstract class BaseUser extends BaseObject implements Persistent
                         break;
                     case '`roles`':
                         $stmt->bindValue($identifier, $this->roles, PDO::PARAM_STR);
+                        break;
+                    case '`email`':
+                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
+                        break;
+                    case '`firstname`':
+                        $stmt->bindValue($identifier, $this->firstname, PDO::PARAM_STR);
+                        break;
+                    case '`lastname`':
+                        $stmt->bindValue($identifier, $this->lastname, PDO::PARAM_STR);
+                        break;
+                    case '`avatar`':
+                        $stmt->bindValue($identifier, $this->avatar, PDO::PARAM_STR);
+                        break;
+                    case '`domain`':
+                        $stmt->bindValue($identifier, $this->domain, PDO::PARAM_STR);
+                        break;
+                    case '`business`':
+                        $stmt->bindValue($identifier, $this->business, PDO::PARAM_STR);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -904,9 +1174,27 @@ abstract class BaseUser extends BaseObject implements Persistent
                 return $this->getRoles();
                 break;
             case 5:
-                return $this->getCreatedAt();
+                return $this->getEmail();
                 break;
             case 6:
+                return $this->getFirstname();
+                break;
+            case 7:
+                return $this->getLastname();
+                break;
+            case 8:
+                return $this->getAvatar();
+                break;
+            case 9:
+                return $this->getDomain();
+                break;
+            case 10:
+                return $this->getBusiness();
+                break;
+            case 11:
+                return $this->getCreatedAt();
+                break;
+            case 12:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -943,8 +1231,14 @@ abstract class BaseUser extends BaseObject implements Persistent
             $keys[2] => $this->getPassword(),
             $keys[3] => $this->getSalt(),
             $keys[4] => $this->getRoles(),
-            $keys[5] => $this->getCreatedAt(),
-            $keys[6] => $this->getUpdatedAt(),
+            $keys[5] => $this->getEmail(),
+            $keys[6] => $this->getFirstname(),
+            $keys[7] => $this->getLastname(),
+            $keys[8] => $this->getAvatar(),
+            $keys[9] => $this->getDomain(),
+            $keys[10] => $this->getBusiness(),
+            $keys[11] => $this->getCreatedAt(),
+            $keys[12] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1005,9 +1299,27 @@ abstract class BaseUser extends BaseObject implements Persistent
                 $this->setRoles($value);
                 break;
             case 5:
-                $this->setCreatedAt($value);
+                $this->setEmail($value);
                 break;
             case 6:
+                $this->setFirstname($value);
+                break;
+            case 7:
+                $this->setLastname($value);
+                break;
+            case 8:
+                $this->setAvatar($value);
+                break;
+            case 9:
+                $this->setDomain($value);
+                break;
+            case 10:
+                $this->setBusiness($value);
+                break;
+            case 11:
+                $this->setCreatedAt($value);
+                break;
+            case 12:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1039,8 +1351,14 @@ abstract class BaseUser extends BaseObject implements Persistent
         if (array_key_exists($keys[2], $arr)) $this->setPassword($arr[$keys[2]]);
         if (array_key_exists($keys[3], $arr)) $this->setSalt($arr[$keys[3]]);
         if (array_key_exists($keys[4], $arr)) $this->setRoles($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
+        if (array_key_exists($keys[5], $arr)) $this->setEmail($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setFirstname($arr[$keys[6]]);
+        if (array_key_exists($keys[7], $arr)) $this->setLastname($arr[$keys[7]]);
+        if (array_key_exists($keys[8], $arr)) $this->setAvatar($arr[$keys[8]]);
+        if (array_key_exists($keys[9], $arr)) $this->setDomain($arr[$keys[9]]);
+        if (array_key_exists($keys[10], $arr)) $this->setBusiness($arr[$keys[10]]);
+        if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
+        if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
     }
 
     /**
@@ -1057,6 +1375,12 @@ abstract class BaseUser extends BaseObject implements Persistent
         if ($this->isColumnModified(UserPeer::PASSWORD)) $criteria->add(UserPeer::PASSWORD, $this->password);
         if ($this->isColumnModified(UserPeer::SALT)) $criteria->add(UserPeer::SALT, $this->salt);
         if ($this->isColumnModified(UserPeer::ROLES)) $criteria->add(UserPeer::ROLES, $this->roles);
+        if ($this->isColumnModified(UserPeer::EMAIL)) $criteria->add(UserPeer::EMAIL, $this->email);
+        if ($this->isColumnModified(UserPeer::FIRSTNAME)) $criteria->add(UserPeer::FIRSTNAME, $this->firstname);
+        if ($this->isColumnModified(UserPeer::LASTNAME)) $criteria->add(UserPeer::LASTNAME, $this->lastname);
+        if ($this->isColumnModified(UserPeer::AVATAR)) $criteria->add(UserPeer::AVATAR, $this->avatar);
+        if ($this->isColumnModified(UserPeer::DOMAIN)) $criteria->add(UserPeer::DOMAIN, $this->domain);
+        if ($this->isColumnModified(UserPeer::BUSINESS)) $criteria->add(UserPeer::BUSINESS, $this->business);
         if ($this->isColumnModified(UserPeer::CREATED_AT)) $criteria->add(UserPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(UserPeer::UPDATED_AT)) $criteria->add(UserPeer::UPDATED_AT, $this->updated_at);
 
@@ -1126,6 +1450,12 @@ abstract class BaseUser extends BaseObject implements Persistent
         $copyObj->setPassword($this->getPassword());
         $copyObj->setSalt($this->getSalt());
         $copyObj->setRoles($this->getRoles());
+        $copyObj->setEmail($this->getEmail());
+        $copyObj->setFirstname($this->getFirstname());
+        $copyObj->setLastname($this->getLastname());
+        $copyObj->setAvatar($this->getAvatar());
+        $copyObj->setDomain($this->getDomain());
+        $copyObj->setBusiness($this->getBusiness());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1468,6 +1798,12 @@ abstract class BaseUser extends BaseObject implements Persistent
         $this->password = null;
         $this->salt = null;
         $this->roles = null;
+        $this->email = null;
+        $this->firstname = null;
+        $this->lastname = null;
+        $this->avatar = null;
+        $this->domain = null;
+        $this->business = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
