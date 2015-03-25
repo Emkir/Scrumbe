@@ -4,3 +4,7 @@ services:
     user_provider:
         class: Scrumbe\Bundle\UserBundle\Security\User\UserProvider
         arguments: [@user.user_service]
+    form.type.user:
+            class: Scrumbe\Bundle\UserBundle\Form\Type\UserType
+            tags:
+                - { name: form.type, alias: user }

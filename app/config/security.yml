@@ -31,6 +31,6 @@ security:
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/(register|resetting), role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/(register|resetting|scrum|about-us), role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, role: IS_AUTHENTICATED_REMEMBERED }
