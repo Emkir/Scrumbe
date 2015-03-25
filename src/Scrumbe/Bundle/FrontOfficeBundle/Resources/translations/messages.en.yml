@@ -28,7 +28,8 @@ signin:
 
 signup:
     title: SIGN UP FOR FREE
-    namePH: Name
+    lastnamePH: Lastname
+    firstnamePH: Firstname
     mailPH: Email
     pwdPH: Password
     button: SIGN UP FOR FREE

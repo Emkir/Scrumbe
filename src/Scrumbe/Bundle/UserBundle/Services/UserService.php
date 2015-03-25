@@ -18,4 +18,14 @@ class UserService {
         return $userArray;
     }
 
+    public function checkEmail($email)
+    {
+        $user = UserQuery::create()->findOneByEmail($email);
+
+        if (is_null($user))
+            return false;
+
+        return true;
+    }
+
 } 

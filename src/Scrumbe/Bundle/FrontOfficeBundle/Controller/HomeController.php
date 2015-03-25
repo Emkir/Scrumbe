@@ -24,13 +24,13 @@ class HomeController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-//        $signinForm = $this->createForm(new UserType(), null, array(
-//            'action' => $this->generateUrl('scrumbe_post_user')
-//        ));
+        $signinForm = $this->createForm(new UserType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_user')
+        ));
 
         return $this->render('ScrumbeFrontOfficeBundle:Home:index.html.twig', array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-//            'signinForm'    => $signinForm->createView(),
+            'signinForm'    => $signinForm->createView(),
             'error'         => $error
         ));
     }

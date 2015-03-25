@@ -27,7 +27,8 @@ signin:
 
 signup:
     title: INSCRIPTION GRATUITE
-    namePH: Nom
+    lastnamePH: Nom
+    firstnamePH: Prénom
     mailPH: Email
     pwdPH: Mot de passe
     button: VALIDER
