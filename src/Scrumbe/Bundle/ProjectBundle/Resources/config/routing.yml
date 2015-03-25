@@ -31,7 +31,6 @@ scrumbe_delete_project:
     defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }
     requirements:
         projectId: \d+
-        _method: DELETE
 
 scrumbe_get_form_project:
     pattern:  /projects/form/{projectId}

@@ -851,10 +851,9 @@ abstract class BaseProject extends BaseObject implements Persistent
 
             if ($this->linkProjectUsersScheduledForDeletion !== null) {
                 if (!$this->linkProjectUsersScheduledForDeletion->isEmpty()) {
-                    foreach ($this->linkProjectUsersScheduledForDeletion as $linkProjectUser) {
-                        // need to save related object because we set the relation to null
-                        $linkProjectUser->save($con);
-                    }
+                    LinkProjectUserQuery::create()
+                        ->filterByPrimaryKeys($this->linkProjectUsersScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
                     $this->linkProjectUsersScheduledForDeletion = null;
                 }
             }

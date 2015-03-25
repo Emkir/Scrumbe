@@ -71,14 +71,16 @@
                         <span class="close-opt-btn">
                             <img src="/assets/img/icons/close-opt-icon.svg" alt="close icon">
                         </span>
+                    
                         <span class="edit-btn">
                             <img src="/assets/img/icons/edit-project-icon.svg" alt="Éditer">
                         </span>
-                        <span class="delete-btn">
+                    <a href="{{ path('scrumbe_delete_project', {'projectId':project.id}) }}">
+                            <span class="delete-btn">
                             <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
                         </span>
-                    </div>
                     </a>
+                    </div>
                 </div>
                 <div class="info-ctn">
                     <h2>{{project.name}}</h2>
@@ -88,7 +90,7 @@
 
                     <div class="divider"></div>
 
-                    <a href="" class="go-to-btn">Aller sur le projet</a>
+                    <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}" class="go-to-btn">Aller sur le projet</a>
                 </div>
             </li>
         {% else %}

@@ -29,13 +29,13 @@ abstract class BaseUserPeer
     const TM_CLASS = 'Scrumbe\\Models\\map\\UserTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 13;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 13;
 
     /** the column name for the id field */
     const ID = 'user.id';
@@ -51,6 +51,24 @@ abstract class BaseUserPeer
 
     /** the column name for the roles field */
     const ROLES = 'user.roles';
+
+    /** the column name for the email field */
+    const EMAIL = 'user.email';
+
+    /** the column name for the firstname field */
+    const FIRSTNAME = 'user.firstname';
+
+    /** the column name for the lastname field */
+    const LASTNAME = 'user.lastname';
+
+    /** the column name for the avatar field */
+    const AVATAR = 'user.avatar';
+
+    /** the column name for the domain field */
+    const DOMAIN = 'user.domain';
+
+    /** the column name for the business field */
+    const BUSINESS = 'user.business';
 
     /** the column name for the created_at field */
     const CREATED_AT = 'user.created_at';
@@ -77,12 +95,12 @@ abstract class BaseUserPeer
      * e.g. UserPeer::$fieldNames[UserPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'Username', 'Password', 'Salt', 'Roles', 'CreatedAt', 'UpdatedAt', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', 'password', 'salt', 'roles', 'createdAt', 'updatedAt', ),
-        BasePeer::TYPE_COLNAME => array (UserPeer::ID, UserPeer::USERNAME, UserPeer::PASSWORD, UserPeer::SALT, UserPeer::ROLES, UserPeer::CREATED_AT, UserPeer::UPDATED_AT, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USERNAME', 'PASSWORD', 'SALT', 'ROLES', 'CREATED_AT', 'UPDATED_AT', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'password', 'salt', 'roles', 'created_at', 'updated_at', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'Username', 'Password', 'Salt', 'Roles', 'Email', 'Firstname', 'Lastname', 'Avatar', 'Domain', 'Business', 'CreatedAt', 'UpdatedAt', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'username', 'password', 'salt', 'roles', 'email', 'firstname', 'lastname', 'avatar', 'domain', 'business', 'createdAt', 'updatedAt', ),
+        BasePeer::TYPE_COLNAME => array (UserPeer::ID, UserPeer::USERNAME, UserPeer::PASSWORD, UserPeer::SALT, UserPeer::ROLES, UserPeer::EMAIL, UserPeer::FIRSTNAME, UserPeer::LASTNAME, UserPeer::AVATAR, UserPeer::DOMAIN, UserPeer::BUSINESS, UserPeer::CREATED_AT, UserPeer::UPDATED_AT, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USERNAME', 'PASSWORD', 'SALT', 'ROLES', 'EMAIL', 'FIRSTNAME', 'LASTNAME', 'AVATAR', 'DOMAIN', 'BUSINESS', 'CREATED_AT', 'UPDATED_AT', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'username', 'password', 'salt', 'roles', 'email', 'firstname', 'lastname', 'avatar', 'domain', 'business', 'created_at', 'updated_at', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
     );
 
     /**
@@ -92,12 +110,12 @@ abstract class BaseUserPeer
      * e.g. UserPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, 'Password' => 2, 'Salt' => 3, 'Roles' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, 'password' => 2, 'salt' => 3, 'roles' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
-        BasePeer::TYPE_COLNAME => array (UserPeer::ID => 0, UserPeer::USERNAME => 1, UserPeer::PASSWORD => 2, UserPeer::SALT => 3, UserPeer::ROLES => 4, UserPeer::CREATED_AT => 5, UserPeer::UPDATED_AT => 6, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USERNAME' => 1, 'PASSWORD' => 2, 'SALT' => 3, 'ROLES' => 4, 'CREATED_AT' => 5, 'UPDATED_AT' => 6, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'password' => 2, 'salt' => 3, 'roles' => 4, 'created_at' => 5, 'updated_at' => 6, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Username' => 1, 'Password' => 2, 'Salt' => 3, 'Roles' => 4, 'Email' => 5, 'Firstname' => 6, 'Lastname' => 7, 'Avatar' => 8, 'Domain' => 9, 'Business' => 10, 'CreatedAt' => 11, 'UpdatedAt' => 12, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'username' => 1, 'password' => 2, 'salt' => 3, 'roles' => 4, 'email' => 5, 'firstname' => 6, 'lastname' => 7, 'avatar' => 8, 'domain' => 9, 'business' => 10, 'createdAt' => 11, 'updatedAt' => 12, ),
+        BasePeer::TYPE_COLNAME => array (UserPeer::ID => 0, UserPeer::USERNAME => 1, UserPeer::PASSWORD => 2, UserPeer::SALT => 3, UserPeer::ROLES => 4, UserPeer::EMAIL => 5, UserPeer::FIRSTNAME => 6, UserPeer::LASTNAME => 7, UserPeer::AVATAR => 8, UserPeer::DOMAIN => 9, UserPeer::BUSINESS => 10, UserPeer::CREATED_AT => 11, UserPeer::UPDATED_AT => 12, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USERNAME' => 1, 'PASSWORD' => 2, 'SALT' => 3, 'ROLES' => 4, 'EMAIL' => 5, 'FIRSTNAME' => 6, 'LASTNAME' => 7, 'AVATAR' => 8, 'DOMAIN' => 9, 'BUSINESS' => 10, 'CREATED_AT' => 11, 'UPDATED_AT' => 12, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'username' => 1, 'password' => 2, 'salt' => 3, 'roles' => 4, 'email' => 5, 'firstname' => 6, 'lastname' => 7, 'avatar' => 8, 'domain' => 9, 'business' => 10, 'created_at' => 11, 'updated_at' => 12, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, )
     );
 
     /**
@@ -176,6 +194,12 @@ abstract class BaseUserPeer
             $criteria->addSelectColumn(UserPeer::PASSWORD);
             $criteria->addSelectColumn(UserPeer::SALT);
             $criteria->addSelectColumn(UserPeer::ROLES);
+            $criteria->addSelectColumn(UserPeer::EMAIL);
+            $criteria->addSelectColumn(UserPeer::FIRSTNAME);
+            $criteria->addSelectColumn(UserPeer::LASTNAME);
+            $criteria->addSelectColumn(UserPeer::AVATAR);
+            $criteria->addSelectColumn(UserPeer::DOMAIN);
+            $criteria->addSelectColumn(UserPeer::BUSINESS);
             $criteria->addSelectColumn(UserPeer::CREATED_AT);
             $criteria->addSelectColumn(UserPeer::UPDATED_AT);
         } else {
@@ -184,6 +208,12 @@ abstract class BaseUserPeer
             $criteria->addSelectColumn($alias . '.password');
             $criteria->addSelectColumn($alias . '.salt');
             $criteria->addSelectColumn($alias . '.roles');
+            $criteria->addSelectColumn($alias . '.email');
+            $criteria->addSelectColumn($alias . '.firstname');
+            $criteria->addSelectColumn($alias . '.lastname');
+            $criteria->addSelectColumn($alias . '.avatar');
+            $criteria->addSelectColumn($alias . '.domain');
+            $criteria->addSelectColumn($alias . '.business');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
         }

@@ -74,6 +74,7 @@ class ProjectController extends Controller
         $project = new Project;
         $admin = new LinkProjectUser;
 
+        $projectService = $this->container->get('project_service');
         $form = $this->createForm(new ProjectType, $project);
 
         $form->handleRequest($request);
@@ -90,8 +91,10 @@ class ProjectController extends Controller
             {
                 $project->setCoverProject($cover);
             }
-            
-            //Save Project            
+
+            //Save Project  
+            $sanitizeUrl = $projectService->sanitizeProjectNameToUrl($project->getName());
+            $project->setUrlName($sanitizeUrl);          
             $project->save();
 
             //SET Admin
@@ -101,7 +104,7 @@ class ProjectController extends Controller
             $admin->setAdmin($user->getId());
             $admin->save();
 
-            return new JsonResponse(array('project' => $project), Response::HTTP_CREATED);
+            return $this->redirect($this->generateUrl('scrumbe_get_project', array('projectId' => $project->getId(), 'projectName' => $project->getUrlName())));
         }
 
          return new JsonResponse(array('errors' => $form->getErrors()), Response::HTTP_CREATED);
@@ -149,7 +152,7 @@ class ProjectController extends Controller
         $validatorService->objectExistsById($projectId, ProjectQuery::create(), 'project');
         $projectService->deleteProject($projectId);
         
-        return new JsonResponse(array('message' => 'project.delete.success'), Response::HTTP_OK);
+        return $this->redirect($this->generateUrl('scrumbe_get_projects'));
     }
 
     /**

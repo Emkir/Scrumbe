@@ -1,9 +1,11 @@
-#login:
-#    pattern:   /login
-#    defaults:  { _controller: ScrumbeUserBundle:User:login }
-
 login_check:
     pattern:   /login_check
 
 logout:
     pattern:   /logout
+
+scrumbe_post_user:
+    pattern:  /users/create
+    defaults: { _controller: ScrumbeUserBundle:User:postUser }
+    requirements:
+        _method: POST

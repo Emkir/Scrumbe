@@ -24,19 +24,16 @@ class UserProvider implements UserProviderInterface
         {
             $id = $user['id'];
             $password = $user['password'];
-            if(!empty($user['salt']))
-            {
-                $user['salt'];
-            }
-            else
-            {
-                $salt = null;
-            }
+            $salt = $user['salt'];
             $roles = array();
-
-            return new User($id, $username, $password, $salt, $roles);
+            $email = $user['email'];
+            $firstname = $user['firstname'];
+            $lastname = $user['lastname'];
+            $avatar = $user['avatar'];
+            $domain = $user['domain'];
+            $business = $user['business'];
+            return new User($id, $username, $password, $salt, $roles, $email, $firstname, $lastname, $avatar, $domain, $business);
         }
-
         throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
     }
 

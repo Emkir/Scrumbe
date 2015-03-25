@@ -23,6 +23,12 @@ use Scrumbe\Models\UserQuery;
  * @method UserQuery orderByPassword($order = Criteria::ASC) Order by the password column
  * @method UserQuery orderBySalt($order = Criteria::ASC) Order by the salt column
  * @method UserQuery orderByRoles($order = Criteria::ASC) Order by the roles column
+ * @method UserQuery orderByEmail($order = Criteria::ASC) Order by the email column
+ * @method UserQuery orderByFirstname($order = Criteria::ASC) Order by the firstname column
+ * @method UserQuery orderByLastname($order = Criteria::ASC) Order by the lastname column
+ * @method UserQuery orderByAvatar($order = Criteria::ASC) Order by the avatar column
+ * @method UserQuery orderByDomain($order = Criteria::ASC) Order by the domain column
+ * @method UserQuery orderByBusiness($order = Criteria::ASC) Order by the business column
  * @method UserQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method UserQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
@@ -31,6 +37,12 @@ use Scrumbe\Models\UserQuery;
  * @method UserQuery groupByPassword() Group by the password column
  * @method UserQuery groupBySalt() Group by the salt column
  * @method UserQuery groupByRoles() Group by the roles column
+ * @method UserQuery groupByEmail() Group by the email column
+ * @method UserQuery groupByFirstname() Group by the firstname column
+ * @method UserQuery groupByLastname() Group by the lastname column
+ * @method UserQuery groupByAvatar() Group by the avatar column
+ * @method UserQuery groupByDomain() Group by the domain column
+ * @method UserQuery groupByBusiness() Group by the business column
  * @method UserQuery groupByCreatedAt() Group by the created_at column
  * @method UserQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -49,6 +61,12 @@ use Scrumbe\Models\UserQuery;
  * @method User findOneByPassword(string $password) Return the first User filtered by the password column
  * @method User findOneBySalt(string $salt) Return the first User filtered by the salt column
  * @method User findOneByRoles(string $roles) Return the first User filtered by the roles column
+ * @method User findOneByEmail(string $email) Return the first User filtered by the email column
+ * @method User findOneByFirstname(string $firstname) Return the first User filtered by the firstname column
+ * @method User findOneByLastname(string $lastname) Return the first User filtered by the lastname column
+ * @method User findOneByAvatar(string $avatar) Return the first User filtered by the avatar column
+ * @method User findOneByDomain(string $domain) Return the first User filtered by the domain column
+ * @method User findOneByBusiness(string $business) Return the first User filtered by the business column
  * @method User findOneByCreatedAt(string $created_at) Return the first User filtered by the created_at column
  * @method User findOneByUpdatedAt(string $updated_at) Return the first User filtered by the updated_at column
  *
@@ -57,6 +75,12 @@ use Scrumbe\Models\UserQuery;
  * @method array findByPassword(string $password) Return User objects filtered by the password column
  * @method array findBySalt(string $salt) Return User objects filtered by the salt column
  * @method array findByRoles(string $roles) Return User objects filtered by the roles column
+ * @method array findByEmail(string $email) Return User objects filtered by the email column
+ * @method array findByFirstname(string $firstname) Return User objects filtered by the firstname column
+ * @method array findByLastname(string $lastname) Return User objects filtered by the lastname column
+ * @method array findByAvatar(string $avatar) Return User objects filtered by the avatar column
+ * @method array findByDomain(string $domain) Return User objects filtered by the domain column
+ * @method array findByBusiness(string $business) Return User objects filtered by the business column
  * @method array findByCreatedAt(string $created_at) Return User objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return User objects filtered by the updated_at column
  */
@@ -164,7 +188,7 @@ abstract class BaseUserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `username`, `password`, `salt`, `roles`, `created_at`, `updated_at` FROM `user` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `username`, `password`, `salt`, `roles`, `email`, `firstname`, `lastname`, `avatar`, `domain`, `business`, `created_at`, `updated_at` FROM `user` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -409,6 +433,180 @@ abstract class BaseUserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserPeer::ROLES, $roles, $comparison);
+    }
+
+    /**
+     * Filter the query on the email column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByEmail('fooValue');   // WHERE email = 'fooValue'
+     * $query->filterByEmail('%fooValue%'); // WHERE email LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $email The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByEmail($email = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($email)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $email)) {
+                $email = str_replace('*', '%', $email);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::EMAIL, $email, $comparison);
+    }
+
+    /**
+     * Filter the query on the firstname column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByFirstname('fooValue');   // WHERE firstname = 'fooValue'
+     * $query->filterByFirstname('%fooValue%'); // WHERE firstname LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $firstname The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByFirstname($firstname = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($firstname)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $firstname)) {
+                $firstname = str_replace('*', '%', $firstname);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::FIRSTNAME, $firstname, $comparison);
+    }
+
+    /**
+     * Filter the query on the lastname column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLastname('fooValue');   // WHERE lastname = 'fooValue'
+     * $query->filterByLastname('%fooValue%'); // WHERE lastname LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $lastname The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByLastname($lastname = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($lastname)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $lastname)) {
+                $lastname = str_replace('*', '%', $lastname);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::LASTNAME, $lastname, $comparison);
+    }
+
+    /**
+     * Filter the query on the avatar column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByAvatar('fooValue');   // WHERE avatar = 'fooValue'
+     * $query->filterByAvatar('%fooValue%'); // WHERE avatar LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $avatar The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByAvatar($avatar = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($avatar)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $avatar)) {
+                $avatar = str_replace('*', '%', $avatar);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::AVATAR, $avatar, $comparison);
+    }
+
+    /**
+     * Filter the query on the domain column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByDomain('fooValue');   // WHERE domain = 'fooValue'
+     * $query->filterByDomain('%fooValue%'); // WHERE domain LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $domain The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByDomain($domain = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($domain)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $domain)) {
+                $domain = str_replace('*', '%', $domain);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::DOMAIN, $domain, $comparison);
+    }
+
+    /**
+     * Filter the query on the business column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByBusiness('fooValue');   // WHERE business = 'fooValue'
+     * $query->filterByBusiness('%fooValue%'); // WHERE business LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $business The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByBusiness($business = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($business)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $business)) {
+                $business = str_replace('*', '%', $business);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::BUSINESS, $business, $comparison);
     }
 
     /**

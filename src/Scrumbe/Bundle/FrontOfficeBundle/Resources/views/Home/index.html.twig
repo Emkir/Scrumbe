@@ -143,7 +143,7 @@
                 </div>
                 <div class="contain-sign-in">
                     <form action="{{ path('login_check') }}" method="post">
-                        <input type="text" id="username" name="_username" autofocus="autofocus">
+                        <input type="text" id="username" placeholder="{{ 'signin.mailPH'|trans }}" name="_username" autofocus="autofocus">
                         <input type="password" name="_password" placeholder="{{ 'signin.pwdPH'|trans }}" required="required">
                         <input type="submit" value="{{ 'signin.button'|trans }}">
                     </form>
@@ -160,12 +160,13 @@
                     <span class="close-sign-up"><img src="/assets/img/Close_icon.png"></span>
                 </div>
                 <div class="contain-sign-up">
-                    <form action="#" method="post">
-                        <input type="text" placeholder="{{ 'signup.namePH'|trans }}" autofocus required>
-                        <input type="email" placeholder="{{ 'signup.mailPH'|trans }}" required="required">
-                        <input type="password" placeholder="{{ 'signup.pwdPH'|trans }}" required="required">
-                        <input type="submit" value="{{ 'signup.button'|trans }}">
-                    </form>
+                    {{ form_start(signinForm) }}
+                    {{ form_widget(signinForm._token) }}
+                    {{ form_widget(signinForm.email, {"attr": {"required": "required", "placeholder": 'signup.mailPH'} }) }}
+                    {{ form_widget(signinForm.password, {"attr": {"required": "required", "placeholder": 'signup.pwdPH'} }) }}
+                    {{ form_widget(signinForm.lastname, {"attr": {"required": "required", "placeholder": 'signup.lastnamePH'} }) }}
+                    {{ form_widget(signinForm.firstname, {"attr": {"required": "required", "placeholder": 'signup.firstnamePH'} }) }}
+                    <input type="submit" value="{{ 'signup.button'|trans }}">
                     <span>{{ 'signup.signin.word1'|trans }} </span>
                     <span class="sign-in-lk">{{ 'signup.signin.lastword'|trans }}</span>
                 </div>

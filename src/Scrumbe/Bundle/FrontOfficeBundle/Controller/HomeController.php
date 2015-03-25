@@ -2,6 +2,7 @@
 
 namespace Scrumbe\Bundle\FrontOfficeBundle\Controller;
 
+use Scrumbe\Bundle\UserBundle\Form\Type\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -22,8 +23,14 @@ class HomeController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
+
+        $signinForm = $this->createForm(new UserType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_user')
+        ));
+
         return $this->render('ScrumbeFrontOfficeBundle:Home:index.html.twig', array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'signinForm'    => $signinForm->createView(),
             'error'         => $error
         ));
     }

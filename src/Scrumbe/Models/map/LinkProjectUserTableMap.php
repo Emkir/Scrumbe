@@ -56,7 +56,7 @@ class LinkProjectUserTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), null, null);
+        $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), 'CASCADE', null);
         $this->addRelation('User', 'Scrumbe\\Models\\User', RelationMap::MANY_TO_ONE, array('user_id' => 'id', ), null, null);
     } // buildRelations()
 
