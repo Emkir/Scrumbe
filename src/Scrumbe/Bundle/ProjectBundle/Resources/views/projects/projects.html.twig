@@ -135,20 +135,35 @@
                     var token = $(data).find("#project__token");
                     var action = $(data).attr("action");
 
-                    $("#"+projectId).parent().prepend('<li class="edit-project"><form name="project" action="'+action+'" method="POST"><input type="hidden" name="_method" value="PUT"><div class="head-ctn"></div><div class="info-ctn"><div class="btn-ctn"><span class="cancel-project-btn">Annuler</span><input type="submit" id="project_save" name="project[save]" class="valid-project-btn" value="Valider"></div></div></form></li>');
+                    $("#"+projectId).after('<li class="edit-project"><form name="project" action="'+action+'" method="POST"><input type="hidden" name="_method" value="PUT"><div class="head-ctn"></div><div class="info-ctn"><div class="btn-ctn"><span class="cancel-project-btn">Annuler</span><input type="submit" id="project_save" name="project[save]" class="valid-project-btn" value="Valider"></div></div></form></li>');
                     $('.edit-project').find('.head-ctn').append(cover);
+                    $("#project_cover_project").attr("placeholder","Url d'une image");
                     $('.edit-project').find('form').append(token);
                     $('.edit-project').find('.info-ctn').prepend(name);
                     $('#project_name').focus();
                     $("#"+projectId).hide();
+                    $("#"+projectId).find('.option-ctn').velocity({
+                        top: "10px",
+                        opacity: 0
+                    },{
+                        duration: 100,
+                        display: "none"
+                    });
 
-//                    $("#"+projectId).append(data);
+                    $(".edit-project").find('#project_save').click(function(){
+                        $("#"+projectId).show();
+                    });
+
+                    $(".edit-project").find('.cancel-project-btn').click(function(){
+                        $(".edit-project").remove();
+                        $("#"+projectId).show();
+                    });
 
 
                 }).fail(function() {
                     console.log("error");
                 });
-            })
+            });
         })
     </script>
 
