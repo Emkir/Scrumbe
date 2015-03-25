@@ -157,6 +157,9 @@
                     <span class="close-sign-up"><img src="/assets/img/Close_icon.png"></span>
                 </div>
                 <div class="contain-sign-up">
+                    {#{{ form_start(signinForm) }}#}
+
+                    {#{{ form_end(signinForm) }}#}
                     <form action="#" method="post">
                         <input type="text" placeholder="{{ 'signup.namePH'|trans }}" autofocus required>
                         <input type="email" placeholder="{{ 'signup.mailPH'|trans }}" required="required">

@@ -8,4 +8,8 @@ use Symfony\Component\Security\Core\SecurityContext;
 
 class UserController extends Controller
 {
+//    public function signinAction(Request $request)
+//    {
+//
+//    }
 }
