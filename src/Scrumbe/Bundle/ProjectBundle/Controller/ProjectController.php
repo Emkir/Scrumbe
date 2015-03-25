@@ -90,7 +90,7 @@ class ProjectController extends Controller
             {
                 $project->setCoverProject($cover);
             }
-            
+
             //Save Project            
             $project->save();
 
@@ -149,7 +149,7 @@ class ProjectController extends Controller
         $validatorService->objectExistsById($projectId, ProjectQuery::create(), 'project');
         $projectService->deleteProject($projectId);
         
-        return new JsonResponse(array('message' => 'project.delete.success'), Response::HTTP_OK);
+        return $this->redirect($this->generateUrl('scrumbe_get_projects'));
     }
 
     /**

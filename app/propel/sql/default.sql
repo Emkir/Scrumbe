@@ -113,7 +113,8 @@ CREATE TABLE `link_project_user`
     INDEX `link_project_user_FI_2` (`user_id`),
     CONSTRAINT `link_project_user_FK_1`
         FOREIGN KEY (`project_id`)
-        REFERENCES `project` (`id`),
+        REFERENCES `project` (`id`)
+        ON DELETE CASCADE,
     CONSTRAINT `link_project_user_FK_2`
         FOREIGN KEY (`user_id`)
         REFERENCES `user` (`id`)
