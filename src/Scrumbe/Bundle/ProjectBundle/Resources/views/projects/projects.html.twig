@@ -96,6 +96,18 @@
         {% endfor %}
     </ul>
 
+    <script>
+        $(document).ready(function(){
+            var newProject = '<li class="new-project"><form  name="{{ projectCreateForm.vars.name }}" action="{{ projectCreateForm.vars.action }}" method="{{ projectCreateForm.vars.method }}"><div class="head-ctn"><input type="text" class="upload-cover" id="{{ projectCreateForm.cover_project.vars.id }}" name="project[{{ projectCreateForm.cover_project.vars.name }}]" autocomplete="off" placeholder="Ajouter une image" maxlength="{{ projectCreateForm.cover_project.vars.max_length }}"></div><div class="info-ctn"><input type="text" id="{{ projectCreateForm.name.vars.id }}" name="project[{{ projectCreateForm.name.vars.name }}]" autocomplete="off" placeholder="Nom du projet" maxlength="{{ projectCreateForm.name.vars.max_length }}"><div class="add-members"><span>+</span>Ajouter des participants</div><div class="btn-ctn"><span class="cancel-projet-btn">Annuler</span><input type="submit" id="{{ projectCreateForm.save.vars.id }}" name="{{ projectCreateForm.save.vars.name }}" class="valid-project-btn" value="Valider"></div></div><input type="hidden" id="{{ projectCreateForm._token.vars.id }}" name="project[{{ projectCreateForm._token.vars.name }}]" value="{{ projectCreateForm._token.vars.value }}"/></form></li>';
+
+            $('.add-project').click(function(event){
+                event.preventDefault();
+                $('.projects-list').append(newProject);
+                $('#project_name').focus();
+            })
+        })
+    </script>
+
     {#{{ form(projectCreateForm) }}#}
     {#<pre>#}
         {#{{ dump(projectCreateForm) }}#}
