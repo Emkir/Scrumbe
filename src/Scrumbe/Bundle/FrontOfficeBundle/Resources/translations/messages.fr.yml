@@ -59,10 +59,10 @@ home:
 
     item2:
         title:
-            word1:
-            word2:
-            lastword:
-        parag:
+            word1: Lorem ipsum
+            word2: Lorem ipsum
+            lastword: Lorem ipsum
+        parag: Lorem ipsum
 
     item3:
         title:

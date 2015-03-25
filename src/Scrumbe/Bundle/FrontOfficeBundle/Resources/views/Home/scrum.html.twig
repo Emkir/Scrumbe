@@ -3,22 +3,29 @@
 {% block title %}What's Scrum?{% endblock %}
 
 {% block nav %}
-    <nav class="black-nav">
-        <div class="wrapper-nav">
-            <ul>
-                <li>
-                    <a href="{{ path('index') }}" class="pull-left">
-                        <img src="/assets/img/logo.svg">
-                    </a>
-                    <a href="#">{{ 'nav.items.1'|trans }}</a>
-                    <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
-                    <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
-                    <a href="#">{{ 'nav.items.4'|trans }}</a>
-                    <span class="sign-in-btn">{{ 'nav.items.5'|trans }}</span>
-                    <span class="button-green sign-up-btn">{{ 'nav.items.6'|trans }}</span>
-                </li>
-            </ul>
-        </div>
+    <nav class="nav-landing black">
+        <ul class="wrapper">
+            <li class="logo">
+                <a href="{{ path('index') }}">
+                    <img src="/assets/img/logo.svg">
+                </a>
+            </li>
+            <li>
+                <a href="#">{{ 'nav.items.1'|trans }}</a>
+            </li>
+            <li>
+                <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
+            </li>
+            <li>
+                <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
+            </li>
+            <li>
+                <a href="#">{{ 'nav.items.4'|trans }}</a>
+            </li>
+            <li class="sign-in-btn">
+                <span class="btn blue rounded">{{ 'nav.items.5'|trans }}</span>
+            </li>
+        </ul>
     </nav>
 {% endblock %}
 

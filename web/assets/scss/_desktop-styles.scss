@@ -24,7 +24,7 @@ body {
     font-weight: 700;
     position: relative;
 
-    &.violet {
+    &.blue {
         background-color: $blue;
 
         &:hover {
@@ -90,6 +90,8 @@ body {
     &.sticki-nav {
         background-color: $back-nav;
     }
+
+    &.black {background-color: #000;}
 }
 footer {
     width: 100%;
@@ -1239,7 +1241,7 @@ footer {
     position: relative;
     z-index: 10;
 
-    li:not([class=new-project]) {
+    li:not([class=new-project]):not([class=edit-project]) {
         display: inline-block;
         vertical-align: top;
         margin-right: 20px;
@@ -1382,6 +1384,131 @@ footer {
     }
 
     .new-project {
+        vertical-align: top;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        transition: .3s ease;
+        display: inline-block;
+
+        .head-ctn {
+            width: 300px;
+            height: 170px;
+            overflow: hidden;
+            position: absolute;
+            background: #28cee0;
+            z-index: 10;
+            background: -moz-linear-gradient(top,  #28cee0 0%, #8df3ff 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#28cee0), color-stop(100%,#8df3ff));
+            background: -webkit-linear-gradient(top,  #28cee0 0%,#8df3ff 100%);
+            background: -o-linear-gradient(top,  #28cee0 0%,#8df3ff 100%);
+            background: -ms-linear-gradient(top,  #28cee0 0%,#8df3ff 100%);
+            background: linear-gradient(to bottom,  #28cee0 0%,#8df3ff 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28cee0', endColorstr='#8df3ff',GradientType=0 );
+
+            .upload-cover {
+                position: absolute;
+                font-weight: 300;
+                font-family: "Open Sans", sans-serif;
+                color: #000;
+                text-decoration: none;
+                padding: 10px;
+                border-radius: 50px;
+                border: 1px dashed #fff;
+                left: 50%;
+                margin-left: -85px;
+                top: 50%;
+                margin-top: -20px;
+                font-size: rem-calc(15px);
+                text-align: center;
+                outline: none;
+            }
+
+            .cover {
+                width: 100%;
+            }
+        }
+
+        .info-ctn {
+            width: 300px;
+            height: 367px;
+            border: 1px solid #E6EAEE;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+
+            input[type=text] {
+                margin-top: 193px;
+                font-family: "Open Sans", sans-serif;
+                font-size: rem-calc(20px);
+                font-weight: 700;
+                text-align: center;
+                outline: none;
+                border: none;
+                margin-bottom: 20px;
+            }
+
+            .add-members {
+                display: block;
+                font-family: "Open Sans", sans-serif;
+                color: $mauve;
+                font-size: rem-calc(13px);
+                cursor: pointer;
+
+                span {
+                    font-size: rem-calc(20px);
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    display: inline-block;
+                    text-align: center;
+                    border: 1px dashed $mauve;
+                    border-radius: 50px;
+                    margin-right: 5px;
+                }
+            }
+
+            .btn-ctn {
+                position: absolute;
+                bottom: 25px;
+                left: 50%;
+                margin-left: -84px;
+
+                .cancel-project-btn {
+                    vertical-align: middle;
+                    display: inline-block;
+                    color: #858585;
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(13px);
+                    font-weight: 600;
+                    padding: 6px 15px;
+                    border-radius: 50px;
+                    text-decoration: none;
+                    border: none;
+                    cursor: pointer;
+                    margin-right: 10px;
+                }
+
+                .valid-project-btn {
+                    vertical-align: middle;
+                    display: inline-block;
+                    color: #fff;
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(13px);
+                    font-weight: 600;
+                    padding: 6px 15px;
+                    border-radius: 50px;
+                    text-decoration: none;
+                    background-color: #7ABE6F;
+                    border: none;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .edit-project {
         vertical-align: top;
         margin-right: 20px;
         margin-bottom: 20px;

@@ -93,9 +93,9 @@ body {
   font-family: "Montserrat", sans-serif;
   font-weight: 700;
   position: relative; }
-  .btn.violet {
+  .btn.blue {
     background-color: #28CEE0; }
-    .btn.violet:hover {
+    .btn.blue:hover {
       color: #fff;
       background-color: #1babba; }
   .btn.rounded {
@@ -138,6 +138,8 @@ body {
         float: right; }
   .nav-landing.sticki-nav {
     background-color: #121a1f; }
+  .nav-landing.black {
+    background-color: #000; }
 
 footer {
   width: 100%;
@@ -971,25 +973,25 @@ footer {
   box-sizing: border-box;
   position: relative;
   z-index: 10; }
-  .projects-list li:not([class=new-project]) {
+  .projects-list li:not([class=new-project]):not([class=edit-project]) {
     display: inline-block;
     vertical-align: top;
     margin-right: 20px;
     margin-bottom: 20px;
     -webkit-transition: .3s ease;
     transition: .3s ease; }
-    .projects-list li:not([class=new-project]) .head-ctn {
+    .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn {
       width: 300px;
       height: 170px;
       overflow: hidden;
       position: absolute; }
-      .projects-list li:not([class=new-project]) .head-ctn .option-btn {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-btn {
         position: absolute;
         top: 10px;
         right: 10px;
         display: block;
         cursor: pointer; }
-      .projects-list li:not([class=new-project]) .head-ctn .upload-cover {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .upload-cover {
         position: absolute;
         font-weight: 300;
         font-family: "Open Sans", sans-serif;
@@ -1002,9 +1004,9 @@ footer {
         margin-left: -67px;
         top: 50%;
         margin-top: -19px; }
-      .projects-list li:not([class=new-project]) .head-ctn .cover {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .cover {
         width: 100%; }
-      .projects-list li:not([class=new-project]) .head-ctn .option-ctn {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn {
         background-color: rgba(24, 39, 64, 0.9);
         position: absolute;
         top: 10px;
@@ -1012,13 +1014,13 @@ footer {
         height: 100%;
         width: 100%;
         display: none; }
-        .projects-list li:not([class=new-project]) .head-ctn .option-ctn .close-opt-btn {
+        .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .close-opt-btn {
           position: absolute;
           top: 10px;
           right: 10px;
           display: block;
           cursor: pointer; }
-        .projects-list li:not([class=new-project]) .head-ctn .option-ctn .edit-btn {
+        .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .edit-btn {
           position: absolute;
           top: 50%;
           left: 35%;
@@ -1026,14 +1028,14 @@ footer {
           margin-top: -26px;
           display: block;
           cursor: pointer; }
-          .projects-list li:not([class=new-project]) .head-ctn .option-ctn .edit-btn img {
+          .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .edit-btn img {
             -webkit-transition: .1s ease;
             transition: .1s ease; }
-          .projects-list li:not([class=new-project]) .head-ctn .option-ctn .edit-btn:hover img {
+          .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .edit-btn:hover img {
             -webkit-transform: rotateZ(-10deg);
             -ms-transform: rotateZ(-10deg);
             transform: rotateZ(-10deg); }
-        .projects-list li:not([class=new-project]) .head-ctn .option-ctn .delete-btn {
+        .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .delete-btn {
           position: absolute;
           top: 50%;
           right: 35%;
@@ -1041,14 +1043,14 @@ footer {
           margin-top: -26px;
           display: block;
           cursor: pointer; }
-          .projects-list li:not([class=new-project]) .head-ctn .option-ctn .delete-btn img {
+          .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .delete-btn img {
             -webkit-transition: .1s ease;
             transition: .1s ease; }
-          .projects-list li:not([class=new-project]) .head-ctn .option-ctn .delete-btn:hover img {
+          .projects-list li:not([class=new-project]):not([class=edit-project]) .head-ctn .option-ctn .delete-btn:hover img {
             -webkit-transform: rotateZ(-10deg);
             -ms-transform: rotateZ(-10deg);
             transform: rotateZ(-10deg); }
-    .projects-list li:not([class=new-project]) .info-ctn {
+    .projects-list li:not([class=new-project]):not([class=edit-project]) .info-ctn {
       width: 300px;
       height: 367px;
       border: 1px solid #E6EAEE;
@@ -1058,27 +1060,27 @@ footer {
       -moz-box-sizing: border-box;
       box-sizing: border-box;
       text-align: center; }
-      .projects-list li:not([class=new-project]) .info-ctn h2 {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .info-ctn h2 {
         font-family: "Open Sans", sans-serif;
         font-size: 1.25rem;
         font-weight: 700;
         margin-top: 200px;
         margin-bottom: 10px; }
-      .projects-list li:not([class=new-project]) .info-ctn .update {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .info-ctn .update {
         font-family: "Open Sans", sans-serif;
         font-size: 0.8125rem;
         font-weight: 300;
         color: #7F8CA6;
         margin-bottom: 25px; }
-        .projects-list li:not([class=new-project]) .info-ctn .update .date {
+        .projects-list li:not([class=new-project]):not([class=edit-project]) .info-ctn .update .date {
           font-weight: 400; }
-      .projects-list li:not([class=new-project]) .info-ctn .divider {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .info-ctn .divider {
         width: 80px;
         height: 1px;
         background-color: #E6EAEE;
         display: block;
         margin: 0 auto 25px auto; }
-      .projects-list li:not([class=new-project]) .info-ctn .go-to-btn {
+      .projects-list li:not([class=new-project]):not([class=edit-project]) .info-ctn .go-to-btn {
         vertical-align: middle;
         display: inline-block;
         color: #fff;
@@ -1181,6 +1183,110 @@ footer {
           cursor: pointer;
           margin-right: 10px; }
         .projects-list .new-project .info-ctn .btn-ctn .valid-project-btn {
+          vertical-align: middle;
+          display: inline-block;
+          color: #fff;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          padding: 6px 15px;
+          border-radius: 50px;
+          text-decoration: none;
+          background-color: #7ABE6F;
+          border: none;
+          cursor: pointer; }
+  .projects-list .edit-project {
+    vertical-align: top;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    -webkit-transition: .3s ease;
+    transition: .3s ease;
+    display: inline-block; }
+    .projects-list .edit-project .head-ctn {
+      width: 300px;
+      height: 170px;
+      overflow: hidden;
+      position: absolute;
+      background: #28cee0;
+      z-index: 10;
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #28cee0), color-stop(100%, #8df3ff));
+      background: -webkit-linear-gradient(top, #28cee0 0%, #8df3ff 100%);
+      background: -webkit-gradient(linear, left top, left bottom, from(#28cee0), to(#8df3ff));
+      background: linear-gradient(to bottom, #28cee0 0%, #8df3ff 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#28cee0', endColorstr='#8df3ff',GradientType=0 ); }
+      .projects-list .edit-project .head-ctn .upload-cover {
+        position: absolute;
+        font-weight: 300;
+        font-family: "Open Sans", sans-serif;
+        color: #000;
+        text-decoration: none;
+        padding: 10px;
+        border-radius: 50px;
+        border: 1px dashed #fff;
+        left: 50%;
+        margin-left: -85px;
+        top: 50%;
+        margin-top: -20px;
+        font-size: 0.9375rem;
+        text-align: center;
+        outline: none; }
+      .projects-list .edit-project .head-ctn .cover {
+        width: 100%; }
+    .projects-list .edit-project .info-ctn {
+      width: 300px;
+      height: 367px;
+      border: 1px solid #E6EAEE;
+      border-radius: 4px;
+      background-color: #fff;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      text-align: center;
+      position: relative; }
+      .projects-list .edit-project .info-ctn input[type=text] {
+        margin-top: 193px;
+        font-family: "Open Sans", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-align: center;
+        outline: none;
+        border: none;
+        margin-bottom: 20px; }
+      .projects-list .edit-project .info-ctn .add-members {
+        display: block;
+        font-family: "Open Sans", sans-serif;
+        color: #7F8CA6;
+        font-size: 0.8125rem;
+        cursor: pointer; }
+        .projects-list .edit-project .info-ctn .add-members span {
+          font-size: 1.25rem;
+          width: 30px;
+          height: 30px;
+          line-height: 30px;
+          display: inline-block;
+          text-align: center;
+          border: 1px dashed #7F8CA6;
+          border-radius: 50px;
+          margin-right: 5px; }
+      .projects-list .edit-project .info-ctn .btn-ctn {
+        position: absolute;
+        bottom: 25px;
+        left: 50%;
+        margin-left: -84px; }
+        .projects-list .edit-project .info-ctn .btn-ctn .cancel-project-btn {
+          vertical-align: middle;
+          display: inline-block;
+          color: #858585;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          padding: 6px 15px;
+          border-radius: 50px;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          margin-right: 10px; }
+        .projects-list .edit-project .info-ctn .btn-ctn .valid-project-btn {
           vertical-align: middle;
           display: inline-block;
           color: #fff;
