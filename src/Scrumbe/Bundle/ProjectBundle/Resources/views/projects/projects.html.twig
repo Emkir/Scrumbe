@@ -75,11 +75,12 @@
                         <span class="edit-btn">
                             <img src="/assets/img/icons/edit-project-icon.svg" alt="Éditer">
                         </span>
-                    <a href="{{ path('scrumbe_delete_project', {'projectId':project.id}) }}">
-                            <span class="delete-btn">
-                            <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
-                        </span>
-                    </a>
+
+                        <a href="{{ path('scrumbe_delete_project', {'projectId':project.id}) }}">
+                                <span class="delete-btn">
+                                <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
+                            </span>
+                        </a>
                     </div>
                 </div>
                 <div class="info-ctn">
@@ -150,8 +151,29 @@
                         display: "none"
                     });
 
-                    $(".edit-project").find('#project_save').click(function(){
+//                    $(".edit-project").find('#project_save').click(function(){
+//                        $('.edit-project').remove();
+//                        $("#"+projectId).show();
+//                    });
+
+                    $(".edit-project").submit(function( event ) {
+                        // Stop form from submitting normally
+//                        event.preventDefault();
+//
+//                        var action = $(this).find('form').attr("action");
+//
+                        $.post(action, $('.edit-project').find("#project_name").val()).done(function(data){
+                            console.log(data);
+                        });
+//
+//                        $.post(action).done(function(data, jqXHR){
+//                            console.log(data);
+//                            console.log(jqXHR);
+//                        });
+
+                        $('.edit-project').remove();
                         $("#"+projectId).show();
+
                     });
 
                     $(".edit-project").find('.cancel-project-btn').click(function(){
