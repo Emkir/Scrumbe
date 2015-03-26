@@ -148,7 +148,7 @@ class ProjectController extends Controller
             $project->setUrlName($sanitizeUrl);
             $project->save();
 
-            return new JsonResponse(array('project' => $project->toArray(\BasePeer::TYPE_FIELDNAME)), Response::HTTP_OK);
+            return $this->redirect($this->generateUrl('scrumbe_get_projects'));
         }
 
         return new JsonResponse(array('errors' => $form->getErrors()), Response::HTTP_BAD_REQUEST);
