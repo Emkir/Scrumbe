@@ -35,13 +35,31 @@ class HomeController extends Controller
         ));
     }
 
-    public function aboutAction()
+    public function aboutAction(Request $request)
     {
-        return $this->render('ScrumbeFrontOfficeBundle:Home:about-us.html.twig');
+        $session = $request->getSession();
+
+        $signinForm = $this->createForm(new UserType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_user')
+        ));
+
+        return $this->render('ScrumbeFrontOfficeBundle:Home:about-us.html.twig', array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'signinForm'    => $signinForm->createView()
+        ));
     }
 
-    public function scrumAction()
+    public function scrumAction(Request $request)
     {
-        return $this->render('ScrumbeFrontOfficeBundle:Home:scrum.html.twig');
+        $session = $request->getSession();
+
+        $signinForm = $this->createForm(new UserType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_user')
+        ));
+
+        return $this->render('ScrumbeFrontOfficeBundle:Home:scrum.html.twig', array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'signinForm'    => $signinForm->createView()
+        ));
     }
 }
