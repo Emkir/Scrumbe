@@ -91,7 +91,7 @@ body {
         background-color: $back-nav;
     }
 
-    &.black {background-color: #000;}
+    &.black {background-color: $nav;}
 }
 footer {
     width: 100%;
@@ -633,7 +633,7 @@ footer {
             margin: 0 auto;
             line-height: 450px;
             color: #6c7180;
-            font-family: "Open Sans";
+            font-family: "Open Sans", sans-serif;
             font-weight: 300;
 
             .contain-info {
@@ -683,13 +683,13 @@ footer {
         width: 100%;
         height: 450px;
 
-        .wrapper {
+        .wrapper-section {
             max-width: 960px;
             position: relative;
             margin: 0 auto;
             line-height: 450px;
             color: #6c7180;
-            font-family: "Open Sans",sans-serif;
+            font-family: "Open Sans", sans-serif;
             font-weight: 300;
             text-align: right;
 
@@ -697,6 +697,7 @@ footer {
                 vertical-align: middle;
                 display: inline-block;
                 line-height: normal;
+                text-align: right;
 
                 h2 {
                     font-size: rem-calc(34px);
@@ -722,7 +723,7 @@ footer {
                     width: 50px;
                     height: 1px;
                     background: #5cad66;
-                    margin: 20px 0 10px 0;
+                    margin: 20px 0 17px 0;
                     display: inline-block;
                 }
             }
@@ -824,12 +825,12 @@ footer {
     z-index: 5;
     background-color: #fff;
 
-    .wrapper {
+    .wrapper-header-fix {
         max-width: 960px;
         position: relative;
         margin: 0 auto;
         text-align: center;
-        font-family: "proxima_novalight";
+        font-family: "proxima_novalight", sans-serif;
         color: $color-header;
         line-height: 550px;
         height: 450px;
@@ -868,7 +869,7 @@ footer {
     width: 100%;
     font-family: "Open Sans",sans-serif;
 
-    .wrapper {
+    .wrapper-scrum {
         max-width: 960px;
         position: relative;
         margin: 0 auto;
