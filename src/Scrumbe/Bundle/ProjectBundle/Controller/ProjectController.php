@@ -120,19 +120,33 @@ class ProjectController extends Controller
     public function putProjectAction(Request $request, $projectId)
     {
         $validatorService   = $this->container->get('scrumbe.validator_service');
+        $projectService = $this->container->get('project_service');
         $validatorService->objectExistsById($projectId, ProjectQuery::create(), 'project');
 
         $project = ProjectQuery::create()->findPk($projectId);
-        $form = $this->createForm(new ProjectType, $project);
+        $form = $this->createForm(new ProjectType, $project, array('method' => 'PUT'));
 
         $form->handleRequest($request);
 
         if ($form->isValid())
         {
             $project = $form->getData();
+
+            //GET && SET cover
+            $allData = $request->request->all();
+            $projectData = $allData['project'];
+            $cover = $projectData['cover_project'];
+            if($cover !== '')
+            {
+                $project->setCoverProject($cover);
+            }
+
+            //Save Project
+            $sanitizeUrl = $projectService->sanitizeProjectNameToUrl($project->getName());
+            $project->setUrlName($sanitizeUrl);
             $project->save();
 
-            return new JsonResponse(array('project' => $project), Response::HTTP_OK);
+            return new JsonResponse(array('project' => $project->toArray(\BasePeer::TYPE_FIELDNAME)), Response::HTTP_OK);
         }
 
         return new JsonResponse(array('errors' => $form->getErrors()), Response::HTTP_BAD_REQUEST);
