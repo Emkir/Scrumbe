@@ -29,13 +29,13 @@
             <reference local="project_id" foreign="id" />
         </foreign-key>
 
-        <column name="numero" type="varchar" size="255"/>
+        <column name="number" type="varchar" size="255"/>
         <column name="description" type="longvarchar"/>
         <column name="value" type="integer"/>
         <column name="complexity" type="integer"/>
         <column name="ratio" type="float"/>
-        <!--<column name="progress" type="varchar" size="255"/>-->
-        <!--<column name="position" type="int"/>-->
+        <column name="progress" type="varchar" size="255"/>
+        <column name="position" type="integer"/>
         <behavior name="timestampable" />
     </table>
 

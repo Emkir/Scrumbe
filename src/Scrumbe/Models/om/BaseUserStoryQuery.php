@@ -21,21 +21,25 @@ use Scrumbe\Models\UserStoryQuery;
 /**
  * @method UserStoryQuery orderById($order = Criteria::ASC) Order by the id column
  * @method UserStoryQuery orderByProjectId($order = Criteria::ASC) Order by the project_id column
- * @method UserStoryQuery orderByNumero($order = Criteria::ASC) Order by the numero column
+ * @method UserStoryQuery orderByNumber($order = Criteria::ASC) Order by the number column
  * @method UserStoryQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method UserStoryQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method UserStoryQuery orderByComplexity($order = Criteria::ASC) Order by the complexity column
  * @method UserStoryQuery orderByRatio($order = Criteria::ASC) Order by the ratio column
+ * @method UserStoryQuery orderByProgress($order = Criteria::ASC) Order by the progress column
+ * @method UserStoryQuery orderByPosition($order = Criteria::ASC) Order by the position column
  * @method UserStoryQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method UserStoryQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method UserStoryQuery groupById() Group by the id column
  * @method UserStoryQuery groupByProjectId() Group by the project_id column
- * @method UserStoryQuery groupByNumero() Group by the numero column
+ * @method UserStoryQuery groupByNumber() Group by the number column
  * @method UserStoryQuery groupByDescription() Group by the description column
  * @method UserStoryQuery groupByValue() Group by the value column
  * @method UserStoryQuery groupByComplexity() Group by the complexity column
  * @method UserStoryQuery groupByRatio() Group by the ratio column
+ * @method UserStoryQuery groupByProgress() Group by the progress column
+ * @method UserStoryQuery groupByPosition() Group by the position column
  * @method UserStoryQuery groupByCreatedAt() Group by the created_at column
  * @method UserStoryQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -55,21 +59,25 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStory findOneOrCreate(PropelPDO $con = null) Return the first UserStory matching the query, or a new UserStory object populated from the query conditions when no match is found
  *
  * @method UserStory findOneByProjectId(int $project_id) Return the first UserStory filtered by the project_id column
- * @method UserStory findOneByNumero(string $numero) Return the first UserStory filtered by the numero column
+ * @method UserStory findOneByNumber(string $number) Return the first UserStory filtered by the number column
  * @method UserStory findOneByDescription(string $description) Return the first UserStory filtered by the description column
  * @method UserStory findOneByValue(int $value) Return the first UserStory filtered by the value column
  * @method UserStory findOneByComplexity(int $complexity) Return the first UserStory filtered by the complexity column
  * @method UserStory findOneByRatio(double $ratio) Return the first UserStory filtered by the ratio column
+ * @method UserStory findOneByProgress(string $progress) Return the first UserStory filtered by the progress column
+ * @method UserStory findOneByPosition(int $position) Return the first UserStory filtered by the position column
  * @method UserStory findOneByCreatedAt(string $created_at) Return the first UserStory filtered by the created_at column
  * @method UserStory findOneByUpdatedAt(string $updated_at) Return the first UserStory filtered by the updated_at column
  *
  * @method array findById(int $id) Return UserStory objects filtered by the id column
  * @method array findByProjectId(int $project_id) Return UserStory objects filtered by the project_id column
- * @method array findByNumero(string $numero) Return UserStory objects filtered by the numero column
+ * @method array findByNumber(string $number) Return UserStory objects filtered by the number column
  * @method array findByDescription(string $description) Return UserStory objects filtered by the description column
  * @method array findByValue(int $value) Return UserStory objects filtered by the value column
  * @method array findByComplexity(int $complexity) Return UserStory objects filtered by the complexity column
  * @method array findByRatio(double $ratio) Return UserStory objects filtered by the ratio column
+ * @method array findByProgress(string $progress) Return UserStory objects filtered by the progress column
+ * @method array findByPosition(int $position) Return UserStory objects filtered by the position column
  * @method array findByCreatedAt(string $created_at) Return UserStory objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return UserStory objects filtered by the updated_at column
  */
@@ -177,7 +185,7 @@ abstract class BaseUserStoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `project_id`, `numero`, `description`, `value`, `complexity`, `ratio`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `project_id`, `number`, `description`, `value`, `complexity`, `ratio`, `progress`, `position`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -353,32 +361,32 @@ abstract class BaseUserStoryQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the numero column
+     * Filter the query on the number column
      *
      * Example usage:
      * <code>
-     * $query->filterByNumero('fooValue');   // WHERE numero = 'fooValue'
-     * $query->filterByNumero('%fooValue%'); // WHERE numero LIKE '%fooValue%'
+     * $query->filterByNumber('fooValue');   // WHERE number = 'fooValue'
+     * $query->filterByNumber('%fooValue%'); // WHERE number LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $numero The value to use as filter.
+     * @param     string $number The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return UserStoryQuery The current query, for fluid interface
      */
-    public function filterByNumero($numero = null, $comparison = null)
+    public function filterByNumber($number = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($numero)) {
+            if (is_array($number)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $numero)) {
-                $numero = str_replace('*', '%', $numero);
+            } elseif (preg_match('/[\%\*]/', $number)) {
+                $number = str_replace('*', '%', $number);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(UserStoryPeer::NUMERO, $numero, $comparison);
+        return $this->addUsingAlias(UserStoryPeer::NUMBER, $number, $comparison);
     }
 
     /**
@@ -534,6 +542,77 @@ abstract class BaseUserStoryQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserStoryPeer::RATIO, $ratio, $comparison);
+    }
+
+    /**
+     * Filter the query on the progress column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByProgress('fooValue');   // WHERE progress = 'fooValue'
+     * $query->filterByProgress('%fooValue%'); // WHERE progress LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $progress The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserStoryQuery The current query, for fluid interface
+     */
+    public function filterByProgress($progress = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($progress)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $progress)) {
+                $progress = str_replace('*', '%', $progress);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserStoryPeer::PROGRESS, $progress, $comparison);
+    }
+
+    /**
+     * Filter the query on the position column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPosition(1234); // WHERE position = 1234
+     * $query->filterByPosition(array(12, 34)); // WHERE position IN (12, 34)
+     * $query->filterByPosition(array('min' => 12)); // WHERE position >= 12
+     * $query->filterByPosition(array('max' => 12)); // WHERE position <= 12
+     * </code>
+     *
+     * @param     mixed $position The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserStoryQuery The current query, for fluid interface
+     */
+    public function filterByPosition($position = null, $comparison = null)
+    {
+        if (is_array($position)) {
+            $useMinMax = false;
+            if (isset($position['min'])) {
+                $this->addUsingAlias(UserStoryPeer::POSITION, $position['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($position['max'])) {
+                $this->addUsingAlias(UserStoryPeer::POSITION, $position['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(UserStoryPeer::POSITION, $position, $comparison);
     }
 
     /**

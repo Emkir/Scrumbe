@@ -33,11 +33,13 @@ CREATE TABLE `user_story`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `project_id` INTEGER,
-    `numero` VARCHAR(255),
+    `number` VARCHAR(255),
     `description` TEXT,
     `value` INTEGER,
     `complexity` INTEGER,
     `ratio` FLOAT,
+    `progress` VARCHAR(255),
+    `position` INTEGER,
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
@@ -45,6 +47,7 @@ CREATE TABLE `user_story`
     CONSTRAINT `user_story_FK_1`
         FOREIGN KEY (`project_id`)
         REFERENCES `project` (`id`)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 -- ---------------------------------------------------------------------

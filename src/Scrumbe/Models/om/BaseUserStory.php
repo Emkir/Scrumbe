@@ -57,10 +57,10 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     protected $project_id;
 
     /**
-     * The value for the numero field.
+     * The value for the number field.
      * @var        string
      */
-    protected $numero;
+    protected $number;
 
     /**
      * The value for the description field.
@@ -85,6 +85,18 @@ abstract class BaseUserStory extends BaseObject implements Persistent
      * @var        double
      */
     protected $ratio;
+
+    /**
+     * The value for the progress field.
+     * @var        string
+     */
+    protected $progress;
+
+    /**
+     * The value for the position field.
+     * @var        int
+     */
+    protected $position;
 
     /**
      * The value for the created_at field.
@@ -158,14 +170,14 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [numero] column value.
+     * Get the [number] column value.
      *
      * @return string
      */
-    public function getNumero()
+    public function getNumber()
     {
 
-        return $this->numero;
+        return $this->number;
     }
 
     /**
@@ -210,6 +222,28 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     {
 
         return $this->ratio;
+    }
+
+    /**
+     * Get the [progress] column value.
+     *
+     * @return string
+     */
+    public function getProgress()
+    {
+
+        return $this->progress;
+    }
+
+    /**
+     * Get the [position] column value.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+
+        return $this->position;
     }
 
     /**
@@ -339,25 +373,25 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     } // setProjectId()
 
     /**
-     * Set the value of [numero] column.
+     * Set the value of [number] column.
      *
      * @param  string $v new value
      * @return UserStory The current object (for fluent API support)
      */
-    public function setNumero($v)
+    public function setNumber($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->numero !== $v) {
-            $this->numero = $v;
-            $this->modifiedColumns[] = UserStoryPeer::NUMERO;
+        if ($this->number !== $v) {
+            $this->number = $v;
+            $this->modifiedColumns[] = UserStoryPeer::NUMBER;
         }
 
 
         return $this;
-    } // setNumero()
+    } // setNumber()
 
     /**
      * Set the value of [description] column.
@@ -444,6 +478,48 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     } // setRatio()
 
     /**
+     * Set the value of [progress] column.
+     *
+     * @param  string $v new value
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setProgress($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->progress !== $v) {
+            $this->progress = $v;
+            $this->modifiedColumns[] = UserStoryPeer::PROGRESS;
+        }
+
+
+        return $this;
+    } // setProgress()
+
+    /**
+     * Set the value of [position] column.
+     *
+     * @param  int $v new value
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setPosition($v)
+    {
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
+        }
+
+        if ($this->position !== $v) {
+            $this->position = $v;
+            $this->modifiedColumns[] = UserStoryPeer::POSITION;
+        }
+
+
+        return $this;
+    } // setPosition()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
@@ -523,13 +599,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->project_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-            $this->numero = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->number = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
             $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
             $this->value = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
             $this->complexity = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
             $this->ratio = ($row[$startcol + 6] !== null) ? (double) $row[$startcol + 6] : null;
-            $this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-            $this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+            $this->progress = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+            $this->position = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+            $this->created_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+            $this->updated_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -539,7 +617,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 9; // 9 = UserStoryPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = UserStoryPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating UserStory object", $e);
@@ -804,8 +882,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if ($this->isColumnModified(UserStoryPeer::PROJECT_ID)) {
             $modifiedColumns[':p' . $index++]  = '`project_id`';
         }
-        if ($this->isColumnModified(UserStoryPeer::NUMERO)) {
-            $modifiedColumns[':p' . $index++]  = '`numero`';
+        if ($this->isColumnModified(UserStoryPeer::NUMBER)) {
+            $modifiedColumns[':p' . $index++]  = '`number`';
         }
         if ($this->isColumnModified(UserStoryPeer::DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = '`description`';
@@ -818,6 +896,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         }
         if ($this->isColumnModified(UserStoryPeer::RATIO)) {
             $modifiedColumns[':p' . $index++]  = '`ratio`';
+        }
+        if ($this->isColumnModified(UserStoryPeer::PROGRESS)) {
+            $modifiedColumns[':p' . $index++]  = '`progress`';
+        }
+        if ($this->isColumnModified(UserStoryPeer::POSITION)) {
+            $modifiedColumns[':p' . $index++]  = '`position`';
         }
         if ($this->isColumnModified(UserStoryPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
@@ -842,8 +926,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                     case '`project_id`':
                         $stmt->bindValue($identifier, $this->project_id, PDO::PARAM_INT);
                         break;
-                    case '`numero`':
-                        $stmt->bindValue($identifier, $this->numero, PDO::PARAM_STR);
+                    case '`number`':
+                        $stmt->bindValue($identifier, $this->number, PDO::PARAM_STR);
                         break;
                     case '`description`':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
@@ -856,6 +940,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                         break;
                     case '`ratio`':
                         $stmt->bindValue($identifier, $this->ratio, PDO::PARAM_STR);
+                        break;
+                    case '`progress`':
+                        $stmt->bindValue($identifier, $this->progress, PDO::PARAM_STR);
+                        break;
+                    case '`position`':
+                        $stmt->bindValue($identifier, $this->position, PDO::PARAM_INT);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -1024,7 +1114,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 return $this->getProjectId();
                 break;
             case 2:
-                return $this->getNumero();
+                return $this->getNumber();
                 break;
             case 3:
                 return $this->getDescription();
@@ -1039,9 +1129,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 return $this->getRatio();
                 break;
             case 7:
-                return $this->getCreatedAt();
+                return $this->getProgress();
                 break;
             case 8:
+                return $this->getPosition();
+                break;
+            case 9:
+                return $this->getCreatedAt();
+                break;
+            case 10:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1075,13 +1171,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getProjectId(),
-            $keys[2] => $this->getNumero(),
+            $keys[2] => $this->getNumber(),
             $keys[3] => $this->getDescription(),
             $keys[4] => $this->getValue(),
             $keys[5] => $this->getComplexity(),
             $keys[6] => $this->getRatio(),
-            $keys[7] => $this->getCreatedAt(),
-            $keys[8] => $this->getUpdatedAt(),
+            $keys[7] => $this->getProgress(),
+            $keys[8] => $this->getPosition(),
+            $keys[9] => $this->getCreatedAt(),
+            $keys[10] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1136,7 +1234,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 $this->setProjectId($value);
                 break;
             case 2:
-                $this->setNumero($value);
+                $this->setNumber($value);
                 break;
             case 3:
                 $this->setDescription($value);
@@ -1151,9 +1249,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 $this->setRatio($value);
                 break;
             case 7:
-                $this->setCreatedAt($value);
+                $this->setProgress($value);
                 break;
             case 8:
+                $this->setPosition($value);
+                break;
+            case 9:
+                $this->setCreatedAt($value);
+                break;
+            case 10:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1182,13 +1286,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setProjectId($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setNumero($arr[$keys[2]]);
+        if (array_key_exists($keys[2], $arr)) $this->setNumber($arr[$keys[2]]);
         if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
         if (array_key_exists($keys[4], $arr)) $this->setValue($arr[$keys[4]]);
         if (array_key_exists($keys[5], $arr)) $this->setComplexity($arr[$keys[5]]);
         if (array_key_exists($keys[6], $arr)) $this->setRatio($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
-        if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
+        if (array_key_exists($keys[7], $arr)) $this->setProgress($arr[$keys[7]]);
+        if (array_key_exists($keys[8], $arr)) $this->setPosition($arr[$keys[8]]);
+        if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+        if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
     }
 
     /**
@@ -1202,11 +1308,13 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
         if ($this->isColumnModified(UserStoryPeer::ID)) $criteria->add(UserStoryPeer::ID, $this->id);
         if ($this->isColumnModified(UserStoryPeer::PROJECT_ID)) $criteria->add(UserStoryPeer::PROJECT_ID, $this->project_id);
-        if ($this->isColumnModified(UserStoryPeer::NUMERO)) $criteria->add(UserStoryPeer::NUMERO, $this->numero);
+        if ($this->isColumnModified(UserStoryPeer::NUMBER)) $criteria->add(UserStoryPeer::NUMBER, $this->number);
         if ($this->isColumnModified(UserStoryPeer::DESCRIPTION)) $criteria->add(UserStoryPeer::DESCRIPTION, $this->description);
         if ($this->isColumnModified(UserStoryPeer::VALUE)) $criteria->add(UserStoryPeer::VALUE, $this->value);
         if ($this->isColumnModified(UserStoryPeer::COMPLEXITY)) $criteria->add(UserStoryPeer::COMPLEXITY, $this->complexity);
         if ($this->isColumnModified(UserStoryPeer::RATIO)) $criteria->add(UserStoryPeer::RATIO, $this->ratio);
+        if ($this->isColumnModified(UserStoryPeer::PROGRESS)) $criteria->add(UserStoryPeer::PROGRESS, $this->progress);
+        if ($this->isColumnModified(UserStoryPeer::POSITION)) $criteria->add(UserStoryPeer::POSITION, $this->position);
         if ($this->isColumnModified(UserStoryPeer::CREATED_AT)) $criteria->add(UserStoryPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(UserStoryPeer::UPDATED_AT)) $criteria->add(UserStoryPeer::UPDATED_AT, $this->updated_at);
 
@@ -1273,11 +1381,13 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setProjectId($this->getProjectId());
-        $copyObj->setNumero($this->getNumero());
+        $copyObj->setNumber($this->getNumber());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setValue($this->getValue());
         $copyObj->setComplexity($this->getComplexity());
         $copyObj->setRatio($this->getRatio());
+        $copyObj->setProgress($this->getProgress());
+        $copyObj->setPosition($this->getPosition());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1644,11 +1754,13 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     {
         $this->id = null;
         $this->project_id = null;
-        $this->numero = null;
+        $this->number = null;
         $this->description = null;
         $this->value = null;
         $this->complexity = null;
         $this->ratio = null;
+        $this->progress = null;
+        $this->position = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

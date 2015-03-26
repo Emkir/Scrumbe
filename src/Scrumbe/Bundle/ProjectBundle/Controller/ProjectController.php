@@ -43,6 +43,7 @@ class ProjectController extends Controller
     public function getProjectAction($projectId, $projectName)
     {
         $projectService     = $this->container->get('project_service');
+        $userStoryService     = $this->container->get('userstory_service');
         $validatorService   = $this->container->get('scrumbe.validator_service');
 
         $validatorService->objectExistsMultipleColumns(
@@ -57,6 +58,7 @@ class ProjectController extends Controller
         $validatorService->userAccessOnObject($projectId, $this->getUser(), new ProjectQuery(), 'project');
 
         $project = $projectService->getProject($projectId);
+        $project['user_stories'] = $userStoryService->getUserStories($projectId);
 
         return $this->render('ScrumbeProjectBundle:projects:project.html.twig',
             array('project' => $project)
