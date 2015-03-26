@@ -22,9 +22,9 @@ class UserstoryService {
 
         $userStories = UserStoryQuery::create()->filterByProjectId($projectId)->find();
 
-        foreach($userStories as $key => $userStory)
+        foreach($userStories as $userStory)
         {
-            $userStoriesArray[$key] = $this->getUs($projectId,$userStory->getId());
+            $userStoriesArray[$userStory->getProgress()][$userStory->getPosition()] = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
         }
 
         return $userStoriesArray;

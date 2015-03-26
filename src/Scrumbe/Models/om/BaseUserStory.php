@@ -87,6 +87,18 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     protected $ratio;
 
     /**
+     * The value for the progress field.
+     * @var        string
+     */
+    protected $progress;
+
+    /**
+     * The value for the position field.
+     * @var        int
+     */
+    protected $position;
+
+    /**
      * The value for the created_at field.
      * @var        string
      */
@@ -210,6 +222,28 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     {
 
         return $this->ratio;
+    }
+
+    /**
+     * Get the [progress] column value.
+     *
+     * @return string
+     */
+    public function getProgress()
+    {
+
+        return $this->progress;
+    }
+
+    /**
+     * Get the [position] column value.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+
+        return $this->position;
     }
 
     /**
@@ -444,6 +478,48 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     } // setRatio()
 
     /**
+     * Set the value of [progress] column.
+     *
+     * @param  string $v new value
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setProgress($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->progress !== $v) {
+            $this->progress = $v;
+            $this->modifiedColumns[] = UserStoryPeer::PROGRESS;
+        }
+
+
+        return $this;
+    } // setProgress()
+
+    /**
+     * Set the value of [position] column.
+     *
+     * @param  int $v new value
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setPosition($v)
+    {
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
+        }
+
+        if ($this->position !== $v) {
+            $this->position = $v;
+            $this->modifiedColumns[] = UserStoryPeer::POSITION;
+        }
+
+
+        return $this;
+    } // setPosition()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
@@ -528,8 +604,10 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             $this->value = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
             $this->complexity = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
             $this->ratio = ($row[$startcol + 6] !== null) ? (double) $row[$startcol + 6] : null;
-            $this->created_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-            $this->updated_at = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+            $this->progress = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+            $this->position = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
+            $this->created_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+            $this->updated_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -539,7 +617,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 9; // 9 = UserStoryPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 11; // 11 = UserStoryPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating UserStory object", $e);
@@ -819,6 +897,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if ($this->isColumnModified(UserStoryPeer::RATIO)) {
             $modifiedColumns[':p' . $index++]  = '`ratio`';
         }
+        if ($this->isColumnModified(UserStoryPeer::PROGRESS)) {
+            $modifiedColumns[':p' . $index++]  = '`progress`';
+        }
+        if ($this->isColumnModified(UserStoryPeer::POSITION)) {
+            $modifiedColumns[':p' . $index++]  = '`position`';
+        }
         if ($this->isColumnModified(UserStoryPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
@@ -856,6 +940,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                         break;
                     case '`ratio`':
                         $stmt->bindValue($identifier, $this->ratio, PDO::PARAM_STR);
+                        break;
+                    case '`progress`':
+                        $stmt->bindValue($identifier, $this->progress, PDO::PARAM_STR);
+                        break;
+                    case '`position`':
+                        $stmt->bindValue($identifier, $this->position, PDO::PARAM_INT);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -1039,9 +1129,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 return $this->getRatio();
                 break;
             case 7:
-                return $this->getCreatedAt();
+                return $this->getProgress();
                 break;
             case 8:
+                return $this->getPosition();
+                break;
+            case 9:
+                return $this->getCreatedAt();
+                break;
+            case 10:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1080,8 +1176,10 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             $keys[4] => $this->getValue(),
             $keys[5] => $this->getComplexity(),
             $keys[6] => $this->getRatio(),
-            $keys[7] => $this->getCreatedAt(),
-            $keys[8] => $this->getUpdatedAt(),
+            $keys[7] => $this->getProgress(),
+            $keys[8] => $this->getPosition(),
+            $keys[9] => $this->getCreatedAt(),
+            $keys[10] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1151,9 +1249,15 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 $this->setRatio($value);
                 break;
             case 7:
-                $this->setCreatedAt($value);
+                $this->setProgress($value);
                 break;
             case 8:
+                $this->setPosition($value);
+                break;
+            case 9:
+                $this->setCreatedAt($value);
+                break;
+            case 10:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1187,8 +1291,10 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if (array_key_exists($keys[4], $arr)) $this->setValue($arr[$keys[4]]);
         if (array_key_exists($keys[5], $arr)) $this->setComplexity($arr[$keys[5]]);
         if (array_key_exists($keys[6], $arr)) $this->setRatio($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setCreatedAt($arr[$keys[7]]);
-        if (array_key_exists($keys[8], $arr)) $this->setUpdatedAt($arr[$keys[8]]);
+        if (array_key_exists($keys[7], $arr)) $this->setProgress($arr[$keys[7]]);
+        if (array_key_exists($keys[8], $arr)) $this->setPosition($arr[$keys[8]]);
+        if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
+        if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
     }
 
     /**
@@ -1207,6 +1313,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if ($this->isColumnModified(UserStoryPeer::VALUE)) $criteria->add(UserStoryPeer::VALUE, $this->value);
         if ($this->isColumnModified(UserStoryPeer::COMPLEXITY)) $criteria->add(UserStoryPeer::COMPLEXITY, $this->complexity);
         if ($this->isColumnModified(UserStoryPeer::RATIO)) $criteria->add(UserStoryPeer::RATIO, $this->ratio);
+        if ($this->isColumnModified(UserStoryPeer::PROGRESS)) $criteria->add(UserStoryPeer::PROGRESS, $this->progress);
+        if ($this->isColumnModified(UserStoryPeer::POSITION)) $criteria->add(UserStoryPeer::POSITION, $this->position);
         if ($this->isColumnModified(UserStoryPeer::CREATED_AT)) $criteria->add(UserStoryPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(UserStoryPeer::UPDATED_AT)) $criteria->add(UserStoryPeer::UPDATED_AT, $this->updated_at);
 
@@ -1278,6 +1386,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         $copyObj->setValue($this->getValue());
         $copyObj->setComplexity($this->getComplexity());
         $copyObj->setRatio($this->getRatio());
+        $copyObj->setProgress($this->getProgress());
+        $copyObj->setPosition($this->getPosition());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1649,6 +1759,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         $this->value = null;
         $this->complexity = null;
         $this->ratio = null;
+        $this->progress = null;
+        $this->position = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
