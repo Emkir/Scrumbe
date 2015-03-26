@@ -25,7 +25,7 @@
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
 
         <column name="project_id" type="integer"/>
-        <foreign-key foreignTable="project">
+        <foreign-key foreignTable="project" onDelete="CASCADE">
             <reference local="project_id" foreign="id" />
         </foreign-key>
 
@@ -34,6 +34,8 @@
         <column name="value" type="integer"/>
         <column name="complexity" type="integer"/>
         <column name="ratio" type="float"/>
+        <!--<column name="progress" type="varchar" size="255"/>-->
+        <!--<column name="position" type="int"/>-->
         <behavior name="timestampable" />
     </table>
 
