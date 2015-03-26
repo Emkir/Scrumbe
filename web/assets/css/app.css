@@ -1856,6 +1856,15 @@ footer {
               user-select: none; }
   .kanban .column {
     height: inherit; }
+  .kanban .ui-sortable-helper {
+    -webkit-box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    -webkit-transform: rotateZ(-3deg);
+    -ms-transform: rotateZ(-3deg);
+    transform: rotateZ(-3deg); }
+  .kanban .us {
+    -webkit-transition: -webkit-transform .3s ease;
+    transition: transform .3s ease; }
 
 .drop-block {
   background-color: #E8E8E8 !important;

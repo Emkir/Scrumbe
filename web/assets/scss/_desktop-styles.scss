@@ -2219,6 +2219,15 @@ footer {
     .column {
         height: inherit;
     }
+
+    .ui-sortable-helper {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.20);
+        transform: rotateZ(-3deg);
+    }
+
+    .us {
+        transition: transform .3s ease;
+    }
 }
 
 .drop-block {
