@@ -21,7 +21,7 @@ use Scrumbe\Models\UserStoryQuery;
 /**
  * @method UserStoryQuery orderById($order = Criteria::ASC) Order by the id column
  * @method UserStoryQuery orderByProjectId($order = Criteria::ASC) Order by the project_id column
- * @method UserStoryQuery orderByNumero($order = Criteria::ASC) Order by the numero column
+ * @method UserStoryQuery orderByNumber($order = Criteria::ASC) Order by the number column
  * @method UserStoryQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method UserStoryQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method UserStoryQuery orderByComplexity($order = Criteria::ASC) Order by the complexity column
@@ -33,7 +33,7 @@ use Scrumbe\Models\UserStoryQuery;
  *
  * @method UserStoryQuery groupById() Group by the id column
  * @method UserStoryQuery groupByProjectId() Group by the project_id column
- * @method UserStoryQuery groupByNumero() Group by the numero column
+ * @method UserStoryQuery groupByNumber() Group by the number column
  * @method UserStoryQuery groupByDescription() Group by the description column
  * @method UserStoryQuery groupByValue() Group by the value column
  * @method UserStoryQuery groupByComplexity() Group by the complexity column
@@ -59,7 +59,7 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStory findOneOrCreate(PropelPDO $con = null) Return the first UserStory matching the query, or a new UserStory object populated from the query conditions when no match is found
  *
  * @method UserStory findOneByProjectId(int $project_id) Return the first UserStory filtered by the project_id column
- * @method UserStory findOneByNumero(string $numero) Return the first UserStory filtered by the numero column
+ * @method UserStory findOneByNumber(string $number) Return the first UserStory filtered by the number column
  * @method UserStory findOneByDescription(string $description) Return the first UserStory filtered by the description column
  * @method UserStory findOneByValue(int $value) Return the first UserStory filtered by the value column
  * @method UserStory findOneByComplexity(int $complexity) Return the first UserStory filtered by the complexity column
@@ -71,7 +71,7 @@ use Scrumbe\Models\UserStoryQuery;
  *
  * @method array findById(int $id) Return UserStory objects filtered by the id column
  * @method array findByProjectId(int $project_id) Return UserStory objects filtered by the project_id column
- * @method array findByNumero(string $numero) Return UserStory objects filtered by the numero column
+ * @method array findByNumber(string $number) Return UserStory objects filtered by the number column
  * @method array findByDescription(string $description) Return UserStory objects filtered by the description column
  * @method array findByValue(int $value) Return UserStory objects filtered by the value column
  * @method array findByComplexity(int $complexity) Return UserStory objects filtered by the complexity column
@@ -185,7 +185,7 @@ abstract class BaseUserStoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `project_id`, `numero`, `description`, `value`, `complexity`, `ratio`, `progress`, `position`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `project_id`, `number`, `description`, `value`, `complexity`, `ratio`, `progress`, `position`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -361,32 +361,32 @@ abstract class BaseUserStoryQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the numero column
+     * Filter the query on the number column
      *
      * Example usage:
      * <code>
-     * $query->filterByNumero('fooValue');   // WHERE numero = 'fooValue'
-     * $query->filterByNumero('%fooValue%'); // WHERE numero LIKE '%fooValue%'
+     * $query->filterByNumber('fooValue');   // WHERE number = 'fooValue'
+     * $query->filterByNumber('%fooValue%'); // WHERE number LIKE '%fooValue%'
      * </code>
      *
-     * @param     string $numero The value to use as filter.
+     * @param     string $number The value to use as filter.
      *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return UserStoryQuery The current query, for fluid interface
      */
-    public function filterByNumero($numero = null, $comparison = null)
+    public function filterByNumber($number = null, $comparison = null)
     {
         if (null === $comparison) {
-            if (is_array($numero)) {
+            if (is_array($number)) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $numero)) {
-                $numero = str_replace('*', '%', $numero);
+            } elseif (preg_match('/[\%\*]/', $number)) {
+                $number = str_replace('*', '%', $number);
                 $comparison = Criteria::LIKE;
             }
         }
 
-        return $this->addUsingAlias(UserStoryPeer::NUMERO, $numero, $comparison);
+        return $this->addUsingAlias(UserStoryPeer::NUMBER, $number, $comparison);
     }
 
     /**

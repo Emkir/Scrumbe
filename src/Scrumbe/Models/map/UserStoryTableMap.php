@@ -44,7 +44,7 @@ class UserStoryTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignKey('project_id', 'ProjectId', 'INTEGER', 'project', 'id', false, null, null);
-        $this->addColumn('numero', 'Numero', 'VARCHAR', false, 255, null);
+        $this->addColumn('number', 'Number', 'VARCHAR', false, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('value', 'Value', 'INTEGER', false, null, null);
         $this->addColumn('complexity', 'Complexity', 'INTEGER', false, null, null);

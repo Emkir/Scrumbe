@@ -57,10 +57,10 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     protected $project_id;
 
     /**
-     * The value for the numero field.
+     * The value for the number field.
      * @var        string
      */
-    protected $numero;
+    protected $number;
 
     /**
      * The value for the description field.
@@ -170,14 +170,14 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [numero] column value.
+     * Get the [number] column value.
      *
      * @return string
      */
-    public function getNumero()
+    public function getNumber()
     {
 
-        return $this->numero;
+        return $this->number;
     }
 
     /**
@@ -373,25 +373,25 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     } // setProjectId()
 
     /**
-     * Set the value of [numero] column.
+     * Set the value of [number] column.
      *
      * @param  string $v new value
      * @return UserStory The current object (for fluent API support)
      */
-    public function setNumero($v)
+    public function setNumber($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->numero !== $v) {
-            $this->numero = $v;
-            $this->modifiedColumns[] = UserStoryPeer::NUMERO;
+        if ($this->number !== $v) {
+            $this->number = $v;
+            $this->modifiedColumns[] = UserStoryPeer::NUMBER;
         }
 
 
         return $this;
-    } // setNumero()
+    } // setNumber()
 
     /**
      * Set the value of [description] column.
@@ -599,7 +599,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->project_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-            $this->numero = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->number = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
             $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
             $this->value = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
             $this->complexity = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
@@ -882,8 +882,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if ($this->isColumnModified(UserStoryPeer::PROJECT_ID)) {
             $modifiedColumns[':p' . $index++]  = '`project_id`';
         }
-        if ($this->isColumnModified(UserStoryPeer::NUMERO)) {
-            $modifiedColumns[':p' . $index++]  = '`numero`';
+        if ($this->isColumnModified(UserStoryPeer::NUMBER)) {
+            $modifiedColumns[':p' . $index++]  = '`number`';
         }
         if ($this->isColumnModified(UserStoryPeer::DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = '`description`';
@@ -926,8 +926,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                     case '`project_id`':
                         $stmt->bindValue($identifier, $this->project_id, PDO::PARAM_INT);
                         break;
-                    case '`numero`':
-                        $stmt->bindValue($identifier, $this->numero, PDO::PARAM_STR);
+                    case '`number`':
+                        $stmt->bindValue($identifier, $this->number, PDO::PARAM_STR);
                         break;
                     case '`description`':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
@@ -1114,7 +1114,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 return $this->getProjectId();
                 break;
             case 2:
-                return $this->getNumero();
+                return $this->getNumber();
                 break;
             case 3:
                 return $this->getDescription();
@@ -1171,7 +1171,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getProjectId(),
-            $keys[2] => $this->getNumero(),
+            $keys[2] => $this->getNumber(),
             $keys[3] => $this->getDescription(),
             $keys[4] => $this->getValue(),
             $keys[5] => $this->getComplexity(),
@@ -1234,7 +1234,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 $this->setProjectId($value);
                 break;
             case 2:
-                $this->setNumero($value);
+                $this->setNumber($value);
                 break;
             case 3:
                 $this->setDescription($value);
@@ -1286,7 +1286,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setProjectId($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setNumero($arr[$keys[2]]);
+        if (array_key_exists($keys[2], $arr)) $this->setNumber($arr[$keys[2]]);
         if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
         if (array_key_exists($keys[4], $arr)) $this->setValue($arr[$keys[4]]);
         if (array_key_exists($keys[5], $arr)) $this->setComplexity($arr[$keys[5]]);
@@ -1308,7 +1308,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
         if ($this->isColumnModified(UserStoryPeer::ID)) $criteria->add(UserStoryPeer::ID, $this->id);
         if ($this->isColumnModified(UserStoryPeer::PROJECT_ID)) $criteria->add(UserStoryPeer::PROJECT_ID, $this->project_id);
-        if ($this->isColumnModified(UserStoryPeer::NUMERO)) $criteria->add(UserStoryPeer::NUMERO, $this->numero);
+        if ($this->isColumnModified(UserStoryPeer::NUMBER)) $criteria->add(UserStoryPeer::NUMBER, $this->number);
         if ($this->isColumnModified(UserStoryPeer::DESCRIPTION)) $criteria->add(UserStoryPeer::DESCRIPTION, $this->description);
         if ($this->isColumnModified(UserStoryPeer::VALUE)) $criteria->add(UserStoryPeer::VALUE, $this->value);
         if ($this->isColumnModified(UserStoryPeer::COMPLEXITY)) $criteria->add(UserStoryPeer::COMPLEXITY, $this->complexity);
@@ -1381,7 +1381,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setProjectId($this->getProjectId());
-        $copyObj->setNumero($this->getNumero());
+        $copyObj->setNumber($this->getNumber());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setValue($this->getValue());
         $copyObj->setComplexity($this->getComplexity());
@@ -1754,7 +1754,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     {
         $this->id = null;
         $this->project_id = null;
-        $this->numero = null;
+        $this->number = null;
         $this->description = null;
         $this->value = null;
         $this->complexity = null;

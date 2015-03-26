@@ -33,7 +33,7 @@ CREATE TABLE `user_story`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `project_id` INTEGER,
-    `numero` VARCHAR(255),
+    `number` VARCHAR(255),
     `description` TEXT,
     `value` INTEGER,
     `complexity` INTEGER,
