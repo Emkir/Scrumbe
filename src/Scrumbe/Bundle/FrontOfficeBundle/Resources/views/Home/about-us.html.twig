@@ -1,6 +1,6 @@
 {% extends "ScrumbeFrontOfficeBundle:Home:index.html.twig" %}
 
-{% block title %}About Us{% endblock %}
+{% block title %}A propos{% endblock %}
 
 {% block nav %}
     <nav class="nav-landing black">
@@ -11,16 +11,16 @@
                 </a>
             </li>
             <li>
-                <a href="#">{{ 'nav.items.1'|trans }}</a>
+                <a href="{{ path('scrum') }}">{{ 'nav.items.1'|trans }}</a>
             </li>
             <li>
-                <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
+                <a href="{{ path('offres') }}">{{ 'nav.items.2'|trans }}</a>
             </li>
             <li>
-                <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
+                <a href="{{ path('about') }}" class="active">{{ 'nav.items.3'|trans }}</a>
             </li>
             <li>
-                <a href="#">{{ 'nav.items.4'|trans }}</a>
+                <a href="{{ path('contact') }}">{{ 'nav.items.4'|trans }}</a>
             </li>
             <li class="sign-in-btn">
                 <span class="btn blue rounded">{{ 'nav.items.5'|trans }}</span>
@@ -106,15 +106,16 @@
                 <img src="/assets/img/Claude-Guglieri.png">
             </div>
         </section>
-        <section class="contact">
-            <h1>{{ 'aboutus.form.title'|trans }}</h1>
-            <p>{{ 'aboutus.form.parag'|trans }}</p>
-            <form action="#" method="post">
-                <input type="text" placeholder="{{ 'aboutus.form.fullname'|trans }}">
-                <input type="email" placeholder="{{ 'aboutus.form.email'|trans }}">
-                <textarea placeholder="{{ 'aboutus.form.message'|trans }}" rows="10"></textarea>
-                <input type="submit" value="{{ 'aboutus.form.button'|trans }}">
-            </form>
+        <section class="section">
+            <div class="wrapper-section">
+                <div class="contain-info">
+                    <h2><span class="openBold">{{ 'aboutus.item7.firstname'|trans }}</span> {{ 'aboutus.item7.lastname'|trans }}</h2>
+                    <h3>{{ 'aboutus.item7.job'|trans }}</h3>
+                    <div class="divider"></div>
+                    <p>{{ 'aboutus.item7.parag'|trans }}</p>
+                </div>
+                <img src="/assets/img/Claude-Guglieri.png">
+            </div>
         </section>
     </article>
 {% endblock %}

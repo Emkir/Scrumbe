@@ -35,6 +35,34 @@ class HomeController extends Controller
         ));
     }
 
+    public function scrumAction(Request $request)
+    {
+        $session = $request->getSession();
+
+        $signinForm = $this->createForm(new UserType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_user')
+        ));
+
+        return $this->render('ScrumbeFrontOfficeBundle:Home:scrum.html.twig', array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'signinForm'    => $signinForm->createView()
+        ));
+    }
+
+    public function offresAction(Request $request)
+    {
+        $session = $request->getSession();
+
+        $signinForm = $this->createForm(new UserType(), null, array(
+            'action' => $this->generateUrl('scrumbe_post_user')
+        ));
+
+        return $this->render('ScrumbeFrontOfficeBundle:Home:offres.html.twig', array(
+            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+            'signinForm'    => $signinForm->createView()
+        ));
+    }
+
     public function aboutAction(Request $request)
     {
         $session = $request->getSession();
@@ -49,7 +77,7 @@ class HomeController extends Controller
         ));
     }
 
-    public function scrumAction(Request $request)
+    public function contactAction(Request $request)
     {
         $session = $request->getSession();
 
@@ -57,7 +85,7 @@ class HomeController extends Controller
             'action' => $this->generateUrl('scrumbe_post_user')
         ));
 
-        return $this->render('ScrumbeFrontOfficeBundle:Home:scrum.html.twig', array(
+        return $this->render('ScrumbeFrontOfficeBundle:Home:contact.html.twig', array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'signinForm'    => $signinForm->createView()
         ));

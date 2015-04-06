@@ -40,16 +40,16 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">{{ 'nav.items.1'|trans }}</a>
+                        <a href="{{ path('scrum') }}">{{ 'nav.items.1'|trans }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('scrum') }}">{{ 'nav.items.2'|trans }}</a>
+                        <a href="{{ path('offres') }}">{{ 'nav.items.2'|trans }}</a>
                     </li>
                     <li>
                         <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
                     </li>
                     <li>
-                        <a href="#">{{ 'nav.items.4'|trans }}</a>
+                        <a href="{{ path('contact') }}">{{ 'nav.items.4'|trans }}</a>
                     </li>
                     <li class="sign-in-btn">
                         <span class="btn blue rounded">{{ 'nav.items.5'|trans }}</span>
@@ -62,7 +62,7 @@
             <header class="header-home">
                 <div class="wrapper-header">
                     <div class="contain-title">
-                        <h1>With Scrumbe, you can <span class="openBold typed"></span></h1>
+                        <h1>{{ "home.header.title.phrase1"|trans }} <span class="openBold typed"></span></h1>
                         <p>{{ "home.header.parag"|trans }}</p>
                         <span class="sign-up-btn btn blue rounded">{{ 'nav.items.6'|trans }}</span>
                     </div>

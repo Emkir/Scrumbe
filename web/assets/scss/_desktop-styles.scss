@@ -71,6 +71,10 @@ body {
                     color: $blue;
                 }
 
+                &.active {
+                    color: $blue;
+                }
+
                 img {
                     vertical-align: middle;
                     height: $height-nav - 40px;

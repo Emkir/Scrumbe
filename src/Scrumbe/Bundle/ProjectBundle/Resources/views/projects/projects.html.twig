@@ -56,7 +56,6 @@
     </div>
 {% endblock %}
 
-
 {%  block body %}
     <ul class="projects-list">
         {% for project in projects %}
@@ -65,7 +64,6 @@
                     <span class="option-btn">
                         <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
                     </span>
-                    {#<a href="" class="upload-cover">Upload cover</a>#}
                     <img src="{{project.cover_project}}" class="cover" alt="image project"/>
                     <div class="option-ctn">
                         <span class="close-opt-btn">
@@ -106,12 +104,18 @@
             $('.add-project').click(function(event){
                 event.preventDefault();
 
-                if ($('.new-project').is(":visible")){
-                    return false
+                if ($("li").hasClass("oppened")) {
+                    console.log('Tu ne créera point');
+                    return false;
                 }
                 else {
-                    $('.projects-list').append(newProject);
-                    $('#project_name').focus();
+                    if ($('.new-project').is(":visible")){
+                        return false
+                    }
+                    else {
+                        $('.projects-list').append(newProject);
+                        $('#project_name').focus();
+                    }
                 }
             });
 
@@ -123,6 +127,15 @@
     <script>
         $(document).ready(function(){
             $('.edit-btn').click(function(){
+                if ($("li").hasClass("oppened")) {
+                    $("body").find("li.oppened");
+                    console.log("tu n'éditeras point");
+                    return false;
+                }
+                else {
+                    $(this).parent().parent().parent().addClass("oppened");
+                }
+
                 var projectId = $(this).parent().parent().parent().attr("id");
                 var images = $(this).parent().parent().parent().find('img');
                 var coverUrl = images[1].currentSrc;
@@ -142,11 +155,12 @@
 
                     $("#"+projectId).after('<li class="edit-project"><form name="project" action="'+action+'" method="POST"><input type="hidden" name="_method" value="PUT"><div class="head-ctn"></div><div class="info-ctn"><div class="btn-ctn"><span class="cancel-project-btn">Annuler</span><input type="submit" id="project_save" name="project[save]" class="valid-project-btn" value="Valider"></div></div></form></li>');
                     $('.edit-project').find('.head-ctn').append(cover);
+
                     $("#project_cover_project").attr("placeholder","Url d'une image");
-                    if( isDefaultCover != true )
-                    {
+                    if( isDefaultCover != true ) {
                         $("#project_cover_project").attr("value",coverUrl);
                     }
+
                     $('.edit-project').find('form').append(token);
                     $('.edit-project').find('.info-ctn').prepend(name);
                     $('#project_name').focus();
@@ -159,32 +173,15 @@
                         display: "none"
                     });
 
-//                    $(".edit-project").find('#project_save').click(function(){
-//                        $('.edit-project').remove();
-//                        $("#"+projectId).show();
-//                    });
-
-                    $(".edit-project").submit(function( event ) {
-                        // Stop form from submitting normally
-//                        event.preventDefault();
-//
-//                        var action = $(this).find('form').attr("action");
-//
-                        $.post(action, $('.edit-project').find("#project_name").val()).done(function(data){
-                            console.log(data);
-                        });
-//
-//                        $.post(action).done(function(data, jqXHR){
-//                            console.log(data);
-//                            console.log(jqXHR);
-//                        });
-
+                    $(".edit-project").submit(function() {
+                        $.post(action, $('.edit-project').find("#project_name").val());
+                        $(this).parent().parent().removeClass("oppened");
                         $('.edit-project').remove();
                         $("#"+projectId).show();
-
                     });
 
                     $(".edit-project").find('.cancel-project-btn').click(function(){
+                        $("body").find("li.oppened").removeClass("oppened");
                         $(".edit-project").remove();
                         $("#"+projectId).show();
                     });
@@ -195,10 +192,4 @@
             });
         })
     </script>
-
-    {#{{ form(projectCreateForm) }}#}
-    <pre>
-        {#{{ dump(projects) }}#}
-    </pre>
-
 {% endblock %}

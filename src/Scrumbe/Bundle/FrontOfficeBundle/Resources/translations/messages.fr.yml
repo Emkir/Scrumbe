@@ -1,9 +1,9 @@
 nav:
     items:
-        1: FONCTIONNALITÉS
-        2: SCRUM ?
-        3: A PROPOS
-        4: OFFRES
+        1: SCRUM
+        2: OFFRES
+        3: L'ÉQUIPE
+        4: CONTACT
         5: SE CONNECTER
         6: ESSAI GRATUIT
 
@@ -45,6 +45,7 @@ signup:
 home:
     header:
         title:
+            phrase1: Avec Scrumbe,
             word1: Organisez
             word2: et
             word3: gérez
@@ -132,6 +133,12 @@ aboutus:
         lastname: Andrieu
         job: Web-marketeur
         parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+
+    item7:
+          firstname: Maxime
+          lastname: Andrieu
+          job: Web-marketeur
+          parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
 
     form:
         title: Contactez-nous

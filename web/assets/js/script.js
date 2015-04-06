@@ -69,7 +69,7 @@ $(".language-select").selectOrDie({
 // Typed.jquery
 $(function(){
     $(".typed").typed({
-        strings: ["Organize^1500", "Lead^1500", "Handle^1500", "Track^1500"],
+        strings: ["organisez^1500", "dirigez^1500", "managez^1500", "maitrisez^1500", "réussissez^1500" ],
         typeSpeed: 80,
         backSpeed: 100,
         loop: true
