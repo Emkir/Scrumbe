@@ -26,6 +26,12 @@ scrumbe_put_project:
         projectId: \d+
         _method: PUT
 
+scrumbe_add_user_project:
+    pattern:  /projects/{projectId}/adduser
+    defaults: {_controller: ScrumbeProjectBundle:Project:addUsersToProject}
+    requirements:
+        _method: GET
+
 scrumbe_delete_project:
     pattern:  /projects/{projectId}/delete
     defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }

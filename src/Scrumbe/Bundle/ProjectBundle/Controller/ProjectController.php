@@ -5,6 +5,7 @@ use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
 use Scrumbe\Models\LinkProjectUser;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
+use Scrumbe\Models\UserQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -152,6 +153,33 @@ class ProjectController extends Controller
         }
 
         return new JsonResponse(array('errors' => $form->getErrors()), Response::HTTP_BAD_REQUEST);
+    }
+
+    /** 
+    * Add users to a project
+    *
+    * @param Array         $userName       The username's list
+    * @return JSONsonResponse              Response with updated project or errors
+    */
+
+    public function addUsersToProjectAction(Request $request, $projectId)
+    {
+        $project = new Project;
+
+        $username = $request->query->get('username');
+
+        for ($i=0; $i < count($username); $i++) { 
+
+            $link_project_user = new LinkProjectUser;
+            
+            $user_id = UserQuery::create()->filterByUsername($username[$i])->findOne()->getId();
+            $link_project_user->setUserId($user_id)->setProjectId($projectId)->setAdmin(0);     
+            $link_project_user->save();
+
+        }
+        die('stop');
+      
+        return $this->redirect($this->generateUrl('scrumbe_get_projects'));
     }
 
     /**
