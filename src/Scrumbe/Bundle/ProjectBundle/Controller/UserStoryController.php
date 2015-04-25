@@ -5,6 +5,8 @@ namespace Scrumbe\Bundle\ProjectBundle\Controller;
 use Scrumbe\Models\UserStory;
 use Scrumbe\Models\UserStoryQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserStoryController extends Controller
 {
@@ -110,6 +112,17 @@ class UserStoryController extends Controller
         return $this->redirect($this->generateUrl('scrumbe_get_user_stories',array('projectId' => $projectId)));
     }
 
+    public function saveKanbanPositionAction(Request $request, $userStoryId)
+    {
+        $userStoryPosition = $request->request->all();
+        $usService = $this->container->get('userstory_service');
 
+        $validatorService = $this->container->get('scrumbe.validator_service');
+        $validatorService->objectExistsById($userStoryId, UserStoryQuery::create(), 'user_story');
+        $usService->saveKanbanPosition($userStoryId, $userStoryPosition);
+
+        return new JsonResponse(array("code" => JsonResponse::HTTP_OK), JsonResponse::HTTP_OK);
+
+    }
 
 }

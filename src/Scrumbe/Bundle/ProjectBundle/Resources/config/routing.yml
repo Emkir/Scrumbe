@@ -77,6 +77,13 @@ scrumbe_delete_user_story:
         userStoryId: \d+
         _method: GET
 
+scrumbe_kanban_position:
+    pattern: /user-stories/{userStoryId}/kanban-position
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:saveKanbanPosition}
+    requirements:
+        userStoryId: \d+
+        _method: PUT
+
 ###TASKS###
 
 scrumbe_get_tasks:

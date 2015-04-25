@@ -85,5 +85,27 @@ class UserstoryService {
         return true;
     }
 
+    public function saveKanbanPosition($userStoryId, $newPosition)
+    {
+        $userStory = UserStoryQuery::create()->findPk($userStoryId);
+        $userStory->setPosition($newPosition['position']);
+        $userStory->setProgress($newPosition['progress']);
+        $userStory->save();
+
+        $userStoriesInProgress = UserStoryQuery::create()->filterByProjectId($userStory->getProjectId())->filterByProgress($newPosition['progress'])->find();
+        if (!$userStoriesInProgress->isEmpty())
+        {
+            foreach ($userStoriesInProgress as $userStoryInProgress)
+            {
+                $position = $userStoryInProgress->getPosition();
+                if ($userStoryInProgress->getPosition() >= $newPosition['position'])
+                {
+                    $userStoryInProgress->setPosition($position + 1);
+                    $userStoryInProgress->save();
+                }
+            }
+        }
+    }
+
 
 }
