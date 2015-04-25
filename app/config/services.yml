@@ -1,0 +1,4 @@
+services:
+    scrumbe_mailer:
+        class: Scrumbe\Service\MailerService
+        arguments: [@service_container, "%mailer_user%"]

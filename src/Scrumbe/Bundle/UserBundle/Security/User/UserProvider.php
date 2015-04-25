@@ -20,7 +20,7 @@ class UserProvider implements UserProviderInterface
     {
         $user = $this->userService->getUserByUsername($username);
 
-        if (!empty($user))
+        if (!empty($user) && $user['validate'] == true)
         {
             $id = $user['id'];
             $password = $user['password'];
@@ -33,6 +33,10 @@ class UserProvider implements UserProviderInterface
             $domain = $user['domain'];
             $business = $user['business'];
             return new User($id, $username, $password, $salt, $roles, $email, $firstname, $lastname, $avatar, $domain, $business);
+        }
+        elseif (!empty($user) && $user['validate'] == false)
+        {
+            throw new UsernameNotFoundException(sprintf('Username "%s" is not validate.', $username));
         }
         throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
     }

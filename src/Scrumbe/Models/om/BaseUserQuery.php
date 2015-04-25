@@ -29,6 +29,8 @@ use Scrumbe\Models\UserQuery;
  * @method UserQuery orderByAvatar($order = Criteria::ASC) Order by the avatar column
  * @method UserQuery orderByDomain($order = Criteria::ASC) Order by the domain column
  * @method UserQuery orderByBusiness($order = Criteria::ASC) Order by the business column
+ * @method UserQuery orderByValidationToken($order = Criteria::ASC) Order by the validation_token column
+ * @method UserQuery orderByValidate($order = Criteria::ASC) Order by the validate column
  * @method UserQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method UserQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
@@ -43,6 +45,8 @@ use Scrumbe\Models\UserQuery;
  * @method UserQuery groupByAvatar() Group by the avatar column
  * @method UserQuery groupByDomain() Group by the domain column
  * @method UserQuery groupByBusiness() Group by the business column
+ * @method UserQuery groupByValidationToken() Group by the validation_token column
+ * @method UserQuery groupByValidate() Group by the validate column
  * @method UserQuery groupByCreatedAt() Group by the created_at column
  * @method UserQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -67,6 +71,8 @@ use Scrumbe\Models\UserQuery;
  * @method User findOneByAvatar(string $avatar) Return the first User filtered by the avatar column
  * @method User findOneByDomain(string $domain) Return the first User filtered by the domain column
  * @method User findOneByBusiness(string $business) Return the first User filtered by the business column
+ * @method User findOneByValidationToken(string $validation_token) Return the first User filtered by the validation_token column
+ * @method User findOneByValidate(boolean $validate) Return the first User filtered by the validate column
  * @method User findOneByCreatedAt(string $created_at) Return the first User filtered by the created_at column
  * @method User findOneByUpdatedAt(string $updated_at) Return the first User filtered by the updated_at column
  *
@@ -81,6 +87,8 @@ use Scrumbe\Models\UserQuery;
  * @method array findByAvatar(string $avatar) Return User objects filtered by the avatar column
  * @method array findByDomain(string $domain) Return User objects filtered by the domain column
  * @method array findByBusiness(string $business) Return User objects filtered by the business column
+ * @method array findByValidationToken(string $validation_token) Return User objects filtered by the validation_token column
+ * @method array findByValidate(boolean $validate) Return User objects filtered by the validate column
  * @method array findByCreatedAt(string $created_at) Return User objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return User objects filtered by the updated_at column
  */
@@ -188,7 +196,7 @@ abstract class BaseUserQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `username`, `password`, `salt`, `roles`, `email`, `firstname`, `lastname`, `avatar`, `domain`, `business`, `created_at`, `updated_at` FROM `user` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `username`, `password`, `salt`, `roles`, `email`, `firstname`, `lastname`, `avatar`, `domain`, `business`, `validation_token`, `validate`, `created_at`, `updated_at` FROM `user` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -607,6 +615,62 @@ abstract class BaseUserQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserPeer::BUSINESS, $business, $comparison);
+    }
+
+    /**
+     * Filter the query on the validation_token column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByValidationToken('fooValue');   // WHERE validation_token = 'fooValue'
+     * $query->filterByValidationToken('%fooValue%'); // WHERE validation_token LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $validationToken The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByValidationToken($validationToken = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($validationToken)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $validationToken)) {
+                $validationToken = str_replace('*', '%', $validationToken);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserPeer::VALIDATION_TOKEN, $validationToken, $comparison);
+    }
+
+    /**
+     * Filter the query on the validate column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByValidate(true); // WHERE validate = true
+     * $query->filterByValidate('yes'); // WHERE validate = true
+     * </code>
+     *
+     * @param     boolean|string $validate The value to use as filter.
+     *              Non-boolean arguments are converted using the following rules:
+     *                * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *                * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     *              Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserQuery The current query, for fluid interface
+     */
+    public function filterByValidate($validate = null, $comparison = null)
+    {
+        if (is_string($validate)) {
+            $validate = in_array(strtolower($validate), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+        }
+
+        return $this->addUsingAlias(UserPeer::VALIDATE, $validate, $comparison);
     }
 
     /**

@@ -1,6 +1,7 @@
 services:
     user.user_service:
         class: Scrumbe\Bundle\UserBundle\Services\UserService
+        arguments: [@translator, @scrumbe_mailer]
     user_provider:
         class: Scrumbe\Bundle\UserBundle\Security\User\UserProvider
         arguments: [@user.user_service]

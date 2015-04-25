@@ -53,6 +53,8 @@ class UserTableMap extends TableMap
         $this->addColumn('avatar', 'Avatar', 'VARCHAR', false, 255, null);
         $this->addColumn('domain', 'Domain', 'VARCHAR', false, 255, null);
         $this->addColumn('business', 'Business', 'VARCHAR', false, 255, null);
+        $this->addColumn('validation_token', 'ValidationToken', 'VARCHAR', false, 255, null);
+        $this->addColumn('validate', 'Validate', 'BOOLEAN', false, 1, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators
