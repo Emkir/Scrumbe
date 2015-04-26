@@ -90,6 +90,8 @@ CREATE TABLE `user`
     `avatar` VARCHAR(255),
     `domain` VARCHAR(255),
     `business` VARCHAR(255),
+    `validation_token` VARCHAR(255),
+    `validate` TINYINT(1),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),

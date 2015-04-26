@@ -74,6 +74,8 @@
         <column name="avatar" type="varchar" size="255" />
         <column name="domain" type="varchar" size="255" />
         <column name="business" type="varchar" size="255" />
+        <column name="validation_token" type="varchar" size="255" />
+        <column name="validate" type="boolean" />
         <unique>
             <unique-column name="username"/>
         </unique>

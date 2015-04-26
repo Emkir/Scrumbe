@@ -109,6 +109,18 @@ abstract class BaseUser extends BaseObject implements Persistent
     protected $business;
 
     /**
+     * The value for the validation_token field.
+     * @var        string
+     */
+    protected $validation_token;
+
+    /**
+     * The value for the validate field.
+     * @var        boolean
+     */
+    protected $validate;
+
+    /**
      * The value for the created_at field.
      * @var        string
      */
@@ -271,6 +283,28 @@ abstract class BaseUser extends BaseObject implements Persistent
     {
 
         return $this->business;
+    }
+
+    /**
+     * Get the [validation_token] column value.
+     *
+     * @return string
+     */
+    public function getValidationToken()
+    {
+
+        return $this->validation_token;
+    }
+
+    /**
+     * Get the [validate] column value.
+     *
+     * @return boolean
+     */
+    public function getValidate()
+    {
+
+        return $this->validate;
     }
 
     /**
@@ -585,6 +619,56 @@ abstract class BaseUser extends BaseObject implements Persistent
     } // setBusiness()
 
     /**
+     * Set the value of [validation_token] column.
+     *
+     * @param  string $v new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setValidationToken($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->validation_token !== $v) {
+            $this->validation_token = $v;
+            $this->modifiedColumns[] = UserPeer::VALIDATION_TOKEN;
+        }
+
+
+        return $this;
+    } // setValidationToken()
+
+    /**
+     * Sets the value of the [validate] column.
+     * Non-boolean arguments are converted using the following rules:
+     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
+     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
+     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
+     *
+     * @param boolean|integer|string $v The new value
+     * @return User The current object (for fluent API support)
+     */
+    public function setValidate($v)
+    {
+        if ($v !== null) {
+            if (is_string($v)) {
+                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
+            } else {
+                $v = (boolean) $v;
+            }
+        }
+
+        if ($this->validate !== $v) {
+            $this->validate = $v;
+            $this->modifiedColumns[] = UserPeer::VALIDATE;
+        }
+
+
+        return $this;
+    } // setValidate()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
@@ -673,8 +757,10 @@ abstract class BaseUser extends BaseObject implements Persistent
             $this->avatar = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
             $this->domain = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
             $this->business = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-            $this->created_at = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-            $this->updated_at = ($row[$startcol + 12] !== null) ? (string) $row[$startcol + 12] : null;
+            $this->validation_token = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
+            $this->validate = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
+            $this->created_at = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
+            $this->updated_at = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -684,7 +770,7 @@ abstract class BaseUser extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 13; // 13 = UserPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 15; // 15 = UserPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating User object", $e);
@@ -960,6 +1046,12 @@ abstract class BaseUser extends BaseObject implements Persistent
         if ($this->isColumnModified(UserPeer::BUSINESS)) {
             $modifiedColumns[':p' . $index++]  = '`business`';
         }
+        if ($this->isColumnModified(UserPeer::VALIDATION_TOKEN)) {
+            $modifiedColumns[':p' . $index++]  = '`validation_token`';
+        }
+        if ($this->isColumnModified(UserPeer::VALIDATE)) {
+            $modifiedColumns[':p' . $index++]  = '`validate`';
+        }
         if ($this->isColumnModified(UserPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
@@ -1009,6 +1101,12 @@ abstract class BaseUser extends BaseObject implements Persistent
                         break;
                     case '`business`':
                         $stmt->bindValue($identifier, $this->business, PDO::PARAM_STR);
+                        break;
+                    case '`validation_token`':
+                        $stmt->bindValue($identifier, $this->validation_token, PDO::PARAM_STR);
+                        break;
+                    case '`validate`':
+                        $stmt->bindValue($identifier, (int) $this->validate, PDO::PARAM_INT);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -1192,9 +1290,15 @@ abstract class BaseUser extends BaseObject implements Persistent
                 return $this->getBusiness();
                 break;
             case 11:
-                return $this->getCreatedAt();
+                return $this->getValidationToken();
                 break;
             case 12:
+                return $this->getValidate();
+                break;
+            case 13:
+                return $this->getCreatedAt();
+                break;
+            case 14:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1237,8 +1341,10 @@ abstract class BaseUser extends BaseObject implements Persistent
             $keys[8] => $this->getAvatar(),
             $keys[9] => $this->getDomain(),
             $keys[10] => $this->getBusiness(),
-            $keys[11] => $this->getCreatedAt(),
-            $keys[12] => $this->getUpdatedAt(),
+            $keys[11] => $this->getValidationToken(),
+            $keys[12] => $this->getValidate(),
+            $keys[13] => $this->getCreatedAt(),
+            $keys[14] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1317,9 +1423,15 @@ abstract class BaseUser extends BaseObject implements Persistent
                 $this->setBusiness($value);
                 break;
             case 11:
-                $this->setCreatedAt($value);
+                $this->setValidationToken($value);
                 break;
             case 12:
+                $this->setValidate($value);
+                break;
+            case 13:
+                $this->setCreatedAt($value);
+                break;
+            case 14:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1357,8 +1469,10 @@ abstract class BaseUser extends BaseObject implements Persistent
         if (array_key_exists($keys[8], $arr)) $this->setAvatar($arr[$keys[8]]);
         if (array_key_exists($keys[9], $arr)) $this->setDomain($arr[$keys[9]]);
         if (array_key_exists($keys[10], $arr)) $this->setBusiness($arr[$keys[10]]);
-        if (array_key_exists($keys[11], $arr)) $this->setCreatedAt($arr[$keys[11]]);
-        if (array_key_exists($keys[12], $arr)) $this->setUpdatedAt($arr[$keys[12]]);
+        if (array_key_exists($keys[11], $arr)) $this->setValidationToken($arr[$keys[11]]);
+        if (array_key_exists($keys[12], $arr)) $this->setValidate($arr[$keys[12]]);
+        if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
+        if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
     }
 
     /**
@@ -1381,6 +1495,8 @@ abstract class BaseUser extends BaseObject implements Persistent
         if ($this->isColumnModified(UserPeer::AVATAR)) $criteria->add(UserPeer::AVATAR, $this->avatar);
         if ($this->isColumnModified(UserPeer::DOMAIN)) $criteria->add(UserPeer::DOMAIN, $this->domain);
         if ($this->isColumnModified(UserPeer::BUSINESS)) $criteria->add(UserPeer::BUSINESS, $this->business);
+        if ($this->isColumnModified(UserPeer::VALIDATION_TOKEN)) $criteria->add(UserPeer::VALIDATION_TOKEN, $this->validation_token);
+        if ($this->isColumnModified(UserPeer::VALIDATE)) $criteria->add(UserPeer::VALIDATE, $this->validate);
         if ($this->isColumnModified(UserPeer::CREATED_AT)) $criteria->add(UserPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(UserPeer::UPDATED_AT)) $criteria->add(UserPeer::UPDATED_AT, $this->updated_at);
 
@@ -1456,6 +1572,8 @@ abstract class BaseUser extends BaseObject implements Persistent
         $copyObj->setAvatar($this->getAvatar());
         $copyObj->setDomain($this->getDomain());
         $copyObj->setBusiness($this->getBusiness());
+        $copyObj->setValidationToken($this->getValidationToken());
+        $copyObj->setValidate($this->getValidate());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1804,6 +1922,8 @@ abstract class BaseUser extends BaseObject implements Persistent
         $this->avatar = null;
         $this->domain = null;
         $this->business = null;
+        $this->validation_token = null;
+        $this->validate = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

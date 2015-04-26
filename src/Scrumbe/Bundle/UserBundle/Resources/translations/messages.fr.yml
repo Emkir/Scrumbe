@@ -1,0 +1,4 @@
+user:
+    mail:
+        confirm:
+            subject: "Bienvenue sur Scrumbe"

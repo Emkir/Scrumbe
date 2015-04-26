@@ -26,6 +26,12 @@ scrumbe_put_project:
         projectId: \d+
         _method: PUT
 
+scrumbe_add_user_project:
+    pattern:  /projects/{projectId}/adduser
+    defaults: {_controller: ScrumbeProjectBundle:Project:addUsersToProject}
+    requirements:
+        _method: GET
+
 scrumbe_delete_project:
     pattern:  /projects/{projectId}/delete
     defaults: { _controller: ScrumbeProjectBundle:Project:deleteProject }
@@ -76,6 +82,13 @@ scrumbe_delete_user_story:
         projectId: \d+
         userStoryId: \d+
         _method: GET
+
+scrumbe_kanban_position:
+    pattern: /user-stories/{userStoryId}/kanban-position
+    defaults: {_controller: ScrumbeProjectBundle:UserStory:saveKanbanPosition}
+    requirements:
+        userStoryId: \d+
+        _method: PUT
 
 ###TASKS###
 

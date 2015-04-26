@@ -9,3 +9,10 @@ scrumbe_post_user:
     defaults: { _controller: ScrumbeUserBundle:User:postUser }
     requirements:
         _method: POST
+
+scrumbe_validate_user:
+    pattern: /users/{userId}/confirm
+    defaults: { _controller: ScrumbeUserBundle:User:validateUser }
+    requirements:
+        userId: \d+
+        _method: GET
