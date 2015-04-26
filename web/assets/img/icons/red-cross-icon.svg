@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12005) - http://www.bohemiancoding.com/sketch -->
+    <title>Cross_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.0851619112 0" in="shadowBlurOuter1" type="matrix" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="My-Team" sketch:type="MSArtboardGroup" transform="translate(-311.000000, -224.000000)">
+            <g id="Profil_member_1" sketch:type="MSLayerGroup" transform="translate(60.000000, 210.000000)">
+                <g id="Remove-user" transform="translate(130.000000, 15.000000)" sketch:type="MSShapeGroup">
+                    <g id="Cross_icon" transform="translate(123.000000, 0.000000)">
+                        <circle id="Oval-72" fill="#FB3C54" filter="url(#filter-1)" cx="16" cy="16" r="16"></circle>
+                        <path d="M16.0012785,14.1306446 L12.262324,10.3916901 C11.737466,9.86683205 10.9059381,9.87281553 10.3893768,10.3893768 C9.86921416,10.9095395 9.87385124,11.7444851 10.3916901,12.262324 L14.1306446,16.0012785 L10.3916901,19.740233 C9.86683205,20.2650911 9.87281553,21.096619 10.3893768,21.6131802 C10.9095395,22.1333429 11.7444851,22.1287058 12.262324,21.6108669 L16.0012785,17.8719124 L19.740233,21.6108669 C20.2650911,22.135725 21.096619,22.1297415 21.6131802,21.6131802 C22.1333429,21.0930176 22.1287058,20.2580719 21.6108669,19.740233 L17.8719124,16.0012785 L21.6108669,12.262324 C22.135725,11.737466 22.1297415,10.9059381 21.6131802,10.3893768 C21.0930176,9.86921416 20.2580719,9.87385124 19.740233,10.3916901 L16.0012785,14.1306446 Z" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

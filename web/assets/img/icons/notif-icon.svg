@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.1 (12005) - http://www.bohemiancoding.com/sketch -->
+    <title>Notify all team mates</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="My-Team" sketch:type="MSArtboardGroup" transform="translate(-1332.000000, -125.000000)">
+            <g id="Sub_header" sketch:type="MSLayerGroup" transform="translate(0.000000, 70.000000)">
+                <g id="Notify-all-team-mates" transform="translate(1332.000000, 55.000000)" sketch:type="MSShapeGroup">
+                    <rect id="BG" fill="#28CEE0" x="0" y="0" width="48" height="48" rx="29"></rect>
+                    <path d="M24,32 C25.105,32 26,31.104 26,30 L22,30 C22,31.104 22.895,32 24,32 L24,32 Z M29,21 C29,18.238 26.761,16 24,16 C21.239,16 19,18.238 19,21 C19,26.026 16,29 16,29 L32,29 C32,28.999 29,25.984 29,21 L29,21 Z" id="Icon_notification-2" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
