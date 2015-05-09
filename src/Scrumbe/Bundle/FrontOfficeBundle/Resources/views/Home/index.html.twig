@@ -148,6 +148,7 @@
                 </div>
                 <div class="contain-sign-in">
                     <form action="{{ path('login_check') }}" method="post">
+                        {% if errors.loginForm|default %}{{ errors.loginForm|trans }}{% endif %}
                         <input type="text" id="username" placeholder="{{ 'signin.mailPH'|trans }}" name="_username" autofocus="autofocus">
                         <input type="password" name="_password" placeholder="{{ 'signin.pwdPH'|trans }}" required="required">
                         <input type="submit" value="{{ 'signin.button'|trans }}">

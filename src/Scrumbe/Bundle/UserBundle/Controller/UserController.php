@@ -70,6 +70,45 @@ class UserController extends Controller
         return $this->redirect($this->generateUrl('index'));
     }
 
+    public function missingPasswordAction(Request $request)
+    {
+        $userService = $this->container->get('user.user_service');
+        $missingPasswordErrors = array();
+        if (!$requestData = $request->request->has('email'))
+        {
+            $missingPasswordErrors['email'] = "user.missing_password.errors.missing_field";
+        }
+        else
+        {
+            $user = UserQuery::create()->findOneByEmail($request->request->get('email'));
+            if ($user == null)
+                $missingPasswordErrors['email'] = "user.missing_password.errors.unknown";
+        }
+
+        if (empty($missingPasswordErrors['email']))
+        {
+            $this->get('session')->getFlashBag()->set(
+                'missingPasswordErrors',
+                $missingPasswordErrors
+            );
+            return $this->redirect($this->generateUrl('index'));
+        }
+
+        $password = bin2hex(openssl_random_pseudo_bytes(8));
+        $hashedPassword = hash('sha512', $password);
+        $user->setPassword($hashedPassword);
+        $user->save();
+
+        $userService->sendMissingPasswordEmail($request->request->get('email'), $password);
+
+        $this->get('session')->getFlashBag()->add(
+            'success',
+            'user.missing_password.success'
+        );
+
+        return $this->redirect($this->generateUrl('index'));
+    }
+
     public function validateUserAction(Request $request, $userId)
     {
         $token = $request->query->get('token');

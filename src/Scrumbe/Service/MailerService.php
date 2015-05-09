@@ -12,7 +12,7 @@ class MailerService {
         $this->sendFrom = $sendFrom;
     }
 
-    public function sendConfirmEmail($subject = '', $data = array(), $sendTo = '', $template = null)
+    public function sendEmail($subject = '', $data = array(), $sendTo = '', $template = null)
     {
         $message = \Swift_Message::newInstance()
             ->setSubject($subject)

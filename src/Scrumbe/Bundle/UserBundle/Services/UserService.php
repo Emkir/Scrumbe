@@ -41,7 +41,14 @@ class UserService {
     {
         $subject = $this->translator->trans("user.mail.confirm.subject");
 
-        $this->mailService->sendConfirmEmail($subject, $user->toArray(BasePeer::TYPE_FIELDNAME), $user->getEmail(), "ScrumbeUserBundle:Emails:signup_confirm.html.twig");
+        $this->mailService->sendEmail($subject, $user->toArray(BasePeer::TYPE_FIELDNAME), $user->getEmail(), "ScrumbeUserBundle:Emails:signup_confirm.html.twig");
+    }
+
+    public function sendMissingPasswordEmail($email, $password)
+    {
+        $subject = $this->translator->trans("user.mail.missing_password.subject");
+
+        $this->mailService->sendEmail($subject, array("password" => $password), $email, "ScrumbeUserBundle:Emails:missing_password.html.twig");
     }
 
 } 

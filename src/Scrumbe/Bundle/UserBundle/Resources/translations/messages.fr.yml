@@ -2,8 +2,19 @@ user:
     mail:
         confirm:
             subject: "Bienvenue sur Scrumbe"
+        missing_password:
+            subject: "Votre nouveau mot de passe"
+            new_password: "Voici votre nouveau mot de passe, pensez à le modifier lors de votre prochaine connexion"
     create:
-        success: "Vous avez été enregistré avec succès, un email de confirmation a été envoyé à votre adresse mail"
+        success: "Vous avez été inscrit avec succès, un email de confirmation vous a été envoyé"
         errors:
             email:
                 exists: "L'email renseigné existe déjà"
+    login:
+        errors:
+            bad_credentials: "L'email et le mot de passe sont incorrects"
+    missing_password:
+        success: "Un email avec votre nouveau mot de passe vous a été envoyé"
+        errors:
+            missing_field: "L'email est obligatoire"
+            unknown: "L'email renseigné n'existe pas"
