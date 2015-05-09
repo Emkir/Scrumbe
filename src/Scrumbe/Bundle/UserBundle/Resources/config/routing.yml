@@ -10,6 +10,12 @@ scrumbe_post_user:
     requirements:
         _method: POST
 
+scrumbe_missing_password:
+    pattern:  /users/missing_password
+    defaults: { _controller: ScrumbeUserBundle:User:missingPassword }
+    requirements:
+        _method: POST
+
 scrumbe_validate_user:
     pattern: /users/{userId}/confirm
     defaults: { _controller: ScrumbeUserBundle:User:validateUser }
