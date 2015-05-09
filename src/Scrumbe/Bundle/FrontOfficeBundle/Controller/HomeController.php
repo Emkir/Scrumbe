@@ -3,6 +3,7 @@
 namespace Scrumbe\Bundle\FrontOfficeBundle\Controller;
 
 use Scrumbe\Bundle\UserBundle\Form\Type\UserType;
+use Scrumbe\Models\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -16,22 +17,30 @@ class HomeController extends Controller
         }
 
         $session = $request->getSession();
+        $error['signinForm'] = $session->getFlashBag()->get('postUserErrors');
 
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+            $error['loginForm'] = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $error['loginForm'] = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        $signinForm = $this->createForm(new UserType(), null, array(
+        $user = new User();
+        if ($session->getFlashBag()->has('postUserValues'))
+        {
+            $signinValues = $session->getFlashBag()->get('postUserValues');
+            $user->fromArray($signinValues, \BasePeer::TYPE_FIELDNAME);
+        }
+
+        $signinForm = $this->createForm(new UserType(), $user, array(
             'action' => $this->generateUrl('scrumbe_post_user')
         ));
 
         return $this->render('ScrumbeFrontOfficeBundle:Home:index.html.twig', array(
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'signinForm'    => $signinForm->createView(),
-            'error'         => $error
+            'errors'         => $error
         ));
     }
 

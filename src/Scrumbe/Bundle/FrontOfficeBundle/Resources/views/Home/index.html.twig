@@ -59,6 +59,11 @@
         {% endblock %}
 
         {% block body %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="flash-notice">
+                    {{ flashMessage|trans }}
+                </div>
+            {% endfor %}
             <header class="header-home">
                 <div class="wrapper-header">
                     <div class="contain-title">
@@ -163,9 +168,13 @@
                     {{ form_start(signinForm) }}
                     {{ form_widget(signinForm._token) }}
                     {{ form_widget(signinForm.email, {"attr": {"required": "required", "placeholder": 'signup.mailPH'} }) }}
+                    {% if errors.signinForm.email|default %}{{ errors.signinForm.email|trans }}{% endif %}
                     {{ form_widget(signinForm.password, {"attr": {"required": "required", "placeholder": 'signup.pwdPH'} }) }}
+                    {% if errors.signinForm.password|default %}{{ errors.signinForm.password|trans }}{% endif %}
                     {{ form_widget(signinForm.lastname, {"attr": {"required": "required", "placeholder": 'signup.lastnamePH'} }) }}
+                    {% if errors.signinForm.lastname|default %}{{ errors.signinForm.lastname|trans }}{% endif %}
                     {{ form_widget(signinForm.firstname, {"attr": {"required": "required", "placeholder": 'signup.firstnamePH'} }) }}
+                    {% if errors.signinForm.firstname|default %}{{ errors.signinForm.firstname|trans }}{% endif %}
                     <input type="submit" value="{{ 'signup.button'|trans }}">
                     <span>{{ 'signup.signin.word1'|trans }} </span>
                     <span class="sign-in-lk">{{ 'signup.signin.lastword'|trans }}</span>
