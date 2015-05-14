@@ -16,15 +16,23 @@ class TaskService {
         $this->container = $container;
     }
 
-    public function getTasks($usId)
+    public function getKanbanTasks($projectId)
     {
         $tasksArray = array();
 
-        $tasks = TaskQuery::create()->filterByUserStoryId($usId)->find();
+        $tasks = TaskQuery::create()
+            ->useUserStoryQuery()
+                ->filterByProjectId($projectId)
+            ->endUse()
+            ->orderByPosition()
+            ->find();
 
-        foreach($tasks as $key=>$task)
+        foreach($tasks as $task)
         {
-            $tasksArray[$key] = $this->getTask($usId,$task->getId());
+            $tasksArray[$task->getProgress()][$task->getPosition()] = $task->toArray(BasePeer::TYPE_FIELDNAME);
+            $userStory = $task->getUserStory();
+            $tasksArray[$task->getProgress()][$task->getPosition()]['label'] = $userStory->getLabel();
+            $tasksArray[$task->getProgress()][$task->getPosition()]['priority'] = $userStory->getPriority();
         }
 
         return $tasksArray;

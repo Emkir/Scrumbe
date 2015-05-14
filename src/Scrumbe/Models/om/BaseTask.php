@@ -65,6 +65,18 @@ abstract class BaseTask extends BaseObject implements Persistent
     protected $description;
 
     /**
+     * The value for the position field.
+     * @var        int
+     */
+    protected $position;
+
+    /**
+     * The value for the progress field.
+     * @var        string
+     */
+    protected $progress;
+
+    /**
      * The value for the created_at field.
      * @var        string
      */
@@ -143,6 +155,28 @@ abstract class BaseTask extends BaseObject implements Persistent
     {
 
         return $this->description;
+    }
+
+    /**
+     * Get the [position] column value.
+     *
+     * @return int
+     */
+    public function getPosition()
+    {
+
+        return $this->position;
+    }
+
+    /**
+     * Get the [progress] column value.
+     *
+     * @return string
+     */
+    public function getProgress()
+    {
+
+        return $this->progress;
     }
 
     /**
@@ -314,6 +348,48 @@ abstract class BaseTask extends BaseObject implements Persistent
     } // setDescription()
 
     /**
+     * Set the value of [position] column.
+     *
+     * @param  int $v new value
+     * @return Task The current object (for fluent API support)
+     */
+    public function setPosition($v)
+    {
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
+        }
+
+        if ($this->position !== $v) {
+            $this->position = $v;
+            $this->modifiedColumns[] = TaskPeer::POSITION;
+        }
+
+
+        return $this;
+    } // setPosition()
+
+    /**
+     * Set the value of [progress] column.
+     *
+     * @param  string $v new value
+     * @return Task The current object (for fluent API support)
+     */
+    public function setProgress($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->progress !== $v) {
+            $this->progress = $v;
+            $this->modifiedColumns[] = TaskPeer::PROGRESS;
+        }
+
+
+        return $this;
+    } // setProgress()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
@@ -395,8 +471,10 @@ abstract class BaseTask extends BaseObject implements Persistent
             $this->user_story_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
             $this->time = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
             $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->created_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-            $this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->position = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
+            $this->progress = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
+            $this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -406,7 +484,7 @@ abstract class BaseTask extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 6; // 6 = TaskPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 8; // 8 = TaskPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating Task object", $e);
@@ -657,6 +735,12 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($this->isColumnModified(TaskPeer::DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = '`description`';
         }
+        if ($this->isColumnModified(TaskPeer::POSITION)) {
+            $modifiedColumns[':p' . $index++]  = '`position`';
+        }
+        if ($this->isColumnModified(TaskPeer::PROGRESS)) {
+            $modifiedColumns[':p' . $index++]  = '`progress`';
+        }
         if ($this->isColumnModified(TaskPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
@@ -685,6 +769,12 @@ abstract class BaseTask extends BaseObject implements Persistent
                         break;
                     case '`description`':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
+                        break;
+                    case '`position`':
+                        $stmt->bindValue($identifier, $this->position, PDO::PARAM_INT);
+                        break;
+                    case '`progress`':
+                        $stmt->bindValue($identifier, $this->progress, PDO::PARAM_STR);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -851,9 +941,15 @@ abstract class BaseTask extends BaseObject implements Persistent
                 return $this->getDescription();
                 break;
             case 4:
-                return $this->getCreatedAt();
+                return $this->getPosition();
                 break;
             case 5:
+                return $this->getProgress();
+                break;
+            case 6:
+                return $this->getCreatedAt();
+                break;
+            case 7:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -889,8 +985,10 @@ abstract class BaseTask extends BaseObject implements Persistent
             $keys[1] => $this->getUserStoryId(),
             $keys[2] => $this->getTime(),
             $keys[3] => $this->getDescription(),
-            $keys[4] => $this->getCreatedAt(),
-            $keys[5] => $this->getUpdatedAt(),
+            $keys[4] => $this->getPosition(),
+            $keys[5] => $this->getProgress(),
+            $keys[6] => $this->getCreatedAt(),
+            $keys[7] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -948,9 +1046,15 @@ abstract class BaseTask extends BaseObject implements Persistent
                 $this->setDescription($value);
                 break;
             case 4:
-                $this->setCreatedAt($value);
+                $this->setPosition($value);
                 break;
             case 5:
+                $this->setProgress($value);
+                break;
+            case 6:
+                $this->setCreatedAt($value);
+                break;
+            case 7:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -981,8 +1085,10 @@ abstract class BaseTask extends BaseObject implements Persistent
         if (array_key_exists($keys[1], $arr)) $this->setUserStoryId($arr[$keys[1]]);
         if (array_key_exists($keys[2], $arr)) $this->setTime($arr[$keys[2]]);
         if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
+        if (array_key_exists($keys[4], $arr)) $this->setPosition($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setProgress($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
+        if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
     }
 
     /**
@@ -998,6 +1104,8 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($this->isColumnModified(TaskPeer::USER_STORY_ID)) $criteria->add(TaskPeer::USER_STORY_ID, $this->user_story_id);
         if ($this->isColumnModified(TaskPeer::TIME)) $criteria->add(TaskPeer::TIME, $this->time);
         if ($this->isColumnModified(TaskPeer::DESCRIPTION)) $criteria->add(TaskPeer::DESCRIPTION, $this->description);
+        if ($this->isColumnModified(TaskPeer::POSITION)) $criteria->add(TaskPeer::POSITION, $this->position);
+        if ($this->isColumnModified(TaskPeer::PROGRESS)) $criteria->add(TaskPeer::PROGRESS, $this->progress);
         if ($this->isColumnModified(TaskPeer::CREATED_AT)) $criteria->add(TaskPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(TaskPeer::UPDATED_AT)) $criteria->add(TaskPeer::UPDATED_AT, $this->updated_at);
 
@@ -1066,6 +1174,8 @@ abstract class BaseTask extends BaseObject implements Persistent
         $copyObj->setUserStoryId($this->getUserStoryId());
         $copyObj->setTime($this->getTime());
         $copyObj->setDescription($this->getDescription());
+        $copyObj->setPosition($this->getPosition());
+        $copyObj->setProgress($this->getProgress());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1187,6 +1297,8 @@ abstract class BaseTask extends BaseObject implements Persistent
         $this->user_story_id = null;
         $this->time = null;
         $this->description = null;
+        $this->position = null;
+        $this->progress = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

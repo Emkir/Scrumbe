@@ -16,7 +16,7 @@ class UserstoryService {
         $this->container = $container;
     }
 
-    public function getUserStories($projectId)
+    public function getKanbanUserStories($projectId)
     {
         $userStoriesArray = array();
 

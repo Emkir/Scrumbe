@@ -46,6 +46,8 @@ class TaskTableMap extends TableMap
         $this->addForeignKey('user_story_id', 'UserStoryId', 'INTEGER', 'user_story', 'id', false, null, null);
         $this->addColumn('time', 'Time', 'VARCHAR', false, 255, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
+        $this->addColumn('position', 'Position', 'INTEGER', false, null, null);
+        $this->addColumn('progress', 'Progress', 'VARCHAR', false, 255, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators

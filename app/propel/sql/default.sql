@@ -86,6 +86,8 @@ CREATE TABLE `task`
     `user_story_id` INTEGER,
     `time` VARCHAR(255),
     `description` TEXT,
+    `position` INTEGER,
+    `progress` VARCHAR(255),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),

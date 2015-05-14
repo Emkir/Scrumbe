@@ -22,6 +22,8 @@ use Scrumbe\Models\UserStory;
  * @method TaskQuery orderByUserStoryId($order = Criteria::ASC) Order by the user_story_id column
  * @method TaskQuery orderByTime($order = Criteria::ASC) Order by the time column
  * @method TaskQuery orderByDescription($order = Criteria::ASC) Order by the description column
+ * @method TaskQuery orderByPosition($order = Criteria::ASC) Order by the position column
+ * @method TaskQuery orderByProgress($order = Criteria::ASC) Order by the progress column
  * @method TaskQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method TaskQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
@@ -29,6 +31,8 @@ use Scrumbe\Models\UserStory;
  * @method TaskQuery groupByUserStoryId() Group by the user_story_id column
  * @method TaskQuery groupByTime() Group by the time column
  * @method TaskQuery groupByDescription() Group by the description column
+ * @method TaskQuery groupByPosition() Group by the position column
+ * @method TaskQuery groupByProgress() Group by the progress column
  * @method TaskQuery groupByCreatedAt() Group by the created_at column
  * @method TaskQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -46,6 +50,8 @@ use Scrumbe\Models\UserStory;
  * @method Task findOneByUserStoryId(int $user_story_id) Return the first Task filtered by the user_story_id column
  * @method Task findOneByTime(string $time) Return the first Task filtered by the time column
  * @method Task findOneByDescription(string $description) Return the first Task filtered by the description column
+ * @method Task findOneByPosition(int $position) Return the first Task filtered by the position column
+ * @method Task findOneByProgress(string $progress) Return the first Task filtered by the progress column
  * @method Task findOneByCreatedAt(string $created_at) Return the first Task filtered by the created_at column
  * @method Task findOneByUpdatedAt(string $updated_at) Return the first Task filtered by the updated_at column
  *
@@ -53,6 +59,8 @@ use Scrumbe\Models\UserStory;
  * @method array findByUserStoryId(int $user_story_id) Return Task objects filtered by the user_story_id column
  * @method array findByTime(string $time) Return Task objects filtered by the time column
  * @method array findByDescription(string $description) Return Task objects filtered by the description column
+ * @method array findByPosition(int $position) Return Task objects filtered by the position column
+ * @method array findByProgress(string $progress) Return Task objects filtered by the progress column
  * @method array findByCreatedAt(string $created_at) Return Task objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return Task objects filtered by the updated_at column
  */
@@ -160,7 +168,7 @@ abstract class BaseTaskQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `user_story_id`, `time`, `description`, `created_at`, `updated_at` FROM `task` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `user_story_id`, `time`, `description`, `position`, `progress`, `created_at`, `updated_at` FROM `task` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -391,6 +399,77 @@ abstract class BaseTaskQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(TaskPeer::DESCRIPTION, $description, $comparison);
+    }
+
+    /**
+     * Filter the query on the position column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPosition(1234); // WHERE position = 1234
+     * $query->filterByPosition(array(12, 34)); // WHERE position IN (12, 34)
+     * $query->filterByPosition(array('min' => 12)); // WHERE position >= 12
+     * $query->filterByPosition(array('max' => 12)); // WHERE position <= 12
+     * </code>
+     *
+     * @param     mixed $position The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return TaskQuery The current query, for fluid interface
+     */
+    public function filterByPosition($position = null, $comparison = null)
+    {
+        if (is_array($position)) {
+            $useMinMax = false;
+            if (isset($position['min'])) {
+                $this->addUsingAlias(TaskPeer::POSITION, $position['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($position['max'])) {
+                $this->addUsingAlias(TaskPeer::POSITION, $position['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(TaskPeer::POSITION, $position, $comparison);
+    }
+
+    /**
+     * Filter the query on the progress column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByProgress('fooValue');   // WHERE progress = 'fooValue'
+     * $query->filterByProgress('%fooValue%'); // WHERE progress LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $progress The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return TaskQuery The current query, for fluid interface
+     */
+    public function filterByProgress($progress = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($progress)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $progress)) {
+                $progress = str_replace('*', '%', $progress);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(TaskPeer::PROGRESS, $progress, $comparison);
     }
 
     /**

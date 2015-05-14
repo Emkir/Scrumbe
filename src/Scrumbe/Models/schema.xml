@@ -74,6 +74,8 @@
 
         <column name="time" type="varchar" size="255"/>
         <column name="description" type="longvarchar"/>
+        <column name="position" type="integer"/>
+        <column name="progress" type="varchar" size="255"/>
         <behavior name="timestampable" />
     </table>
 
