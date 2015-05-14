@@ -122,7 +122,6 @@ class UserStoryController extends Controller
         $usService->saveKanbanPosition($userStoryId, $userStoryPosition);
 
         return new JsonResponse(array("code" => JsonResponse::HTTP_OK), JsonResponse::HTTP_OK);
-
     }
 
 }

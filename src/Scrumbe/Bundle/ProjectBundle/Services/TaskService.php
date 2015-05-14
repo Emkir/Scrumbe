@@ -92,5 +92,54 @@ class TaskService {
         return true;
     }
 
+    public function saveKanbanPosition($taskId, $taskPosition)
+    {
+        $task = TaskQuery::create()->findPk($taskId);
+        $oldProgress = $task->getProgress();
+        $oldPosition = $task->getPosition();
+        $task->setPosition($taskPosition['position']);
+        $task->setProgress($taskPosition['progress']);
+        $task->save();
+
+        $tasksInNewProgress = TaskQuery::create()
+            ->useUserStoryQuery()
+                ->filterByProjectId($task->getUserStory()->getProjectId())
+            ->endUse()
+            ->filterByProgress($taskPosition['progress'])
+            ->find();
+
+        if (!$tasksInNewProgress->isEmpty())
+        {
+            foreach ($tasksInNewProgress as $taskInNewProgress)
+            {
+                $position = $taskInNewProgress->getPosition();
+                if ($position >= $taskPosition['position'] && $taskInNewProgress->getId() != $taskId)
+                {
+                    $taskInNewProgress->setPosition($position + 1);
+                    $taskInNewProgress->save();
+                }
+            }
+        }
+
+        $tasksInOldProgress = TaskQuery::create()
+            ->useUserStoryQuery()
+                ->filterByProjectId($task->getUserStory()->getProjectId())
+            ->endUse()
+            ->filterByProgress($oldProgress)
+            ->find();
+
+        if (!$tasksInOldProgress->isEmpty())
+        {
+            foreach ($tasksInOldProgress as $taskInOldProgress)
+            {
+                $position = $taskInOldProgress->getPosition();
+                if ($position > $oldPosition)
+                {
+                    $taskInOldProgress->setPosition($position - 1);
+                    $taskInOldProgress->save();
+                }
+            }
+        }
+    }
 
 }
