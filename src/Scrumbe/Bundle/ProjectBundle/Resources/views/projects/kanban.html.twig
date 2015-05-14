@@ -123,7 +123,7 @@
                                 <p>{{ us.description }}</p>
                             </div>
                             <div class="footer">
-                                <span class="tasks">2</span>
+                                <span class="tasks">{{ us.task_count }}</span>
                                 <div class="priority-ctn">
                                     <span class="{{ us.priority }}">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
                                 </div>

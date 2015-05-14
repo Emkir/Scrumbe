@@ -25,6 +25,7 @@ class UserstoryService {
         foreach($userStories as $userStory)
         {
             $userStoriesArray[$userStory->getPosition()] = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
+            $userStoriesArray[$userStory->getPosition()]['task_count'] = count($userStory->getTasks());
         }
 
         return $userStoriesArray;

@@ -21,9 +21,6 @@ class HomeController extends Controller
 
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error['loginForm'] = "user.login.errors.bad_credentials";
-        } else {
-            $error['loginForm'] = "user.login.errors.bad_credentials";
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
         $user = new User();
