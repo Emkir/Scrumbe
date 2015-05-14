@@ -20,11 +20,11 @@ class UserstoryService {
     {
         $userStoriesArray = array();
 
-        $userStories = UserStoryQuery::create()->filterByProjectId($projectId)->find();
+        $userStories = UserStoryQuery::create()->filterByProjectId($projectId)->orderByPosition()->find();
 
         foreach($userStories as $userStory)
         {
-            $userStoriesArray[$userStory->getProgress()][$userStory->getPosition()] = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
+            $userStoriesArray[$userStory->getPosition()] = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
         }
 
         return $userStoriesArray;
@@ -89,19 +89,18 @@ class UserstoryService {
     {
         $userStory = UserStoryQuery::create()->findPk($userStoryId);
         $userStory->setPosition($newPosition['position']);
-        $userStory->setProgress($newPosition['progress']);
         $userStory->save();
 
-        $userStoriesInProgress = UserStoryQuery::create()->filterByProjectId($userStory->getProjectId())->filterByProgress($newPosition['progress'])->find();
-        if (!$userStoriesInProgress->isEmpty())
+        $userStoriesInSprint = UserStoryQuery::create()->filterByProjectId($userStory->getProjectId())->find();
+        if (!$userStoriesInSprint->isEmpty())
         {
-            foreach ($userStoriesInProgress as $userStoryInProgress)
+            foreach ($userStoriesInSprint as $userStoryInSprint)
             {
-                $position = $userStoryInProgress->getPosition();
-                if ($userStoryInProgress->getPosition() >= $newPosition['position'])
+                $position = $userStoryInSprint->getPosition();
+                if ($userStoryInSprint->getPosition() >= $newPosition['position'] && $userStoryInSprint->getId() != $userStoryId)
                 {
-                    $userStoryInProgress->setPosition($position + 1);
-                    $userStoryInProgress->save();
+                    $userStoryInSprint->setPosition($position + 1);
+                    $userStoryInSprint->save();
                 }
             }
         }

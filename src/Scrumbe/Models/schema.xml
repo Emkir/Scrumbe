@@ -16,6 +16,25 @@
         <behavior name="timestampable" />
     </table>
 
+    <table name="sprint">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+
+        <column name="project_id" type="integer"/>
+        <foreign-key foreignTable="project" onDelete="CASCADE">
+            <reference local="project_id" foreign="id" />
+        </foreign-key>
+
+        <column name="name" type="varchar" size="255"/>
+        <column name="start_date" type="date"/>
+        <column name="end_date" type="date"/>
+        <behavior name="timestampable" />
+    </table>
+
     <table name="user_story">
         <vendor type="mysql">
             <parameter name="Engine" value="InnoDB" />
@@ -34,8 +53,9 @@
         <column name="value" type="integer"/>
         <column name="complexity" type="integer"/>
         <column name="ratio" type="float"/>
-        <column name="progress" type="varchar" size="255"/>
         <column name="position" type="integer"/>
+        <column name="priority" type="varchar" size="255"/>
+        <column name="label" type="varchar" size="255"/>
         <behavior name="timestampable" />
     </table>
 
@@ -100,12 +120,32 @@
         </foreign-key>
 
         <column name="user_id" type="integer"/>
-        <foreign-key foreignTable="user">
+        <foreign-key foreignTable="user" onDelete="CASCADE">
             <reference local="user_id" foreign="id" />
         </foreign-key>
 
         <column name="admin" type="boolean" />
 
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="link_user_story_sprint">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+
+        <column name="user_story_id" type="integer"/>
+        <foreign-key foreignTable="user_story" onDelete="CASCADE">
+            <reference local="user_story_id" foreign="id" />
+        </foreign-key>
+
+        <column name="sprint_id" type="integer"/>
+        <foreign-key foreignTable="sprint" onDelete="CASCADE">
+            <reference local="sprint_id" foreign="id" />
+        </foreign-key>
         <behavior name="timestampable" />
     </table>
 </database>

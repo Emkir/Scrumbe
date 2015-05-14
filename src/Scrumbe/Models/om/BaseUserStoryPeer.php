@@ -9,6 +9,7 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
+use Scrumbe\Models\LinkUserStorySprintPeer;
 use Scrumbe\Models\ProjectPeer;
 use Scrumbe\Models\UserStory;
 use Scrumbe\Models\UserStoryPeer;
@@ -30,13 +31,13 @@ abstract class BaseUserStoryPeer
     const TM_CLASS = 'Scrumbe\\Models\\map\\UserStoryTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 11;
+    const NUM_COLUMNS = 12;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 11;
+    const NUM_HYDRATE_COLUMNS = 12;
 
     /** the column name for the id field */
     const ID = 'user_story.id';
@@ -59,11 +60,14 @@ abstract class BaseUserStoryPeer
     /** the column name for the ratio field */
     const RATIO = 'user_story.ratio';
 
-    /** the column name for the progress field */
-    const PROGRESS = 'user_story.progress';
-
     /** the column name for the position field */
     const POSITION = 'user_story.position';
+
+    /** the column name for the priority field */
+    const PRIORITY = 'user_story.priority';
+
+    /** the column name for the label field */
+    const LABEL = 'user_story.label';
 
     /** the column name for the created_at field */
     const CREATED_AT = 'user_story.created_at';
@@ -90,12 +94,12 @@ abstract class BaseUserStoryPeer
      * e.g. UserStoryPeer::$fieldNames[UserStoryPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'ProjectId', 'Number', 'Description', 'Value', 'Complexity', 'Ratio', 'Progress', 'Position', 'CreatedAt', 'UpdatedAt', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projectId', 'number', 'description', 'value', 'complexity', 'ratio', 'progress', 'position', 'createdAt', 'updatedAt', ),
-        BasePeer::TYPE_COLNAME => array (UserStoryPeer::ID, UserStoryPeer::PROJECT_ID, UserStoryPeer::NUMBER, UserStoryPeer::DESCRIPTION, UserStoryPeer::VALUE, UserStoryPeer::COMPLEXITY, UserStoryPeer::RATIO, UserStoryPeer::PROGRESS, UserStoryPeer::POSITION, UserStoryPeer::CREATED_AT, UserStoryPeer::UPDATED_AT, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'PROJECT_ID', 'NUMBER', 'DESCRIPTION', 'VALUE', 'COMPLEXITY', 'RATIO', 'PROGRESS', 'POSITION', 'CREATED_AT', 'UPDATED_AT', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'project_id', 'number', 'description', 'value', 'complexity', 'ratio', 'progress', 'position', 'created_at', 'updated_at', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'ProjectId', 'Number', 'Description', 'Value', 'Complexity', 'Ratio', 'Position', 'Priority', 'Label', 'CreatedAt', 'UpdatedAt', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projectId', 'number', 'description', 'value', 'complexity', 'ratio', 'position', 'priority', 'label', 'createdAt', 'updatedAt', ),
+        BasePeer::TYPE_COLNAME => array (UserStoryPeer::ID, UserStoryPeer::PROJECT_ID, UserStoryPeer::NUMBER, UserStoryPeer::DESCRIPTION, UserStoryPeer::VALUE, UserStoryPeer::COMPLEXITY, UserStoryPeer::RATIO, UserStoryPeer::POSITION, UserStoryPeer::PRIORITY, UserStoryPeer::LABEL, UserStoryPeer::CREATED_AT, UserStoryPeer::UPDATED_AT, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'PROJECT_ID', 'NUMBER', 'DESCRIPTION', 'VALUE', 'COMPLEXITY', 'RATIO', 'POSITION', 'PRIORITY', 'LABEL', 'CREATED_AT', 'UPDATED_AT', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'project_id', 'number', 'description', 'value', 'complexity', 'ratio', 'position', 'priority', 'label', 'created_at', 'updated_at', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -105,12 +109,12 @@ abstract class BaseUserStoryPeer
      * e.g. UserStoryPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjectId' => 1, 'Number' => 2, 'Description' => 3, 'Value' => 4, 'Complexity' => 5, 'Ratio' => 6, 'Progress' => 7, 'Position' => 8, 'CreatedAt' => 9, 'UpdatedAt' => 10, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projectId' => 1, 'number' => 2, 'description' => 3, 'value' => 4, 'complexity' => 5, 'ratio' => 6, 'progress' => 7, 'position' => 8, 'createdAt' => 9, 'updatedAt' => 10, ),
-        BasePeer::TYPE_COLNAME => array (UserStoryPeer::ID => 0, UserStoryPeer::PROJECT_ID => 1, UserStoryPeer::NUMBER => 2, UserStoryPeer::DESCRIPTION => 3, UserStoryPeer::VALUE => 4, UserStoryPeer::COMPLEXITY => 5, UserStoryPeer::RATIO => 6, UserStoryPeer::PROGRESS => 7, UserStoryPeer::POSITION => 8, UserStoryPeer::CREATED_AT => 9, UserStoryPeer::UPDATED_AT => 10, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'PROJECT_ID' => 1, 'NUMBER' => 2, 'DESCRIPTION' => 3, 'VALUE' => 4, 'COMPLEXITY' => 5, 'RATIO' => 6, 'PROGRESS' => 7, 'POSITION' => 8, 'CREATED_AT' => 9, 'UPDATED_AT' => 10, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'project_id' => 1, 'number' => 2, 'description' => 3, 'value' => 4, 'complexity' => 5, 'ratio' => 6, 'progress' => 7, 'position' => 8, 'created_at' => 9, 'updated_at' => 10, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjectId' => 1, 'Number' => 2, 'Description' => 3, 'Value' => 4, 'Complexity' => 5, 'Ratio' => 6, 'Position' => 7, 'Priority' => 8, 'Label' => 9, 'CreatedAt' => 10, 'UpdatedAt' => 11, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projectId' => 1, 'number' => 2, 'description' => 3, 'value' => 4, 'complexity' => 5, 'ratio' => 6, 'position' => 7, 'priority' => 8, 'label' => 9, 'createdAt' => 10, 'updatedAt' => 11, ),
+        BasePeer::TYPE_COLNAME => array (UserStoryPeer::ID => 0, UserStoryPeer::PROJECT_ID => 1, UserStoryPeer::NUMBER => 2, UserStoryPeer::DESCRIPTION => 3, UserStoryPeer::VALUE => 4, UserStoryPeer::COMPLEXITY => 5, UserStoryPeer::RATIO => 6, UserStoryPeer::POSITION => 7, UserStoryPeer::PRIORITY => 8, UserStoryPeer::LABEL => 9, UserStoryPeer::CREATED_AT => 10, UserStoryPeer::UPDATED_AT => 11, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'PROJECT_ID' => 1, 'NUMBER' => 2, 'DESCRIPTION' => 3, 'VALUE' => 4, 'COMPLEXITY' => 5, 'RATIO' => 6, 'POSITION' => 7, 'PRIORITY' => 8, 'LABEL' => 9, 'CREATED_AT' => 10, 'UPDATED_AT' => 11, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'project_id' => 1, 'number' => 2, 'description' => 3, 'value' => 4, 'complexity' => 5, 'ratio' => 6, 'position' => 7, 'priority' => 8, 'label' => 9, 'created_at' => 10, 'updated_at' => 11, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -191,8 +195,9 @@ abstract class BaseUserStoryPeer
             $criteria->addSelectColumn(UserStoryPeer::VALUE);
             $criteria->addSelectColumn(UserStoryPeer::COMPLEXITY);
             $criteria->addSelectColumn(UserStoryPeer::RATIO);
-            $criteria->addSelectColumn(UserStoryPeer::PROGRESS);
             $criteria->addSelectColumn(UserStoryPeer::POSITION);
+            $criteria->addSelectColumn(UserStoryPeer::PRIORITY);
+            $criteria->addSelectColumn(UserStoryPeer::LABEL);
             $criteria->addSelectColumn(UserStoryPeer::CREATED_AT);
             $criteria->addSelectColumn(UserStoryPeer::UPDATED_AT);
         } else {
@@ -203,8 +208,9 @@ abstract class BaseUserStoryPeer
             $criteria->addSelectColumn($alias . '.value');
             $criteria->addSelectColumn($alias . '.complexity');
             $criteria->addSelectColumn($alias . '.ratio');
-            $criteria->addSelectColumn($alias . '.progress');
             $criteria->addSelectColumn($alias . '.position');
+            $criteria->addSelectColumn($alias . '.priority');
+            $criteria->addSelectColumn($alias . '.label');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
         }
@@ -411,6 +417,9 @@ abstract class BaseUserStoryPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in LinkUserStorySprintPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        LinkUserStorySprintPeer::clearInstancePool();
     }
 
     /**

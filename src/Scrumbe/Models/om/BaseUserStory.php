@@ -15,6 +15,8 @@ use \PropelDateTime;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\LinkUserStorySprint;
+use Scrumbe\Models\LinkUserStorySprintQuery;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Scrumbe\Models\Task;
@@ -87,16 +89,22 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     protected $ratio;
 
     /**
-     * The value for the progress field.
-     * @var        string
-     */
-    protected $progress;
-
-    /**
      * The value for the position field.
      * @var        int
      */
     protected $position;
+
+    /**
+     * The value for the priority field.
+     * @var        string
+     */
+    protected $priority;
+
+    /**
+     * The value for the label field.
+     * @var        string
+     */
+    protected $label;
 
     /**
      * The value for the created_at field.
@@ -120,6 +128,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
      */
     protected $collTasks;
     protected $collTasksPartial;
+
+    /**
+     * @var        PropelObjectCollection|LinkUserStorySprint[] Collection to store aggregation of LinkUserStorySprint objects.
+     */
+    protected $collLinkUserStorySprints;
+    protected $collLinkUserStorySprintsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -146,6 +160,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
      * @var		PropelObjectCollection
      */
     protected $tasksScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $linkUserStorySprintsScheduledForDeletion = null;
 
     /**
      * Get the [id] column value.
@@ -225,17 +245,6 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [progress] column value.
-     *
-     * @return string
-     */
-    public function getProgress()
-    {
-
-        return $this->progress;
-    }
-
-    /**
      * Get the [position] column value.
      *
      * @return int
@@ -244,6 +253,28 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     {
 
         return $this->position;
+    }
+
+    /**
+     * Get the [priority] column value.
+     *
+     * @return string
+     */
+    public function getPriority()
+    {
+
+        return $this->priority;
+    }
+
+    /**
+     * Get the [label] column value.
+     *
+     * @return string
+     */
+    public function getLabel()
+    {
+
+        return $this->label;
     }
 
     /**
@@ -478,27 +509,6 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     } // setRatio()
 
     /**
-     * Set the value of [progress] column.
-     *
-     * @param  string $v new value
-     * @return UserStory The current object (for fluent API support)
-     */
-    public function setProgress($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->progress !== $v) {
-            $this->progress = $v;
-            $this->modifiedColumns[] = UserStoryPeer::PROGRESS;
-        }
-
-
-        return $this;
-    } // setProgress()
-
-    /**
      * Set the value of [position] column.
      *
      * @param  int $v new value
@@ -518,6 +528,48 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
         return $this;
     } // setPosition()
+
+    /**
+     * Set the value of [priority] column.
+     *
+     * @param  string $v new value
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setPriority($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->priority !== $v) {
+            $this->priority = $v;
+            $this->modifiedColumns[] = UserStoryPeer::PRIORITY;
+        }
+
+
+        return $this;
+    } // setPriority()
+
+    /**
+     * Set the value of [label] column.
+     *
+     * @param  string $v new value
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setLabel($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->label !== $v) {
+            $this->label = $v;
+            $this->modifiedColumns[] = UserStoryPeer::LABEL;
+        }
+
+
+        return $this;
+    } // setLabel()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
@@ -604,10 +656,11 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             $this->value = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
             $this->complexity = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
             $this->ratio = ($row[$startcol + 6] !== null) ? (double) $row[$startcol + 6] : null;
-            $this->progress = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-            $this->position = ($row[$startcol + 8] !== null) ? (int) $row[$startcol + 8] : null;
-            $this->created_at = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-            $this->updated_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+            $this->position = ($row[$startcol + 7] !== null) ? (int) $row[$startcol + 7] : null;
+            $this->priority = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
+            $this->label = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
+            $this->created_at = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
+            $this->updated_at = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -617,7 +670,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 11; // 11 = UserStoryPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 12; // 12 = UserStoryPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating UserStory object", $e);
@@ -684,6 +737,8 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
             $this->aProject = null;
             $this->collTasks = null;
+
+            $this->collLinkUserStorySprints = null;
 
         } // if (deep)
     }
@@ -850,6 +905,23 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 }
             }
 
+            if ($this->linkUserStorySprintsScheduledForDeletion !== null) {
+                if (!$this->linkUserStorySprintsScheduledForDeletion->isEmpty()) {
+                    LinkUserStorySprintQuery::create()
+                        ->filterByPrimaryKeys($this->linkUserStorySprintsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->linkUserStorySprintsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collLinkUserStorySprints !== null) {
+                foreach ($this->collLinkUserStorySprints as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -897,11 +969,14 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if ($this->isColumnModified(UserStoryPeer::RATIO)) {
             $modifiedColumns[':p' . $index++]  = '`ratio`';
         }
-        if ($this->isColumnModified(UserStoryPeer::PROGRESS)) {
-            $modifiedColumns[':p' . $index++]  = '`progress`';
-        }
         if ($this->isColumnModified(UserStoryPeer::POSITION)) {
             $modifiedColumns[':p' . $index++]  = '`position`';
+        }
+        if ($this->isColumnModified(UserStoryPeer::PRIORITY)) {
+            $modifiedColumns[':p' . $index++]  = '`priority`';
+        }
+        if ($this->isColumnModified(UserStoryPeer::LABEL)) {
+            $modifiedColumns[':p' . $index++]  = '`label`';
         }
         if ($this->isColumnModified(UserStoryPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
@@ -941,11 +1016,14 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                     case '`ratio`':
                         $stmt->bindValue($identifier, $this->ratio, PDO::PARAM_STR);
                         break;
-                    case '`progress`':
-                        $stmt->bindValue($identifier, $this->progress, PDO::PARAM_STR);
-                        break;
                     case '`position`':
                         $stmt->bindValue($identifier, $this->position, PDO::PARAM_INT);
+                        break;
+                    case '`priority`':
+                        $stmt->bindValue($identifier, $this->priority, PDO::PARAM_STR);
+                        break;
+                    case '`label`':
+                        $stmt->bindValue($identifier, $this->label, PDO::PARAM_STR);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -1072,6 +1150,14 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                     }
                 }
 
+                if ($this->collLinkUserStorySprints !== null) {
+                    foreach ($this->collLinkUserStorySprints as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
 
             $this->alreadyInValidation = false;
         }
@@ -1129,15 +1215,18 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 return $this->getRatio();
                 break;
             case 7:
-                return $this->getProgress();
-                break;
-            case 8:
                 return $this->getPosition();
                 break;
+            case 8:
+                return $this->getPriority();
+                break;
             case 9:
-                return $this->getCreatedAt();
+                return $this->getLabel();
                 break;
             case 10:
+                return $this->getCreatedAt();
+                break;
+            case 11:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1176,10 +1265,11 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             $keys[4] => $this->getValue(),
             $keys[5] => $this->getComplexity(),
             $keys[6] => $this->getRatio(),
-            $keys[7] => $this->getProgress(),
-            $keys[8] => $this->getPosition(),
-            $keys[9] => $this->getCreatedAt(),
-            $keys[10] => $this->getUpdatedAt(),
+            $keys[7] => $this->getPosition(),
+            $keys[8] => $this->getPriority(),
+            $keys[9] => $this->getLabel(),
+            $keys[10] => $this->getCreatedAt(),
+            $keys[11] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1192,6 +1282,9 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             }
             if (null !== $this->collTasks) {
                 $result['Tasks'] = $this->collTasks->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collLinkUserStorySprints) {
+                $result['LinkUserStorySprints'] = $this->collLinkUserStorySprints->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1249,15 +1342,18 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                 $this->setRatio($value);
                 break;
             case 7:
-                $this->setProgress($value);
-                break;
-            case 8:
                 $this->setPosition($value);
                 break;
+            case 8:
+                $this->setPriority($value);
+                break;
             case 9:
-                $this->setCreatedAt($value);
+                $this->setLabel($value);
                 break;
             case 10:
+                $this->setCreatedAt($value);
+                break;
+            case 11:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1291,10 +1387,11 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if (array_key_exists($keys[4], $arr)) $this->setValue($arr[$keys[4]]);
         if (array_key_exists($keys[5], $arr)) $this->setComplexity($arr[$keys[5]]);
         if (array_key_exists($keys[6], $arr)) $this->setRatio($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setProgress($arr[$keys[7]]);
-        if (array_key_exists($keys[8], $arr)) $this->setPosition($arr[$keys[8]]);
-        if (array_key_exists($keys[9], $arr)) $this->setCreatedAt($arr[$keys[9]]);
-        if (array_key_exists($keys[10], $arr)) $this->setUpdatedAt($arr[$keys[10]]);
+        if (array_key_exists($keys[7], $arr)) $this->setPosition($arr[$keys[7]]);
+        if (array_key_exists($keys[8], $arr)) $this->setPriority($arr[$keys[8]]);
+        if (array_key_exists($keys[9], $arr)) $this->setLabel($arr[$keys[9]]);
+        if (array_key_exists($keys[10], $arr)) $this->setCreatedAt($arr[$keys[10]]);
+        if (array_key_exists($keys[11], $arr)) $this->setUpdatedAt($arr[$keys[11]]);
     }
 
     /**
@@ -1313,8 +1410,9 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         if ($this->isColumnModified(UserStoryPeer::VALUE)) $criteria->add(UserStoryPeer::VALUE, $this->value);
         if ($this->isColumnModified(UserStoryPeer::COMPLEXITY)) $criteria->add(UserStoryPeer::COMPLEXITY, $this->complexity);
         if ($this->isColumnModified(UserStoryPeer::RATIO)) $criteria->add(UserStoryPeer::RATIO, $this->ratio);
-        if ($this->isColumnModified(UserStoryPeer::PROGRESS)) $criteria->add(UserStoryPeer::PROGRESS, $this->progress);
         if ($this->isColumnModified(UserStoryPeer::POSITION)) $criteria->add(UserStoryPeer::POSITION, $this->position);
+        if ($this->isColumnModified(UserStoryPeer::PRIORITY)) $criteria->add(UserStoryPeer::PRIORITY, $this->priority);
+        if ($this->isColumnModified(UserStoryPeer::LABEL)) $criteria->add(UserStoryPeer::LABEL, $this->label);
         if ($this->isColumnModified(UserStoryPeer::CREATED_AT)) $criteria->add(UserStoryPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(UserStoryPeer::UPDATED_AT)) $criteria->add(UserStoryPeer::UPDATED_AT, $this->updated_at);
 
@@ -1386,8 +1484,9 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         $copyObj->setValue($this->getValue());
         $copyObj->setComplexity($this->getComplexity());
         $copyObj->setRatio($this->getRatio());
-        $copyObj->setProgress($this->getProgress());
         $copyObj->setPosition($this->getPosition());
+        $copyObj->setPriority($this->getPriority());
+        $copyObj->setLabel($this->getLabel());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1401,6 +1500,12 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             foreach ($this->getTasks() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addTask($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getLinkUserStorySprints() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addLinkUserStorySprint($relObj->copy($deepCopy));
                 }
             }
 
@@ -1519,6 +1624,9 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     {
         if ('Task' == $relationName) {
             $this->initTasks();
+        }
+        if ('LinkUserStorySprint' == $relationName) {
+            $this->initLinkUserStorySprints();
         }
     }
 
@@ -1748,6 +1856,256 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     }
 
     /**
+     * Clears out the collLinkUserStorySprints collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return UserStory The current object (for fluent API support)
+     * @see        addLinkUserStorySprints()
+     */
+    public function clearLinkUserStorySprints()
+    {
+        $this->collLinkUserStorySprints = null; // important to set this to null since that means it is uninitialized
+        $this->collLinkUserStorySprintsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collLinkUserStorySprints collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialLinkUserStorySprints($v = true)
+    {
+        $this->collLinkUserStorySprintsPartial = $v;
+    }
+
+    /**
+     * Initializes the collLinkUserStorySprints collection.
+     *
+     * By default this just sets the collLinkUserStorySprints collection to an empty array (like clearcollLinkUserStorySprints());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initLinkUserStorySprints($overrideExisting = true)
+    {
+        if (null !== $this->collLinkUserStorySprints && !$overrideExisting) {
+            return;
+        }
+        $this->collLinkUserStorySprints = new PropelObjectCollection();
+        $this->collLinkUserStorySprints->setModel('LinkUserStorySprint');
+    }
+
+    /**
+     * Gets an array of LinkUserStorySprint objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this UserStory is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|LinkUserStorySprint[] List of LinkUserStorySprint objects
+     * @throws PropelException
+     */
+    public function getLinkUserStorySprints($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collLinkUserStorySprintsPartial && !$this->isNew();
+        if (null === $this->collLinkUserStorySprints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collLinkUserStorySprints) {
+                // return empty collection
+                $this->initLinkUserStorySprints();
+            } else {
+                $collLinkUserStorySprints = LinkUserStorySprintQuery::create(null, $criteria)
+                    ->filterByUserStory($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collLinkUserStorySprintsPartial && count($collLinkUserStorySprints)) {
+                      $this->initLinkUserStorySprints(false);
+
+                      foreach ($collLinkUserStorySprints as $obj) {
+                        if (false == $this->collLinkUserStorySprints->contains($obj)) {
+                          $this->collLinkUserStorySprints->append($obj);
+                        }
+                      }
+
+                      $this->collLinkUserStorySprintsPartial = true;
+                    }
+
+                    $collLinkUserStorySprints->getInternalIterator()->rewind();
+
+                    return $collLinkUserStorySprints;
+                }
+
+                if ($partial && $this->collLinkUserStorySprints) {
+                    foreach ($this->collLinkUserStorySprints as $obj) {
+                        if ($obj->isNew()) {
+                            $collLinkUserStorySprints[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collLinkUserStorySprints = $collLinkUserStorySprints;
+                $this->collLinkUserStorySprintsPartial = false;
+            }
+        }
+
+        return $this->collLinkUserStorySprints;
+    }
+
+    /**
+     * Sets a collection of LinkUserStorySprint objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $linkUserStorySprints A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function setLinkUserStorySprints(PropelCollection $linkUserStorySprints, PropelPDO $con = null)
+    {
+        $linkUserStorySprintsToDelete = $this->getLinkUserStorySprints(new Criteria(), $con)->diff($linkUserStorySprints);
+
+
+        $this->linkUserStorySprintsScheduledForDeletion = $linkUserStorySprintsToDelete;
+
+        foreach ($linkUserStorySprintsToDelete as $linkUserStorySprintRemoved) {
+            $linkUserStorySprintRemoved->setUserStory(null);
+        }
+
+        $this->collLinkUserStorySprints = null;
+        foreach ($linkUserStorySprints as $linkUserStorySprint) {
+            $this->addLinkUserStorySprint($linkUserStorySprint);
+        }
+
+        $this->collLinkUserStorySprints = $linkUserStorySprints;
+        $this->collLinkUserStorySprintsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related LinkUserStorySprint objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related LinkUserStorySprint objects.
+     * @throws PropelException
+     */
+    public function countLinkUserStorySprints(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collLinkUserStorySprintsPartial && !$this->isNew();
+        if (null === $this->collLinkUserStorySprints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collLinkUserStorySprints) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getLinkUserStorySprints());
+            }
+            $query = LinkUserStorySprintQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUserStory($this)
+                ->count($con);
+        }
+
+        return count($this->collLinkUserStorySprints);
+    }
+
+    /**
+     * Method called to associate a LinkUserStorySprint object to this object
+     * through the LinkUserStorySprint foreign key attribute.
+     *
+     * @param    LinkUserStorySprint $l LinkUserStorySprint
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function addLinkUserStorySprint(LinkUserStorySprint $l)
+    {
+        if ($this->collLinkUserStorySprints === null) {
+            $this->initLinkUserStorySprints();
+            $this->collLinkUserStorySprintsPartial = true;
+        }
+
+        if (!in_array($l, $this->collLinkUserStorySprints->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddLinkUserStorySprint($l);
+
+            if ($this->linkUserStorySprintsScheduledForDeletion and $this->linkUserStorySprintsScheduledForDeletion->contains($l)) {
+                $this->linkUserStorySprintsScheduledForDeletion->remove($this->linkUserStorySprintsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	LinkUserStorySprint $linkUserStorySprint The linkUserStorySprint object to add.
+     */
+    protected function doAddLinkUserStorySprint($linkUserStorySprint)
+    {
+        $this->collLinkUserStorySprints[]= $linkUserStorySprint;
+        $linkUserStorySprint->setUserStory($this);
+    }
+
+    /**
+     * @param	LinkUserStorySprint $linkUserStorySprint The linkUserStorySprint object to remove.
+     * @return UserStory The current object (for fluent API support)
+     */
+    public function removeLinkUserStorySprint($linkUserStorySprint)
+    {
+        if ($this->getLinkUserStorySprints()->contains($linkUserStorySprint)) {
+            $this->collLinkUserStorySprints->remove($this->collLinkUserStorySprints->search($linkUserStorySprint));
+            if (null === $this->linkUserStorySprintsScheduledForDeletion) {
+                $this->linkUserStorySprintsScheduledForDeletion = clone $this->collLinkUserStorySprints;
+                $this->linkUserStorySprintsScheduledForDeletion->clear();
+            }
+            $this->linkUserStorySprintsScheduledForDeletion[]= $linkUserStorySprint;
+            $linkUserStorySprint->setUserStory(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this UserStory is new, it will return
+     * an empty collection; or if this UserStory has previously
+     * been saved, it will retrieve related LinkUserStorySprints from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in UserStory.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|LinkUserStorySprint[] List of LinkUserStorySprint objects
+     */
+    public function getLinkUserStorySprintsJoinSprint($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = LinkUserStorySprintQuery::create(null, $criteria);
+        $query->joinWith('Sprint', $join_behavior);
+
+        return $this->getLinkUserStorySprints($query, $con);
+    }
+
+    /**
      * Clears the current object and sets all attributes to their default values
      */
     public function clear()
@@ -1759,8 +2117,9 @@ abstract class BaseUserStory extends BaseObject implements Persistent
         $this->value = null;
         $this->complexity = null;
         $this->ratio = null;
-        $this->progress = null;
         $this->position = null;
+        $this->priority = null;
+        $this->label = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
@@ -1790,6 +2149,11 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collLinkUserStorySprints) {
+                foreach ($this->collLinkUserStorySprints as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->aProject instanceof Persistent) {
               $this->aProject->clearAllReferences($deep);
             }
@@ -1801,6 +2165,10 @@ abstract class BaseUserStory extends BaseObject implements Persistent
             $this->collTasks->clearIterator();
         }
         $this->collTasks = null;
+        if ($this->collLinkUserStorySprints instanceof PropelCollection) {
+            $this->collLinkUserStorySprints->clearIterator();
+        }
+        $this->collLinkUserStorySprints = null;
         $this->aProject = null;
     }
 

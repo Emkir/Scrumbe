@@ -111,8 +111,8 @@
         <div class="user-stories">
             <div class="header-col">User stories</div>
             <ul class="user-stories-list column1">
-                {% if project.user_stories.us is defined %}
-                    {% for us in project.user_stories.us %}
+                {% if project.user_stories is defined %}
+                    {% for us in project.user_stories %}
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
                                 <ul class="label">
@@ -125,7 +125,7 @@
                             <div class="footer">
                                 <span class="tasks">2</span>
                                 <div class="priority-ctn">
-                                    <span class="low">Basse</span>
+                                    <span class="{{ us.priority }}">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
                                 </div>
                                 <ul class="member-list">
                                     <li>

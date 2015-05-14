@@ -87,8 +87,8 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
         position: 1
+        priority: low
     us2:
         project_id: p1
         number: 2
@@ -96,8 +96,8 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
         position: 2
+        priority: high
     us3:
         project_id: p1
         number: 3
@@ -105,230 +105,122 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
         position: 3
+        priority: medium
     us4:
         project_id: p1
         number: 4
-        description: TODO 1
+        description: US 4
         value: 42
         complexity: 42
         ratio: 1
-        progress: todo
-        position: 1
+        position: 4
+        priority: high
     us5:
-        project_id: p1
-        number: 5
-        description: TODO 2
+        project_id: p2
+        number: 1
+        description: US 1
         value: 42
         complexity: 42
         ratio: 1
-        progress: todo
-        position: 2
+        position: 1
+        priority: low
     us6:
-        project_id: p1
-        number: 6
-        description: WIP 1
+        project_id: p2
+        number: 2
+        description: US 2
         value: 42
         complexity: 42
         ratio: 1
-        progress: wip
-        position: 1
+        position: 2
+        priority: high
     us7:
-        project_id: p1
-        number: 7
-        description: DONE 1
+        project_id: p2
+        number: 3
+        description: US 3
         value: 42
         complexity: 42
         ratio: 1
-        progress: done
-        position: 1
+        position: 3
+        priority: medium
     us8:
         project_id: p2
-        number: 1
-        description: US 1
+        number: 4
+        description: US 4
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
-        position: 1
+        position: 4
+        priority: high
     us9:
-        project_id: p2
-        number: 2
-        description: US 2
+        project_id: p3
+        number: 1
+        description: US 1
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
-        position: 2
+        position: 1
+        priority: low
     us10:
-        project_id: p2
-        number: 3
-        description: US 3
+        project_id: p3
+        number: 2
+        description: US 2
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
-        position: 3
+        position: 2
+        priority: high
     us11:
-        project_id: p2
-        number: 4
-        description: TODO 1
+        project_id: p3
+        number: 3
+        description: US 3
         value: 42
         complexity: 42
         ratio: 1
-        progress: todo
-        position: 1
+        position: 3
+        priority: medium
     us12:
-        project_id: p2
-        number: 5
-        description: TODO 2
+        project_id: p3
+        number: 4
+        description: US 4
         value: 42
         complexity: 42
         ratio: 1
-        progress: todo
-        position: 2
+        position: 4
+        priority: high
     us13:
-        project_id: p2
-        number: 6
-        description: WIP 1
+        project_id: p4
+        number: 1
+        description: US 1
         value: 42
         complexity: 42
         ratio: 1
-        progress: wip
         position: 1
+        priority: low
     us14:
-        project_id: p2
-        number: 7
-        description: DONE 1
+        project_id: p4
+        number: 2
+        description: US 2
         value: 42
         complexity: 42
         ratio: 1
-        progress: done
-        position: 1
+        position: 2
+        priority: high
     us15:
-        project_id: p3
-        number: 1
-        description: US 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: us
-        position: 1
-    us216:
-        project_id: p3
-        number: 2
-        description: US 2
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: us
-        position: 2
-    us17:
-        project_id: p3
-        number: 3
-        description: US 3
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: us
-        position: 3
-    us18:
-        project_id: p3
-        number: 4
-        description: TODO 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: todo
-        position: 1
-    us19:
-        project_id: p3
-        number: 5
-        description: TODO 2
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: todo
-        position: 2
-    us20:
-        project_id: p3
-        number: 6
-        description: WIP 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: wip
-        position: 1
-    us21:
-        project_id: p3
-        number: 7
-        description: DONE 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: done
-        position: 1
-    us22:
-        project_id: p4
-        number: 1
-        description: US 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: us
-        position: 1
-    us23:
-        project_id: p4
-        number: 2
-        description: US 2
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: us
-        position: 2
-    us24:
         project_id: p4
         number: 3
         description: US 3
         value: 42
         complexity: 42
         ratio: 1
-        progress: us
         position: 3
-    us25:
+        priority: medium
+    us16:
         project_id: p4
         number: 4
-        description: TODO 1
+        description: US 4
         value: 42
         complexity: 42
         ratio: 1
-        progress: todo
-        position: 1
-    us26:
-        project_id: p4
-        number: 5
-        description: TODO 2
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: todo
-        position: 2
-    us27:
-        project_id: p4
-        number: 6
-        description: WIP 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: wip
-        position: 1
-    us28:
-        project_id: p4
-        number: 7
-        description: DONE 1
-        value: 42
-        complexity: 42
-        ratio: 1
-        progress: done
-        position: 1
+        position: 4
+        priority: high

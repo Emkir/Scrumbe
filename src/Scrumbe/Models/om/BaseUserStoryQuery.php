@@ -12,6 +12,7 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\LinkUserStorySprint;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\UserStory;
@@ -26,8 +27,9 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStoryQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method UserStoryQuery orderByComplexity($order = Criteria::ASC) Order by the complexity column
  * @method UserStoryQuery orderByRatio($order = Criteria::ASC) Order by the ratio column
- * @method UserStoryQuery orderByProgress($order = Criteria::ASC) Order by the progress column
  * @method UserStoryQuery orderByPosition($order = Criteria::ASC) Order by the position column
+ * @method UserStoryQuery orderByPriority($order = Criteria::ASC) Order by the priority column
+ * @method UserStoryQuery orderByLabel($order = Criteria::ASC) Order by the label column
  * @method UserStoryQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method UserStoryQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
@@ -38,8 +40,9 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStoryQuery groupByValue() Group by the value column
  * @method UserStoryQuery groupByComplexity() Group by the complexity column
  * @method UserStoryQuery groupByRatio() Group by the ratio column
- * @method UserStoryQuery groupByProgress() Group by the progress column
  * @method UserStoryQuery groupByPosition() Group by the position column
+ * @method UserStoryQuery groupByPriority() Group by the priority column
+ * @method UserStoryQuery groupByLabel() Group by the label column
  * @method UserStoryQuery groupByCreatedAt() Group by the created_at column
  * @method UserStoryQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -55,6 +58,10 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStoryQuery rightJoinTask($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Task relation
  * @method UserStoryQuery innerJoinTask($relationAlias = null) Adds a INNER JOIN clause to the query using the Task relation
  *
+ * @method UserStoryQuery leftJoinLinkUserStorySprint($relationAlias = null) Adds a LEFT JOIN clause to the query using the LinkUserStorySprint relation
+ * @method UserStoryQuery rightJoinLinkUserStorySprint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the LinkUserStorySprint relation
+ * @method UserStoryQuery innerJoinLinkUserStorySprint($relationAlias = null) Adds a INNER JOIN clause to the query using the LinkUserStorySprint relation
+ *
  * @method UserStory findOne(PropelPDO $con = null) Return the first UserStory matching the query
  * @method UserStory findOneOrCreate(PropelPDO $con = null) Return the first UserStory matching the query, or a new UserStory object populated from the query conditions when no match is found
  *
@@ -64,8 +71,9 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStory findOneByValue(int $value) Return the first UserStory filtered by the value column
  * @method UserStory findOneByComplexity(int $complexity) Return the first UserStory filtered by the complexity column
  * @method UserStory findOneByRatio(double $ratio) Return the first UserStory filtered by the ratio column
- * @method UserStory findOneByProgress(string $progress) Return the first UserStory filtered by the progress column
  * @method UserStory findOneByPosition(int $position) Return the first UserStory filtered by the position column
+ * @method UserStory findOneByPriority(string $priority) Return the first UserStory filtered by the priority column
+ * @method UserStory findOneByLabel(string $label) Return the first UserStory filtered by the label column
  * @method UserStory findOneByCreatedAt(string $created_at) Return the first UserStory filtered by the created_at column
  * @method UserStory findOneByUpdatedAt(string $updated_at) Return the first UserStory filtered by the updated_at column
  *
@@ -76,8 +84,9 @@ use Scrumbe\Models\UserStoryQuery;
  * @method array findByValue(int $value) Return UserStory objects filtered by the value column
  * @method array findByComplexity(int $complexity) Return UserStory objects filtered by the complexity column
  * @method array findByRatio(double $ratio) Return UserStory objects filtered by the ratio column
- * @method array findByProgress(string $progress) Return UserStory objects filtered by the progress column
  * @method array findByPosition(int $position) Return UserStory objects filtered by the position column
+ * @method array findByPriority(string $priority) Return UserStory objects filtered by the priority column
+ * @method array findByLabel(string $label) Return UserStory objects filtered by the label column
  * @method array findByCreatedAt(string $created_at) Return UserStory objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return UserStory objects filtered by the updated_at column
  */
@@ -185,7 +194,7 @@ abstract class BaseUserStoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `project_id`, `number`, `description`, `value`, `complexity`, `ratio`, `progress`, `position`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `project_id`, `number`, `description`, `value`, `complexity`, `ratio`, `position`, `priority`, `label`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -545,35 +554,6 @@ abstract class BaseUserStoryQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the progress column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByProgress('fooValue');   // WHERE progress = 'fooValue'
-     * $query->filterByProgress('%fooValue%'); // WHERE progress LIKE '%fooValue%'
-     * </code>
-     *
-     * @param     string $progress The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return UserStoryQuery The current query, for fluid interface
-     */
-    public function filterByProgress($progress = null, $comparison = null)
-    {
-        if (null === $comparison) {
-            if (is_array($progress)) {
-                $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $progress)) {
-                $progress = str_replace('*', '%', $progress);
-                $comparison = Criteria::LIKE;
-            }
-        }
-
-        return $this->addUsingAlias(UserStoryPeer::PROGRESS, $progress, $comparison);
-    }
-
-    /**
      * Filter the query on the position column
      *
      * Example usage:
@@ -613,6 +593,64 @@ abstract class BaseUserStoryQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserStoryPeer::POSITION, $position, $comparison);
+    }
+
+    /**
+     * Filter the query on the priority column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPriority('fooValue');   // WHERE priority = 'fooValue'
+     * $query->filterByPriority('%fooValue%'); // WHERE priority LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $priority The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserStoryQuery The current query, for fluid interface
+     */
+    public function filterByPriority($priority = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($priority)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $priority)) {
+                $priority = str_replace('*', '%', $priority);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserStoryPeer::PRIORITY, $priority, $comparison);
+    }
+
+    /**
+     * Filter the query on the label column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLabel('fooValue');   // WHERE label = 'fooValue'
+     * $query->filterByLabel('%fooValue%'); // WHERE label LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $label The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return UserStoryQuery The current query, for fluid interface
+     */
+    public function filterByLabel($label = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($label)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $label)) {
+                $label = str_replace('*', '%', $label);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(UserStoryPeer::LABEL, $label, $comparison);
     }
 
     /**
@@ -849,6 +887,80 @@ abstract class BaseUserStoryQuery extends ModelCriteria
         return $this
             ->joinTask($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Task', '\Scrumbe\Models\TaskQuery');
+    }
+
+    /**
+     * Filter the query by a related LinkUserStorySprint object
+     *
+     * @param   LinkUserStorySprint|PropelObjectCollection $linkUserStorySprint  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 UserStoryQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByLinkUserStorySprint($linkUserStorySprint, $comparison = null)
+    {
+        if ($linkUserStorySprint instanceof LinkUserStorySprint) {
+            return $this
+                ->addUsingAlias(UserStoryPeer::ID, $linkUserStorySprint->getUserStoryId(), $comparison);
+        } elseif ($linkUserStorySprint instanceof PropelObjectCollection) {
+            return $this
+                ->useLinkUserStorySprintQuery()
+                ->filterByPrimaryKeys($linkUserStorySprint->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByLinkUserStorySprint() only accepts arguments of type LinkUserStorySprint or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the LinkUserStorySprint relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return UserStoryQuery The current query, for fluid interface
+     */
+    public function joinLinkUserStorySprint($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('LinkUserStorySprint');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'LinkUserStorySprint');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the LinkUserStorySprint relation LinkUserStorySprint object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \Scrumbe\Models\LinkUserStorySprintQuery A secondary query class using the current class as primary query
+     */
+    public function useLinkUserStorySprintQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinLinkUserStorySprint($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'LinkUserStorySprint', '\Scrumbe\Models\LinkUserStorySprintQuery');
     }
 
     /**

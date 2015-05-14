@@ -20,6 +20,8 @@ use Scrumbe\Models\LinkProjectUserQuery;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectPeer;
 use Scrumbe\Models\ProjectQuery;
+use Scrumbe\Models\Sprint;
+use Scrumbe\Models\SprintQuery;
 use Scrumbe\Models\UserStory;
 use Scrumbe\Models\UserStoryQuery;
 
@@ -100,6 +102,12 @@ abstract class BaseProject extends BaseObject implements Persistent
     protected $updated_at;
 
     /**
+     * @var        PropelObjectCollection|Sprint[] Collection to store aggregation of Sprint objects.
+     */
+    protected $collSprints;
+    protected $collSprintsPartial;
+
+    /**
      * @var        PropelObjectCollection|UserStory[] Collection to store aggregation of UserStory objects.
      */
     protected $collUserStories;
@@ -130,6 +138,12 @@ abstract class BaseProject extends BaseObject implements Persistent
      * @var        boolean
      */
     protected $alreadyInClearAllReferencesDeep = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $sprintsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -692,6 +706,8 @@ abstract class BaseProject extends BaseObject implements Persistent
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->collSprints = null;
+
             $this->collUserStories = null;
 
             $this->collLinkProjectUsers = null;
@@ -829,6 +845,23 @@ abstract class BaseProject extends BaseObject implements Persistent
                 }
                 $affectedRows += 1;
                 $this->resetModified();
+            }
+
+            if ($this->sprintsScheduledForDeletion !== null) {
+                if (!$this->sprintsScheduledForDeletion->isEmpty()) {
+                    SprintQuery::create()
+                        ->filterByPrimaryKeys($this->sprintsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->sprintsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSprints !== null) {
+                foreach ($this->collSprints as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             if ($this->userStoriesScheduledForDeletion !== null) {
@@ -1055,6 +1088,14 @@ abstract class BaseProject extends BaseObject implements Persistent
             }
 
 
+                if ($this->collSprints !== null) {
+                    foreach ($this->collSprints as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
                 if ($this->collUserStories !== null) {
                     foreach ($this->collUserStories as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
@@ -1178,6 +1219,9 @@ abstract class BaseProject extends BaseObject implements Persistent
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->collSprints) {
+                $result['Sprints'] = $this->collSprints->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collUserStories) {
                 $result['UserStories'] = $this->collUserStories->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
@@ -1377,6 +1421,12 @@ abstract class BaseProject extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
+            foreach ($this->getSprints() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSprint($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getUserStories() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addUserStory($relObj->copy($deepCopy));
@@ -1450,12 +1500,240 @@ abstract class BaseProject extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
+        if ('Sprint' == $relationName) {
+            $this->initSprints();
+        }
         if ('UserStory' == $relationName) {
             $this->initUserStories();
         }
         if ('LinkProjectUser' == $relationName) {
             $this->initLinkProjectUsers();
         }
+    }
+
+    /**
+     * Clears out the collSprints collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Project The current object (for fluent API support)
+     * @see        addSprints()
+     */
+    public function clearSprints()
+    {
+        $this->collSprints = null; // important to set this to null since that means it is uninitialized
+        $this->collSprintsPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collSprints collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialSprints($v = true)
+    {
+        $this->collSprintsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSprints collection.
+     *
+     * By default this just sets the collSprints collection to an empty array (like clearcollSprints());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSprints($overrideExisting = true)
+    {
+        if (null !== $this->collSprints && !$overrideExisting) {
+            return;
+        }
+        $this->collSprints = new PropelObjectCollection();
+        $this->collSprints->setModel('Sprint');
+    }
+
+    /**
+     * Gets an array of Sprint objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Project is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|Sprint[] List of Sprint objects
+     * @throws PropelException
+     */
+    public function getSprints($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collSprintsPartial && !$this->isNew();
+        if (null === $this->collSprints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSprints) {
+                // return empty collection
+                $this->initSprints();
+            } else {
+                $collSprints = SprintQuery::create(null, $criteria)
+                    ->filterByProject($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collSprintsPartial && count($collSprints)) {
+                      $this->initSprints(false);
+
+                      foreach ($collSprints as $obj) {
+                        if (false == $this->collSprints->contains($obj)) {
+                          $this->collSprints->append($obj);
+                        }
+                      }
+
+                      $this->collSprintsPartial = true;
+                    }
+
+                    $collSprints->getInternalIterator()->rewind();
+
+                    return $collSprints;
+                }
+
+                if ($partial && $this->collSprints) {
+                    foreach ($this->collSprints as $obj) {
+                        if ($obj->isNew()) {
+                            $collSprints[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSprints = $collSprints;
+                $this->collSprintsPartial = false;
+            }
+        }
+
+        return $this->collSprints;
+    }
+
+    /**
+     * Sets a collection of Sprint objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $sprints A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Project The current object (for fluent API support)
+     */
+    public function setSprints(PropelCollection $sprints, PropelPDO $con = null)
+    {
+        $sprintsToDelete = $this->getSprints(new Criteria(), $con)->diff($sprints);
+
+
+        $this->sprintsScheduledForDeletion = $sprintsToDelete;
+
+        foreach ($sprintsToDelete as $sprintRemoved) {
+            $sprintRemoved->setProject(null);
+        }
+
+        $this->collSprints = null;
+        foreach ($sprints as $sprint) {
+            $this->addSprint($sprint);
+        }
+
+        $this->collSprints = $sprints;
+        $this->collSprintsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Sprint objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related Sprint objects.
+     * @throws PropelException
+     */
+    public function countSprints(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collSprintsPartial && !$this->isNew();
+        if (null === $this->collSprints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSprints) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSprints());
+            }
+            $query = SprintQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByProject($this)
+                ->count($con);
+        }
+
+        return count($this->collSprints);
+    }
+
+    /**
+     * Method called to associate a Sprint object to this object
+     * through the Sprint foreign key attribute.
+     *
+     * @param    Sprint $l Sprint
+     * @return Project The current object (for fluent API support)
+     */
+    public function addSprint(Sprint $l)
+    {
+        if ($this->collSprints === null) {
+            $this->initSprints();
+            $this->collSprintsPartial = true;
+        }
+
+        if (!in_array($l, $this->collSprints->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddSprint($l);
+
+            if ($this->sprintsScheduledForDeletion and $this->sprintsScheduledForDeletion->contains($l)) {
+                $this->sprintsScheduledForDeletion->remove($this->sprintsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	Sprint $sprint The sprint object to add.
+     */
+    protected function doAddSprint($sprint)
+    {
+        $this->collSprints[]= $sprint;
+        $sprint->setProject($this);
+    }
+
+    /**
+     * @param	Sprint $sprint The sprint object to remove.
+     * @return Project The current object (for fluent API support)
+     */
+    public function removeSprint($sprint)
+    {
+        if ($this->getSprints()->contains($sprint)) {
+            $this->collSprints->remove($this->collSprints->search($sprint));
+            if (null === $this->sprintsScheduledForDeletion) {
+                $this->sprintsScheduledForDeletion = clone $this->collSprints;
+                $this->sprintsScheduledForDeletion->clear();
+            }
+            $this->sprintsScheduledForDeletion[]= $sprint;
+            $sprint->setProject(null);
+        }
+
+        return $this;
     }
 
     /**
@@ -1970,6 +2248,11 @@ abstract class BaseProject extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
+            if ($this->collSprints) {
+                foreach ($this->collSprints as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collUserStories) {
                 foreach ($this->collUserStories as $o) {
                     $o->clearAllReferences($deep);
@@ -1984,6 +2267,10 @@ abstract class BaseProject extends BaseObject implements Persistent
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
+        if ($this->collSprints instanceof PropelCollection) {
+            $this->collSprints->clearIterator();
+        }
+        $this->collSprints = null;
         if ($this->collUserStories instanceof PropelCollection) {
             $this->collUserStories->clearIterator();
         }

@@ -61,7 +61,7 @@ class ProjectController extends Controller
         $project = $projectService->getProject($projectId);
         $project['user_stories'] = $userStoryService->getUserStories($projectId);
 
-        return $this->render('ScrumbeProjectBundle:projects:project.html.twig',
+        return $this->render('ScrumbeProjectBundle:projects:kanban.html.twig',
             array('project' => $project)
         );
     }
