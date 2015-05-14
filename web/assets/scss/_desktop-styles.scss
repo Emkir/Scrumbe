@@ -1087,7 +1087,6 @@ footer {
 .sub-nav-projects {
     background-color: #fff;
     height: 70px;
-    border-bottom: 1px solid #E6EAEE;
     clear: both;
     line-height: 70px;
     position: fixed;
@@ -1657,16 +1656,16 @@ footer {
     margin-top: 130px;
 
     .user-stories {
-        width: 25%;
+        width: 20%;
         float: left;
         height: 1000px;
         display: block;
-        border-right: 1px solid #E6EAEE;
         box-sizing: border-box;
+        border-right: 1px solid #E6EAEE;
 
         .header-col {
             color: $blue;
-            width: 25%;
+            width: 20%;
             background-color: #ffffff;
             text-transform: uppercase;
             font-family: "Montserrat", sans-serif;
@@ -1677,116 +1676,129 @@ footer {
             border-bottom: 1px solid #E6EAEE;
             position: fixed;
             z-index: 4;
-            border-right: 1px solid #E6EAEE;
             box-sizing: border-box;
-            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
 
         .user-stories-list {
             margin-top: 53px;
+            margin-right: 8px;
+            border-right: 1px solid #E6EAEE;
 
             & > li {
                 background-color: white;
-                padding: 10px 15px 16px 15px;
+                padding: 20px;
                 box-sizing: border-box;
                 border-bottom: 1px solid #E6EAEE;
                 position: relative;
                 user-select: none;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+                margin-bottom: 8px;
 
                 .head {
-                    min-height: 25px;
                     margin-bottom: 5px;
 
                     .label {
                         li {
-                           font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(8px);
-                            font-weight: 600;
-                            letter-spacing: 1px;
-                            padding: 3px 6px;
-                            display: inline-block;
-                            border-radius: 10px;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-width: 0 15px 15px 0;
                             box-sizing: border-box;
-                            color: #fff;
-                            background-color: $red;
-                            text-transform: uppercase;
                             user-select: none;
-                        }
-                    }
 
-                    .difficulty {
-                        color: $mauve;
-                        font-family: "Open Sans", sans-serif;
-                        font-weight: 300;
-                        font-size: rem-calc(13px);
-                        width: 23px;
-                        height: 23px;
-                        text-align: center;
-                        line-height: 23px;
-                        border: 1px solid $mauve;
-                        border-radius: 50px;
-                        position: absolute;
-                        top: 10px;
-                        right: 15px;
-                        user-select: none;
+                            &.red {border-color: transparent $red transparent transparent;}
+                            &.blue {border-color: transparent $blue transparent transparent;}
+                            &.yellow {border-color: transparent $yellow transparent transparent;}
+                            &.green {border-color: transparent $green transparent transparent;}
+                            &.violet {border-color: transparent $violet transparent transparent;}
+                        }
                     }
                 }
                 .content {
-                    margin-bottom: 10px;
+                    margin-bottom: 20px;
 
                     p {
                         font-family: "Open Sans", sans-serif;
                         font-size: rem-calc(14px);
                         font-weight: 400;
                         color: #182740;
-                        line-height: 17px;
+                        line-height: 19px;
                         user-select: none;
                     }
                 }
                 .footer {
-                    .task-ctn {
-                        img {
-                            width: 10px;
-                            display: inline-block;
-                            vertical-align: middle;
-                            user-select: none;
+                    .tasks {
+                        color: #8B8CA6;
+                        font-weight: 300;
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(13px);
+                        margin-bottom: 5px;
+                        display: block;
+
+                        &:after {
+                            content: ' tâches';
                         }
+                    }
 
-                        .task-done {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(13px);
-                            font-weight: 400;
-                            color: $mauve;
-                            vertical-align: middle;
-                            user-select: none;
-
-                            &:after {
-                                content: " /";
+                    .priority-ctn {
+                        span {
+                            &:before {
+                                content: "Priorité : ";
+                                color: #8B8CA6;
                             }
-                        }
-
-                        .all-task {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(13px);
-                            font-weight: 400;
-                            color: $mauve;
-                            vertical-align: middle;
 
                             &:after {
-                                content: " Tâches";
+                                width: 6px;
+                                height: 6px;
+                                content: "";
+                                display: inline-block;
+                                border-radius: 50%;
+                                margin-left: 7px;
+                            }
+
+
+                            &.low {
+                                color: $green;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $green}
+                            }
+
+                            &.medium {
+                                color: $orange;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $orange}
+                            }
+
+                            &.high {
+                                color: $red;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $red}
                             }
                         }
                     }
+
                     .member-list {
                         position: absolute;
-                        bottom: 10px;
-                        right: 15px;
+                        bottom: 20px;
+                        right: 20px;
 
                         li {
                             width: 23px;
                             height: 23px;
                             display: inline-block;
-                            margin-right: 3px;
+                            margin-right: 0;
                             border-radius: 50%;
                             overflow: hidden;
 
@@ -1801,16 +1813,16 @@ footer {
         }
     }
     .to-do {
-        width: 25%;
+        width: 20%;
         float: left;
         height: 1000px;
         display: block;
-        border-right: 1px solid #E6EAEE;
         box-sizing: border-box;
+        border-right: 1px solid #E6EAEE;
 
         .header-col {
-            color: $yellow;
-            width: 25%;
+            color: $red;
+            width: 20%;
             background-color: #ffffff;
             text-transform: uppercase;
             font-family: "Montserrat", sans-serif;
@@ -1821,116 +1833,129 @@ footer {
             border-bottom: 1px solid #E6EAEE;
             position: fixed;
             z-index: 3;
-            border-right: 1px solid #E6EAEE;
             box-sizing: border-box;
-            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
 
         .to-do-list {
             margin-top: 53px;
+            margin-right: 8px;
+            border-right: 1px solid #E6EAEE;
 
             & > li {
                 background-color: white;
-                padding: 10px 15px 16px 15px;
+                padding: 20px;
                 box-sizing: border-box;
                 border-bottom: 1px solid #E6EAEE;
                 position: relative;
                 user-select: none;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+                margin-bottom: 8px;
 
                 .head {
-                    min-height: 25px;
                     margin-bottom: 5px;
 
                     .label {
                         li {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(8px);
-                            font-weight: 600;
-                            letter-spacing: 1px;
-                            padding: 3px 6px;
-                            display: inline-block;
-                            border-radius: 10px;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-width: 0 15px 15px 0;
                             box-sizing: border-box;
-                            color: #fff;
-                            background-color: $red;
-                            text-transform: uppercase;
                             user-select: none;
-                        }
-                    }
 
-                    .difficulty {
-                        color: $mauve;
-                        font-family: "Open Sans", sans-serif;
-                        font-weight: 300;
-                        font-size: rem-calc(13px);
-                        width: 23px;
-                        height: 23px;
-                        text-align: center;
-                        line-height: 23px;
-                        border: 1px solid $mauve;
-                        border-radius: 50px;
-                        position: absolute;
-                        top: 10px;
-                        right: 15px;
-                        user-select: none;
+                            &.red {border-color: transparent $red transparent transparent;}
+                            &.blue {border-color: transparent $blue transparent transparent;}
+                            &.yellow {border-color: transparent $yellow transparent transparent;}
+                            &.green {border-color: transparent $green transparent transparent;}
+                            &.violet {border-color: transparent $violet transparent transparent;}
+                        }
                     }
                 }
                 .content {
-                    margin-bottom: 10px;
+                    margin-bottom: 20px;
 
                     p {
                         font-family: "Open Sans", sans-serif;
                         font-size: rem-calc(14px);
                         font-weight: 400;
                         color: #182740;
-                        line-height: 17px;
+                        line-height: 19px;
                         user-select: none;
                     }
                 }
                 .footer {
-                    .task-ctn {
-                        img {
-                            width: 10px;
-                            display: inline-block;
-                            vertical-align: middle;
-                            user-select: none;
+                    .tasks {
+                        color: #8B8CA6;
+                        font-weight: 300;
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(13px);
+                        margin-bottom: 5px;
+                        display: block;
+
+                        &:after {
+                            content: ' tâches';
                         }
+                    }
 
-                        .task-done {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(13px);
-                            font-weight: 400;
-                            color: $mauve;
-                            vertical-align: middle;
-                            user-select: none;
-
-                            &:after {
-                                content: " /";
+                    .priority-ctn {
+                        span {
+                            &:before {
+                                content: "Priorité : ";
+                                color: #8B8CA6;
                             }
-                        }
-
-                        .all-task {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(13px);
-                            font-weight: 400;
-                            color: $mauve;
-                            vertical-align: middle;
 
                             &:after {
-                                content: " Tâches";
+                                width: 6px;
+                                height: 6px;
+                                content: "";
+                                display: inline-block;
+                                border-radius: 50%;
+                                margin-left: 7px;
+                            }
+
+
+                            &.low {
+                                color: $green;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $green}
+                            }
+
+                            &.medium {
+                                color: $orange;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $orange}
+                            }
+
+                            &.high {
+                                color: $red;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $red}
                             }
                         }
                     }
+
                     .member-list {
                         position: absolute;
-                        bottom: 10px;
-                        right: 15px;
+                        bottom: 20px;
+                        right: 20px;
 
                         li {
                             width: 23px;
                             height: 23px;
                             display: inline-block;
-                            margin-right: 3px;
+                            margin-right: 0;
                             border-radius: 50%;
                             overflow: hidden;
 
@@ -1945,16 +1970,16 @@ footer {
         }
     }
     .doing {
-        width: 25%;
+        width: 20%;
         float: left;
         height: 1000px;
         display: block;
-        border-right: 1px solid #E6EAEE;
         box-sizing: border-box;
+        border-right: 1px solid #E6EAEE;
 
         .header-col {
-            color: $green;
-            width: 25%;
+            color: $yellow;
+            width: 20%;
             background-color: #ffffff;
             text-transform: uppercase;
             font-family: "Montserrat", sans-serif;
@@ -1965,116 +1990,129 @@ footer {
             border-bottom: 1px solid #E6EAEE;
             position: fixed;
             z-index: 2;
-            border-right: 1px solid #E6EAEE;
             box-sizing: border-box;
-            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
 
         .doing-list {
             margin-top: 53px;
+            margin-right: 8px;
+            border-right: 1px solid #E6EAEE;
 
             & > li {
                 background-color: white;
-                padding: 10px 15px 16px 15px;
+                padding: 20px;
                 box-sizing: border-box;
                 border-bottom: 1px solid #E6EAEE;
                 position: relative;
                 user-select: none;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+                margin-bottom: 8px;
 
                 .head {
-                    min-height: 25px;
                     margin-bottom: 5px;
 
                     .label {
                         li {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(8px);
-                            font-weight: 600;
-                            letter-spacing: 1px;
-                            padding: 3px 6px;
-                            display: inline-block;
-                            border-radius: 10px;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-width: 0 15px 15px 0;
                             box-sizing: border-box;
-                            color: #fff;
-                            background-color: $red;
-                            text-transform: uppercase;
                             user-select: none;
-                        }
-                    }
 
-                    .difficulty {
-                        color: $mauve;
-                        font-family: "Open Sans", sans-serif;
-                        font-weight: 300;
-                        font-size: rem-calc(13px);
-                        width: 23px;
-                        height: 23px;
-                        text-align: center;
-                        line-height: 23px;
-                        border: 1px solid $mauve;
-                        border-radius: 50px;
-                        position: absolute;
-                        top: 10px;
-                        right: 15px;
-                        user-select: none;
+                            &.red {border-color: transparent $red transparent transparent;}
+                            &.blue {border-color: transparent $blue transparent transparent;}
+                            &.yellow {border-color: transparent $yellow transparent transparent;}
+                            &.green {border-color: transparent $green transparent transparent;}
+                            &.violet {border-color: transparent $violet transparent transparent;}
+                        }
                     }
                 }
                 .content {
-                    margin-bottom: 10px;
+                    margin-bottom: 20px;
 
                     p {
                         font-family: "Open Sans", sans-serif;
                         font-size: rem-calc(14px);
                         font-weight: 400;
                         color: #182740;
-                        line-height: 17px;
+                        line-height: 19px;
                         user-select: none;
                     }
                 }
                 .footer {
-                    .task-ctn {
-                        img {
-                            width: 10px;
-                            display: inline-block;
-                            vertical-align: middle;
-                            user-select: none;
+                    .tasks {
+                        color: #8B8CA6;
+                        font-weight: 300;
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(13px);
+                        margin-bottom: 5px;
+                        display: block;
+
+                        &:after {
+                            content: ' tâches';
                         }
+                    }
 
-                        .task-done {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(13px);
-                            font-weight: 400;
-                            color: $mauve;
-                            vertical-align: middle;
-                            user-select: none;
-
-                            &:after {
-                                content: " /";
+                    .priority-ctn {
+                        span {
+                            &:before {
+                                content: "Priorité : ";
+                                color: #8B8CA6;
                             }
-                        }
-
-                        .all-task {
-                            font-family: "Open Sans", sans-serif;
-                            font-size: rem-calc(13px);
-                            font-weight: 400;
-                            color: $mauve;
-                            vertical-align: middle;
 
                             &:after {
-                                content: " Tâches";
+                                width: 6px;
+                                height: 6px;
+                                content: "";
+                                display: inline-block;
+                                border-radius: 50%;
+                                margin-left: 7px;
+                            }
+
+
+                            &.low {
+                                color: $green;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $green}
+                            }
+
+                            &.medium {
+                                color: $orange;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $orange}
+                            }
+
+                            &.high {
+                                color: $red;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $red}
                             }
                         }
                     }
+
                     .member-list {
                         position: absolute;
-                        bottom: 10px;
-                        right: 15px;
+                        bottom: 20px;
+                        right: 20px;
 
                         li {
                             width: 23px;
                             height: 23px;
                             display: inline-block;
-                            margin-right: 3px;
+                            margin-right: 0;
                             border-radius: 50%;
                             overflow: hidden;
 
@@ -2089,16 +2127,16 @@ footer {
         }
     }
     .done {
-        width: 25%;
+        width: 20%;
         float: left;
         height: 1000px;
         display: block;
-        border-right: 1px solid #E6EAEE;
         box-sizing: border-box;
+        border-right: 1px solid #E6EAEE;
 
         .header-col {
-            color: $red;
-            width: 25%;
+            color: $green;
+            width: 20%;
             background-color: #ffffff;
             text-transform: uppercase;
             font-family: "Montserrat", sans-serif;
@@ -2109,12 +2147,166 @@ footer {
             border-bottom: 1px solid #E6EAEE;
             position: fixed;
             z-index: 1;
-            border-right: 1px solid #E6EAEE;
             box-sizing: border-box;
-            box-shadow: 0 5px 5px -1px rgba(0, 0, 0, 0.1);
         }
 
         .done-list {
+            margin-top: 53px;
+            margin-right: 8px;
+            border-right: 1px solid #E6EAEE;
+
+            & > li {
+                background-color: white;
+                padding: 20px;
+                box-sizing: border-box;
+                border-bottom: 1px solid #E6EAEE;
+                position: relative;
+                user-select: none;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.10);
+                margin-bottom: 8px;
+
+                .head {
+                    margin-bottom: 5px;
+
+                    .label {
+                        li {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 0;
+                            height: 0;
+                            border-style: solid;
+                            border-width: 0 15px 15px 0;
+                            box-sizing: border-box;
+                            user-select: none;
+
+                            &.red {border-color: transparent $red transparent transparent;}
+                            &.blue {border-color: transparent $blue transparent transparent;}
+                            &.yellow {border-color: transparent $yellow transparent transparent;}
+                            &.green {border-color: transparent $green transparent transparent;}
+                            &.violet {border-color: transparent $violet transparent transparent;}
+                        }
+                    }
+                }
+                .content {
+                    margin-bottom: 20px;
+
+                    p {
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(14px);
+                        font-weight: 400;
+                        color: #182740;
+                        line-height: 19px;
+                        user-select: none;
+                    }
+                }
+                .footer {
+                    .tasks {
+                        color: #8B8CA6;
+                        font-weight: 300;
+                        font-family: "Open Sans", sans-serif;
+                        font-size: rem-calc(13px);
+                        margin-bottom: 5px;
+                        display: block;
+
+                        &:after {
+                            content: ' tâches';
+                        }
+                    }
+
+                    .priority-ctn {
+                        span {
+                            &:before {
+                                content: "Priorité : ";
+                                color: #8B8CA6;
+                            }
+
+                            &:after {
+                                width: 6px;
+                                height: 6px;
+                                content: "";
+                                display: inline-block;
+                                border-radius: 50%;
+                                margin-left: 7px;
+                            }
+
+
+                            &.low {
+                                color: $green;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $green}
+                            }
+
+                            &.medium {
+                                color: $orange;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $orange}
+                            }
+
+                            &.high {
+                                color: $red;
+                                font-weight: 300;
+                                font-family: "Open Sans", sans-serif;
+                                font-size: rem-calc(13px);
+
+                                &:after {background-color: $red}
+                            }
+                        }
+                    }
+
+                    .member-list {
+                        position: absolute;
+                        bottom: 20px;
+                        right: 20px;
+
+                        li {
+                            width: 23px;
+                            height: 23px;
+                            display: inline-block;
+                            margin-right: 0;
+                            border-radius: 50%;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                user-select: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .activity {
+        width: 20%;
+        float: left;
+        height: 1000px;
+        display: block;
+        box-sizing: border-box;
+
+        .header-col {
+            color: #000;
+            width: 20%;
+            background-color: #ffffff;
+            text-transform: uppercase;
+            font-family: "Montserrat", sans-serif;
+            font-size: rem-calc(12px);
+            font-weight: 700;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #E6EAEE;
+            position: fixed;
+            z-index: 1;
+            box-sizing: border-box;
+        }
+
+        .activity-list {
             margin-top: 53px;
 
             & > li {
@@ -2243,7 +2435,7 @@ footer {
     }
 
     .us {
-        transition: transform .3s ease;
+//        transition: transform .3s ease;
     }
 }
 .drop-block {

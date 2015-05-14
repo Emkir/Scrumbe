@@ -110,24 +110,22 @@
     <section class="kanban">
         <div class="user-stories">
             <div class="header-col">User stories</div>
-            <ul class="user-stories-list column">
+            <ul class="user-stories-list column1">
                 {% if project.user_stories.us is defined %}
                     {% for us in project.user_stories.us %}
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red">label</li>
+                                    <li class="red"></li>
                                 </ul>
-                                <span class="difficulty">{{ us.complexity }}</span>
                             </div>
                             <div class="content">
                                 <p>{{ us.description }}</p>
                             </div>
                             <div class="footer">
-                                <div class="task-ctn">
-                                    <img src="/assets/img/icons/task-icon.svg" alt="task icon"/>
-                                    <span class="task-done">0</span>
-                                    <span class="all-task">8</span>
+                                <span class="tasks">2</span>
+                                <div class="priority-ctn">
+                                    <span class="low">Basse</span>
                                 </div>
                                 <ul class="member-list">
                                     <li>
@@ -156,19 +154,13 @@
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red">label</li>
+                                    <li class="red"></li>
                                 </ul>
-                                <span class="difficulty">{{ us.complexity }}</span>
                             </div>
                             <div class="content">
                                 <p>{{ us.description }}</p>
                             </div>
                             <div class="footer">
-                                <div class="task-ctn">
-                                    <img src="/assets/img/icons/task-icon.svg" alt="task icon"/>
-                                    <span class="task-done">0</span>
-                                    <span class="all-task">8</span>
-                                </div>
                                 <ul class="member-list">
                                     <li>
                                         <img src="/assets/img/Claude-Guglieri.png" alt=""/>
@@ -196,19 +188,13 @@
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red">label</li>
+                                    <li class="red"></li>
                                 </ul>
-                                <span class="difficulty">{{ us.complexity }}</span>
                             </div>
                             <div class="content">
                                 <p>{{ us.description }}</p>
                             </div>
                             <div class="footer">
-                                <div class="task-ctn">
-                                    <img src="/assets/img/icons/task-icon.svg" alt="task icon"/>
-                                    <span class="task-done">0</span>
-                                    <span class="all-task">8</span>
-                                </div>
                                 <ul class="member-list">
                                     <li>
                                         <img src="/assets/img/Claude-Guglieri.png" alt=""/>
@@ -236,19 +222,13 @@
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red">label</li>
+                                    <li class="red"></li>
                                 </ul>
-                                <span class="difficulty">{{ us.complexity }}</span>
                             </div>
                             <div class="content">
                                 <p>{{ us.description }}</p>
                             </div>
                             <div class="footer">
-                                <div class="task-ctn">
-                                    <img src="/assets/img/icons/task-icon.svg" alt="task icon"/>
-                                    <span class="task-done">0</span>
-                                    <span class="all-task">8</span>
-                                </div>
                                 <ul class="member-list">
                                     <li>
                                         <img src="/assets/img/Claude-Guglieri.png" alt=""/>
@@ -267,6 +247,10 @@
                     {% endfor %}
                 {% endif %}
             </ul>
+        </div>
+        <div class="activity">
+            <div class="header-col">Activité récente</div>
+            <ul class="activity-list"></ul>
         </div>
     </section>
 {% endblock %}
