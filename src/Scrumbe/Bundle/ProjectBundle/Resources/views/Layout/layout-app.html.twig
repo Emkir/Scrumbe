@@ -8,10 +8,8 @@
         <!-- start: CSS -->
         <link href="/assets/css/app.min.css" rel="stylesheet">
 
-        <!-- JS -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-        <!-- The HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+        <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
             <script src="assets/js/libs/respond.js"></script>
             <script src="assets/js/libs/selectivizr.js"></script>
@@ -56,8 +54,9 @@
     {% block footer %}
     {% endblock %}
 
-    <!--   SCRIPTS   -->
+    <!-- JS -->
     <!--<script src="/assets/js/script.js"></script>-->
+    <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <script src="/assets/js/libs/velocity.min.js"></script>
     <script src="/assets/js/libs/velocity.ui.min.js"></script>
     <script src="//cdn.jsdelivr.net/velocity/1.2.2/velocity.ui.min.js"></script>
@@ -84,6 +83,10 @@
             });
         });
     </script>
+
+    {#<!--   SCRIPTS   -->#}
+    {#{% block script %}#}
+    {#{% endblock %}#}
 
     </body>
 </html>

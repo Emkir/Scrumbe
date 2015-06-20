@@ -12,7 +12,6 @@
             </li>
             <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
             <li><a href="">Learn</a></li>
-            <li><a href="">Team</a></li>
             <li>
                 <a href="">
                     <img src="/assets/img/icons/search-icon.svg" alt="search icon">
@@ -42,16 +41,16 @@
         <div class="divider"></div>
         <ul class="sub-nav">
             <li>
-                <a href="">User Stories</a>
-            </li>
-            <li>
-                <a href="">Sprint</a>
+                <a href="{{ url('sprint') }}">Sprint</a>
             </li>
             <li class="active">
                 <a href="">Kanban</a>
             </li>
             <li>
                 <a href="">Backlog</a>
+            </li>
+            <li>
+                <a href="{{ url('team') }}">Team</a>
             </li>
         </ul>
         <div class="members right">
@@ -253,4 +252,10 @@
             <ul class="activity-list"></ul>
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+    <script>
+
+    </script>
 {% endblock %}

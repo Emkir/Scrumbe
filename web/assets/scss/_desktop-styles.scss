@@ -1130,7 +1130,7 @@ footer {
         }
     }
 
-    .add-project, .notification {
+    .add-project,.add-sprint, .notification {
         position: absolute;
         right: 40px;
         bottom: -47px;
@@ -2599,6 +2599,190 @@ footer {
 
             .write-to {
 
+            }
+        }
+    }
+}
+
+
+//Sprint
+.sprint {
+    .sprints-list {
+        padding: 190px 60px 60px 60px;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 10;
+
+        & > li {
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            transition: .3s ease;
+
+            .infos-ctn {
+                width: 300px;
+                overflow: hidden;
+                position: absolute;
+
+                .option-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 10px;
+                    display: block;
+                    cursor: pointer;
+                }
+
+                .option-ctn {
+                    background-color: rgba(24, 39, 64, 0.9);
+                    position: absolute;
+                    top: 10px;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    display: none;
+
+                    .close-opt-btn {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        display: block;
+                        cursor: pointer;
+                    }
+
+                    .edit-btn {
+                        position: absolute;
+                        top: 50%;
+                        left: 35%;
+                        margin-left: -26px;
+                        margin-top: -26px;
+                        display: block;
+                        cursor: pointer;
+
+                        img {transition: .1s ease}
+
+                        &:hover img {
+                            transform: rotateZ(-10deg);
+                        }
+                    }
+
+                    .delete-btn {
+                        position: absolute;
+                        top: 50%;
+                        right: 35%;
+                        margin-right: -26px;
+                        margin-top: -26px;
+                        display: block;
+                        cursor: pointer;
+
+                        img {transition: .1s ease}
+
+                        &:hover img {
+                            transform: rotateZ(-10deg);
+                        }
+                    }
+                }
+
+                .state {
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(11px);
+                    font-weight: 300;
+                    letter-spacing: 2px;
+                    display: block;
+                    text-align: center;
+                    text-transform: uppercase;
+                    margin-top: 25px;
+                    color: #7F8CA6;
+
+                    &.now {color: $green;}
+                    &.next {color: $orange;}
+                }
+
+                h2 {
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(20px);
+                    font-weight: 700;
+                    color: #182740;
+                    text-align: center;
+                    display: block;
+                    width: 70%;
+                    margin: 20px auto 0 auto;
+
+                }
+
+                .member-list {
+                    display: block;
+                    text-align: center;
+                    margin-top: 20px;
+
+                    li {
+                        display: inline-block;
+                        margin-right: 5px;
+                        position: relative;
+
+                        .avatar-ctn {
+                            height: 32px;
+                            width: 32px;
+                            overflow: hidden;
+                            border-radius: 50%;
+
+                            img {
+                                width: 100%;
+                                background-color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+            .date-ctn {
+                width: 300px;
+                height: 367px;
+                border: 1px solid #E6EAEE;
+                border-radius: 4px;
+                background-color: #fff;
+                box-sizing: border-box;
+                text-align: center;
+
+                h2 {
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(20px);
+                    font-weight: 700;
+                    margin-top: 200px;
+                    margin-bottom: 10px;
+                }
+
+                .update {
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(13px);
+                    font-weight: 300;
+                    color: #7F8CA6;
+                    margin-bottom: 25px;
+
+                    .date {
+                        font-weight: 400;
+                    }
+                }
+
+                .divider {
+                    width: 80px;
+                    height: 1px;
+                    background-color: #E6EAEE;
+                    display: block;
+                    margin: 0 auto 25px auto;
+                }
+
+                .go-to-btn {
+                    vertical-align: middle;
+                    display: inline-block;
+                    color: #fff;
+                    font-family: "Open Sans", sans-serif;
+                    font-size: rem-calc(13px);
+                    font-weight: 600;
+                    padding: 12px 15px;
+                    border-radius: 50px;
+                    text-decoration: none;
+                    background-color: $blue;
+                }
             }
         }
     }

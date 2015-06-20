@@ -12,7 +12,6 @@
             </li>
             <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
             <li><a href="">Learn</a></li>
-            <li class="active"><a href="{{ url('team') }}">Team</a></li>
             <li>
                 <a href="">
                     <img src="/assets/img/icons/search-icon.svg" alt="search icon">
@@ -38,11 +37,70 @@
         </ul>
     </nav>
     <div class="sub-nav-projects">
-        <span class="title">Apple Watch App</span>
+        <span class="title">project.name</span>
         <div class="divider"></div>
-        <span class="title-2">Membres de l'équipe</span>
-        <a href="" class="notification">
-            <img src="/assets/img/icons/notif-icon.svg" alt="notification icon">
+        <ul class="sub-nav">
+            <li>
+                <a href="">Sprint</a>
+            </li>
+            <li>
+                <a href="">Kanban</a>
+            </li>
+            <li>
+                <a href="">Backlog</a>
+            </li>
+            <li class="active">
+                <a href="{{ url('team') }}">Team</a>
+            </li>
+        </ul>
+        <div class="members right">
+            <div class="divider"></div>
+            <ul>
+                <li class="add-member">
+                    <a href="">+</a>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Claude-Guglieri.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Thomas-Sanson.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Anthony-Ribeiro.png" alt=""/>
+                    </div>
+                    <div class="connect disconnect"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Christophe-Tauziet.png" alt=""/>
+                    </div>
+                    <div class="connect innactive"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Jeremy-Thomas.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="sort-by hide">
+            <span class="title">Sort by</span>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+        <a href="" class="add-project hide">
+            <img src="/assets/img/icons/add-project-icon.svg" alt="add project icon">
         </a>
     </div>
 {% endblock %}
@@ -568,7 +626,6 @@
                     $(this).addClass("active");
                 }
             });
-
         });
     </script>
 {% endblock %}
