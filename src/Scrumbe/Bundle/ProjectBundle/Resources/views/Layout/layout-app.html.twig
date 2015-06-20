@@ -16,7 +16,35 @@
                     placeholder: "drop-block",
                     forcePlaceholderSize: true,
                     containment: "window",
-                    cursor: "move"
+                    cursor: "move",
+                    update: function(event, ui) {
+                        console.log(ui.item.context.parentElement.className);
+
+                        var position = ui.item.index();
+                        var id = ui.item[0].id;
+                        var progress;
+
+                        if (ui.item.context.parentElement.className == "doing-list column ui-sortable"){
+                            progress = "wip";
+                        }
+                        else if (ui.item.context.parentElement.className == "to-do-list column ui-sortable"){
+                            progress = "todo";
+                        }
+                        else {
+                            progress = "done";
+                        }
+
+                        $.ajax({
+                            url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/"+id+"/kanban-position",
+                            method: "PUT",
+                            data: {
+                                'position': position,
+                                'progress': progress
+                            }
+                        }).done(function() {
+
+                        });
+                    }
                 });
                 $( ".column1" ).sortable({
                     connectWith: ".column1",
@@ -24,22 +52,20 @@
                     forcePlaceholderSize: true,
                     containment: "window",
                     cursor: "move",
-                    update: function(event, item) {
-                        console.log(item);
-
-                        var id = item.item[0].id;
+                    update: function(event, ui) {
+                        var position = ui.item.index() + 1;
+                        var id = ui.item[0].id;
+                        
+                        console.log(position);
 
                         $.ajax({
-                            url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/"+id+"/kanban-position",
+                            url: "http://scrumbe.loc.com:8080/app_dev.php/user-stories/"+id+"/kanban-position",
                             method: "PUT",
                             data: {
-                                'position': '2',
-                                'progress': 'done'
+                                'position': position
                             }
                         }).done(function() {
-                            console.log(data);
-                        }).fail(function() {
-                            console.log(data);
+
                         });
                     }
                 });

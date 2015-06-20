@@ -264,25 +264,4 @@
 {% endblock %}
 
 {% block script %}
-    <script>
-        $( ".help" ).click(function(){
-            $.ajax({
-                url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/9/kanban-position",
-                method: "PUT",
-                data: {
-                    'position': '2',
-                    'progress': 'done'
-                }
-            })
-            .done(function() {
-                alert( "success" );
-            })
-            .fail(function() {
-                alert( "error" );
-            })
-            .always(function() {
-                alert( "complete" );
-            });
-        });
-    </script>
 {% endblock %}
