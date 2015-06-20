@@ -107,10 +107,10 @@
 
 {% block body %}
     <section class="kanban">
+    {% if project.user_stories is not empty %}
         <div class="user-stories">
             <div class="header-col">User stories</div>
             <ul class="user-stories-list column1">
-                {% if project.user_stories is defined %}
                     {% for us in project.user_stories %}
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
@@ -139,12 +139,10 @@
                                 </ul>
                             </div>
                         </li>
-                    {% else %}
-                        <span>Commencez par créer une user stories</span>
                     {% endfor %}
-                {% endif %}
             </ul>
         </div>
+
         <div class="to-do">
             <div class="header-col">A faire</div>
             <ul class="to-do-list column">
@@ -260,6 +258,9 @@
             <div class="header-col">Activité récente</div>
             <ul class="activity-list"></ul>
         </div>
+    {% endif %}
+    <br><p style="margin-left:10px">Commencez par créer une user story !</p>
+
     </section>
 {% endblock %}
 
