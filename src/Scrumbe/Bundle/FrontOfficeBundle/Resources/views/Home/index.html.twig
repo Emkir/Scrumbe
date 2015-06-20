@@ -128,11 +128,6 @@
                             <a href="#">{{ 'nav.items.2'|trans }}</a>
                             <a href="{{ path('about') }}">{{ 'nav.items.3'|trans }}</a>
                             <a href="#">{{ 'nav.items.4'|trans }}</a>
-                            <span class="sign-up-btn">{{ 'footer.nav.item5'|trans }}</span>
-                            <select class="language-select">
-                                <option value="{{ path( app.request.attributes.get('_route'), {'_locale': 'fr'}) }}" {% if app.request.locale == 'fr' %}selected{% endif %}>{{ 'footer.nav.lang.fr'|trans }}</option>
-                                <option value="{{ path( app.request.attributes.get('_route'), {'_locale': 'en'}) }}" {% if app.request.locale == 'en' %}selected{% endif %}>{{ 'footer.nav.lang.en'|trans }}</option>
-                            </select>
                         </li>
                     </ul>
                 </div>
