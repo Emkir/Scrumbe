@@ -10,8 +10,8 @@
                     <img src="/assets/img/logo.svg" alt="search icon">
                 </a>
             </li>
-            <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
-            <li><a href="">Learn</a></li>
+            <li><a href="{{ url('scrumbe_get_projects') }}">{{ "nav.projects" | trans() }}</a></li>
+            <li><a href="">{{ "nav.learn" | trans() }}</a></li>
             <li>
                 <a href="">
                     <img src="/assets/img/icons/search-icon.svg" alt="search icon">
@@ -41,16 +41,16 @@
         <div class="divider"></div>
         <ul class="sub-nav">
             <li class="active">
-                <a href="{{ url('sprint') }}">Sprint</a>
+                <a href="{{ path('sprint') }}">{{ "nav.project.sprint" | trans() }}</a>
             </li>
             <li>
-                <a href="">Kanban</a>
+                <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>
             </li>
             <li>
-                <a href="">Backlog</a>
+                <a href="">{{ "nav.project.backlog" | trans() }}</a>
             </li>
             <li>
-                <a href="{{ url('team') }}">Team</a>
+                <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
             </li>
         </ul>
         <a href="" class="add-sprint">
