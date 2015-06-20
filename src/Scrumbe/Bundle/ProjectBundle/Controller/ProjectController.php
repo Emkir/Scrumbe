@@ -46,6 +46,7 @@ class ProjectController extends Controller
         $projectService     = $this->container->get('project_service');
         $userStoryService   = $this->container->get('userstory_service');
         $taskService        = $this->container->get('task_service');
+
         $validatorService   = $this->container->get('scrumbe.validator_service');
 
         $validatorService->objectExistsMultipleColumns(
@@ -163,7 +164,6 @@ class ProjectController extends Controller
     * @param Array         $userName       The username's list
     * @return JSONsonResponse              Response with updated project or errors
     */
-
     public function addUsersToProjectAction(Request $request, $projectId)
     {
         $project = new Project;
@@ -239,5 +239,23 @@ class ProjectController extends Controller
         $response = new Response($json, 200);
         $response->headers->set('Content-Type', 'application/json');
         return $response;
+    }
+
+    /**
+     * Display team page
+     *
+     */
+    public function teamAction()
+    {
+        return $this->render('ScrumbeProjectBundle:projects:team.html.twig');
+    }
+
+    /**
+     * Display sprint page
+     *
+     */
+    public function sprintAction()
+    {
+        return $this->render('ScrumbeProjectBundle:projects:sprint.html.twig');
     }
 }

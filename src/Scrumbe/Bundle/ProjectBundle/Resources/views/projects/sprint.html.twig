@@ -1,0 +1,147 @@
+{% extends "ScrumbeProjectBundle:Layout:layout-app.html.twig" %}
+
+{% block title %}Sprint{% endblock %}
+
+{% block nav %}
+    <nav class="nav-projects">
+        <ul class="left-nav">
+            <li class="logo">
+                <a href="">
+                    <img src="/assets/img/logo.svg" alt="search icon">
+                </a>
+            </li>
+            <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
+            <li><a href="">Learn</a></li>
+            <li>
+                <a href="">
+                    <img src="/assets/img/icons/search-icon.svg" alt="search icon">
+                </a>
+            </li>
+        </ul>
+        <ul class="right-nav">
+            <li>
+                <img src="/assets/img/icons/help-icon.svg" alt="help icon"/>
+            </li>
+            <li>
+                <div class="notif-ctn">
+                    <img src="/assets/img/icons/notification-icon.svg" alt="notification icon"/>
+                    <span class="notif-count">2</span>
+                </div>
+            </li>
+            <li>
+                <div class="avatar-ctn">
+                    <img src="/assets/img/Claude-Guglieri.png" alt="avatar">
+                </div>
+                <img src="/assets/img/icons/arrow-down-icon.svg" alt="arrown-down icon">
+            </li>
+        </ul>
+    </nav>
+    <div class="sub-nav-projects">
+        <span class="title">project.name</span>
+        <div class="divider"></div>
+        <ul class="sub-nav">
+            <li class="active">
+                <a href="{{ url('sprint') }}">Sprint</a>
+            </li>
+            <li>
+                <a href="">Kanban</a>
+            </li>
+            <li>
+                <a href="">Backlog</a>
+            </li>
+            <li>
+                <a href="{{ url('team') }}">Team</a>
+            </li>
+        </ul>
+        <a href="" class="add-sprint">
+            <img src="/assets/img/icons/add-project-icon.svg" alt="add project icon">
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <section class="sprint">
+        <ul class="sprints-list">
+            <li>
+                <div class="infos-ctn">
+                    <span class="option-btn">
+                        <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
+                    </span>
+                    <div class="option-ctn">
+                        <span class="close-opt-btn">
+                            <img src="/assets/img/icons/close-opt-icon.svg" alt="close icon">
+                        </span>
+
+                        <span class="edit-btn">
+                            <img src="/assets/img/icons/edit-project-icon.svg" alt="Éditer">
+                        </span>
+                        <a href="">
+                            <span class="delete-btn">
+                                <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
+                            </span>
+                        </a>
+                    </div>
+                    <span class="state now">En cours</span>
+                    <h2>Phantom: Landing Page Redesign</h2>
+                    <ul class="member-list">
+                        <li>
+                            <div class="avatar-ctn">
+                                <img src="/assets/img/Claude-Guglieri.png" alt=""/>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="avatar-ctn">
+                                <img src="/assets/img/Thomas-Sanson.png" alt=""/>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="avatar-ctn">
+                                <img src="/assets/img/Anthony-Ribeiro.png" alt=""/>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="avatar-ctn">
+                                <img src="/assets/img/Christophe-Tauziet.png" alt=""/>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="task-count">
+                        <div id="gauge"></div>
+                        <span class="tasks">10/20</span>
+                    </div>
+                </div>
+                <div class="date-ctn">
+                    <span class="start-date"></span>
+                    <img src="" alt="arrow"/>
+                    <span class="end-date"></span>
+                </div>
+            </li>
+        </ul>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script src="/web/assets/js/libs/gauge.min.js"></script>
+    <script>
+        var opts = {
+            lines: 12, // The number of lines to draw
+            angle: 0.5, // The length of each line
+            lineWidth: 0.05, // The line thickness
+            pointer: {
+                length: 0.9, // The radius of the inner circle
+                strokeWidth: 0.035, // The rotation offset
+                color: '#000000' // Fill color
+            },
+            limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+            colorStart: '#28CEE0',   // Colors
+            colorStop: '#E6EAEE',    // just experiment with them
+            strokeColor: '#E6EAEE',   // to see which ones work best for you
+            generateGradient: true
+        };
+        var target = document.getElementById('gauge'); // your canvas element
+        var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+        gauge.maxValue = 3000; // set max gauge value
+        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        gauge.set(1250); // set actual value
+    </script>
+{% endblock %}

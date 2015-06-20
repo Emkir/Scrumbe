@@ -8,24 +8,7 @@
         <!-- start: CSS -->
         <link href="/assets/css/app.min.css" rel="stylesheet">
 
-        <!-- JS -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-        <!-- The HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-            <script src="assets/js/libs/respond.js"></script>
-            <script src="assets/js/libs/selectivizr.js"></script>
-
-        <!-- start: Favicon and Touch Icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/img/ico/fav-icon144.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/img/ico/fav-icon114.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/img/ico/fav-icon72.png">
-        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/img/ico/fav-icon57.png">
-        <link rel="shortcut icon" href="/assets/img/ico/fav-icon16.png">
-
-        <!-- Fonts -->
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800|Montserrat:400,700' rel='stylesheet' type='text/css'>
-        <script src="/assets/js/libs/jquery-ui.min.js"></script>
+        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
         <script>
             $(function() {
                 $( ".column" ).sortable({
@@ -40,11 +23,45 @@
                     placeholder: "drop-block",
                     forcePlaceholderSize: true,
                     containment: "window",
-                    cursor: "move"
+                    cursor: "move",
+                    update: function(event, item) {
+                        console.log(item);
+
+                        var id = item.item[0].id;
+
+                        $.ajax({
+                            url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/"+id+"/kanban-position",
+                            method: "PUT",
+                            data: {
+                                'position': '2',
+                                'progress': 'done'
+                            }
+                        }).done(function() {
+                            console.log(data);
+                        }).fail(function() {
+                            console.log(data);
+                        });
+                    }
                 });
             });
         </script>
 
+        <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+            <script src="assets/js/libs/respond.js"></script>
+            <script src="assets/js/libs/selectivizr.js"></script>
+
+        <!-- start: Favicon and Touch Icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/img/ico/fav-icon144.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets/img/ico/fav-icon114.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets/img/ico/fav-icon72.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/assets/img/ico/fav-icon57.png">
+        <link rel="shortcut icon" href="/assets/img/ico/fav-icon16.png">
+
+        <!-- Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800|Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <script src="/assets/js/libs/jquery-ui.min.js"></script>
     </head>
     <body class="project">
     {% block nav %}
@@ -56,8 +73,7 @@
     {% block footer %}
     {% endblock %}
 
-    <!--   SCRIPTS   -->
-    <!--<script src="/assets/js/script.js"></script>-->
+    <!-- JS -->
     <script src="/assets/js/libs/velocity.min.js"></script>
     <script src="/assets/js/libs/velocity.ui.min.js"></script>
     <script src="//cdn.jsdelivr.net/velocity/1.2.2/velocity.ui.min.js"></script>
@@ -84,6 +100,10 @@
             });
         });
     </script>
+
+    {#<!--   SCRIPTS   -->#}
+    {% block script %}
+    {% endblock %}
 
     </body>
 </html>

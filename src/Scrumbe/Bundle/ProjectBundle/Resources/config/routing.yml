@@ -140,11 +140,14 @@ scrumbe_task_kanban_position:
         taskId: \d+
         _method: PUT
 
-###KANBAN###
+###TEAM###
 
-kanban:
-    pattern:  /kanban
-    defaults: { _controller: ScrumbeProjectBundle:Kanban:kanban }
 team:
     pattern:  /team
-    defaults: { _controller: ScrumbeProjectBundle:Team:team }
+    defaults: { _controller: ScrumbeProjectBundle:Project:team }
+
+###SPRINT###
+
+sprint:
+    pattern:  /sprint
+    defaults: { _controller: ScrumbeProjectBundle:Project:sprint }

@@ -63,8 +63,9 @@ $(".sign-up-lk").click(function(){
 
 //Initialisation SelectOrDie
 $(".language-select").selectOrDie({
-    links: true,
+    links: true
 });
+
 
 // Typed.jquery
 $(function(){

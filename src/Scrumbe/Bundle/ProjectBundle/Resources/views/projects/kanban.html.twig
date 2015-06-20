@@ -12,7 +12,6 @@
             </li>
             <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
             <li><a href="">Learn</a></li>
-            <li><a href="">Team</a></li>
             <li>
                 <a href="">
                     <img src="/assets/img/icons/search-icon.svg" alt="search icon">
@@ -20,7 +19,7 @@
             </li>
         </ul>
         <ul class="right-nav">
-            <li>
+            <li class="help">
                 <img src="/assets/img/icons/help-icon.svg" alt="help icon"/>
             </li>
             <li>
@@ -42,16 +41,16 @@
         <div class="divider"></div>
         <ul class="sub-nav">
             <li>
-                <a href="">User Stories</a>
-            </li>
-            <li>
-                <a href="">Sprint</a>
+                <a href="{{ url('sprint') }}">Sprint</a>
             </li>
             <li class="active">
                 <a href="">Kanban</a>
             </li>
             <li>
                 <a href="">Backlog</a>
+            </li>
+            <li>
+                <a href="{{ url('team') }}">Team</a>
             </li>
         </ul>
         <div class="members right">
@@ -262,4 +261,28 @@
             <ul class="activity-list"></ul>
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $( ".help" ).click(function(){
+            $.ajax({
+                url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/9/kanban-position",
+                method: "PUT",
+                data: {
+                    'position': '2',
+                    'progress': 'done'
+                }
+            })
+            .done(function() {
+                alert( "success" );
+            })
+            .fail(function() {
+                alert( "error" );
+            })
+            .always(function() {
+                alert( "complete" );
+            });
+        });
+    </script>
 {% endblock %}
