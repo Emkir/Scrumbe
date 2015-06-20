@@ -7,3 +7,10 @@ user_story:
         low: Basse
         medium: Moyenne
         high: Haute
+
+projects:
+    my_projects:  Mes projets
+
+nav:
+    projects: Projets
+    learn: Découvrir Scrum

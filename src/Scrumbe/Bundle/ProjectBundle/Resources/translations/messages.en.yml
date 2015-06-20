@@ -1,3 +1,16 @@
 project:
     delete:
         success: The project was successfuly deleted
+
+user_story:
+    priority:
+        low: Low
+        medium: Medium
+        high: High
+
+projects:
+    my_projects:  My projects
+
+nav:
+    projects: Projects
+    learn: Learn Scrum
