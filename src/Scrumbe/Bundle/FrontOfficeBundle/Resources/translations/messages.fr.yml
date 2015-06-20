@@ -189,3 +189,65 @@ scrum:
             word1: Quick
             lastword: Progression
         parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+#NOS OFFRES
+offres:
+    title:
+        word1: Ne payez que vos
+        lastword: projets d'envergure
+    parag: Financer un projet qui se lance n'est pas toujours évident, et nous souhaitons vous voir réussir ! Nous avons donc choisi de vous permettre
+    parag2: d'utiliser Scrumbe gratuitement jusqu'à la réussite concrète de votre projet. Plus de précisions ? Voilà comment ça fonctionne !
+
+    title2:
+        word1: Vous êtes
+        lastword: Étudiant
+    parag3: SCRUMBE, c'est pour tout le monde, alors les étudiants, nous avons pensé à vous ! Réussir ses projets scolaires n'a pas de prix, nous avons donc mis deux offres à votre disposition pour mettre toutes les chances de votre coté !
+
+    block1:
+        title: Gratuit !
+        till: jusqu'à
+        tasks: 300 tâches
+        bestfor: Idéal pour
+        type: Tester SCRUMBE
+
+    block2:
+        title: 5€ HT par mois 
+        till: Plus de
+        tasks: 300 tâches
+        bestfor: Idéal pour
+        type: Vos petits projets
+
+    block3:
+        title: 20€ HT par mois 
+        till: Plus de
+        tasks: 700 tâches
+        bestfor: Idéal pour
+        type: Votre start-up
+
+    block4:
+        title: 40€ HT par mois 
+        till: Plus de
+        tasks: 2000 tâches
+        bestfor: Idéal pour
+        type: Vos projets plus ambitieux
+
+    block5:
+        till: Plus de
+        tasks: 1000 tâches
+        bestfor: sur 120 jours glissants
+
+    block6:
+        title: Gratuit ! 
+        till: Jusqu'à
+        tasks: 500 tâches
+        bestfor: Hors partenariats
+        type: Avec justificatif étudiant
+
+    block7:
+        title: Gratuit ! 
+        till: Projets d'envergures
+        tasks: 2
+        bestfor: Partenariats écoles
+        type: Avec justificatif étudiant
+
+    subs: Souscrire
+    longer: Prolonger
