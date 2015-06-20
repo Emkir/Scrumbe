@@ -258,4 +258,13 @@ class ProjectController extends Controller
     {
         return $this->render('ScrumbeProjectBundle:projects:sprint.html.twig');
     }
+
+    /**
+     * Display backlog page
+     *
+     */
+    public function backlogAction()
+    {
+        return $this->render('ScrumbeProjectBundle:projects:backlog.html.twig');
+    }
 }
