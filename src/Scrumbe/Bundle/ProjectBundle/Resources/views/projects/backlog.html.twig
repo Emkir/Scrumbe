@@ -125,7 +125,16 @@
                         </div>
                     </form>
                 </li>
-                <li>
+                <li id="1">
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                    <div class="footer">
+                        <span class="tasks-count">2 tâches</span>
+                        <div class="priority-ctn">
+                            <span class="high">haute</span>
+                        </div>
+                    </div>
+                </li>
+                <li id="2">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                     <div class="footer">
                         <span class="tasks-count">2 tâches</span>
@@ -140,25 +149,33 @@
             <div class="header-col">Tâches</div>
             <span class="add-tasks">Ajouter +</span>
             <ul class="tasks-list">
-                <li>
+                <li class="form-add-tasks">
+                    <form action="">
+                        <textarea name="" id="" placeholder="Intitulé" rows="6"></textarea>
+                        <div class="footer">
+                            <span class="submit">Valider</span>
+                        </div>
+                    </form>
+                </li>
+                <li class="US1">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
-                <li>
+                <li class="1">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
-                <li>
+                <li class="1">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
-                <li>
+                <li class="2">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
-                <li>
+                <li class="2">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
-                <li>
+                <li class="2">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
-                <li>
+                <li class="2">
                     <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
                 </li>
             </ul>
@@ -191,6 +208,10 @@
 
 {% block script %}
     <script>
+
+        var currentUsId;
+
+        // Display form user storie
         $('.add-us').click(function(){
             $('html, body').animate({scrollTop : 0},800);
 
@@ -199,6 +220,7 @@
             $('.form-add-us textarea').focus();
         });
 
+        // Submit user storie
         $('.form-add-us .submit').click(function(){
             $.ajax({
                 url: '',
@@ -208,6 +230,47 @@
                 $('.form-add-us textarea, .form-add-us select').val('');
                 $('.form-add-us').hide();
             })
-        })
+        });
+
+        // Select user storie
+        $('.user-stories-list li').click(function(){
+            if( $(this).hasClass('selected') ){
+                $(this).removeClass('selected');
+                $('.add-tasks').hide();
+            }
+            else if ( $('.form-add-us').is(':visible') ) {
+                return false
+            }
+            else {
+                $('.user-stories-list li').removeClass('selected');
+                $(this).addClass('selected');
+                $('.add-tasks').show();
+                currentUsId = $(this).attr('id');
+            }
+        });
+
+        // Display form add tasks
+        $('.add-tasks').click(function(){
+            $('html, body').animate({scrollTop : 0},800);
+
+            $('.form-add-tasks').show();
+
+            $('.form-add-tasks textarea').focus();
+        });
+
+        // Submit tasks
+        $('.form-add-tasks .submit').click(function(){
+            $.ajax({
+                url: '',
+                method: '',
+                data: {
+                    'id': currentUsId
+                }
+            }).done(function(data){
+                console.log(data);
+                $('.form-add-tasks textarea').val('');
+                $('.form-add-tasks').hide();
+            })
+        });
     </script>
 {% endblock %}
