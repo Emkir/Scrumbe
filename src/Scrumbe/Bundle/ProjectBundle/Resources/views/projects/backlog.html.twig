@@ -132,7 +132,7 @@
                         <div class="footer">
                             <span class="tasks-count">{{ us.task_count }} tâches</span>
                             <div class="priority-ctn">
-                                <span class="high">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
+                                <span class="{{ us.priority }}">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
                             </div>
                         </div>
                     </li>
@@ -217,8 +217,13 @@
         // Submit user storie
         $('.form-add-us .submit').click(function(){
             $.ajax({
-                url: '',
-                method: ''
+                url: '{{ path('scrumbe_post_user_story') }}',
+                method: 'POST',
+                data: {
+                    'project_id': $('.user-stories-list input').val(),
+                    'description': $('.user-stories-list textarea').val(),
+                    'priority': $('.user-stories-list select').val()
+                }
             }).done(function(data){
                 console.log(data);
                 $('.form-add-us textarea, .form-add-us select').val('');

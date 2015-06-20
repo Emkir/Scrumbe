@@ -22,6 +22,8 @@
 
                         var position = ui.item.index() + 1;
                         var id = ui.item[0].id;
+                        var url = '{{ path('scrumbe_task_kanban_position', {'taskId':00}) }}';
+                        url = url.replace(00, id);
                         var progress;
 
                         if (ui.item.context.parentElement.className == "doing-list column ui-sortable"){
@@ -35,7 +37,7 @@
                         }
 
                         $.ajax({
-                            url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/"+id+"/kanban-position",
+                            url: url,
                             method: "PUT",
                             data: {
                                 'position': position,
@@ -56,10 +58,11 @@
                         var position = ui.item.index() + 1;
                         var id = ui.item[0].id;
 
-                        console.log(position);
+                        var url = '{{ path('scrumbe_user_story_kanban_position', {'userStoryId':00}) }}';
+                        url = url.replace(00, id);
 
                         $.ajax({
-                            url: "http://scrumbe.loc.com:8080/app_dev.php/user-stories/"+id+"/kanban-position",
+                            url: url,
                             method: "PUT",
                             data: {
                                 'position': position
