@@ -20,7 +20,7 @@
                     update: function(event, ui) {
                         console.log(ui.item.context.parentElement.className);
 
-                        var position = ui.item.index();
+                        var position = ui.item.index() + 1;
                         var id = ui.item[0].id;
                         var progress;
 

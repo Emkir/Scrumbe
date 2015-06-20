@@ -103,12 +103,12 @@ class UserstoryService {
                 $position = $userStoryInSprint->getPosition();
                 if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $userStoryInSprint->getId() != $userStoryId)
                 {
-                    $userStoryInSprint->setPosition($userStoryInSprint->getPosition() - 1);
+                    $userStoryInSprint->setPosition($position - 1);
                     $userStoryInSprint->save();
                 }
                 elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $userStoryInSprint->getId() != $userStoryId)
                 {
-                    $userStoryInSprint->setPosition($userStoryInSprint->getPosition() + 1);
+                    $userStoryInSprint->setPosition($position + 1);
                     $userStoryInSprint->save();
                 }
             }
