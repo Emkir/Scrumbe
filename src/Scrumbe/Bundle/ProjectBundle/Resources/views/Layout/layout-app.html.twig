@@ -8,6 +8,44 @@
         <!-- start: CSS -->
         <link href="/assets/css/app.min.css" rel="stylesheet">
 
+        <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+        <script>
+            $(function() {
+                $( ".column" ).sortable({
+                    connectWith: ".column",
+                    placeholder: "drop-block",
+                    forcePlaceholderSize: true,
+                    containment: "window",
+                    cursor: "move"
+                });
+                $( ".column1" ).sortable({
+                    connectWith: ".column1",
+                    placeholder: "drop-block",
+                    forcePlaceholderSize: true,
+                    containment: "window",
+                    cursor: "move",
+                    update: function(event, item) {
+                        console.log(item);
+
+                        var id = item.item[0].id;
+
+                        $.ajax({
+                            url: "http://scrumbe.loc.com:8080/app_dev.php/tasks/"+id+"/kanban-position",
+                            method: "PUT",
+                            data: {
+                                'position': '2',
+                                'progress': 'done'
+                            }
+                        }).done(function() {
+                            console.log(data);
+                        }).fail(function() {
+                            console.log(data);
+                        });
+                    }
+                });
+            });
+        </script>
+
         <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -24,25 +62,6 @@
         <!-- Fonts -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800|Montserrat:400,700' rel='stylesheet' type='text/css'>
         <script src="/assets/js/libs/jquery-ui.min.js"></script>
-        <script>
-            $(function() {
-                $( ".column" ).sortable({
-                    connectWith: ".column",
-                    placeholder: "drop-block",
-                    forcePlaceholderSize: true,
-                    containment: "window",
-                    cursor: "move"
-                });
-                $( ".column1" ).sortable({
-                    connectWith: ".column1",
-                    placeholder: "drop-block",
-                    forcePlaceholderSize: true,
-                    containment: "window",
-                    cursor: "move"
-                });
-            });
-        </script>
-
     </head>
     <body class="project">
     {% block nav %}
@@ -55,8 +74,6 @@
     {% endblock %}
 
     <!-- JS -->
-    <!--<script src="/assets/js/script.js"></script>-->
-    <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <script src="/assets/js/libs/velocity.min.js"></script>
     <script src="/assets/js/libs/velocity.ui.min.js"></script>
     <script src="//cdn.jsdelivr.net/velocity/1.2.2/velocity.ui.min.js"></script>
@@ -85,8 +102,8 @@
     </script>
 
     {#<!--   SCRIPTS   -->#}
-    {#{% block script %}#}
-    {#{% endblock %}#}
+    {% block script %}
+    {% endblock %}
 
     </body>
 </html>
