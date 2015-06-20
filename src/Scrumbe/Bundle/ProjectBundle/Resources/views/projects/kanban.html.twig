@@ -10,8 +10,8 @@
                     <img src="/assets/img/logo.svg" alt="search icon">
                 </a>
             </li>
-            <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
-            <li><a href="">Learn</a></li>
+            <li><a href="{{ url('scrumbe_get_projects') }}">{{ "nav.projects" | trans() }}</a></li>
+            <li><a href="">{{ "nav.learn" | trans() }}</a></li>
             <li>
                 <a href="">
                     <img src="/assets/img/icons/search-icon.svg" alt="search icon">
@@ -41,16 +41,16 @@
         <div class="divider"></div>
         <ul class="sub-nav">
             <li>
-                <a href="{{ url('sprint') }}">Sprint</a>
+                <a href="{{ path('sprint') }}">{{ "nav.project.sprint" | trans() }}</a>
             </li>
             <li class="active">
-                <a href="">Kanban</a>
+                <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>
             </li>
             <li>
-                <a href="{{ url('backlog') }}">Backlog</a>
+                <a href="{{ path('backlog') }}">{{ "nav.project.backlog" | trans() }}</a>
             </li>
             <li>
-                <a href="{{ url('team') }}">Team</a>
+                <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
             </li>
         </ul>
         <div class="members right">
@@ -107,10 +107,10 @@
 
 {% block body %}
     <section class="kanban">
+    {% if project.user_stories is not empty %}
         <div class="user-stories">
             <div class="header-col">User stories</div>
             <ul class="user-stories-list column1">
-                {% if project.user_stories is defined %}
                     {% for us in project.user_stories %}
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
@@ -139,12 +139,10 @@
                                 </ul>
                             </div>
                         </li>
-                    {% else %}
-                        <span>Commencez par créer une user stories</span>
                     {% endfor %}
-                {% endif %}
             </ul>
         </div>
+
         <div class="to-do">
             <div class="header-col">A faire</div>
             <ul class="to-do-list column">
@@ -260,6 +258,9 @@
             <div class="header-col">Activité récente</div>
             <ul class="activity-list"></ul>
         </div>
+    {% endif %}
+    <br><p style="margin-left:10px">Commencez par créer une user story !</p>
+
     </section>
 {% endblock %}
 
