@@ -49,23 +49,14 @@ class UserStoryController extends Controller
     /**
      * Create a user story
      *
-     * @param  Integer             $projectId      Project's id
-     * @return RedirectResponse                    Get to the created user story page
-     *         Response                            Twig view with form
+     * @ JsonResponse
      */
-    public function postUserStoryAction($projectId)
+    public function postUserStoryAction()
     {
-        $usService = $this->container->get('userstory_service');
-        $userStory = $usService->createUserStory($projectId);
-
-        if ($userStory instanceof UserStory)
-        {
-            return $this->redirect($this->generateUrl('scrumbe_get_user_story',array('projectId' => $projectId, 'userStoryId' => $userStory->getId())));
-        }
-
-        return $this->render('ScrumbeProjectBundle:userstories:createUserStory.html.twig', array(
-            'form' => $userStory->createView()
-        ));    
+//        $usService = $this->container->get('userstory_service');
+//        $userStory = $usService->createUserStory($projectId);
+//
+//        return new JsonResponse(array('user_story' => $userStory), JsonResponse::HTTP_CREATED);
     }
 
     /**

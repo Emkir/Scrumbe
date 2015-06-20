@@ -63,10 +63,10 @@ scrumbe_get_user_story:
         _method: GET
 
 scrumbe_post_user_story:
-    pattern: /projects/{projectId}/user-stories/create
+    pattern: /user-stories/create
     defaults: {_controller: ScrumbeProjectBundle:UserStory:postUserStory}
     requirements:
-        projectId: \d+
+        _method: POST
 
 scrumbe_put_user_story:
     pattern: /projects/{projectId}/user-stories/{userStoryId}/update
@@ -154,6 +154,9 @@ sprint:
 
 ###BACKLOG###
 
-backlog:
-    pattern:  /backlog
+scrumbe_get_backlog:
+    pattern:  /{projectId}/{projectName}/backlog
     defaults: { _controller: ScrumbeProjectBundle:Project:backlog }
+    requirements:
+        projectId: \d+
+        _method: GET

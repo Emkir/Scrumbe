@@ -47,7 +47,7 @@
                 <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.kanban" | trans() }}</a>
             </li>
             <li class="active">
-                <a href="{{ path('backlog') }}">{{ "nav.project.backlog" | trans() }}</a>
+                <a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>
             </li>
             <li>
                 <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
@@ -113,13 +113,14 @@
             <ul class="user-stories-list">
                 <li class="form-add-us">
                     <form action="">
-                        <textarea name="" id="" placeholder="Intitulé" rows="6"></textarea>
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <textarea name="description" id="" placeholder="Intitulé" rows="6"></textarea>
                         <div class="footer">
-                            <select name="" id="">
+                            <select name="priority" id="">
                                 <option value="">Priorité</option>
-                                <option value="0">basse</option>
-                                <option value="1">moyenne</option>
-                                <option value="2">haute</option>
+                                <option value="0">Basse</option>
+                                <option value="1">Moyenne</option>
+                                <option value="2">Haute</option>
                             </select>
                             <span class="submit">Valider</span>
                         </div>

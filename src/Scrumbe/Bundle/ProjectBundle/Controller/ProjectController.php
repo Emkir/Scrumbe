@@ -262,9 +262,36 @@ class ProjectController extends Controller
     /**
      * Display backlog page
      *
+     * @param   Integer   $projectId      Project's Id
+     * @param   Integer   $projectName    Project's name
+     * @return  Response                  Twig view with the backlog
+     *
      */
-    public function backlogAction()
+    public function backlogAction($projectId, $projectName)
     {
-        return $this->render('ScrumbeProjectBundle:projects:backlog.html.twig');
+        $projectService     = $this->container->get('project_service');
+        $userStoryService   = $this->container->get('userstory_service');
+        $taskService        = $this->container->get('task_service');
+
+        $validatorService   = $this->container->get('scrumbe.validator_service');
+
+        $validatorService->objectExistsMultipleColumns(
+            array(
+                'Id' => $projectId,
+                'UrlName' => $projectName
+            ),
+            ProjectQuery::create(),
+            'project'
+        );
+
+        $validatorService->userAccessOnObject($projectId, $this->getUser(), new ProjectQuery(), 'project');
+
+        $project = $projectService->getProject($projectId);
+        $project['user_stories'] = $userStoryService->getBacklogUserStories($projectId);
+//        $project['tasks'] = $taskService->getBacklogTasks($projectId);
+
+        return $this->render('ScrumbeProjectBundle:projects:backlog.html.twig',
+            array('project' => $project)
+        );
     }
 }

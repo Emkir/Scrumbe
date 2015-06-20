@@ -31,6 +31,21 @@ class UserstoryService {
         return $userStoriesArray;
     }
 
+    public function getBacklogUserStories($projectId)
+    {
+        $userStoriesArray = array();
+
+        $userStories = UserStoryQuery::create()->filterByProjectId($projectId)->orderByNumber()->find();
+
+        foreach($userStories as $userStory)
+        {
+            $userStoriesArray[$userStory->getId()] = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
+            $userStoriesArray[$userStory->getId()]['task_count'] = count($userStory->getTasks());
+        }
+
+        return $userStoriesArray;
+    }
+
     public function getUserStory($projectId, $userStoryId)
     {
         $userStory      = UserStoryQuery::create()->filterByProjectId($projectId)->findPk($userStoryId);
