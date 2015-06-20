@@ -47,7 +47,7 @@
                 <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>
             </li>
             <li>
-                <a href="">{{ "nav.project.backlog" | trans() }}</a>
+                <a href="{{ path('backlog') }}">{{ "nav.project.backlog" | trans() }}</a>
             </li>
             <li>
                 <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
