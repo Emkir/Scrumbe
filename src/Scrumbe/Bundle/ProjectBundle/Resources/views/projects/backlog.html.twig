@@ -126,24 +126,17 @@
                         </div>
                     </form>
                 </li>
-                <li id="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                    <div class="footer">
-                        <span class="tasks-count">2 tâches</span>
-                        <div class="priority-ctn">
-                            <span class="high">haute</span>
+                {% for us in project.user_stories %}
+                    <li id="{{ us.id }}">
+                        <p class="title">{{ us.description }}</p>
+                        <div class="footer">
+                            <span class="tasks-count">{{ us.task_count }} tâches</span>
+                            <div class="priority-ctn">
+                                <span class="high">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li id="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                    <div class="footer">
-                        <span class="tasks-count">2 tâches</span>
-                        <div class="priority-ctn">
-                            <span class="high">haute</span>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="tasks">

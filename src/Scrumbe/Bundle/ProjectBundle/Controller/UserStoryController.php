@@ -51,12 +51,25 @@ class UserStoryController extends Controller
      *
      * @ JsonResponse
      */
-    public function postUserStoryAction()
+    public function postUserStoryAction(Request $request)
     {
-//        $usService = $this->container->get('userstory_service');
-//        $userStory = $usService->createUserStory($projectId);
-//
-//        return new JsonResponse(array('user_story' => $userStory), JsonResponse::HTTP_CREATED);
+        $data = $request->request->all();
+
+        $priority = array("0"=>"low", "1"=>"medium", "2"=>"high");
+        $lastUserStory = UserStoryQuery::create()
+            ->filterByProjectId($data['project_id'])
+            ->orderByNumber(\Criteria::DESC)
+            ->limit(1)
+            ->findOne();
+
+        $userStory = new UserStory();
+        $userStory->setProjectId($data['project_id']);
+        $userStory->setDescription($data['description']);
+        $userStory->setPriority($priority[$data['priority']]);
+        $userStory->setNumber($lastUserStory->getNumber() + 1);
+        $userStory->save();
+
+        return new JsonResponse(array('user_story' => $userStory), JsonResponse::HTTP_CREATED);
     }
 
     /**
