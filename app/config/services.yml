@@ -2,3 +2,7 @@ services:
     scrumbe_mailer:
         class: Scrumbe\Service\MailerService
         arguments: [@service_container, "%mailer_user%"]
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+           - { name: twig.extension }

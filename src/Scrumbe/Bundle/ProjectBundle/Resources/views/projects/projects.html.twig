@@ -11,10 +11,9 @@
                 </a>
             </li>
             <li class="active">
-                <a href="{{ url('scrumbe_get_projects') }}">Projects</a>
+                <a href="{{ url('scrumbe_get_projects') }}">{{ "nav.projects" | trans() }}</a>
             </li>
-            <li><a href="">Learn</a></li>
-            <li><a href="{{ url('team') }}">Team</a></li>
+            <li><a href="">{{ "nav.learn" | trans() }}</a></li>
             <li>
                 <a href="">
                     <img src="/assets/img/icons/search-icon.svg" alt="search icon">
@@ -43,15 +42,15 @@
         </ul>
     </nav>
     <div class="sub-nav-projects">
-        <span class="title">My projects</span>
-        <div class="sort-by">
-            <span class="title">Sort by</span>
-            <select>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-            </select>
-        </div>
+        <span class="title">{{ "projects.my_projects" | trans() }}</span>
+        {#<div class="sort-by">#}
+            {#<span class="title">Sort by</span>#}
+            {#<select>#}
+                {#<option>1</option>#}
+                {#<option>2</option>#}
+                {#<option>3</option>#}
+            {#</select>#}
+        {#</div>#}
         <a href="" class="add-project">
             <img src="/assets/img/icons/add-project-icon.svg" alt="add project icon">
         </a>
@@ -86,7 +85,7 @@
                 <div class="info-ctn">
                     <h2>{{project.name}}</h2>
                     <div class="update">
-                        Dernière mise à jour le <span class="date">{{project.updated_at.date|date('F d,Y')}}</span>
+                        Dernière mise à jour le <span class="date">{{project.updated_at.date| localizeddate('full', 'none')}}</span>
                     </div>
 
                     <div class="divider"></div>

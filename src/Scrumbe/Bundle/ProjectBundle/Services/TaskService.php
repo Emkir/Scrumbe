@@ -97,46 +97,78 @@ class TaskService {
         $task = TaskQuery::create()->findPk($taskId);
         $oldProgress = $task->getProgress();
         $oldPosition = $task->getPosition();
+        $newProgress = $taskPosition['progress'];
+        $newPosition = $taskPosition['position'];
         $task->setPosition($taskPosition['position']);
         $task->setProgress($taskPosition['progress']);
         $task->save();
 
-        $tasksInNewProgress = TaskQuery::create()
-            ->useUserStoryQuery()
-                ->filterByProjectId($task->getUserStory()->getProjectId())
-            ->endUse()
-            ->filterByProgress($taskPosition['progress'])
-            ->find();
-
-        if (!$tasksInNewProgress->isEmpty())
+        if ($oldProgress !== $newProgress)
         {
-            foreach ($tasksInNewProgress as $taskInNewProgress)
+            $tasksInNewProgress = TaskQuery::create()
+                ->useUserStoryQuery()
+                ->filterByProjectId($task->getUserStory()->getProjectId())
+                ->endUse()
+                ->filterByProgress($newProgress)
+                ->find();
+
+            if (!$tasksInNewProgress->isEmpty())
             {
-                $position = $taskInNewProgress->getPosition();
-                if ($position >= $taskPosition['position'] && $taskInNewProgress->getId() != $taskId)
+                foreach ($tasksInNewProgress as $taskInNewProgress)
                 {
-                    $taskInNewProgress->setPosition($position + 1);
-                    $taskInNewProgress->save();
+                    $position = $taskInNewProgress->getPosition();
+                    if ($position >= $newPosition && $taskInNewProgress->getId() != $taskId)
+                    {
+                        $taskInNewProgress->setPosition($position + 1);
+                        $taskInNewProgress->save();
+                    }
+                }
+            }
+
+            $tasksInOldProgress = TaskQuery::create()
+                ->useUserStoryQuery()
+                ->filterByProjectId($task->getUserStory()->getProjectId())
+                ->endUse()
+                ->filterByProgress($oldProgress)
+                ->find();
+
+            if (!$tasksInOldProgress->isEmpty())
+            {
+                foreach ($tasksInOldProgress as $taskInOldProgress)
+                {
+                    $position = $taskInOldProgress->getPosition();
+                    if ($position > $oldPosition)
+                    {
+                        $taskInOldProgress->setPosition($position - 1);
+                        $taskInOldProgress->save();
+                    }
                 }
             }
         }
-
-        $tasksInOldProgress = TaskQuery::create()
-            ->useUserStoryQuery()
-                ->filterByProjectId($task->getUserStory()->getProjectId())
-            ->endUse()
-            ->filterByProgress($oldProgress)
-            ->find();
-
-        if (!$tasksInOldProgress->isEmpty())
+        else
         {
-            foreach ($tasksInOldProgress as $taskInOldProgress)
+            $tasksInProgress = TaskQuery::create()
+                ->useUserStoryQuery()
+                ->filterByProjectId($task->getUserStory()->getProjectId())
+                ->endUse()
+                ->filterByProgress($newProgress)
+                ->find();
+
+            if (!$tasksInProgress->isEmpty())
             {
-                $position = $taskInOldProgress->getPosition();
-                if ($position > $oldPosition)
+                foreach ($tasksInProgress as $taskInProgress)
                 {
-                    $taskInOldProgress->setPosition($position - 1);
-                    $taskInOldProgress->save();
+                    $position = $taskInProgress->getPosition();
+                    if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $taskInProgress->getId() != $task->getId())
+                    {
+                        $taskInProgress->setPosition($position - 1);
+                        $taskInProgress->save();
+                    }
+                    elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $taskInProgress->getId() != $task->getId())
+                    {
+                        $taskInProgress->setPosition($position + 1);
+                        $taskInProgress->save();
+                    }
                 }
             }
         }
