@@ -93,10 +93,7 @@ home:
 aboutus:
     header:
         title:
-            word1: Fusce dapibus
-            lastword: tellus ac cursus commodo
-
-        parag: Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+            word1: L'équipe SCRUMBE
 
     item1:
         firstname: François-Xavier
