@@ -89,7 +89,10 @@ class UserstoryService {
     public function saveKanbanPosition($userStoryId, $newPosition)
     {
         $userStory = UserStoryQuery::create()->findPk($userStoryId);
-        $userStory->setPosition($newPosition['position']);
+        $oldPosition = $userStory->getPosition();
+        $newPosition = $newPosition['position'];
+
+        $userStory->setPosition($newPosition);
         $userStory->save();
 
         $userStoriesInSprint = UserStoryQuery::create()->filterByProjectId($userStory->getProjectId())->find();
@@ -98,9 +101,14 @@ class UserstoryService {
             foreach ($userStoriesInSprint as $userStoryInSprint)
             {
                 $position = $userStoryInSprint->getPosition();
-                if ($position >= $newPosition['position'] && $userStoryInSprint->getId() != $userStoryId)
+                if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $userStoryInSprint->getId() != $userStoryId)
                 {
-                    $userStoryInSprint->setPosition($position + 1);
+                    $userStoryInSprint->setPosition($userStoryInSprint->getPosition() - 1);
+                    $userStoryInSprint->save();
+                }
+                elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $userStoryInSprint->getId() != $userStoryId)
+                {
+                    $userStoryInSprint->setPosition($userStoryInSprint->getPosition() + 1);
                     $userStoryInSprint->save();
                 }
             }
