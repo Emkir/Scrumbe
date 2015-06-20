@@ -24,6 +24,29 @@ CREATE TABLE `project`
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 -- ---------------------------------------------------------------------
+-- sprint
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sprint`;
+
+CREATE TABLE `sprint`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `project_id` INTEGER,
+    `name` VARCHAR(255),
+    `start_date` DATE,
+    `end_date` DATE,
+    `created_at` DATETIME,
+    `updated_at` DATETIME,
+    PRIMARY KEY (`id`),
+    INDEX `sprint_FI_1` (`project_id`),
+    CONSTRAINT `sprint_FK_1`
+        FOREIGN KEY (`project_id`)
+        REFERENCES `project` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
+
+-- ---------------------------------------------------------------------
 -- user_story
 -- ---------------------------------------------------------------------
 
@@ -38,8 +61,9 @@ CREATE TABLE `user_story`
     `value` INTEGER,
     `complexity` INTEGER,
     `ratio` FLOAT,
-    `progress` VARCHAR(255),
     `position` INTEGER,
+    `priority` VARCHAR(255),
+    `label` VARCHAR(255),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
@@ -62,6 +86,8 @@ CREATE TABLE `task`
     `user_story_id` INTEGER,
     `time` VARCHAR(255),
     `description` TEXT,
+    `position` INTEGER,
+    `progress` VARCHAR(255),
     `created_at` DATETIME,
     `updated_at` DATETIME,
     PRIMARY KEY (`id`),
@@ -123,6 +149,33 @@ CREATE TABLE `link_project_user`
     CONSTRAINT `link_project_user_FK_2`
         FOREIGN KEY (`user_id`)
         REFERENCES `user` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
+
+-- ---------------------------------------------------------------------
+-- link_user_story_sprint
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `link_user_story_sprint`;
+
+CREATE TABLE `link_user_story_sprint`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `user_story_id` INTEGER,
+    `sprint_id` INTEGER,
+    `created_at` DATETIME,
+    `updated_at` DATETIME,
+    PRIMARY KEY (`id`),
+    INDEX `link_user_story_sprint_FI_1` (`user_story_id`),
+    INDEX `link_user_story_sprint_FI_2` (`sprint_id`),
+    CONSTRAINT `link_user_story_sprint_FK_1`
+        FOREIGN KEY (`user_story_id`)
+        REFERENCES `user_story` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `link_user_story_sprint_FK_2`
+        FOREIGN KEY (`sprint_id`)
+        REFERENCES `sprint` (`id`)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 # This restores the fkey checks, after having unset them earlier

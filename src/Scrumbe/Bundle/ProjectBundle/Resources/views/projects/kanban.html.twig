@@ -110,21 +110,21 @@
         <div class="user-stories">
             <div class="header-col">User stories</div>
             <ul class="user-stories-list column1">
-                {% if project.user_stories.us is defined %}
-                    {% for us in project.user_stories.us %}
+                {% if project.user_stories is defined %}
+                    {% for us in project.user_stories %}
                         <li class="us" id="{{ us.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red"></li>
+                                    <li class="{{ us.label }}"></li>
                                 </ul>
                             </div>
                             <div class="content">
                                 <p>{{ us.description }}</p>
                             </div>
                             <div class="footer">
-                                <span class="tasks">2</span>
+                                <span class="tasks">{{ us.task_count }}</span>
                                 <div class="priority-ctn">
-                                    <span class="low">Basse</span>
+                                    <span class="{{ us.priority }}">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
                                 </div>
                                 <ul class="member-list">
                                     <li>
@@ -148,18 +148,21 @@
         <div class="to-do">
             <div class="header-col">A faire</div>
             <ul class="to-do-list column">
-                {% if project.user_stories.todo is defined %}
-                    {% for us in project.user_stories.todo %}
-                        <li class="us" id="{{ us.id }}">
+                {% if project.tasks.todo is defined %}
+                    {% for task in project.tasks.todo %}
+                        <li class="task" id="{{ task.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red"></li>
+                                    <li class="{{ task.label }}"></li>
                                 </ul>
                             </div>
                             <div class="content">
-                                <p>{{ us.description }}</p>
+                                <p>{{ task.description }}</p>
                             </div>
                             <div class="footer">
+                                <div class="priority-ctn">
+                                    <span class="{{ task.priority }}">{{ ('user_story.priority.' ~ task.priority) |trans }}</span>
+                                </div>
                                 <ul class="member-list">
                                     <li>
                                         <img src="/assets/img/Claude-Guglieri.png" alt=""/>
@@ -182,18 +185,21 @@
         <div class="doing">
             <div class="header-col">En cours</div>
             <ul class="doing-list column">
-                {% if project.user_stories.wip is defined %}
-                    {% for us in project.user_stories.wip %}
-                        <li class="us" id="{{ us.id }}">
+                {% if project.tasks.wip is defined %}
+                    {% for task in project.tasks.wip %}
+                        <li class="task" id="{{ task.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red"></li>
+                                    <li class="{{ task.label }}"></li>
                                 </ul>
                             </div>
                             <div class="content">
-                                <p>{{ us.description }}</p>
+                                <p>{{ task.description }}</p>
                             </div>
                             <div class="footer">
+                                <div class="priority-ctn">
+                                    <span class="{{ task.priority }}">{{ ('user_story.priority.' ~ task.priority) |trans }}</span>
+                                </div>
                                 <ul class="member-list">
                                     <li>
                                         <img src="/assets/img/Claude-Guglieri.png" alt=""/>
@@ -216,18 +222,21 @@
         <div class="done">
             <div class="header-col">Terminées</div>
             <ul class="done-list column">
-                {% if project.user_stories.done is defined %}
-                    {% for us in project.user_stories.done %}
-                        <li class="us" id="{{ us.id }}">
+                {% if project.tasks.done is defined %}
+                    {% for task in project.tasks.done %}
+                        <li class="task" id="{{ task.id }}">
                             <div class="head">
                                 <ul class="label">
-                                    <li class="red"></li>
+                                    <li class="{{ task.label }}"></li>
                                 </ul>
                             </div>
                             <div class="content">
-                                <p>{{ us.description }}</p>
+                                <p>{{ task.description }}</p>
                             </div>
                             <div class="footer">
+                                <div class="priority-ctn">
+                                    <span class="{{ task.priority }}">{{ ('user_story.priority.' ~ task.priority) |trans }}</span>
+                                </div>
                                 <ul class="member-list">
                                     <li>
                                         <img src="/assets/img/Claude-Guglieri.png" alt=""/>

@@ -7,7 +7,7 @@ use \TableMap;
 
 
 /**
- * This class defines the structure of the 'task' table.
+ * This class defines the structure of the 'link_user_story_sprint' table.
  *
  *
  *
@@ -18,13 +18,13 @@ use \TableMap;
  *
  * @package    propel.generator..map
  */
-class TaskTableMap extends TableMap
+class LinkUserStorySprintTableMap extends TableMap
 {
 
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.map.TaskTableMap';
+    const CLASS_NAME = '.map.LinkUserStorySprintTableMap';
 
     /**
      * Initialize the table attributes, columns and validators
@@ -36,18 +36,15 @@ class TaskTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('task');
-        $this->setPhpName('Task');
-        $this->setClassname('Scrumbe\\Models\\Task');
+        $this->setName('link_user_story_sprint');
+        $this->setPhpName('LinkUserStorySprint');
+        $this->setClassname('Scrumbe\\Models\\LinkUserStorySprint');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignKey('user_story_id', 'UserStoryId', 'INTEGER', 'user_story', 'id', false, null, null);
-        $this->addColumn('time', 'Time', 'VARCHAR', false, 255, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('position', 'Position', 'INTEGER', false, null, null);
-        $this->addColumn('progress', 'Progress', 'VARCHAR', false, 255, null);
+        $this->addForeignKey('sprint_id', 'SprintId', 'INTEGER', 'sprint', 'id', false, null, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators
@@ -58,7 +55,8 @@ class TaskTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::MANY_TO_ONE, array('user_story_id' => 'id', ), null, null);
+        $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::MANY_TO_ONE, array('user_story_id' => 'id', ), 'CASCADE', null);
+        $this->addRelation('Sprint', 'Scrumbe\\Models\\Sprint', RelationMap::MANY_TO_ONE, array('sprint_id' => 'id', ), 'CASCADE', null);
     } // buildRelations()
 
     /**
@@ -78,4 +76,4 @@ class TaskTableMap extends TableMap
         );
     } // getBehaviors()
 
-} // TaskTableMap
+} // LinkUserStorySprintTableMap

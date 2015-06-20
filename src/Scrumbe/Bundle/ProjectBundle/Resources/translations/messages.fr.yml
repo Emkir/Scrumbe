@@ -1,3 +1,9 @@
 project:
     delete:
         success: Le projet a été supprimé avec succès
+
+user_story:
+    priority:
+        low: Basse
+        medium: Moyenne
+        high: Haute

@@ -15,24 +15,26 @@ use \PropelDateTime;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
-use Scrumbe\Models\LinkProjectUser;
-use Scrumbe\Models\LinkProjectUserQuery;
-use Scrumbe\Models\User;
-use Scrumbe\Models\UserPeer;
-use Scrumbe\Models\UserQuery;
+use Scrumbe\Models\LinkUserStorySprint;
+use Scrumbe\Models\LinkUserStorySprintQuery;
+use Scrumbe\Models\Project;
+use Scrumbe\Models\ProjectQuery;
+use Scrumbe\Models\Sprint;
+use Scrumbe\Models\SprintPeer;
+use Scrumbe\Models\SprintQuery;
 
-abstract class BaseUser extends BaseObject implements Persistent
+abstract class BaseSprint extends BaseObject implements Persistent
 {
     /**
      * Peer class name
      */
-    const PEER = 'Scrumbe\\Models\\UserPeer';
+    const PEER = 'Scrumbe\\Models\\SprintPeer';
 
     /**
      * The Peer class.
      * Instance provides a convenient way of calling static methods on a class
      * that calling code may not be able to identify.
-     * @var        UserPeer
+     * @var        SprintPeer
      */
     protected static $peer;
 
@@ -49,76 +51,28 @@ abstract class BaseUser extends BaseObject implements Persistent
     protected $id;
 
     /**
-     * The value for the username field.
-     * @var        string
+     * The value for the project_id field.
+     * @var        int
      */
-    protected $username;
+    protected $project_id;
 
     /**
-     * The value for the password field.
+     * The value for the name field.
      * @var        string
      */
-    protected $password;
+    protected $name;
 
     /**
-     * The value for the salt field.
+     * The value for the start_date field.
      * @var        string
      */
-    protected $salt;
+    protected $start_date;
 
     /**
-     * The value for the roles field.
+     * The value for the end_date field.
      * @var        string
      */
-    protected $roles;
-
-    /**
-     * The value for the email field.
-     * @var        string
-     */
-    protected $email;
-
-    /**
-     * The value for the firstname field.
-     * @var        string
-     */
-    protected $firstname;
-
-    /**
-     * The value for the lastname field.
-     * @var        string
-     */
-    protected $lastname;
-
-    /**
-     * The value for the avatar field.
-     * @var        string
-     */
-    protected $avatar;
-
-    /**
-     * The value for the domain field.
-     * @var        string
-     */
-    protected $domain;
-
-    /**
-     * The value for the business field.
-     * @var        string
-     */
-    protected $business;
-
-    /**
-     * The value for the validation_token field.
-     * @var        string
-     */
-    protected $validation_token;
-
-    /**
-     * The value for the validate field.
-     * @var        boolean
-     */
-    protected $validate;
+    protected $end_date;
 
     /**
      * The value for the created_at field.
@@ -133,10 +87,15 @@ abstract class BaseUser extends BaseObject implements Persistent
     protected $updated_at;
 
     /**
-     * @var        PropelObjectCollection|LinkProjectUser[] Collection to store aggregation of LinkProjectUser objects.
+     * @var        Project
      */
-    protected $collLinkProjectUsers;
-    protected $collLinkProjectUsersPartial;
+    protected $aProject;
+
+    /**
+     * @var        PropelObjectCollection|LinkUserStorySprint[] Collection to store aggregation of LinkUserStorySprint objects.
+     */
+    protected $collLinkUserStorySprints;
+    protected $collLinkUserStorySprintsPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -162,7 +121,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      * An array of objects scheduled for deletion.
      * @var		PropelObjectCollection
      */
-    protected $linkProjectUsersScheduledForDeletion = null;
+    protected $linkUserStorySprintsScheduledForDeletion = null;
 
     /**
      * Get the [id] column value.
@@ -176,135 +135,105 @@ abstract class BaseUser extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [username] column value.
+     * Get the [project_id] column value.
      *
-     * @return string
+     * @return int
      */
-    public function getUsername()
+    public function getProjectId()
     {
 
-        return $this->username;
+        return $this->project_id;
     }
 
     /**
-     * Get the [password] column value.
+     * Get the [name] column value.
      *
      * @return string
      */
-    public function getPassword()
+    public function getName()
     {
 
-        return $this->password;
+        return $this->name;
     }
 
     /**
-     * Get the [salt] column value.
+     * Get the [optionally formatted] temporal [start_date] column value.
      *
-     * @return string
+     *
+     * @param string $format The date/time format string (either date()-style or strftime()-style).
+     *				 If format is null, then the raw DateTime object will be returned.
+     * @return mixed Formatted date/time value as string or DateTime object (if format is null), null if column is null, and 0 if column value is 0000-00-00
+     * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getSalt()
+    public function getStartDate($format = null)
     {
+        if ($this->start_date === null) {
+            return null;
+        }
 
-        return $this->salt;
+        if ($this->start_date === '0000-00-00') {
+            // while technically this is not a default value of null,
+            // this seems to be closest in meaning.
+            return null;
+        }
+
+        try {
+            $dt = new DateTime($this->start_date);
+        } catch (Exception $x) {
+            throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->start_date, true), $x);
+        }
+
+        if ($format === null) {
+            // Because propel.useDateTimeClass is true, we return a DateTime object.
+            return $dt;
+        }
+
+        if (strpos($format, '%') !== false) {
+            return strftime($format, $dt->format('U'));
+        }
+
+        return $dt->format($format);
+
     }
 
     /**
-     * Get the [roles] column value.
+     * Get the [optionally formatted] temporal [end_date] column value.
      *
-     * @return string
-     */
-    public function getRoles()
-    {
-
-        return $this->roles;
-    }
-
-    /**
-     * Get the [email] column value.
      *
-     * @return string
+     * @param string $format The date/time format string (either date()-style or strftime()-style).
+     *				 If format is null, then the raw DateTime object will be returned.
+     * @return mixed Formatted date/time value as string or DateTime object (if format is null), null if column is null, and 0 if column value is 0000-00-00
+     * @throws PropelException - if unable to parse/validate the date/time value.
      */
-    public function getEmail()
+    public function getEndDate($format = null)
     {
+        if ($this->end_date === null) {
+            return null;
+        }
 
-        return $this->email;
-    }
+        if ($this->end_date === '0000-00-00') {
+            // while technically this is not a default value of null,
+            // this seems to be closest in meaning.
+            return null;
+        }
 
-    /**
-     * Get the [firstname] column value.
-     *
-     * @return string
-     */
-    public function getFirstname()
-    {
+        try {
+            $dt = new DateTime($this->end_date);
+        } catch (Exception $x) {
+            throw new PropelException("Internally stored date/time/timestamp value could not be converted to DateTime: " . var_export($this->end_date, true), $x);
+        }
 
-        return $this->firstname;
-    }
+        if ($format === null) {
+            // Because propel.useDateTimeClass is true, we return a DateTime object.
+            return $dt;
+        }
 
-    /**
-     * Get the [lastname] column value.
-     *
-     * @return string
-     */
-    public function getLastname()
-    {
+        if (strpos($format, '%') !== false) {
+            return strftime($format, $dt->format('U'));
+        }
 
-        return $this->lastname;
-    }
+        return $dt->format($format);
 
-    /**
-     * Get the [avatar] column value.
-     *
-     * @return string
-     */
-    public function getAvatar()
-    {
-
-        return $this->avatar;
-    }
-
-    /**
-     * Get the [domain] column value.
-     *
-     * @return string
-     */
-    public function getDomain()
-    {
-
-        return $this->domain;
-    }
-
-    /**
-     * Get the [business] column value.
-     *
-     * @return string
-     */
-    public function getBusiness()
-    {
-
-        return $this->business;
-    }
-
-    /**
-     * Get the [validation_token] column value.
-     *
-     * @return string
-     */
-    public function getValidationToken()
-    {
-
-        return $this->validation_token;
-    }
-
-    /**
-     * Get the [validate] column value.
-     *
-     * @return boolean
-     */
-    public function getValidate()
-    {
-
-        return $this->validate;
     }
 
     /**
@@ -391,7 +320,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      * Set the value of [id] column.
      *
      * @param  int $v new value
-     * @return User The current object (for fluent API support)
+     * @return Sprint The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -401,7 +330,7 @@ abstract class BaseUser extends BaseObject implements Persistent
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[] = UserPeer::ID;
+            $this->modifiedColumns[] = SprintPeer::ID;
         }
 
 
@@ -409,271 +338,103 @@ abstract class BaseUser extends BaseObject implements Persistent
     } // setId()
 
     /**
-     * Set the value of [username] column.
+     * Set the value of [project_id] column.
+     *
+     * @param  int $v new value
+     * @return Sprint The current object (for fluent API support)
+     */
+    public function setProjectId($v)
+    {
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
+        }
+
+        if ($this->project_id !== $v) {
+            $this->project_id = $v;
+            $this->modifiedColumns[] = SprintPeer::PROJECT_ID;
+        }
+
+        if ($this->aProject !== null && $this->aProject->getId() !== $v) {
+            $this->aProject = null;
+        }
+
+
+        return $this;
+    } // setProjectId()
+
+    /**
+     * Set the value of [name] column.
      *
      * @param  string $v new value
-     * @return User The current object (for fluent API support)
+     * @return Sprint The current object (for fluent API support)
      */
-    public function setUsername($v)
+    public function setName($v)
     {
         if ($v !== null) {
             $v = (string) $v;
         }
 
-        if ($this->username !== $v) {
-            $this->username = $v;
-            $this->modifiedColumns[] = UserPeer::USERNAME;
+        if ($this->name !== $v) {
+            $this->name = $v;
+            $this->modifiedColumns[] = SprintPeer::NAME;
         }
 
 
         return $this;
-    } // setUsername()
+    } // setName()
 
     /**
-     * Set the value of [password] column.
+     * Sets the value of [start_date] column to a normalized version of the date/time value specified.
      *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
+     * @param mixed $v string, integer (timestamp), or DateTime value.
+     *               Empty strings are treated as null.
+     * @return Sprint The current object (for fluent API support)
      */
-    public function setPassword($v)
+    public function setStartDate($v)
     {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->password !== $v) {
-            $this->password = $v;
-            $this->modifiedColumns[] = UserPeer::PASSWORD;
-        }
-
-
-        return $this;
-    } // setPassword()
-
-    /**
-     * Set the value of [salt] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setSalt($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->salt !== $v) {
-            $this->salt = $v;
-            $this->modifiedColumns[] = UserPeer::SALT;
-        }
-
-
-        return $this;
-    } // setSalt()
-
-    /**
-     * Set the value of [roles] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setRoles($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->roles !== $v) {
-            $this->roles = $v;
-            $this->modifiedColumns[] = UserPeer::ROLES;
-        }
-
-
-        return $this;
-    } // setRoles()
-
-    /**
-     * Set the value of [email] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setEmail($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->email !== $v) {
-            $this->email = $v;
-            $this->modifiedColumns[] = UserPeer::EMAIL;
-        }
-
-
-        return $this;
-    } // setEmail()
-
-    /**
-     * Set the value of [firstname] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setFirstname($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->firstname !== $v) {
-            $this->firstname = $v;
-            $this->modifiedColumns[] = UserPeer::FIRSTNAME;
-        }
-
-
-        return $this;
-    } // setFirstname()
-
-    /**
-     * Set the value of [lastname] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setLastname($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->lastname !== $v) {
-            $this->lastname = $v;
-            $this->modifiedColumns[] = UserPeer::LASTNAME;
-        }
-
-
-        return $this;
-    } // setLastname()
-
-    /**
-     * Set the value of [avatar] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setAvatar($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->avatar !== $v) {
-            $this->avatar = $v;
-            $this->modifiedColumns[] = UserPeer::AVATAR;
-        }
-
-
-        return $this;
-    } // setAvatar()
-
-    /**
-     * Set the value of [domain] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setDomain($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->domain !== $v) {
-            $this->domain = $v;
-            $this->modifiedColumns[] = UserPeer::DOMAIN;
-        }
-
-
-        return $this;
-    } // setDomain()
-
-    /**
-     * Set the value of [business] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setBusiness($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->business !== $v) {
-            $this->business = $v;
-            $this->modifiedColumns[] = UserPeer::BUSINESS;
-        }
-
-
-        return $this;
-    } // setBusiness()
-
-    /**
-     * Set the value of [validation_token] column.
-     *
-     * @param  string $v new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setValidationToken($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->validation_token !== $v) {
-            $this->validation_token = $v;
-            $this->modifiedColumns[] = UserPeer::VALIDATION_TOKEN;
-        }
-
-
-        return $this;
-    } // setValidationToken()
-
-    /**
-     * Sets the value of the [validate] column.
-     * Non-boolean arguments are converted using the following rules:
-     *   * 1, '1', 'true',  'on',  and 'yes' are converted to boolean true
-     *   * 0, '0', 'false', 'off', and 'no'  are converted to boolean false
-     * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
-     *
-     * @param boolean|integer|string $v The new value
-     * @return User The current object (for fluent API support)
-     */
-    public function setValidate($v)
-    {
-        if ($v !== null) {
-            if (is_string($v)) {
-                $v = in_array(strtolower($v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
-            } else {
-                $v = (boolean) $v;
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->start_date !== null || $dt !== null) {
+            $currentDateAsString = ($this->start_date !== null && $tmpDt = new DateTime($this->start_date)) ? $tmpDt->format('Y-m-d') : null;
+            $newDateAsString = $dt ? $dt->format('Y-m-d') : null;
+            if ($currentDateAsString !== $newDateAsString) {
+                $this->start_date = $newDateAsString;
+                $this->modifiedColumns[] = SprintPeer::START_DATE;
             }
-        }
-
-        if ($this->validate !== $v) {
-            $this->validate = $v;
-            $this->modifiedColumns[] = UserPeer::VALIDATE;
-        }
+        } // if either are not null
 
 
         return $this;
-    } // setValidate()
+    } // setStartDate()
+
+    /**
+     * Sets the value of [end_date] column to a normalized version of the date/time value specified.
+     *
+     * @param mixed $v string, integer (timestamp), or DateTime value.
+     *               Empty strings are treated as null.
+     * @return Sprint The current object (for fluent API support)
+     */
+    public function setEndDate($v)
+    {
+        $dt = PropelDateTime::newInstance($v, null, 'DateTime');
+        if ($this->end_date !== null || $dt !== null) {
+            $currentDateAsString = ($this->end_date !== null && $tmpDt = new DateTime($this->end_date)) ? $tmpDt->format('Y-m-d') : null;
+            $newDateAsString = $dt ? $dt->format('Y-m-d') : null;
+            if ($currentDateAsString !== $newDateAsString) {
+                $this->end_date = $newDateAsString;
+                $this->modifiedColumns[] = SprintPeer::END_DATE;
+            }
+        } // if either are not null
+
+
+        return $this;
+    } // setEndDate()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
      *               Empty strings are treated as null.
-     * @return User The current object (for fluent API support)
+     * @return Sprint The current object (for fluent API support)
      */
     public function setCreatedAt($v)
     {
@@ -683,7 +444,7 @@ abstract class BaseUser extends BaseObject implements Persistent
             $newDateAsString = $dt ? $dt->format('Y-m-d H:i:s') : null;
             if ($currentDateAsString !== $newDateAsString) {
                 $this->created_at = $newDateAsString;
-                $this->modifiedColumns[] = UserPeer::CREATED_AT;
+                $this->modifiedColumns[] = SprintPeer::CREATED_AT;
             }
         } // if either are not null
 
@@ -696,7 +457,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
      *               Empty strings are treated as null.
-     * @return User The current object (for fluent API support)
+     * @return Sprint The current object (for fluent API support)
      */
     public function setUpdatedAt($v)
     {
@@ -706,7 +467,7 @@ abstract class BaseUser extends BaseObject implements Persistent
             $newDateAsString = $dt ? $dt->format('Y-m-d H:i:s') : null;
             if ($currentDateAsString !== $newDateAsString) {
                 $this->updated_at = $newDateAsString;
-                $this->modifiedColumns[] = UserPeer::UPDATED_AT;
+                $this->modifiedColumns[] = SprintPeer::UPDATED_AT;
             }
         } // if either are not null
 
@@ -747,20 +508,12 @@ abstract class BaseUser extends BaseObject implements Persistent
         try {
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-            $this->username = ($row[$startcol + 1] !== null) ? (string) $row[$startcol + 1] : null;
-            $this->password = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->salt = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->roles = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
-            $this->email = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->firstname = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-            $this->lastname = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
-            $this->avatar = ($row[$startcol + 8] !== null) ? (string) $row[$startcol + 8] : null;
-            $this->domain = ($row[$startcol + 9] !== null) ? (string) $row[$startcol + 9] : null;
-            $this->business = ($row[$startcol + 10] !== null) ? (string) $row[$startcol + 10] : null;
-            $this->validation_token = ($row[$startcol + 11] !== null) ? (string) $row[$startcol + 11] : null;
-            $this->validate = ($row[$startcol + 12] !== null) ? (boolean) $row[$startcol + 12] : null;
-            $this->created_at = ($row[$startcol + 13] !== null) ? (string) $row[$startcol + 13] : null;
-            $this->updated_at = ($row[$startcol + 14] !== null) ? (string) $row[$startcol + 14] : null;
+            $this->project_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+            $this->name = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->start_date = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->end_date = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+            $this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -770,10 +523,10 @@ abstract class BaseUser extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 15; // 15 = UserPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = SprintPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException("Error populating User object", $e);
+            throw new PropelException("Error populating Sprint object", $e);
         }
     }
 
@@ -793,6 +546,9 @@ abstract class BaseUser extends BaseObject implements Persistent
     public function ensureConsistency()
     {
 
+        if ($this->aProject !== null && $this->project_id !== $this->aProject->getId()) {
+            $this->aProject = null;
+        }
     } // ensureConsistency
 
     /**
@@ -816,13 +572,13 @@ abstract class BaseUser extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $stmt = UserPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+        $stmt = SprintPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         if (!$row) {
@@ -832,7 +588,8 @@ abstract class BaseUser extends BaseObject implements Persistent
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->collLinkProjectUsers = null;
+            $this->aProject = null;
+            $this->collLinkUserStorySprints = null;
 
         } // if (deep)
     }
@@ -854,12 +611,12 @@ abstract class BaseUser extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
         try {
-            $deleteQuery = UserQuery::create()
+            $deleteQuery = SprintQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -897,7 +654,7 @@ abstract class BaseUser extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(UserPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
@@ -907,16 +664,16 @@ abstract class BaseUser extends BaseObject implements Persistent
             if ($isInsert) {
                 $ret = $ret && $this->preInsert($con);
                 // timestampable behavior
-                if (!$this->isColumnModified(UserPeer::CREATED_AT)) {
+                if (!$this->isColumnModified(SprintPeer::CREATED_AT)) {
                     $this->setCreatedAt(time());
                 }
-                if (!$this->isColumnModified(UserPeer::UPDATED_AT)) {
+                if (!$this->isColumnModified(SprintPeer::UPDATED_AT)) {
                     $this->setUpdatedAt(time());
                 }
             } else {
                 $ret = $ret && $this->preUpdate($con);
                 // timestampable behavior
-                if ($this->isModified() && !$this->isColumnModified(UserPeer::UPDATED_AT)) {
+                if ($this->isModified() && !$this->isColumnModified(SprintPeer::UPDATED_AT)) {
                     $this->setUpdatedAt(time());
                 }
             }
@@ -928,7 +685,7 @@ abstract class BaseUser extends BaseObject implements Persistent
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                UserPeer::addInstanceToPool($this);
+                SprintPeer::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -958,6 +715,18 @@ abstract class BaseUser extends BaseObject implements Persistent
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aProject !== null) {
+                if ($this->aProject->isModified() || $this->aProject->isNew()) {
+                    $affectedRows += $this->aProject->save($con);
+                }
+                $this->setProject($this->aProject);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -969,17 +738,17 @@ abstract class BaseUser extends BaseObject implements Persistent
                 $this->resetModified();
             }
 
-            if ($this->linkProjectUsersScheduledForDeletion !== null) {
-                if (!$this->linkProjectUsersScheduledForDeletion->isEmpty()) {
-                    LinkProjectUserQuery::create()
-                        ->filterByPrimaryKeys($this->linkProjectUsersScheduledForDeletion->getPrimaryKeys(false))
+            if ($this->linkUserStorySprintsScheduledForDeletion !== null) {
+                if (!$this->linkUserStorySprintsScheduledForDeletion->isEmpty()) {
+                    LinkUserStorySprintQuery::create()
+                        ->filterByPrimaryKeys($this->linkUserStorySprintsScheduledForDeletion->getPrimaryKeys(false))
                         ->delete($con);
-                    $this->linkProjectUsersScheduledForDeletion = null;
+                    $this->linkUserStorySprintsScheduledForDeletion = null;
                 }
             }
 
-            if ($this->collLinkProjectUsers !== null) {
-                foreach ($this->collLinkProjectUsers as $referrerFK) {
+            if ($this->collLinkUserStorySprints !== null) {
+                foreach ($this->collLinkUserStorySprints as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1006,60 +775,36 @@ abstract class BaseUser extends BaseObject implements Persistent
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[] = UserPeer::ID;
+        $this->modifiedColumns[] = SprintPeer::ID;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . UserPeer::ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . SprintPeer::ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(UserPeer::ID)) {
+        if ($this->isColumnModified(SprintPeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`id`';
         }
-        if ($this->isColumnModified(UserPeer::USERNAME)) {
-            $modifiedColumns[':p' . $index++]  = '`username`';
+        if ($this->isColumnModified(SprintPeer::PROJECT_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`project_id`';
         }
-        if ($this->isColumnModified(UserPeer::PASSWORD)) {
-            $modifiedColumns[':p' . $index++]  = '`password`';
+        if ($this->isColumnModified(SprintPeer::NAME)) {
+            $modifiedColumns[':p' . $index++]  = '`name`';
         }
-        if ($this->isColumnModified(UserPeer::SALT)) {
-            $modifiedColumns[':p' . $index++]  = '`salt`';
+        if ($this->isColumnModified(SprintPeer::START_DATE)) {
+            $modifiedColumns[':p' . $index++]  = '`start_date`';
         }
-        if ($this->isColumnModified(UserPeer::ROLES)) {
-            $modifiedColumns[':p' . $index++]  = '`roles`';
+        if ($this->isColumnModified(SprintPeer::END_DATE)) {
+            $modifiedColumns[':p' . $index++]  = '`end_date`';
         }
-        if ($this->isColumnModified(UserPeer::EMAIL)) {
-            $modifiedColumns[':p' . $index++]  = '`email`';
-        }
-        if ($this->isColumnModified(UserPeer::FIRSTNAME)) {
-            $modifiedColumns[':p' . $index++]  = '`firstname`';
-        }
-        if ($this->isColumnModified(UserPeer::LASTNAME)) {
-            $modifiedColumns[':p' . $index++]  = '`lastname`';
-        }
-        if ($this->isColumnModified(UserPeer::AVATAR)) {
-            $modifiedColumns[':p' . $index++]  = '`avatar`';
-        }
-        if ($this->isColumnModified(UserPeer::DOMAIN)) {
-            $modifiedColumns[':p' . $index++]  = '`domain`';
-        }
-        if ($this->isColumnModified(UserPeer::BUSINESS)) {
-            $modifiedColumns[':p' . $index++]  = '`business`';
-        }
-        if ($this->isColumnModified(UserPeer::VALIDATION_TOKEN)) {
-            $modifiedColumns[':p' . $index++]  = '`validation_token`';
-        }
-        if ($this->isColumnModified(UserPeer::VALIDATE)) {
-            $modifiedColumns[':p' . $index++]  = '`validate`';
-        }
-        if ($this->isColumnModified(UserPeer::CREATED_AT)) {
+        if ($this->isColumnModified(SprintPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
-        if ($this->isColumnModified(UserPeer::UPDATED_AT)) {
+        if ($this->isColumnModified(SprintPeer::UPDATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`updated_at`';
         }
 
         $sql = sprintf(
-            'INSERT INTO `user` (%s) VALUES (%s)',
+            'INSERT INTO `sprint` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -1071,41 +816,17 @@ abstract class BaseUser extends BaseObject implements Persistent
                     case '`id`':
                         $stmt->bindValue($identifier, $this->id, PDO::PARAM_INT);
                         break;
-                    case '`username`':
-                        $stmt->bindValue($identifier, $this->username, PDO::PARAM_STR);
+                    case '`project_id`':
+                        $stmt->bindValue($identifier, $this->project_id, PDO::PARAM_INT);
                         break;
-                    case '`password`':
-                        $stmt->bindValue($identifier, $this->password, PDO::PARAM_STR);
+                    case '`name`':
+                        $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
                         break;
-                    case '`salt`':
-                        $stmt->bindValue($identifier, $this->salt, PDO::PARAM_STR);
+                    case '`start_date`':
+                        $stmt->bindValue($identifier, $this->start_date, PDO::PARAM_STR);
                         break;
-                    case '`roles`':
-                        $stmt->bindValue($identifier, $this->roles, PDO::PARAM_STR);
-                        break;
-                    case '`email`':
-                        $stmt->bindValue($identifier, $this->email, PDO::PARAM_STR);
-                        break;
-                    case '`firstname`':
-                        $stmt->bindValue($identifier, $this->firstname, PDO::PARAM_STR);
-                        break;
-                    case '`lastname`':
-                        $stmt->bindValue($identifier, $this->lastname, PDO::PARAM_STR);
-                        break;
-                    case '`avatar`':
-                        $stmt->bindValue($identifier, $this->avatar, PDO::PARAM_STR);
-                        break;
-                    case '`domain`':
-                        $stmt->bindValue($identifier, $this->domain, PDO::PARAM_STR);
-                        break;
-                    case '`business`':
-                        $stmt->bindValue($identifier, $this->business, PDO::PARAM_STR);
-                        break;
-                    case '`validation_token`':
-                        $stmt->bindValue($identifier, $this->validation_token, PDO::PARAM_STR);
-                        break;
-                    case '`validate`':
-                        $stmt->bindValue($identifier, (int) $this->validate, PDO::PARAM_INT);
+                    case '`end_date`':
+                        $stmt->bindValue($identifier, $this->end_date, PDO::PARAM_STR);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -1207,13 +928,25 @@ abstract class BaseUser extends BaseObject implements Persistent
             $failureMap = array();
 
 
-            if (($retval = UserPeer::doValidate($this, $columns)) !== true) {
+            // We call the validate method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aProject !== null) {
+                if (!$this->aProject->validate($columns)) {
+                    $failureMap = array_merge($failureMap, $this->aProject->getValidationFailures());
+                }
+            }
+
+
+            if (($retval = SprintPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
             }
 
 
-                if ($this->collLinkProjectUsers !== null) {
-                    foreach ($this->collLinkProjectUsers as $referrerFK) {
+                if ($this->collLinkUserStorySprints !== null) {
+                    foreach ($this->collLinkUserStorySprints as $referrerFK) {
                         if (!$referrerFK->validate($columns)) {
                             $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
                         }
@@ -1239,7 +972,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = UserPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = SprintPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -1259,45 +992,21 @@ abstract class BaseUser extends BaseObject implements Persistent
                 return $this->getId();
                 break;
             case 1:
-                return $this->getUsername();
+                return $this->getProjectId();
                 break;
             case 2:
-                return $this->getPassword();
+                return $this->getName();
                 break;
             case 3:
-                return $this->getSalt();
+                return $this->getStartDate();
                 break;
             case 4:
-                return $this->getRoles();
+                return $this->getEndDate();
                 break;
             case 5:
-                return $this->getEmail();
-                break;
-            case 6:
-                return $this->getFirstname();
-                break;
-            case 7:
-                return $this->getLastname();
-                break;
-            case 8:
-                return $this->getAvatar();
-                break;
-            case 9:
-                return $this->getDomain();
-                break;
-            case 10:
-                return $this->getBusiness();
-                break;
-            case 11:
-                return $this->getValidationToken();
-                break;
-            case 12:
-                return $this->getValidate();
-                break;
-            case 13:
                 return $this->getCreatedAt();
                 break;
-            case 14:
+            case 6:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -1323,27 +1032,19 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
-        if (isset($alreadyDumpedObjects['User'][$this->getPrimaryKey()])) {
+        if (isset($alreadyDumpedObjects['Sprint'][$this->getPrimaryKey()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['User'][$this->getPrimaryKey()] = true;
-        $keys = UserPeer::getFieldNames($keyType);
+        $alreadyDumpedObjects['Sprint'][$this->getPrimaryKey()] = true;
+        $keys = SprintPeer::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
-            $keys[1] => $this->getUsername(),
-            $keys[2] => $this->getPassword(),
-            $keys[3] => $this->getSalt(),
-            $keys[4] => $this->getRoles(),
-            $keys[5] => $this->getEmail(),
-            $keys[6] => $this->getFirstname(),
-            $keys[7] => $this->getLastname(),
-            $keys[8] => $this->getAvatar(),
-            $keys[9] => $this->getDomain(),
-            $keys[10] => $this->getBusiness(),
-            $keys[11] => $this->getValidationToken(),
-            $keys[12] => $this->getValidate(),
-            $keys[13] => $this->getCreatedAt(),
-            $keys[14] => $this->getUpdatedAt(),
+            $keys[1] => $this->getProjectId(),
+            $keys[2] => $this->getName(),
+            $keys[3] => $this->getStartDate(),
+            $keys[4] => $this->getEndDate(),
+            $keys[5] => $this->getCreatedAt(),
+            $keys[6] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1351,8 +1052,11 @@ abstract class BaseUser extends BaseObject implements Persistent
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->collLinkProjectUsers) {
-                $result['LinkProjectUsers'] = $this->collLinkProjectUsers->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            if (null !== $this->aProject) {
+                $result['Project'] = $this->aProject->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collLinkUserStorySprints) {
+                $result['LinkUserStorySprints'] = $this->collLinkUserStorySprints->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1372,7 +1076,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = UserPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = SprintPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 
         $this->setByPosition($pos, $value);
     }
@@ -1392,45 +1096,21 @@ abstract class BaseUser extends BaseObject implements Persistent
                 $this->setId($value);
                 break;
             case 1:
-                $this->setUsername($value);
+                $this->setProjectId($value);
                 break;
             case 2:
-                $this->setPassword($value);
+                $this->setName($value);
                 break;
             case 3:
-                $this->setSalt($value);
+                $this->setStartDate($value);
                 break;
             case 4:
-                $this->setRoles($value);
+                $this->setEndDate($value);
                 break;
             case 5:
-                $this->setEmail($value);
-                break;
-            case 6:
-                $this->setFirstname($value);
-                break;
-            case 7:
-                $this->setLastname($value);
-                break;
-            case 8:
-                $this->setAvatar($value);
-                break;
-            case 9:
-                $this->setDomain($value);
-                break;
-            case 10:
-                $this->setBusiness($value);
-                break;
-            case 11:
-                $this->setValidationToken($value);
-                break;
-            case 12:
-                $this->setValidate($value);
-                break;
-            case 13:
                 $this->setCreatedAt($value);
                 break;
-            case 14:
+            case 6:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1455,23 +1135,15 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
     {
-        $keys = UserPeer::getFieldNames($keyType);
+        $keys = SprintPeer::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-        if (array_key_exists($keys[1], $arr)) $this->setUsername($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setPassword($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setSalt($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setRoles($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setEmail($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setFirstname($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setLastname($arr[$keys[7]]);
-        if (array_key_exists($keys[8], $arr)) $this->setAvatar($arr[$keys[8]]);
-        if (array_key_exists($keys[9], $arr)) $this->setDomain($arr[$keys[9]]);
-        if (array_key_exists($keys[10], $arr)) $this->setBusiness($arr[$keys[10]]);
-        if (array_key_exists($keys[11], $arr)) $this->setValidationToken($arr[$keys[11]]);
-        if (array_key_exists($keys[12], $arr)) $this->setValidate($arr[$keys[12]]);
-        if (array_key_exists($keys[13], $arr)) $this->setCreatedAt($arr[$keys[13]]);
-        if (array_key_exists($keys[14], $arr)) $this->setUpdatedAt($arr[$keys[14]]);
+        if (array_key_exists($keys[1], $arr)) $this->setProjectId($arr[$keys[1]]);
+        if (array_key_exists($keys[2], $arr)) $this->setName($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setStartDate($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setEndDate($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
     }
 
     /**
@@ -1481,23 +1153,15 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(UserPeer::DATABASE_NAME);
+        $criteria = new Criteria(SprintPeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(UserPeer::ID)) $criteria->add(UserPeer::ID, $this->id);
-        if ($this->isColumnModified(UserPeer::USERNAME)) $criteria->add(UserPeer::USERNAME, $this->username);
-        if ($this->isColumnModified(UserPeer::PASSWORD)) $criteria->add(UserPeer::PASSWORD, $this->password);
-        if ($this->isColumnModified(UserPeer::SALT)) $criteria->add(UserPeer::SALT, $this->salt);
-        if ($this->isColumnModified(UserPeer::ROLES)) $criteria->add(UserPeer::ROLES, $this->roles);
-        if ($this->isColumnModified(UserPeer::EMAIL)) $criteria->add(UserPeer::EMAIL, $this->email);
-        if ($this->isColumnModified(UserPeer::FIRSTNAME)) $criteria->add(UserPeer::FIRSTNAME, $this->firstname);
-        if ($this->isColumnModified(UserPeer::LASTNAME)) $criteria->add(UserPeer::LASTNAME, $this->lastname);
-        if ($this->isColumnModified(UserPeer::AVATAR)) $criteria->add(UserPeer::AVATAR, $this->avatar);
-        if ($this->isColumnModified(UserPeer::DOMAIN)) $criteria->add(UserPeer::DOMAIN, $this->domain);
-        if ($this->isColumnModified(UserPeer::BUSINESS)) $criteria->add(UserPeer::BUSINESS, $this->business);
-        if ($this->isColumnModified(UserPeer::VALIDATION_TOKEN)) $criteria->add(UserPeer::VALIDATION_TOKEN, $this->validation_token);
-        if ($this->isColumnModified(UserPeer::VALIDATE)) $criteria->add(UserPeer::VALIDATE, $this->validate);
-        if ($this->isColumnModified(UserPeer::CREATED_AT)) $criteria->add(UserPeer::CREATED_AT, $this->created_at);
-        if ($this->isColumnModified(UserPeer::UPDATED_AT)) $criteria->add(UserPeer::UPDATED_AT, $this->updated_at);
+        if ($this->isColumnModified(SprintPeer::ID)) $criteria->add(SprintPeer::ID, $this->id);
+        if ($this->isColumnModified(SprintPeer::PROJECT_ID)) $criteria->add(SprintPeer::PROJECT_ID, $this->project_id);
+        if ($this->isColumnModified(SprintPeer::NAME)) $criteria->add(SprintPeer::NAME, $this->name);
+        if ($this->isColumnModified(SprintPeer::START_DATE)) $criteria->add(SprintPeer::START_DATE, $this->start_date);
+        if ($this->isColumnModified(SprintPeer::END_DATE)) $criteria->add(SprintPeer::END_DATE, $this->end_date);
+        if ($this->isColumnModified(SprintPeer::CREATED_AT)) $criteria->add(SprintPeer::CREATED_AT, $this->created_at);
+        if ($this->isColumnModified(SprintPeer::UPDATED_AT)) $criteria->add(SprintPeer::UPDATED_AT, $this->updated_at);
 
         return $criteria;
     }
@@ -1512,8 +1176,8 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function buildPkeyCriteria()
     {
-        $criteria = new Criteria(UserPeer::DATABASE_NAME);
-        $criteria->add(UserPeer::ID, $this->id);
+        $criteria = new Criteria(SprintPeer::DATABASE_NAME);
+        $criteria->add(SprintPeer::ID, $this->id);
 
         return $criteria;
     }
@@ -1554,25 +1218,17 @@ abstract class BaseUser extends BaseObject implements Persistent
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param object $copyObj An object of User (or compatible) type.
+     * @param object $copyObj An object of Sprint (or compatible) type.
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setUsername($this->getUsername());
-        $copyObj->setPassword($this->getPassword());
-        $copyObj->setSalt($this->getSalt());
-        $copyObj->setRoles($this->getRoles());
-        $copyObj->setEmail($this->getEmail());
-        $copyObj->setFirstname($this->getFirstname());
-        $copyObj->setLastname($this->getLastname());
-        $copyObj->setAvatar($this->getAvatar());
-        $copyObj->setDomain($this->getDomain());
-        $copyObj->setBusiness($this->getBusiness());
-        $copyObj->setValidationToken($this->getValidationToken());
-        $copyObj->setValidate($this->getValidate());
+        $copyObj->setProjectId($this->getProjectId());
+        $copyObj->setName($this->getName());
+        $copyObj->setStartDate($this->getStartDate());
+        $copyObj->setEndDate($this->getEndDate());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1583,9 +1239,9 @@ abstract class BaseUser extends BaseObject implements Persistent
             // store object hash to prevent cycle
             $this->startCopy = true;
 
-            foreach ($this->getLinkProjectUsers() as $relObj) {
+            foreach ($this->getLinkUserStorySprints() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-                    $copyObj->addLinkProjectUser($relObj->copy($deepCopy));
+                    $copyObj->addLinkUserStorySprint($relObj->copy($deepCopy));
                 }
             }
 
@@ -1608,7 +1264,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      * objects.
      *
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return User Clone of current object.
+     * @return Sprint Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1628,15 +1284,67 @@ abstract class BaseUser extends BaseObject implements Persistent
      * same instance for all member of this class. The method could therefore
      * be static, but this would prevent one from overriding the behavior.
      *
-     * @return UserPeer
+     * @return SprintPeer
      */
     public function getPeer()
     {
         if (self::$peer === null) {
-            self::$peer = new UserPeer();
+            self::$peer = new SprintPeer();
         }
 
         return self::$peer;
+    }
+
+    /**
+     * Declares an association between this object and a Project object.
+     *
+     * @param                  Project $v
+     * @return Sprint The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setProject(Project $v = null)
+    {
+        if ($v === null) {
+            $this->setProjectId(NULL);
+        } else {
+            $this->setProjectId($v->getId());
+        }
+
+        $this->aProject = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the Project object, it will not be re-added.
+        if ($v !== null) {
+            $v->addSprint($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated Project object
+     *
+     * @param PropelPDO $con Optional Connection object.
+     * @param $doQuery Executes a query to get the object if required
+     * @return Project The associated Project object.
+     * @throws PropelException
+     */
+    public function getProject(PropelPDO $con = null, $doQuery = true)
+    {
+        if ($this->aProject === null && ($this->project_id !== null) && $doQuery) {
+            $this->aProject = ProjectQuery::create()->findPk($this->project_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aProject->addSprints($this);
+             */
+        }
+
+        return $this->aProject;
     }
 
 
@@ -1650,42 +1358,42 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function initRelation($relationName)
     {
-        if ('LinkProjectUser' == $relationName) {
-            $this->initLinkProjectUsers();
+        if ('LinkUserStorySprint' == $relationName) {
+            $this->initLinkUserStorySprints();
         }
     }
 
     /**
-     * Clears out the collLinkProjectUsers collection
+     * Clears out the collLinkUserStorySprints collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
-     * @return User The current object (for fluent API support)
-     * @see        addLinkProjectUsers()
+     * @return Sprint The current object (for fluent API support)
+     * @see        addLinkUserStorySprints()
      */
-    public function clearLinkProjectUsers()
+    public function clearLinkUserStorySprints()
     {
-        $this->collLinkProjectUsers = null; // important to set this to null since that means it is uninitialized
-        $this->collLinkProjectUsersPartial = null;
+        $this->collLinkUserStorySprints = null; // important to set this to null since that means it is uninitialized
+        $this->collLinkUserStorySprintsPartial = null;
 
         return $this;
     }
 
     /**
-     * reset is the collLinkProjectUsers collection loaded partially
+     * reset is the collLinkUserStorySprints collection loaded partially
      *
      * @return void
      */
-    public function resetPartialLinkProjectUsers($v = true)
+    public function resetPartialLinkUserStorySprints($v = true)
     {
-        $this->collLinkProjectUsersPartial = $v;
+        $this->collLinkUserStorySprintsPartial = $v;
     }
 
     /**
-     * Initializes the collLinkProjectUsers collection.
+     * Initializes the collLinkUserStorySprints collection.
      *
-     * By default this just sets the collLinkProjectUsers collection to an empty array (like clearcollLinkProjectUsers());
+     * By default this just sets the collLinkUserStorySprints collection to an empty array (like clearcollLinkUserStorySprints());
      * however, you may wish to override this method in your stub class to provide setting appropriate
      * to your application -- for example, setting the initial array to the values stored in database.
      *
@@ -1694,158 +1402,158 @@ abstract class BaseUser extends BaseObject implements Persistent
      *
      * @return void
      */
-    public function initLinkProjectUsers($overrideExisting = true)
+    public function initLinkUserStorySprints($overrideExisting = true)
     {
-        if (null !== $this->collLinkProjectUsers && !$overrideExisting) {
+        if (null !== $this->collLinkUserStorySprints && !$overrideExisting) {
             return;
         }
-        $this->collLinkProjectUsers = new PropelObjectCollection();
-        $this->collLinkProjectUsers->setModel('LinkProjectUser');
+        $this->collLinkUserStorySprints = new PropelObjectCollection();
+        $this->collLinkUserStorySprints->setModel('LinkUserStorySprint');
     }
 
     /**
-     * Gets an array of LinkProjectUser objects which contain a foreign key that references this object.
+     * Gets an array of LinkUserStorySprint objects which contain a foreign key that references this object.
      *
      * If the $criteria is not null, it is used to always fetch the results from the database.
      * Otherwise the results are fetched from the database the first time, then cached.
      * Next time the same method is called without $criteria, the cached collection is returned.
-     * If this User is new, it will return
+     * If this Sprint is new, it will return
      * an empty collection or the current collection; the criteria is ignored on a new object.
      *
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
-     * @return PropelObjectCollection|LinkProjectUser[] List of LinkProjectUser objects
+     * @return PropelObjectCollection|LinkUserStorySprint[] List of LinkUserStorySprint objects
      * @throws PropelException
      */
-    public function getLinkProjectUsers($criteria = null, PropelPDO $con = null)
+    public function getLinkUserStorySprints($criteria = null, PropelPDO $con = null)
     {
-        $partial = $this->collLinkProjectUsersPartial && !$this->isNew();
-        if (null === $this->collLinkProjectUsers || null !== $criteria  || $partial) {
-            if ($this->isNew() && null === $this->collLinkProjectUsers) {
+        $partial = $this->collLinkUserStorySprintsPartial && !$this->isNew();
+        if (null === $this->collLinkUserStorySprints || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collLinkUserStorySprints) {
                 // return empty collection
-                $this->initLinkProjectUsers();
+                $this->initLinkUserStorySprints();
             } else {
-                $collLinkProjectUsers = LinkProjectUserQuery::create(null, $criteria)
-                    ->filterByUser($this)
+                $collLinkUserStorySprints = LinkUserStorySprintQuery::create(null, $criteria)
+                    ->filterBySprint($this)
                     ->find($con);
                 if (null !== $criteria) {
-                    if (false !== $this->collLinkProjectUsersPartial && count($collLinkProjectUsers)) {
-                      $this->initLinkProjectUsers(false);
+                    if (false !== $this->collLinkUserStorySprintsPartial && count($collLinkUserStorySprints)) {
+                      $this->initLinkUserStorySprints(false);
 
-                      foreach ($collLinkProjectUsers as $obj) {
-                        if (false == $this->collLinkProjectUsers->contains($obj)) {
-                          $this->collLinkProjectUsers->append($obj);
+                      foreach ($collLinkUserStorySprints as $obj) {
+                        if (false == $this->collLinkUserStorySprints->contains($obj)) {
+                          $this->collLinkUserStorySprints->append($obj);
                         }
                       }
 
-                      $this->collLinkProjectUsersPartial = true;
+                      $this->collLinkUserStorySprintsPartial = true;
                     }
 
-                    $collLinkProjectUsers->getInternalIterator()->rewind();
+                    $collLinkUserStorySprints->getInternalIterator()->rewind();
 
-                    return $collLinkProjectUsers;
+                    return $collLinkUserStorySprints;
                 }
 
-                if ($partial && $this->collLinkProjectUsers) {
-                    foreach ($this->collLinkProjectUsers as $obj) {
+                if ($partial && $this->collLinkUserStorySprints) {
+                    foreach ($this->collLinkUserStorySprints as $obj) {
                         if ($obj->isNew()) {
-                            $collLinkProjectUsers[] = $obj;
+                            $collLinkUserStorySprints[] = $obj;
                         }
                     }
                 }
 
-                $this->collLinkProjectUsers = $collLinkProjectUsers;
-                $this->collLinkProjectUsersPartial = false;
+                $this->collLinkUserStorySprints = $collLinkUserStorySprints;
+                $this->collLinkUserStorySprintsPartial = false;
             }
         }
 
-        return $this->collLinkProjectUsers;
+        return $this->collLinkUserStorySprints;
     }
 
     /**
-     * Sets a collection of LinkProjectUser objects related by a one-to-many relationship
+     * Sets a collection of LinkUserStorySprint objects related by a one-to-many relationship
      * to the current object.
      * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
      * and new objects from the given Propel collection.
      *
-     * @param PropelCollection $linkProjectUsers A Propel collection.
+     * @param PropelCollection $linkUserStorySprints A Propel collection.
      * @param PropelPDO $con Optional connection object
-     * @return User The current object (for fluent API support)
+     * @return Sprint The current object (for fluent API support)
      */
-    public function setLinkProjectUsers(PropelCollection $linkProjectUsers, PropelPDO $con = null)
+    public function setLinkUserStorySprints(PropelCollection $linkUserStorySprints, PropelPDO $con = null)
     {
-        $linkProjectUsersToDelete = $this->getLinkProjectUsers(new Criteria(), $con)->diff($linkProjectUsers);
+        $linkUserStorySprintsToDelete = $this->getLinkUserStorySprints(new Criteria(), $con)->diff($linkUserStorySprints);
 
 
-        $this->linkProjectUsersScheduledForDeletion = $linkProjectUsersToDelete;
+        $this->linkUserStorySprintsScheduledForDeletion = $linkUserStorySprintsToDelete;
 
-        foreach ($linkProjectUsersToDelete as $linkProjectUserRemoved) {
-            $linkProjectUserRemoved->setUser(null);
+        foreach ($linkUserStorySprintsToDelete as $linkUserStorySprintRemoved) {
+            $linkUserStorySprintRemoved->setSprint(null);
         }
 
-        $this->collLinkProjectUsers = null;
-        foreach ($linkProjectUsers as $linkProjectUser) {
-            $this->addLinkProjectUser($linkProjectUser);
+        $this->collLinkUserStorySprints = null;
+        foreach ($linkUserStorySprints as $linkUserStorySprint) {
+            $this->addLinkUserStorySprint($linkUserStorySprint);
         }
 
-        $this->collLinkProjectUsers = $linkProjectUsers;
-        $this->collLinkProjectUsersPartial = false;
+        $this->collLinkUserStorySprints = $linkUserStorySprints;
+        $this->collLinkUserStorySprintsPartial = false;
 
         return $this;
     }
 
     /**
-     * Returns the number of related LinkProjectUser objects.
+     * Returns the number of related LinkUserStorySprint objects.
      *
      * @param Criteria $criteria
      * @param boolean $distinct
      * @param PropelPDO $con
-     * @return int             Count of related LinkProjectUser objects.
+     * @return int             Count of related LinkUserStorySprint objects.
      * @throws PropelException
      */
-    public function countLinkProjectUsers(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    public function countLinkUserStorySprints(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
     {
-        $partial = $this->collLinkProjectUsersPartial && !$this->isNew();
-        if (null === $this->collLinkProjectUsers || null !== $criteria || $partial) {
-            if ($this->isNew() && null === $this->collLinkProjectUsers) {
+        $partial = $this->collLinkUserStorySprintsPartial && !$this->isNew();
+        if (null === $this->collLinkUserStorySprints || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collLinkUserStorySprints) {
                 return 0;
             }
 
             if ($partial && !$criteria) {
-                return count($this->getLinkProjectUsers());
+                return count($this->getLinkUserStorySprints());
             }
-            $query = LinkProjectUserQuery::create(null, $criteria);
+            $query = LinkUserStorySprintQuery::create(null, $criteria);
             if ($distinct) {
                 $query->distinct();
             }
 
             return $query
-                ->filterByUser($this)
+                ->filterBySprint($this)
                 ->count($con);
         }
 
-        return count($this->collLinkProjectUsers);
+        return count($this->collLinkUserStorySprints);
     }
 
     /**
-     * Method called to associate a LinkProjectUser object to this object
-     * through the LinkProjectUser foreign key attribute.
+     * Method called to associate a LinkUserStorySprint object to this object
+     * through the LinkUserStorySprint foreign key attribute.
      *
-     * @param    LinkProjectUser $l LinkProjectUser
-     * @return User The current object (for fluent API support)
+     * @param    LinkUserStorySprint $l LinkUserStorySprint
+     * @return Sprint The current object (for fluent API support)
      */
-    public function addLinkProjectUser(LinkProjectUser $l)
+    public function addLinkUserStorySprint(LinkUserStorySprint $l)
     {
-        if ($this->collLinkProjectUsers === null) {
-            $this->initLinkProjectUsers();
-            $this->collLinkProjectUsersPartial = true;
+        if ($this->collLinkUserStorySprints === null) {
+            $this->initLinkUserStorySprints();
+            $this->collLinkUserStorySprintsPartial = true;
         }
 
-        if (!in_array($l, $this->collLinkProjectUsers->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            $this->doAddLinkProjectUser($l);
+        if (!in_array($l, $this->collLinkUserStorySprints->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddLinkUserStorySprint($l);
 
-            if ($this->linkProjectUsersScheduledForDeletion and $this->linkProjectUsersScheduledForDeletion->contains($l)) {
-                $this->linkProjectUsersScheduledForDeletion->remove($this->linkProjectUsersScheduledForDeletion->search($l));
+            if ($this->linkUserStorySprintsScheduledForDeletion and $this->linkUserStorySprintsScheduledForDeletion->contains($l)) {
+                $this->linkUserStorySprintsScheduledForDeletion->remove($this->linkUserStorySprintsScheduledForDeletion->search($l));
             }
         }
 
@@ -1853,28 +1561,28 @@ abstract class BaseUser extends BaseObject implements Persistent
     }
 
     /**
-     * @param	LinkProjectUser $linkProjectUser The linkProjectUser object to add.
+     * @param	LinkUserStorySprint $linkUserStorySprint The linkUserStorySprint object to add.
      */
-    protected function doAddLinkProjectUser($linkProjectUser)
+    protected function doAddLinkUserStorySprint($linkUserStorySprint)
     {
-        $this->collLinkProjectUsers[]= $linkProjectUser;
-        $linkProjectUser->setUser($this);
+        $this->collLinkUserStorySprints[]= $linkUserStorySprint;
+        $linkUserStorySprint->setSprint($this);
     }
 
     /**
-     * @param	LinkProjectUser $linkProjectUser The linkProjectUser object to remove.
-     * @return User The current object (for fluent API support)
+     * @param	LinkUserStorySprint $linkUserStorySprint The linkUserStorySprint object to remove.
+     * @return Sprint The current object (for fluent API support)
      */
-    public function removeLinkProjectUser($linkProjectUser)
+    public function removeLinkUserStorySprint($linkUserStorySprint)
     {
-        if ($this->getLinkProjectUsers()->contains($linkProjectUser)) {
-            $this->collLinkProjectUsers->remove($this->collLinkProjectUsers->search($linkProjectUser));
-            if (null === $this->linkProjectUsersScheduledForDeletion) {
-                $this->linkProjectUsersScheduledForDeletion = clone $this->collLinkProjectUsers;
-                $this->linkProjectUsersScheduledForDeletion->clear();
+        if ($this->getLinkUserStorySprints()->contains($linkUserStorySprint)) {
+            $this->collLinkUserStorySprints->remove($this->collLinkUserStorySprints->search($linkUserStorySprint));
+            if (null === $this->linkUserStorySprintsScheduledForDeletion) {
+                $this->linkUserStorySprintsScheduledForDeletion = clone $this->collLinkUserStorySprints;
+                $this->linkUserStorySprintsScheduledForDeletion->clear();
             }
-            $this->linkProjectUsersScheduledForDeletion[]= $linkProjectUser;
-            $linkProjectUser->setUser(null);
+            $this->linkUserStorySprintsScheduledForDeletion[]= $linkUserStorySprint;
+            $linkUserStorySprint->setSprint(null);
         }
 
         return $this;
@@ -1884,25 +1592,25 @@ abstract class BaseUser extends BaseObject implements Persistent
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this User is new, it will return
-     * an empty collection; or if this User has previously
-     * been saved, it will retrieve related LinkProjectUsers from storage.
+     * Otherwise if this Sprint is new, it will return
+     * an empty collection; or if this Sprint has previously
+     * been saved, it will retrieve related LinkUserStorySprints from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in User.
+     * actually need in Sprint.
      *
      * @param Criteria $criteria optional Criteria object to narrow the query
      * @param PropelPDO $con optional connection object
      * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
-     * @return PropelObjectCollection|LinkProjectUser[] List of LinkProjectUser objects
+     * @return PropelObjectCollection|LinkUserStorySprint[] List of LinkUserStorySprint objects
      */
-    public function getLinkProjectUsersJoinProject($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    public function getLinkUserStorySprintsJoinUserStory($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
     {
-        $query = LinkProjectUserQuery::create(null, $criteria);
-        $query->joinWith('Project', $join_behavior);
+        $query = LinkUserStorySprintQuery::create(null, $criteria);
+        $query->joinWith('UserStory', $join_behavior);
 
-        return $this->getLinkProjectUsers($query, $con);
+        return $this->getLinkUserStorySprints($query, $con);
     }
 
     /**
@@ -1911,18 +1619,10 @@ abstract class BaseUser extends BaseObject implements Persistent
     public function clear()
     {
         $this->id = null;
-        $this->username = null;
-        $this->password = null;
-        $this->salt = null;
-        $this->roles = null;
-        $this->email = null;
-        $this->firstname = null;
-        $this->lastname = null;
-        $this->avatar = null;
-        $this->domain = null;
-        $this->business = null;
-        $this->validation_token = null;
-        $this->validate = null;
+        $this->project_id = null;
+        $this->name = null;
+        $this->start_date = null;
+        $this->end_date = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
@@ -1947,19 +1647,23 @@ abstract class BaseUser extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
-            if ($this->collLinkProjectUsers) {
-                foreach ($this->collLinkProjectUsers as $o) {
+            if ($this->collLinkUserStorySprints) {
+                foreach ($this->collLinkUserStorySprints as $o) {
                     $o->clearAllReferences($deep);
                 }
+            }
+            if ($this->aProject instanceof Persistent) {
+              $this->aProject->clearAllReferences($deep);
             }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
-        if ($this->collLinkProjectUsers instanceof PropelCollection) {
-            $this->collLinkProjectUsers->clearIterator();
+        if ($this->collLinkUserStorySprints instanceof PropelCollection) {
+            $this->collLinkUserStorySprints->clearIterator();
         }
-        $this->collLinkProjectUsers = null;
+        $this->collLinkUserStorySprints = null;
+        $this->aProject = null;
     }
 
     /**
@@ -1969,7 +1673,7 @@ abstract class BaseUser extends BaseObject implements Persistent
      */
     public function __toString()
     {
-        return (string) $this->exportTo(UserPeer::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(SprintPeer::DEFAULT_STRING_FORMAT);
     }
 
     /**
@@ -1987,11 +1691,11 @@ abstract class BaseUser extends BaseObject implements Persistent
     /**
      * Mark the current object so that the update date doesn't get updated during next save
      *
-     * @return     User The current object (for fluent API support)
+     * @return     Sprint The current object (for fluent API support)
      */
     public function keepUpdateDateUnchanged()
     {
-        $this->modifiedColumns[] = UserPeer::UPDATED_AT;
+        $this->modifiedColumns[] = SprintPeer::UPDATED_AT;
 
         return $this;
     }

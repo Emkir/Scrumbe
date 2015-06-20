@@ -49,8 +49,9 @@ class UserStoryTableMap extends TableMap
         $this->addColumn('value', 'Value', 'INTEGER', false, null, null);
         $this->addColumn('complexity', 'Complexity', 'INTEGER', false, null, null);
         $this->addColumn('ratio', 'Ratio', 'FLOAT', false, null, null);
-        $this->addColumn('progress', 'Progress', 'VARCHAR', false, 255, null);
         $this->addColumn('position', 'Position', 'INTEGER', false, null, null);
+        $this->addColumn('priority', 'Priority', 'VARCHAR', false, 255, null);
+        $this->addColumn('label', 'Label', 'VARCHAR', false, 255, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators
@@ -63,6 +64,7 @@ class UserStoryTableMap extends TableMap
     {
         $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), 'CASCADE', null);
         $this->addRelation('Task', 'Scrumbe\\Models\\Task', RelationMap::ONE_TO_MANY, array('id' => 'user_story_id', ), null, null, 'Tasks');
+        $this->addRelation('LinkUserStorySprint', 'Scrumbe\\Models\\LinkUserStorySprint', RelationMap::ONE_TO_MANY, array('id' => 'user_story_id', ), 'CASCADE', null, 'LinkUserStorySprints');
     } // buildRelations()
 
     /**

@@ -5,6 +5,8 @@ namespace Scrumbe\Bundle\ProjectBundle\Controller;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\TaskQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends Controller
 {
@@ -83,6 +85,16 @@ class TaskController extends Controller
         return $this->redirect($this->generateUrl('scrumbe_get_tasks',array('projectId' => $projectId, 'usId' => $userStoryId)));
     }
 
+    public function saveKanbanPositionAction(Request $request, $taskId)
+    {
+        $taskPosition = $request->request->all();
+        $taskService = $this->container->get('task_service');
 
+        $validatorService = $this->container->get('scrumbe.validator_service');
+        $validatorService->objectExistsById($taskId, TaskQuery::create(), 'task');
+        $taskService->saveKanbanPosition($taskId, $taskPosition);
+
+        return new JsonResponse(array("code" => JsonResponse::HTTP_OK), JsonResponse::HTTP_OK);
+    }
 
 }

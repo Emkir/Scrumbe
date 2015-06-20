@@ -9,72 +9,65 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
-use Scrumbe\Models\LinkProjectUserPeer;
-use Scrumbe\Models\Project;
+use Scrumbe\Models\LinkUserStorySprintPeer;
 use Scrumbe\Models\ProjectPeer;
+use Scrumbe\Models\Sprint;
 use Scrumbe\Models\SprintPeer;
-use Scrumbe\Models\UserStoryPeer;
-use Scrumbe\Models\map\ProjectTableMap;
+use Scrumbe\Models\map\SprintTableMap;
 
-abstract class BaseProjectPeer
+abstract class BaseSprintPeer
 {
 
     /** the default database name for this class */
     const DATABASE_NAME = 'default';
 
     /** the table name for this class */
-    const TABLE_NAME = 'project';
+    const TABLE_NAME = 'sprint';
 
     /** the related Propel class for this table */
-    const OM_CLASS = 'Scrumbe\\Models\\Project';
+    const OM_CLASS = 'Scrumbe\\Models\\Sprint';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = 'Scrumbe\\Models\\map\\ProjectTableMap';
+    const TM_CLASS = 'Scrumbe\\Models\\map\\SprintTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 9;
+    const NUM_COLUMNS = 7;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 9;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /** the column name for the id field */
-    const ID = 'project.id';
+    const ID = 'sprint.id';
+
+    /** the column name for the project_id field */
+    const PROJECT_ID = 'sprint.project_id';
 
     /** the column name for the name field */
-    const NAME = 'project.name';
-
-    /** the column name for the url_name field */
-    const URL_NAME = 'project.url_name';
-
-    /** the column name for the description field */
-    const DESCRIPTION = 'project.description';
-
-    /** the column name for the cover_project field */
-    const COVER_PROJECT = 'project.cover_project';
+    const NAME = 'sprint.name';
 
     /** the column name for the start_date field */
-    const START_DATE = 'project.start_date';
+    const START_DATE = 'sprint.start_date';
 
     /** the column name for the end_date field */
-    const END_DATE = 'project.end_date';
+    const END_DATE = 'sprint.end_date';
 
     /** the column name for the created_at field */
-    const CREATED_AT = 'project.created_at';
+    const CREATED_AT = 'sprint.created_at';
 
     /** the column name for the updated_at field */
-    const UPDATED_AT = 'project.updated_at';
+    const UPDATED_AT = 'sprint.updated_at';
 
     /** The default string format for model objects of the related table **/
     const DEFAULT_STRING_FORMAT = 'YAML';
 
     /**
-     * An identity map to hold any loaded instances of Project objects.
+     * An identity map to hold any loaded instances of Sprint objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array Project[]
+     * @var        array Sprint[]
      */
     public static $instances = array();
 
@@ -83,30 +76,30 @@ abstract class BaseProjectPeer
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. ProjectPeer::$fieldNames[ProjectPeer::TYPE_PHPNAME][0] = 'Id'
+     * e.g. SprintPeer::$fieldNames[SprintPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'UrlName', 'Description', 'CoverProject', 'StartDate', 'EndDate', 'CreatedAt', 'UpdatedAt', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'name', 'urlName', 'description', 'coverProject', 'startDate', 'endDate', 'createdAt', 'updatedAt', ),
-        BasePeer::TYPE_COLNAME => array (ProjectPeer::ID, ProjectPeer::NAME, ProjectPeer::URL_NAME, ProjectPeer::DESCRIPTION, ProjectPeer::COVER_PROJECT, ProjectPeer::START_DATE, ProjectPeer::END_DATE, ProjectPeer::CREATED_AT, ProjectPeer::UPDATED_AT, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'NAME', 'URL_NAME', 'DESCRIPTION', 'COVER_PROJECT', 'START_DATE', 'END_DATE', 'CREATED_AT', 'UPDATED_AT', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'url_name', 'description', 'cover_project', 'start_date', 'end_date', 'created_at', 'updated_at', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'ProjectId', 'Name', 'StartDate', 'EndDate', 'CreatedAt', 'UpdatedAt', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'projectId', 'name', 'startDate', 'endDate', 'createdAt', 'updatedAt', ),
+        BasePeer::TYPE_COLNAME => array (SprintPeer::ID, SprintPeer::PROJECT_ID, SprintPeer::NAME, SprintPeer::START_DATE, SprintPeer::END_DATE, SprintPeer::CREATED_AT, SprintPeer::UPDATED_AT, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'PROJECT_ID', 'NAME', 'START_DATE', 'END_DATE', 'CREATED_AT', 'UPDATED_AT', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'project_id', 'name', 'start_date', 'end_date', 'created_at', 'updated_at', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. ProjectPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. SprintPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'UrlName' => 2, 'Description' => 3, 'CoverProject' => 4, 'StartDate' => 5, 'EndDate' => 6, 'CreatedAt' => 7, 'UpdatedAt' => 8, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'name' => 1, 'urlName' => 2, 'description' => 3, 'coverProject' => 4, 'startDate' => 5, 'endDate' => 6, 'createdAt' => 7, 'updatedAt' => 8, ),
-        BasePeer::TYPE_COLNAME => array (ProjectPeer::ID => 0, ProjectPeer::NAME => 1, ProjectPeer::URL_NAME => 2, ProjectPeer::DESCRIPTION => 3, ProjectPeer::COVER_PROJECT => 4, ProjectPeer::START_DATE => 5, ProjectPeer::END_DATE => 6, ProjectPeer::CREATED_AT => 7, ProjectPeer::UPDATED_AT => 8, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'NAME' => 1, 'URL_NAME' => 2, 'DESCRIPTION' => 3, 'COVER_PROJECT' => 4, 'START_DATE' => 5, 'END_DATE' => 6, 'CREATED_AT' => 7, 'UPDATED_AT' => 8, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'url_name' => 2, 'description' => 3, 'cover_project' => 4, 'start_date' => 5, 'end_date' => 6, 'created_at' => 7, 'updated_at' => 8, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'ProjectId' => 1, 'Name' => 2, 'StartDate' => 3, 'EndDate' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'projectId' => 1, 'name' => 2, 'startDate' => 3, 'endDate' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
+        BasePeer::TYPE_COLNAME => array (SprintPeer::ID => 0, SprintPeer::PROJECT_ID => 1, SprintPeer::NAME => 2, SprintPeer::START_DATE => 3, SprintPeer::END_DATE => 4, SprintPeer::CREATED_AT => 5, SprintPeer::UPDATED_AT => 6, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'PROJECT_ID' => 1, 'NAME' => 2, 'START_DATE' => 3, 'END_DATE' => 4, 'CREATED_AT' => 5, 'UPDATED_AT' => 6, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'project_id' => 1, 'name' => 2, 'start_date' => 3, 'end_date' => 4, 'created_at' => 5, 'updated_at' => 6, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -121,10 +114,10 @@ abstract class BaseProjectPeer
      */
     public static function translateFieldName($name, $fromType, $toType)
     {
-        $toNames = ProjectPeer::getFieldNames($toType);
-        $key = isset(ProjectPeer::$fieldKeys[$fromType][$name]) ? ProjectPeer::$fieldKeys[$fromType][$name] : null;
+        $toNames = SprintPeer::getFieldNames($toType);
+        $key = isset(SprintPeer::$fieldKeys[$fromType][$name]) ? SprintPeer::$fieldKeys[$fromType][$name] : null;
         if ($key === null) {
-            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(ProjectPeer::$fieldKeys[$fromType], true));
+            throw new PropelException("'$name' could not be found in the field names of type '$fromType'. These are: " . print_r(SprintPeer::$fieldKeys[$fromType], true));
         }
 
         return $toNames[$key];
@@ -141,11 +134,11 @@ abstract class BaseProjectPeer
      */
     public static function getFieldNames($type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists($type, ProjectPeer::$fieldNames)) {
+        if (!array_key_exists($type, SprintPeer::$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter $type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . $type . ' was given.');
         }
 
-        return ProjectPeer::$fieldNames[$type];
+        return SprintPeer::$fieldNames[$type];
     }
 
     /**
@@ -157,12 +150,12 @@ abstract class BaseProjectPeer
      *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
      * @param      string $alias The alias for the current table.
-     * @param      string $column The column name for current table. (i.e. ProjectPeer::COLUMN_NAME).
+     * @param      string $column The column name for current table. (i.e. SprintPeer::COLUMN_NAME).
      * @return string
      */
     public static function alias($alias, $column)
     {
-        return str_replace(ProjectPeer::TABLE_NAME.'.', $alias.'.', $column);
+        return str_replace(SprintPeer::TABLE_NAME.'.', $alias.'.', $column);
     }
 
     /**
@@ -180,21 +173,17 @@ abstract class BaseProjectPeer
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(ProjectPeer::ID);
-            $criteria->addSelectColumn(ProjectPeer::NAME);
-            $criteria->addSelectColumn(ProjectPeer::URL_NAME);
-            $criteria->addSelectColumn(ProjectPeer::DESCRIPTION);
-            $criteria->addSelectColumn(ProjectPeer::COVER_PROJECT);
-            $criteria->addSelectColumn(ProjectPeer::START_DATE);
-            $criteria->addSelectColumn(ProjectPeer::END_DATE);
-            $criteria->addSelectColumn(ProjectPeer::CREATED_AT);
-            $criteria->addSelectColumn(ProjectPeer::UPDATED_AT);
+            $criteria->addSelectColumn(SprintPeer::ID);
+            $criteria->addSelectColumn(SprintPeer::PROJECT_ID);
+            $criteria->addSelectColumn(SprintPeer::NAME);
+            $criteria->addSelectColumn(SprintPeer::START_DATE);
+            $criteria->addSelectColumn(SprintPeer::END_DATE);
+            $criteria->addSelectColumn(SprintPeer::CREATED_AT);
+            $criteria->addSelectColumn(SprintPeer::UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
+            $criteria->addSelectColumn($alias . '.project_id');
             $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.url_name');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.cover_project');
             $criteria->addSelectColumn($alias . '.start_date');
             $criteria->addSelectColumn($alias . '.end_date');
             $criteria->addSelectColumn($alias . '.created_at');
@@ -218,21 +207,21 @@ abstract class BaseProjectPeer
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(ProjectPeer::TABLE_NAME);
+        $criteria->setPrimaryTableName(SprintPeer::TABLE_NAME);
 
         if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
             $criteria->setDistinct();
         }
 
         if (!$criteria->hasSelectClause()) {
-            ProjectPeer::addSelectColumns($criteria);
+            SprintPeer::addSelectColumns($criteria);
         }
 
         $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        $criteria->setDbName(ProjectPeer::DATABASE_NAME); // Set the correct dbName
+        $criteria->setDbName(SprintPeer::DATABASE_NAME); // Set the correct dbName
 
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         // BasePeer returns a PDOStatement
         $stmt = BasePeer::doCount($criteria, $con);
@@ -251,7 +240,7 @@ abstract class BaseProjectPeer
      *
      * @param      Criteria $criteria object used to create the SELECT statement.
      * @param      PropelPDO $con
-     * @return Project
+     * @return Sprint
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -259,7 +248,7 @@ abstract class BaseProjectPeer
     {
         $critcopy = clone $criteria;
         $critcopy->setLimit(1);
-        $objects = ProjectPeer::doSelect($critcopy, $con);
+        $objects = SprintPeer::doSelect($critcopy, $con);
         if ($objects) {
             return $objects[0];
         }
@@ -277,7 +266,7 @@ abstract class BaseProjectPeer
      */
     public static function doSelect(Criteria $criteria, PropelPDO $con = null)
     {
-        return ProjectPeer::populateObjects(ProjectPeer::doSelectStmt($criteria, $con));
+        return SprintPeer::populateObjects(SprintPeer::doSelectStmt($criteria, $con));
     }
     /**
      * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -295,16 +284,16 @@ abstract class BaseProjectPeer
     public static function doSelectStmt(Criteria $criteria, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         if (!$criteria->hasSelectClause()) {
             $criteria = clone $criteria;
-            ProjectPeer::addSelectColumns($criteria);
+            SprintPeer::addSelectColumns($criteria);
         }
 
         // Set the correct dbName
-        $criteria->setDbName(ProjectPeer::DATABASE_NAME);
+        $criteria->setDbName(SprintPeer::DATABASE_NAME);
 
         // BasePeer returns a PDOStatement
         return BasePeer::doSelect($criteria, $con);
@@ -318,7 +307,7 @@ abstract class BaseProjectPeer
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param Project $obj A Project object.
+     * @param Sprint $obj A Sprint object.
      * @param      string $key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
@@ -327,7 +316,7 @@ abstract class BaseProjectPeer
             if ($key === null) {
                 $key = (string) $obj->getId();
             } // if key === null
-            ProjectPeer::$instances[$key] = $obj;
+            SprintPeer::$instances[$key] = $obj;
         }
     }
 
@@ -339,7 +328,7 @@ abstract class BaseProjectPeer
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param      mixed $value A Project object or a primary key value.
+     * @param      mixed $value A Sprint object or a primary key value.
      *
      * @return void
      * @throws PropelException - if the value is invalid.
@@ -347,17 +336,17 @@ abstract class BaseProjectPeer
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && $value !== null) {
-            if (is_object($value) && $value instanceof Project) {
+            if (is_object($value) && $value instanceof Sprint) {
                 $key = (string) $value->getId();
             } elseif (is_scalar($value)) {
                 // assume we've been passed a primary key
                 $key = (string) $value;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Project object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Sprint object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value,true)));
                 throw $e;
             }
 
-            unset(ProjectPeer::$instances[$key]);
+            unset(SprintPeer::$instances[$key]);
         }
     } // removeInstanceFromPool()
 
@@ -368,14 +357,14 @@ abstract class BaseProjectPeer
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string $key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return Project Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return Sprint Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool($key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(ProjectPeer::$instances[$key])) {
-                return ProjectPeer::$instances[$key];
+            if (isset(SprintPeer::$instances[$key])) {
+                return SprintPeer::$instances[$key];
             }
         }
 
@@ -390,28 +379,22 @@ abstract class BaseProjectPeer
     public static function clearInstancePool($and_clear_all_references = false)
     {
       if ($and_clear_all_references) {
-        foreach (ProjectPeer::$instances as $instance) {
+        foreach (SprintPeer::$instances as $instance) {
           $instance->clearAllReferences(true);
         }
       }
-        ProjectPeer::$instances = array();
+        SprintPeer::$instances = array();
     }
 
     /**
-     * Method to invalidate the instance pool of all tables related to project
+     * Method to invalidate the instance pool of all tables related to sprint
      * by a foreign key with ON DELETE CASCADE
      */
     public static function clearRelatedInstancePool()
     {
-        // Invalidate objects in SprintPeer instance pool,
+        // Invalidate objects in LinkUserStorySprintPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        SprintPeer::clearInstancePool();
-        // Invalidate objects in UserStoryPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        UserStoryPeer::clearInstancePool();
-        // Invalidate objects in LinkProjectUserPeer instance pool,
-        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
-        LinkProjectUserPeer::clearInstancePool();
+        LinkUserStorySprintPeer::clearInstancePool();
     }
 
     /**
@@ -461,11 +444,11 @@ abstract class BaseProjectPeer
         $results = array();
 
         // set the class once to avoid overhead in the loop
-        $cls = ProjectPeer::getOMClass();
+        $cls = SprintPeer::getOMClass();
         // populate the object(s)
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $key = ProjectPeer::getPrimaryKeyHashFromRow($row, 0);
-            if (null !== ($obj = ProjectPeer::getInstanceFromPool($key))) {
+            $key = SprintPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj = SprintPeer::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
@@ -474,7 +457,7 @@ abstract class BaseProjectPeer
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                ProjectPeer::addInstanceToPool($obj, $key);
+                SprintPeer::addInstanceToPool($obj, $key);
             } // if key exists
         }
         $stmt->closeCursor();
@@ -488,24 +471,262 @@ abstract class BaseProjectPeer
      * @param      int $startcol The 0-based offset for reading from the resultset row.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (Project object, last column rank)
+     * @return array (Sprint object, last column rank)
      */
     public static function populateObject($row, $startcol = 0)
     {
-        $key = ProjectPeer::getPrimaryKeyHashFromRow($row, $startcol);
-        if (null !== ($obj = ProjectPeer::getInstanceFromPool($key))) {
+        $key = SprintPeer::getPrimaryKeyHashFromRow($row, $startcol);
+        if (null !== ($obj = SprintPeer::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $startcol, true); // rehydrate
-            $col = $startcol + ProjectPeer::NUM_HYDRATE_COLUMNS;
+            $col = $startcol + SprintPeer::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = ProjectPeer::OM_CLASS;
+            $cls = SprintPeer::OM_CLASS;
             $obj = new $cls();
             $col = $obj->hydrate($row, $startcol);
-            ProjectPeer::addInstanceToPool($obj, $key);
+            SprintPeer::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
+    }
+
+
+    /**
+     * Returns the number of rows matching criteria, joining the related Project table
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return int Number of matching rows.
+     */
+    public static function doCountJoinProject(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        // we're going to modify criteria, so copy it first
+        $criteria = clone $criteria;
+
+        // We need to set the primary table name, since in the case that there are no WHERE columns
+        // it will be impossible for the BasePeer::createSelectSql() method to determine which
+        // tables go into the FROM clause.
+        $criteria->setPrimaryTableName(SprintPeer::TABLE_NAME);
+
+        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+            $criteria->setDistinct();
+        }
+
+        if (!$criteria->hasSelectClause()) {
+            SprintPeer::addSelectColumns($criteria);
+        }
+
+        $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+
+        // Set the correct dbName
+        $criteria->setDbName(SprintPeer::DATABASE_NAME);
+
+        if ($con === null) {
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+        }
+
+        $criteria->addJoin(SprintPeer::PROJECT_ID, ProjectPeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doCount($criteria, $con);
+
+        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $count = (int) $row[0];
+        } else {
+            $count = 0; // no rows returned; we infer that means 0 matches.
+        }
+        $stmt->closeCursor();
+
+        return $count;
+    }
+
+
+    /**
+     * Selects a collection of Sprint objects pre-filled with their Project objects.
+     * @param      Criteria  $criteria
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return array           Array of Sprint objects.
+     * @throws PropelException Any exceptions caught during processing will be
+     *		 rethrown wrapped into a PropelException.
+     */
+    public static function doSelectJoinProject(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $criteria = clone $criteria;
+
+        // Set the correct dbName if it has not been overridden
+        if ($criteria->getDbName() == Propel::getDefaultDB()) {
+            $criteria->setDbName(SprintPeer::DATABASE_NAME);
+        }
+
+        SprintPeer::addSelectColumns($criteria);
+        $startcol = SprintPeer::NUM_HYDRATE_COLUMNS;
+        ProjectPeer::addSelectColumns($criteria);
+
+        $criteria->addJoin(SprintPeer::PROJECT_ID, ProjectPeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doSelect($criteria, $con);
+        $results = array();
+
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $key1 = SprintPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = SprintPeer::getInstanceFromPool($key1))) {
+                // We no longer rehydrate the object, since this can cause data loss.
+                // See http://www.propelorm.org/ticket/509
+                // $obj1->hydrate($row, 0, true); // rehydrate
+            } else {
+
+                $cls = SprintPeer::getOMClass();
+
+                $obj1 = new $cls();
+                $obj1->hydrate($row);
+                SprintPeer::addInstanceToPool($obj1, $key1);
+            } // if $obj1 already loaded
+
+            $key2 = ProjectPeer::getPrimaryKeyHashFromRow($row, $startcol);
+            if ($key2 !== null) {
+                $obj2 = ProjectPeer::getInstanceFromPool($key2);
+                if (!$obj2) {
+
+                    $cls = ProjectPeer::getOMClass();
+
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol);
+                    ProjectPeer::addInstanceToPool($obj2, $key2);
+                } // if obj2 already loaded
+
+                // Add the $obj1 (Sprint) to $obj2 (Project)
+                $obj2->addSprint($obj1);
+
+            } // if joined row was not null
+
+            $results[] = $obj1;
+        }
+        $stmt->closeCursor();
+
+        return $results;
+    }
+
+
+    /**
+     * Returns the number of rows matching criteria, joining all related tables
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return int Number of matching rows.
+     */
+    public static function doCountJoinAll(Criteria $criteria, $distinct = false, PropelPDO $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        // we're going to modify criteria, so copy it first
+        $criteria = clone $criteria;
+
+        // We need to set the primary table name, since in the case that there are no WHERE columns
+        // it will be impossible for the BasePeer::createSelectSql() method to determine which
+        // tables go into the FROM clause.
+        $criteria->setPrimaryTableName(SprintPeer::TABLE_NAME);
+
+        if ($distinct && !in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
+            $criteria->setDistinct();
+        }
+
+        if (!$criteria->hasSelectClause()) {
+            SprintPeer::addSelectColumns($criteria);
+        }
+
+        $criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
+
+        // Set the correct dbName
+        $criteria->setDbName(SprintPeer::DATABASE_NAME);
+
+        if ($con === null) {
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+        }
+
+        $criteria->addJoin(SprintPeer::PROJECT_ID, ProjectPeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doCount($criteria, $con);
+
+        if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $count = (int) $row[0];
+        } else {
+            $count = 0; // no rows returned; we infer that means 0 matches.
+        }
+        $stmt->closeCursor();
+
+        return $count;
+    }
+
+    /**
+     * Selects a collection of Sprint objects pre-filled with all related objects.
+     *
+     * @param      Criteria  $criteria
+     * @param      PropelPDO $con
+     * @param      String    $join_behavior the type of joins to use, defaults to Criteria::LEFT_JOIN
+     * @return array           Array of Sprint objects.
+     * @throws PropelException Any exceptions caught during processing will be
+     *		 rethrown wrapped into a PropelException.
+     */
+    public static function doSelectJoinAll(Criteria $criteria, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $criteria = clone $criteria;
+
+        // Set the correct dbName if it has not been overridden
+        if ($criteria->getDbName() == Propel::getDefaultDB()) {
+            $criteria->setDbName(SprintPeer::DATABASE_NAME);
+        }
+
+        SprintPeer::addSelectColumns($criteria);
+        $startcol2 = SprintPeer::NUM_HYDRATE_COLUMNS;
+
+        ProjectPeer::addSelectColumns($criteria);
+        $startcol3 = $startcol2 + ProjectPeer::NUM_HYDRATE_COLUMNS;
+
+        $criteria->addJoin(SprintPeer::PROJECT_ID, ProjectPeer::ID, $join_behavior);
+
+        $stmt = BasePeer::doSelect($criteria, $con);
+        $results = array();
+
+        while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+            $key1 = SprintPeer::getPrimaryKeyHashFromRow($row, 0);
+            if (null !== ($obj1 = SprintPeer::getInstanceFromPool($key1))) {
+                // We no longer rehydrate the object, since this can cause data loss.
+                // See http://www.propelorm.org/ticket/509
+                // $obj1->hydrate($row, 0, true); // rehydrate
+            } else {
+                $cls = SprintPeer::getOMClass();
+
+                $obj1 = new $cls();
+                $obj1->hydrate($row);
+                SprintPeer::addInstanceToPool($obj1, $key1);
+            } // if obj1 already loaded
+
+            // Add objects for joined Project rows
+
+            $key2 = ProjectPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+            if ($key2 !== null) {
+                $obj2 = ProjectPeer::getInstanceFromPool($key2);
+                if (!$obj2) {
+
+                    $cls = ProjectPeer::getOMClass();
+
+                    $obj2 = new $cls();
+                    $obj2->hydrate($row, $startcol2);
+                    ProjectPeer::addInstanceToPool($obj2, $key2);
+                } // if obj2 loaded
+
+                // Add the $obj1 (Sprint) to the collection in $obj2 (Project)
+                $obj2->addSprint($obj1);
+            } // if joined row not null
+
+            $results[] = $obj1;
+        }
+        $stmt->closeCursor();
+
+        return $results;
     }
 
     /**
@@ -517,7 +738,7 @@ abstract class BaseProjectPeer
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(ProjectPeer::DATABASE_NAME)->getTable(ProjectPeer::TABLE_NAME);
+        return Propel::getDatabaseMap(SprintPeer::DATABASE_NAME)->getTable(SprintPeer::TABLE_NAME);
     }
 
     /**
@@ -525,9 +746,9 @@ abstract class BaseProjectPeer
      */
     public static function buildTableMap()
     {
-      $dbMap = Propel::getDatabaseMap(BaseProjectPeer::DATABASE_NAME);
-      if (!$dbMap->hasTable(BaseProjectPeer::TABLE_NAME)) {
-        $dbMap->addTableObject(new \Scrumbe\Models\map\ProjectTableMap());
+      $dbMap = Propel::getDatabaseMap(BaseSprintPeer::DATABASE_NAME);
+      if (!$dbMap->hasTable(BaseSprintPeer::TABLE_NAME)) {
+        $dbMap->addTableObject(new \Scrumbe\Models\map\SprintTableMap());
       }
     }
 
@@ -539,13 +760,13 @@ abstract class BaseProjectPeer
      */
     public static function getOMClass($row = 0, $colnum = 0)
     {
-        return ProjectPeer::OM_CLASS;
+        return SprintPeer::OM_CLASS;
     }
 
     /**
-     * Performs an INSERT on the database, given a Project or Criteria object.
+     * Performs an INSERT on the database, given a Sprint or Criteria object.
      *
-     * @param      mixed $values Criteria or Project object containing data that is used to create the INSERT statement.
+     * @param      mixed $values Criteria or Sprint object containing data that is used to create the INSERT statement.
      * @param      PropelPDO $con the PropelPDO connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -554,22 +775,22 @@ abstract class BaseProjectPeer
     public static function doInsert($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
         } else {
-            $criteria = $values->buildCriteria(); // build Criteria from Project object
+            $criteria = $values->buildCriteria(); // build Criteria from Sprint object
         }
 
-        if ($criteria->containsKey(ProjectPeer::ID) && $criteria->keyContainsValue(ProjectPeer::ID) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.ProjectPeer::ID.')');
+        if ($criteria->containsKey(SprintPeer::ID) && $criteria->keyContainsValue(SprintPeer::ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SprintPeer::ID.')');
         }
 
 
         // Set the correct dbName
-        $criteria->setDbName(ProjectPeer::DATABASE_NAME);
+        $criteria->setDbName(SprintPeer::DATABASE_NAME);
 
         try {
             // use transaction because $criteria could contain info
@@ -586,9 +807,9 @@ abstract class BaseProjectPeer
     }
 
     /**
-     * Performs an UPDATE on the database, given a Project or Criteria object.
+     * Performs an UPDATE on the database, given a Sprint or Criteria object.
      *
-     * @param      mixed $values Criteria or Project object containing data that is used to create the UPDATE statement.
+     * @param      mixed $values Criteria or Sprint object containing data that is used to create the UPDATE statement.
      * @param      PropelPDO $con The connection to use (specify PropelPDO connection object to exert more control over transactions).
      * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException Any exceptions caught during processing will be
@@ -597,35 +818,35 @@ abstract class BaseProjectPeer
     public static function doUpdate($values, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        $selectCriteria = new Criteria(ProjectPeer::DATABASE_NAME);
+        $selectCriteria = new Criteria(SprintPeer::DATABASE_NAME);
 
         if ($values instanceof Criteria) {
             $criteria = clone $values; // rename for clarity
 
-            $comparison = $criteria->getComparison(ProjectPeer::ID);
-            $value = $criteria->remove(ProjectPeer::ID);
+            $comparison = $criteria->getComparison(SprintPeer::ID);
+            $value = $criteria->remove(SprintPeer::ID);
             if ($value) {
-                $selectCriteria->add(ProjectPeer::ID, $value, $comparison);
+                $selectCriteria->add(SprintPeer::ID, $value, $comparison);
             } else {
-                $selectCriteria->setPrimaryTableName(ProjectPeer::TABLE_NAME);
+                $selectCriteria->setPrimaryTableName(SprintPeer::TABLE_NAME);
             }
 
-        } else { // $values is Project object
+        } else { // $values is Sprint object
             $criteria = $values->buildCriteria(); // gets full criteria
             $selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
         }
 
         // set the correct dbName
-        $criteria->setDbName(ProjectPeer::DATABASE_NAME);
+        $criteria->setDbName(SprintPeer::DATABASE_NAME);
 
         return BasePeer::doUpdate($selectCriteria, $criteria, $con);
     }
 
     /**
-     * Deletes all rows from the project table.
+     * Deletes all rows from the sprint table.
      *
      * @param      PropelPDO $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
@@ -634,19 +855,19 @@ abstract class BaseProjectPeer
     public static function doDeleteAll(PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         $affectedRows = 0; // initialize var to track total num of affected rows
         try {
             // use transaction because $criteria could contain info
             // for more than one table or we could emulating ON DELETE CASCADE, etc.
             $con->beginTransaction();
-            $affectedRows += BasePeer::doDeleteAll(ProjectPeer::TABLE_NAME, $con, ProjectPeer::DATABASE_NAME);
+            $affectedRows += BasePeer::doDeleteAll(SprintPeer::TABLE_NAME, $con, SprintPeer::DATABASE_NAME);
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            ProjectPeer::clearInstancePool();
-            ProjectPeer::clearRelatedInstancePool();
+            SprintPeer::clearInstancePool();
+            SprintPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -657,9 +878,9 @@ abstract class BaseProjectPeer
     }
 
     /**
-     * Performs a DELETE on the database, given a Project or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Sprint or Criteria object OR a primary key value.
      *
-     * @param      mixed $values Criteria or Project object or primary key or array of primary keys
+     * @param      mixed $values Criteria or Sprint object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param      PropelPDO $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -670,32 +891,32 @@ abstract class BaseProjectPeer
      public static function doDelete($values, PropelPDO $con = null)
      {
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         if ($values instanceof Criteria) {
             // invalidate the cache for all objects of this type, since we have no
             // way of knowing (without running a query) what objects should be invalidated
             // from the cache based on this Criteria.
-            ProjectPeer::clearInstancePool();
+            SprintPeer::clearInstancePool();
             // rename for clarity
             $criteria = clone $values;
-        } elseif ($values instanceof Project) { // it's a model object
+        } elseif ($values instanceof Sprint) { // it's a model object
             // invalidate the cache for this single object
-            ProjectPeer::removeInstanceFromPool($values);
+            SprintPeer::removeInstanceFromPool($values);
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(ProjectPeer::DATABASE_NAME);
-            $criteria->add(ProjectPeer::ID, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SprintPeer::DATABASE_NAME);
+            $criteria->add(SprintPeer::ID, (array) $values, Criteria::IN);
             // invalidate the cache for this object(s)
             foreach ((array) $values as $singleval) {
-                ProjectPeer::removeInstanceFromPool($singleval);
+                SprintPeer::removeInstanceFromPool($singleval);
             }
         }
 
         // Set the correct dbName
-        $criteria->setDbName(ProjectPeer::DATABASE_NAME);
+        $criteria->setDbName(SprintPeer::DATABASE_NAME);
 
         $affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -705,7 +926,7 @@ abstract class BaseProjectPeer
             $con->beginTransaction();
 
             $affectedRows += BasePeer::doDelete($criteria, $con);
-            ProjectPeer::clearRelatedInstancePool();
+            SprintPeer::clearRelatedInstancePool();
             $con->commit();
 
             return $affectedRows;
@@ -716,13 +937,13 @@ abstract class BaseProjectPeer
     }
 
     /**
-     * Validates all modified columns of given Project object.
+     * Validates all modified columns of given Sprint object.
      * If parameter $columns is either a single column name or an array of column names
      * than only those columns are validated.
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param Project $obj The object to validate.
+     * @param Sprint $obj The object to validate.
      * @param      mixed $cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -732,8 +953,8 @@ abstract class BaseProjectPeer
         $columns = array();
 
         if ($cols) {
-            $dbMap = Propel::getDatabaseMap(ProjectPeer::DATABASE_NAME);
-            $tableMap = $dbMap->getTable(ProjectPeer::TABLE_NAME);
+            $dbMap = Propel::getDatabaseMap(SprintPeer::DATABASE_NAME);
+            $tableMap = $dbMap->getTable(SprintPeer::TABLE_NAME);
 
             if (! is_array($cols)) {
                 $cols = array($cols);
@@ -749,7 +970,7 @@ abstract class BaseProjectPeer
 
         }
 
-        return BasePeer::doValidate(ProjectPeer::DATABASE_NAME, ProjectPeer::TABLE_NAME, $columns);
+        return BasePeer::doValidate(SprintPeer::DATABASE_NAME, SprintPeer::TABLE_NAME, $columns);
     }
 
     /**
@@ -757,23 +978,23 @@ abstract class BaseProjectPeer
      *
      * @param int $pk the primary key.
      * @param      PropelPDO $con the connection to use
-     * @return Project
+     * @return Sprint
      */
     public static function retrieveByPK($pk, PropelPDO $con = null)
     {
 
-        if (null !== ($obj = ProjectPeer::getInstanceFromPool((string) $pk))) {
+        if (null !== ($obj = SprintPeer::getInstanceFromPool((string) $pk))) {
             return $obj;
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
-        $criteria = new Criteria(ProjectPeer::DATABASE_NAME);
-        $criteria->add(ProjectPeer::ID, $pk);
+        $criteria = new Criteria(SprintPeer::DATABASE_NAME);
+        $criteria->add(SprintPeer::ID, $pk);
 
-        $v = ProjectPeer::doSelect($criteria, $con);
+        $v = SprintPeer::doSelect($criteria, $con);
 
         return !empty($v) > 0 ? $v[0] : null;
     }
@@ -783,31 +1004,31 @@ abstract class BaseProjectPeer
      *
      * @param      array $pks List of primary keys
      * @param      PropelPDO $con the connection to use
-     * @return Project[]
+     * @return Sprint[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
     public static function retrieveByPKs($pks, PropelPDO $con = null)
     {
         if ($con === null) {
-            $con = Propel::getConnection(ProjectPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(SprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         $objs = null;
         if (empty($pks)) {
             $objs = array();
         } else {
-            $criteria = new Criteria(ProjectPeer::DATABASE_NAME);
-            $criteria->add(ProjectPeer::ID, $pks, Criteria::IN);
-            $objs = ProjectPeer::doSelect($criteria, $con);
+            $criteria = new Criteria(SprintPeer::DATABASE_NAME);
+            $criteria->add(SprintPeer::ID, $pks, Criteria::IN);
+            $objs = SprintPeer::doSelect($criteria, $con);
         }
 
         return $objs;
     }
 
-} // BaseProjectPeer
+} // BaseSprintPeer
 
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-BaseProjectPeer::buildTableMap();
+BaseSprintPeer::buildTableMap();
 

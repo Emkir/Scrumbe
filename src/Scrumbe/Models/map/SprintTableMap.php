@@ -7,7 +7,7 @@ use \TableMap;
 
 
 /**
- * This class defines the structure of the 'task' table.
+ * This class defines the structure of the 'sprint' table.
  *
  *
  *
@@ -18,13 +18,13 @@ use \TableMap;
  *
  * @package    propel.generator..map
  */
-class TaskTableMap extends TableMap
+class SprintTableMap extends TableMap
 {
 
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.map.TaskTableMap';
+    const CLASS_NAME = '.map.SprintTableMap';
 
     /**
      * Initialize the table attributes, columns and validators
@@ -36,18 +36,17 @@ class TaskTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('task');
-        $this->setPhpName('Task');
-        $this->setClassname('Scrumbe\\Models\\Task');
+        $this->setName('sprint');
+        $this->setPhpName('Sprint');
+        $this->setClassname('Scrumbe\\Models\\Sprint');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addForeignKey('user_story_id', 'UserStoryId', 'INTEGER', 'user_story', 'id', false, null, null);
-        $this->addColumn('time', 'Time', 'VARCHAR', false, 255, null);
-        $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('position', 'Position', 'INTEGER', false, null, null);
-        $this->addColumn('progress', 'Progress', 'VARCHAR', false, 255, null);
+        $this->addForeignKey('project_id', 'ProjectId', 'INTEGER', 'project', 'id', false, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
+        $this->addColumn('start_date', 'StartDate', 'DATE', false, null, null);
+        $this->addColumn('end_date', 'EndDate', 'DATE', false, null, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators
@@ -58,7 +57,8 @@ class TaskTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::MANY_TO_ONE, array('user_story_id' => 'id', ), null, null);
+        $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), 'CASCADE', null);
+        $this->addRelation('LinkUserStorySprint', 'Scrumbe\\Models\\LinkUserStorySprint', RelationMap::ONE_TO_MANY, array('id' => 'sprint_id', ), 'CASCADE', null, 'LinkUserStorySprints');
     } // buildRelations()
 
     /**
@@ -78,4 +78,4 @@ class TaskTableMap extends TableMap
         );
     } // getBehaviors()
 
-} // TaskTableMap
+} // SprintTableMap

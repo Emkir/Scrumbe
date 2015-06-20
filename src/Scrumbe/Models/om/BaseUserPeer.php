@@ -9,6 +9,7 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
+use Scrumbe\Models\LinkProjectUserPeer;
 use Scrumbe\Models\User;
 use Scrumbe\Models\UserPeer;
 use Scrumbe\Models\map\UserTableMap;
@@ -430,6 +431,9 @@ abstract class BaseUserPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in LinkProjectUserPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        LinkProjectUserPeer::clearInstancePool();
     }
 
     /**

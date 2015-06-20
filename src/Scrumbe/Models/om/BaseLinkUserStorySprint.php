@@ -13,24 +13,26 @@ use \Propel;
 use \PropelDateTime;
 use \PropelException;
 use \PropelPDO;
-use Scrumbe\Models\Task;
-use Scrumbe\Models\TaskPeer;
-use Scrumbe\Models\TaskQuery;
+use Scrumbe\Models\LinkUserStorySprint;
+use Scrumbe\Models\LinkUserStorySprintPeer;
+use Scrumbe\Models\LinkUserStorySprintQuery;
+use Scrumbe\Models\Sprint;
+use Scrumbe\Models\SprintQuery;
 use Scrumbe\Models\UserStory;
 use Scrumbe\Models\UserStoryQuery;
 
-abstract class BaseTask extends BaseObject implements Persistent
+abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
 {
     /**
      * Peer class name
      */
-    const PEER = 'Scrumbe\\Models\\TaskPeer';
+    const PEER = 'Scrumbe\\Models\\LinkUserStorySprintPeer';
 
     /**
      * The Peer class.
      * Instance provides a convenient way of calling static methods on a class
      * that calling code may not be able to identify.
-     * @var        TaskPeer
+     * @var        LinkUserStorySprintPeer
      */
     protected static $peer;
 
@@ -53,28 +55,10 @@ abstract class BaseTask extends BaseObject implements Persistent
     protected $user_story_id;
 
     /**
-     * The value for the time field.
-     * @var        string
-     */
-    protected $time;
-
-    /**
-     * The value for the description field.
-     * @var        string
-     */
-    protected $description;
-
-    /**
-     * The value for the position field.
+     * The value for the sprint_id field.
      * @var        int
      */
-    protected $position;
-
-    /**
-     * The value for the progress field.
-     * @var        string
-     */
-    protected $progress;
+    protected $sprint_id;
 
     /**
      * The value for the created_at field.
@@ -92,6 +76,11 @@ abstract class BaseTask extends BaseObject implements Persistent
      * @var        UserStory
      */
     protected $aUserStory;
+
+    /**
+     * @var        Sprint
+     */
+    protected $aSprint;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -136,47 +125,14 @@ abstract class BaseTask extends BaseObject implements Persistent
     }
 
     /**
-     * Get the [time] column value.
-     *
-     * @return string
-     */
-    public function getTime()
-    {
-
-        return $this->time;
-    }
-
-    /**
-     * Get the [description] column value.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-
-        return $this->description;
-    }
-
-    /**
-     * Get the [position] column value.
+     * Get the [sprint_id] column value.
      *
      * @return int
      */
-    public function getPosition()
+    public function getSprintId()
     {
 
-        return $this->position;
-    }
-
-    /**
-     * Get the [progress] column value.
-     *
-     * @return string
-     */
-    public function getProgress()
-    {
-
-        return $this->progress;
+        return $this->sprint_id;
     }
 
     /**
@@ -263,7 +219,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      * Set the value of [id] column.
      *
      * @param  int $v new value
-     * @return Task The current object (for fluent API support)
+     * @return LinkUserStorySprint The current object (for fluent API support)
      */
     public function setId($v)
     {
@@ -273,7 +229,7 @@ abstract class BaseTask extends BaseObject implements Persistent
 
         if ($this->id !== $v) {
             $this->id = $v;
-            $this->modifiedColumns[] = TaskPeer::ID;
+            $this->modifiedColumns[] = LinkUserStorySprintPeer::ID;
         }
 
 
@@ -284,7 +240,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      * Set the value of [user_story_id] column.
      *
      * @param  int $v new value
-     * @return Task The current object (for fluent API support)
+     * @return LinkUserStorySprint The current object (for fluent API support)
      */
     public function setUserStoryId($v)
     {
@@ -294,7 +250,7 @@ abstract class BaseTask extends BaseObject implements Persistent
 
         if ($this->user_story_id !== $v) {
             $this->user_story_id = $v;
-            $this->modifiedColumns[] = TaskPeer::USER_STORY_ID;
+            $this->modifiedColumns[] = LinkUserStorySprintPeer::USER_STORY_ID;
         }
 
         if ($this->aUserStory !== null && $this->aUserStory->getId() !== $v) {
@@ -306,95 +262,36 @@ abstract class BaseTask extends BaseObject implements Persistent
     } // setUserStoryId()
 
     /**
-     * Set the value of [time] column.
-     *
-     * @param  string $v new value
-     * @return Task The current object (for fluent API support)
-     */
-    public function setTime($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->time !== $v) {
-            $this->time = $v;
-            $this->modifiedColumns[] = TaskPeer::TIME;
-        }
-
-
-        return $this;
-    } // setTime()
-
-    /**
-     * Set the value of [description] column.
-     *
-     * @param  string $v new value
-     * @return Task The current object (for fluent API support)
-     */
-    public function setDescription($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->description !== $v) {
-            $this->description = $v;
-            $this->modifiedColumns[] = TaskPeer::DESCRIPTION;
-        }
-
-
-        return $this;
-    } // setDescription()
-
-    /**
-     * Set the value of [position] column.
+     * Set the value of [sprint_id] column.
      *
      * @param  int $v new value
-     * @return Task The current object (for fluent API support)
+     * @return LinkUserStorySprint The current object (for fluent API support)
      */
-    public function setPosition($v)
+    public function setSprintId($v)
     {
         if ($v !== null && is_numeric($v)) {
             $v = (int) $v;
         }
 
-        if ($this->position !== $v) {
-            $this->position = $v;
-            $this->modifiedColumns[] = TaskPeer::POSITION;
+        if ($this->sprint_id !== $v) {
+            $this->sprint_id = $v;
+            $this->modifiedColumns[] = LinkUserStorySprintPeer::SPRINT_ID;
+        }
+
+        if ($this->aSprint !== null && $this->aSprint->getId() !== $v) {
+            $this->aSprint = null;
         }
 
 
         return $this;
-    } // setPosition()
-
-    /**
-     * Set the value of [progress] column.
-     *
-     * @param  string $v new value
-     * @return Task The current object (for fluent API support)
-     */
-    public function setProgress($v)
-    {
-        if ($v !== null) {
-            $v = (string) $v;
-        }
-
-        if ($this->progress !== $v) {
-            $this->progress = $v;
-            $this->modifiedColumns[] = TaskPeer::PROGRESS;
-        }
-
-
-        return $this;
-    } // setProgress()
+    } // setSprintId()
 
     /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
      *               Empty strings are treated as null.
-     * @return Task The current object (for fluent API support)
+     * @return LinkUserStorySprint The current object (for fluent API support)
      */
     public function setCreatedAt($v)
     {
@@ -404,7 +301,7 @@ abstract class BaseTask extends BaseObject implements Persistent
             $newDateAsString = $dt ? $dt->format('Y-m-d H:i:s') : null;
             if ($currentDateAsString !== $newDateAsString) {
                 $this->created_at = $newDateAsString;
-                $this->modifiedColumns[] = TaskPeer::CREATED_AT;
+                $this->modifiedColumns[] = LinkUserStorySprintPeer::CREATED_AT;
             }
         } // if either are not null
 
@@ -417,7 +314,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
      *               Empty strings are treated as null.
-     * @return Task The current object (for fluent API support)
+     * @return LinkUserStorySprint The current object (for fluent API support)
      */
     public function setUpdatedAt($v)
     {
@@ -427,7 +324,7 @@ abstract class BaseTask extends BaseObject implements Persistent
             $newDateAsString = $dt ? $dt->format('Y-m-d H:i:s') : null;
             if ($currentDateAsString !== $newDateAsString) {
                 $this->updated_at = $newDateAsString;
-                $this->modifiedColumns[] = TaskPeer::UPDATED_AT;
+                $this->modifiedColumns[] = LinkUserStorySprintPeer::UPDATED_AT;
             }
         } // if either are not null
 
@@ -469,12 +366,9 @@ abstract class BaseTask extends BaseObject implements Persistent
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->user_story_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-            $this->time = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
-            $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->position = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-            $this->progress = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-            $this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+            $this->sprint_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
+            $this->created_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
+            $this->updated_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -484,10 +378,10 @@ abstract class BaseTask extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 8; // 8 = TaskPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 5; // 5 = LinkUserStorySprintPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException("Error populating Task object", $e);
+            throw new PropelException("Error populating LinkUserStorySprint object", $e);
         }
     }
 
@@ -509,6 +403,9 @@ abstract class BaseTask extends BaseObject implements Persistent
 
         if ($this->aUserStory !== null && $this->user_story_id !== $this->aUserStory->getId()) {
             $this->aUserStory = null;
+        }
+        if ($this->aSprint !== null && $this->sprint_id !== $this->aSprint->getId()) {
+            $this->aSprint = null;
         }
     } // ensureConsistency
 
@@ -533,13 +430,13 @@ abstract class BaseTask extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(TaskPeer::DATABASE_NAME, Propel::CONNECTION_READ);
+            $con = Propel::getConnection(LinkUserStorySprintPeer::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $stmt = TaskPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
+        $stmt = LinkUserStorySprintPeer::doSelectStmt($this->buildPkeyCriteria(), $con);
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $stmt->closeCursor();
         if (!$row) {
@@ -550,6 +447,7 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($deep) {  // also de-associate any related objects?
 
             $this->aUserStory = null;
+            $this->aSprint = null;
         } // if (deep)
     }
 
@@ -570,12 +468,12 @@ abstract class BaseTask extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(TaskPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(LinkUserStorySprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
         try {
-            $deleteQuery = TaskQuery::create()
+            $deleteQuery = LinkUserStorySprintQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -613,7 +511,7 @@ abstract class BaseTask extends BaseObject implements Persistent
         }
 
         if ($con === null) {
-            $con = Propel::getConnection(TaskPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            $con = Propel::getConnection(LinkUserStorySprintPeer::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         $con->beginTransaction();
@@ -623,16 +521,16 @@ abstract class BaseTask extends BaseObject implements Persistent
             if ($isInsert) {
                 $ret = $ret && $this->preInsert($con);
                 // timestampable behavior
-                if (!$this->isColumnModified(TaskPeer::CREATED_AT)) {
+                if (!$this->isColumnModified(LinkUserStorySprintPeer::CREATED_AT)) {
                     $this->setCreatedAt(time());
                 }
-                if (!$this->isColumnModified(TaskPeer::UPDATED_AT)) {
+                if (!$this->isColumnModified(LinkUserStorySprintPeer::UPDATED_AT)) {
                     $this->setUpdatedAt(time());
                 }
             } else {
                 $ret = $ret && $this->preUpdate($con);
                 // timestampable behavior
-                if ($this->isModified() && !$this->isColumnModified(TaskPeer::UPDATED_AT)) {
+                if ($this->isModified() && !$this->isColumnModified(LinkUserStorySprintPeer::UPDATED_AT)) {
                     $this->setUpdatedAt(time());
                 }
             }
@@ -644,7 +542,7 @@ abstract class BaseTask extends BaseObject implements Persistent
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                TaskPeer::addInstanceToPool($this);
+                LinkUserStorySprintPeer::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -686,6 +584,13 @@ abstract class BaseTask extends BaseObject implements Persistent
                 $this->setUserStory($this->aUserStory);
             }
 
+            if ($this->aSprint !== null) {
+                if ($this->aSprint->isModified() || $this->aSprint->isNew()) {
+                    $affectedRows += $this->aSprint->save($con);
+                }
+                $this->setSprint($this->aSprint);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -717,39 +622,30 @@ abstract class BaseTask extends BaseObject implements Persistent
         $modifiedColumns = array();
         $index = 0;
 
-        $this->modifiedColumns[] = TaskPeer::ID;
+        $this->modifiedColumns[] = LinkUserStorySprintPeer::ID;
         if (null !== $this->id) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key (' . TaskPeer::ID . ')');
+            throw new PropelException('Cannot insert a value for auto-increment primary key (' . LinkUserStorySprintPeer::ID . ')');
         }
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(TaskPeer::ID)) {
+        if ($this->isColumnModified(LinkUserStorySprintPeer::ID)) {
             $modifiedColumns[':p' . $index++]  = '`id`';
         }
-        if ($this->isColumnModified(TaskPeer::USER_STORY_ID)) {
+        if ($this->isColumnModified(LinkUserStorySprintPeer::USER_STORY_ID)) {
             $modifiedColumns[':p' . $index++]  = '`user_story_id`';
         }
-        if ($this->isColumnModified(TaskPeer::TIME)) {
-            $modifiedColumns[':p' . $index++]  = '`time`';
+        if ($this->isColumnModified(LinkUserStorySprintPeer::SPRINT_ID)) {
+            $modifiedColumns[':p' . $index++]  = '`sprint_id`';
         }
-        if ($this->isColumnModified(TaskPeer::DESCRIPTION)) {
-            $modifiedColumns[':p' . $index++]  = '`description`';
-        }
-        if ($this->isColumnModified(TaskPeer::POSITION)) {
-            $modifiedColumns[':p' . $index++]  = '`position`';
-        }
-        if ($this->isColumnModified(TaskPeer::PROGRESS)) {
-            $modifiedColumns[':p' . $index++]  = '`progress`';
-        }
-        if ($this->isColumnModified(TaskPeer::CREATED_AT)) {
+        if ($this->isColumnModified(LinkUserStorySprintPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
-        if ($this->isColumnModified(TaskPeer::UPDATED_AT)) {
+        if ($this->isColumnModified(LinkUserStorySprintPeer::UPDATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`updated_at`';
         }
 
         $sql = sprintf(
-            'INSERT INTO `task` (%s) VALUES (%s)',
+            'INSERT INTO `link_user_story_sprint` (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -764,17 +660,8 @@ abstract class BaseTask extends BaseObject implements Persistent
                     case '`user_story_id`':
                         $stmt->bindValue($identifier, $this->user_story_id, PDO::PARAM_INT);
                         break;
-                    case '`time`':
-                        $stmt->bindValue($identifier, $this->time, PDO::PARAM_STR);
-                        break;
-                    case '`description`':
-                        $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
-                        break;
-                    case '`position`':
-                        $stmt->bindValue($identifier, $this->position, PDO::PARAM_INT);
-                        break;
-                    case '`progress`':
-                        $stmt->bindValue($identifier, $this->progress, PDO::PARAM_STR);
+                    case '`sprint_id`':
+                        $stmt->bindValue($identifier, $this->sprint_id, PDO::PARAM_INT);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -887,8 +774,14 @@ abstract class BaseTask extends BaseObject implements Persistent
                 }
             }
 
+            if ($this->aSprint !== null) {
+                if (!$this->aSprint->validate($columns)) {
+                    $failureMap = array_merge($failureMap, $this->aSprint->getValidationFailures());
+                }
+            }
 
-            if (($retval = TaskPeer::doValidate($this, $columns)) !== true) {
+
+            if (($retval = LinkUserStorySprintPeer::doValidate($this, $columns)) !== true) {
                 $failureMap = array_merge($failureMap, $retval);
             }
 
@@ -912,7 +805,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = TaskPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = LinkUserStorySprintPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -935,21 +828,12 @@ abstract class BaseTask extends BaseObject implements Persistent
                 return $this->getUserStoryId();
                 break;
             case 2:
-                return $this->getTime();
+                return $this->getSprintId();
                 break;
             case 3:
-                return $this->getDescription();
-                break;
-            case 4:
-                return $this->getPosition();
-                break;
-            case 5:
-                return $this->getProgress();
-                break;
-            case 6:
                 return $this->getCreatedAt();
                 break;
-            case 7:
+            case 4:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -975,20 +859,17 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
-        if (isset($alreadyDumpedObjects['Task'][$this->getPrimaryKey()])) {
+        if (isset($alreadyDumpedObjects['LinkUserStorySprint'][$this->getPrimaryKey()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Task'][$this->getPrimaryKey()] = true;
-        $keys = TaskPeer::getFieldNames($keyType);
+        $alreadyDumpedObjects['LinkUserStorySprint'][$this->getPrimaryKey()] = true;
+        $keys = LinkUserStorySprintPeer::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getId(),
             $keys[1] => $this->getUserStoryId(),
-            $keys[2] => $this->getTime(),
-            $keys[3] => $this->getDescription(),
-            $keys[4] => $this->getPosition(),
-            $keys[5] => $this->getProgress(),
-            $keys[6] => $this->getCreatedAt(),
-            $keys[7] => $this->getUpdatedAt(),
+            $keys[2] => $this->getSprintId(),
+            $keys[3] => $this->getCreatedAt(),
+            $keys[4] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -998,6 +879,9 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($includeForeignObjects) {
             if (null !== $this->aUserStory) {
                 $result['UserStory'] = $this->aUserStory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aSprint) {
+                $result['Sprint'] = $this->aSprint->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
         }
 
@@ -1017,7 +901,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
     {
-        $pos = TaskPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+        $pos = LinkUserStorySprintPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 
         $this->setByPosition($pos, $value);
     }
@@ -1040,21 +924,12 @@ abstract class BaseTask extends BaseObject implements Persistent
                 $this->setUserStoryId($value);
                 break;
             case 2:
-                $this->setTime($value);
+                $this->setSprintId($value);
                 break;
             case 3:
-                $this->setDescription($value);
-                break;
-            case 4:
-                $this->setPosition($value);
-                break;
-            case 5:
-                $this->setProgress($value);
-                break;
-            case 6:
                 $this->setCreatedAt($value);
                 break;
-            case 7:
+            case 4:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1079,16 +954,13 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
     {
-        $keys = TaskPeer::getFieldNames($keyType);
+        $keys = LinkUserStorySprintPeer::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setUserStoryId($arr[$keys[1]]);
-        if (array_key_exists($keys[2], $arr)) $this->setTime($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setPosition($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setProgress($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+        if (array_key_exists($keys[2], $arr)) $this->setSprintId($arr[$keys[2]]);
+        if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
     }
 
     /**
@@ -1098,16 +970,13 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(TaskPeer::DATABASE_NAME);
+        $criteria = new Criteria(LinkUserStorySprintPeer::DATABASE_NAME);
 
-        if ($this->isColumnModified(TaskPeer::ID)) $criteria->add(TaskPeer::ID, $this->id);
-        if ($this->isColumnModified(TaskPeer::USER_STORY_ID)) $criteria->add(TaskPeer::USER_STORY_ID, $this->user_story_id);
-        if ($this->isColumnModified(TaskPeer::TIME)) $criteria->add(TaskPeer::TIME, $this->time);
-        if ($this->isColumnModified(TaskPeer::DESCRIPTION)) $criteria->add(TaskPeer::DESCRIPTION, $this->description);
-        if ($this->isColumnModified(TaskPeer::POSITION)) $criteria->add(TaskPeer::POSITION, $this->position);
-        if ($this->isColumnModified(TaskPeer::PROGRESS)) $criteria->add(TaskPeer::PROGRESS, $this->progress);
-        if ($this->isColumnModified(TaskPeer::CREATED_AT)) $criteria->add(TaskPeer::CREATED_AT, $this->created_at);
-        if ($this->isColumnModified(TaskPeer::UPDATED_AT)) $criteria->add(TaskPeer::UPDATED_AT, $this->updated_at);
+        if ($this->isColumnModified(LinkUserStorySprintPeer::ID)) $criteria->add(LinkUserStorySprintPeer::ID, $this->id);
+        if ($this->isColumnModified(LinkUserStorySprintPeer::USER_STORY_ID)) $criteria->add(LinkUserStorySprintPeer::USER_STORY_ID, $this->user_story_id);
+        if ($this->isColumnModified(LinkUserStorySprintPeer::SPRINT_ID)) $criteria->add(LinkUserStorySprintPeer::SPRINT_ID, $this->sprint_id);
+        if ($this->isColumnModified(LinkUserStorySprintPeer::CREATED_AT)) $criteria->add(LinkUserStorySprintPeer::CREATED_AT, $this->created_at);
+        if ($this->isColumnModified(LinkUserStorySprintPeer::UPDATED_AT)) $criteria->add(LinkUserStorySprintPeer::UPDATED_AT, $this->updated_at);
 
         return $criteria;
     }
@@ -1122,8 +991,8 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function buildPkeyCriteria()
     {
-        $criteria = new Criteria(TaskPeer::DATABASE_NAME);
-        $criteria->add(TaskPeer::ID, $this->id);
+        $criteria = new Criteria(LinkUserStorySprintPeer::DATABASE_NAME);
+        $criteria->add(LinkUserStorySprintPeer::ID, $this->id);
 
         return $criteria;
     }
@@ -1164,7 +1033,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param object $copyObj An object of Task (or compatible) type.
+     * @param object $copyObj An object of LinkUserStorySprint (or compatible) type.
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1172,10 +1041,7 @@ abstract class BaseTask extends BaseObject implements Persistent
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
         $copyObj->setUserStoryId($this->getUserStoryId());
-        $copyObj->setTime($this->getTime());
-        $copyObj->setDescription($this->getDescription());
-        $copyObj->setPosition($this->getPosition());
-        $copyObj->setProgress($this->getProgress());
+        $copyObj->setSprintId($this->getSprintId());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1205,7 +1071,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      * objects.
      *
      * @param boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return Task Clone of current object.
+     * @return LinkUserStorySprint Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1225,12 +1091,12 @@ abstract class BaseTask extends BaseObject implements Persistent
      * same instance for all member of this class. The method could therefore
      * be static, but this would prevent one from overriding the behavior.
      *
-     * @return TaskPeer
+     * @return LinkUserStorySprintPeer
      */
     public function getPeer()
     {
         if (self::$peer === null) {
-            self::$peer = new TaskPeer();
+            self::$peer = new LinkUserStorySprintPeer();
         }
 
         return self::$peer;
@@ -1240,7 +1106,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      * Declares an association between this object and a UserStory object.
      *
      * @param                  UserStory $v
-     * @return Task The current object (for fluent API support)
+     * @return LinkUserStorySprint The current object (for fluent API support)
      * @throws PropelException
      */
     public function setUserStory(UserStory $v = null)
@@ -1256,7 +1122,7 @@ abstract class BaseTask extends BaseObject implements Persistent
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the UserStory object, it will not be re-added.
         if ($v !== null) {
-            $v->addTask($this);
+            $v->addLinkUserStorySprint($this);
         }
 
 
@@ -1281,11 +1147,63 @@ abstract class BaseTask extends BaseObject implements Persistent
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUserStory->addTasks($this);
+                $this->aUserStory->addLinkUserStorySprints($this);
              */
         }
 
         return $this->aUserStory;
+    }
+
+    /**
+     * Declares an association between this object and a Sprint object.
+     *
+     * @param                  Sprint $v
+     * @return LinkUserStorySprint The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setSprint(Sprint $v = null)
+    {
+        if ($v === null) {
+            $this->setSprintId(NULL);
+        } else {
+            $this->setSprintId($v->getId());
+        }
+
+        $this->aSprint = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the Sprint object, it will not be re-added.
+        if ($v !== null) {
+            $v->addLinkUserStorySprint($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated Sprint object
+     *
+     * @param PropelPDO $con Optional Connection object.
+     * @param $doQuery Executes a query to get the object if required
+     * @return Sprint The associated Sprint object.
+     * @throws PropelException
+     */
+    public function getSprint(PropelPDO $con = null, $doQuery = true)
+    {
+        if ($this->aSprint === null && ($this->sprint_id !== null) && $doQuery) {
+            $this->aSprint = SprintQuery::create()->findPk($this->sprint_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aSprint->addLinkUserStorySprints($this);
+             */
+        }
+
+        return $this->aSprint;
     }
 
     /**
@@ -1295,10 +1213,7 @@ abstract class BaseTask extends BaseObject implements Persistent
     {
         $this->id = null;
         $this->user_story_id = null;
-        $this->time = null;
-        $this->description = null;
-        $this->position = null;
-        $this->progress = null;
+        $this->sprint_id = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;
@@ -1326,11 +1241,15 @@ abstract class BaseTask extends BaseObject implements Persistent
             if ($this->aUserStory instanceof Persistent) {
               $this->aUserStory->clearAllReferences($deep);
             }
+            if ($this->aSprint instanceof Persistent) {
+              $this->aSprint->clearAllReferences($deep);
+            }
 
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
         $this->aUserStory = null;
+        $this->aSprint = null;
     }
 
     /**
@@ -1340,7 +1259,7 @@ abstract class BaseTask extends BaseObject implements Persistent
      */
     public function __toString()
     {
-        return (string) $this->exportTo(TaskPeer::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(LinkUserStorySprintPeer::DEFAULT_STRING_FORMAT);
     }
 
     /**
@@ -1358,11 +1277,11 @@ abstract class BaseTask extends BaseObject implements Persistent
     /**
      * Mark the current object so that the update date doesn't get updated during next save
      *
-     * @return     Task The current object (for fluent API support)
+     * @return     LinkUserStorySprint The current object (for fluent API support)
      */
     public function keepUpdateDateUnchanged()
     {
-        $this->modifiedColumns[] = TaskPeer::UPDATED_AT;
+        $this->modifiedColumns[] = LinkUserStorySprintPeer::UPDATED_AT;
 
         return $this;
     }

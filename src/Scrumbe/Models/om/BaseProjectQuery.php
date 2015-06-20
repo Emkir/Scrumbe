@@ -16,6 +16,7 @@ use Scrumbe\Models\LinkProjectUser;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectPeer;
 use Scrumbe\Models\ProjectQuery;
+use Scrumbe\Models\Sprint;
 use Scrumbe\Models\UserStory;
 
 /**
@@ -42,6 +43,10 @@ use Scrumbe\Models\UserStory;
  * @method ProjectQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method ProjectQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method ProjectQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ *
+ * @method ProjectQuery leftJoinSprint($relationAlias = null) Adds a LEFT JOIN clause to the query using the Sprint relation
+ * @method ProjectQuery rightJoinSprint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Sprint relation
+ * @method ProjectQuery innerJoinSprint($relationAlias = null) Adds a INNER JOIN clause to the query using the Sprint relation
  *
  * @method ProjectQuery leftJoinUserStory($relationAlias = null) Adds a LEFT JOIN clause to the query using the UserStory relation
  * @method ProjectQuery rightJoinUserStory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the UserStory relation
@@ -594,6 +599,80 @@ abstract class BaseProjectQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ProjectPeer::UPDATED_AT, $updatedAt, $comparison);
+    }
+
+    /**
+     * Filter the query by a related Sprint object
+     *
+     * @param   Sprint|PropelObjectCollection $sprint  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 ProjectQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterBySprint($sprint, $comparison = null)
+    {
+        if ($sprint instanceof Sprint) {
+            return $this
+                ->addUsingAlias(ProjectPeer::ID, $sprint->getProjectId(), $comparison);
+        } elseif ($sprint instanceof PropelObjectCollection) {
+            return $this
+                ->useSprintQuery()
+                ->filterByPrimaryKeys($sprint->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySprint() only accepts arguments of type Sprint or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Sprint relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return ProjectQuery The current query, for fluid interface
+     */
+    public function joinSprint($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Sprint');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Sprint');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Sprint relation Sprint object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \Scrumbe\Models\SprintQuery A secondary query class using the current class as primary query
+     */
+    public function useSprintQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinSprint($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Sprint', '\Scrumbe\Models\SprintQuery');
     }
 
     /**
