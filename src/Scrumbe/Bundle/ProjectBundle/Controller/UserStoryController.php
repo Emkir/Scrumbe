@@ -66,6 +66,7 @@ class UserStoryController extends Controller
         $userStory->setProjectId($data['project_id']);
         $userStory->setDescription($data['description']);
         $userStory->setPriority($priority[$data['priority']]);
+        $userStory->setLabel($data['label']);
         $userStory->setNumber($lastUserStory->getNumber() + 1);
         $userStory->save();
 

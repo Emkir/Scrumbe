@@ -116,7 +116,19 @@
                         <input type="hidden" name="project_id" value="{{ project.id }}">
                         <textarea name="description" id="" placeholder="Intitulé" rows="6"></textarea>
                         <div class="footer">
-                            <select name="priority" id="">
+                            <select name="label" id="usColor">
+                                <option value="">Couleur</option>
+                                <option value="red">Rouge</option>
+                                <option value="blue">Bleu</option>
+                                <option value="yellow">Jaune</option>
+                                <option value="green">Vert</option>
+                                <option value="pink">Rose</option>
+                                <option value="brown">Marron</option>
+                                <option value="purple">Violet</option>
+                                <option value="black">Noir</option>
+                                <option value="white">Blanc</option>
+                            </select>
+                            <select name="priority" id="usPriority">
                                 <option value="">Priorité</option>
                                 <option value="0">Basse</option>
                                 <option value="1">Moyenne</option>
@@ -222,7 +234,8 @@
                 data: {
                     'project_id': $('.user-stories-list input').val(),
                     'description': $('.user-stories-list textarea').val(),
-                    'priority': $('.user-stories-list select').val()
+                    'priority': $('.user-stories-list #usPriority').val(),
+                    'label': $('.user-stories-list #usColor').val()
                 }
             }).done(function(data){
                 console.log(data);
