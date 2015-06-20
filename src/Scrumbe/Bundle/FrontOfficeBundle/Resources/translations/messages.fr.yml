@@ -5,7 +5,7 @@ nav:
         3: L'ÉQUIPE
         4: CONTACT
         5: SE CONNECTER
-        6: ESSAI GRATUIT
+        6: ÊTRE AVERTI DU LANCEMENT DE LA BÉTA
 
 footer:
     nav:
@@ -13,7 +13,7 @@ footer:
         lang:
             en: English
             fr: Français
-    copy: Scrumbe © 2013-2014 — Tous droits réservé
+    copy: Scrumbe © 2014-2015 — Tous droits réservés
 
 signin:
     title: SE CONNECTER
@@ -23,7 +23,7 @@ signin:
     forgetpwd: Mot de passe oublié?
     footer:
         word1: Pas encore de compte?
-        lastword: Commencer
+        lastword: S'incrire
 
 signup:
     title: INSCRIPTION GRATUITE
@@ -102,51 +102,53 @@ aboutus:
         firstname: François-Xavier
         lastname: Costanzo
         job: Developpeur front-end
-        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+        parag: FX est intégrateur, mais pas que ! Gogo-dancer à ses heures perdues, il a commencé des études en webdesign avant de se rabattre du côté obscur de la force: le développement front-end. Il se cache toujours derrière les rideaux en pensant qu'on ne voit pas ses pieds qui dépassent.
 
     item2:
         firstname: Adrien
         lastname: Thomas
         job: UX/UI Designer
-        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+        parag: Quand il était petit, Adrien dessinait sur le visage de son frère. Il fait parfois des bruits bizarres, mais les designers sont des gens spéciaux, paraît-il. Adrien est en quête de perfection et n'arrêtera jamais d'améliorer son travail. Sauf pour dormir. Quand même.
 
     item3:
         firstname: Emmeric
         lastname: Royer
         job: Developpeur Back-end
-        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+        parag: Celà fait maintenant 3 ans qu'Emmeric code avec ses pieds, on ignore pourquoi, mais c'est efficace. Développeur back de talent, il maîtrise parfaitement les subtilités de la méthode Scrum (on me signale dans l'oreillette qu'Emmeric est roux).   
 
     item4:
         firstname: Nicolas
         lastname: Foubart
-        job: Developpeur back-end
-        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+        job: Developpeur back-end - Intégrateur
+        parag: Développeur web à la recherche d'innovation, si vous trouvez un bug, réfléchissez-y à deux fois, c'est peut-être une fonctionnalité. La méthode SCRUM vous aidera pour la plupart de vos projets, web ou autres !        
 
     item5:
-        firstname: Phillipe
-        lastname: Cwik
-        job: Web-marketeur
-        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+        firstname: Julien
+        lastname: Boudry
+        job: Responsable relations
+        parag: Julien est un business-man dans l'âme ! Entrepreneur depuis l'âge de deux ans et trois quart, Julien se charge de la prospection et des relations clientèles. Une fois, il s'est déguisé en Blanche Neige et s'est mis à danser sur une table.
 
     item6:
-        firstname: Maxime
-        lastname: Andrieu
-        job: Web-marketeur
-        parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+        firstname: Chrystelle
+        lastname: Blot
+        job: Chef de Projet
+        parag: Chrystelle mange de la colle, toujours convaincue que ça la fera grandir. Initialement UI/UX designer, elle s'est reconvertie en chef de projet pour mener à bien la belle aventure Scrumbe. Chrystelle ne croit pas en un avenir sans chat, et ne jure que par le fameux coquillettes-jambon. 
 
     item7:
-          firstname: Maxime
-          lastname: Andrieu
-          job: Web-marketeur
-          parag: Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Nullam quis risus eget urna mollis ornare vel eu leo. Aenean eu leo quam.
+          firstname: Isaure
+          lastname: Sacerdot
+          job: Community Manager
+          parag: Isaure vit dans une caravane et parcourt les routes de France pour distribuer des jelly beans goût crotte de nez aux enfants pas sages. Community manager de qualité, elle nous aide à vous faire croire que chaque bug est en fait une super fonctionnalité. 
 
-    form:
-        title: Contactez-nous
-        parag: Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur. Integer posuere erat a ante.
-        fullname: Nom complet
-        email: Email
-        message: Votre message
-        button: Valider
+#Contact-us
+form:
+    title: Contactez-nous
+    parag: Vous avez une question ? Une suggestion ?
+    parag2: N'hésitez pas à nous contacter, c'est par ici que ça se passe !
+    fullname: Nom complet
+    email: Email
+    message: Votre message
+    button: Valider
 
 #SCRUM
 scrum:
