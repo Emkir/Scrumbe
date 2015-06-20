@@ -151,3 +151,9 @@ team:
 sprint:
     pattern:  /sprint
     defaults: { _controller: ScrumbeProjectBundle:Project:sprint }
+
+###BACKLOG###
+
+backlog:
+    pattern:  /backlog
+    defaults: { _controller: ScrumbeProjectBundle:Project:backlog }

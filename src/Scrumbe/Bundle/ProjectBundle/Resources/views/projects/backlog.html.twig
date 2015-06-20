@@ -1,0 +1,213 @@
+{% extends "ScrumbeProjectBundle:Layout:layout-app.html.twig" %}
+
+{% block title %}Backlog{% endblock %}
+
+{% block nav %}
+    <nav class="nav-projects">
+        <ul class="left-nav">
+            <li class="logo">
+                <a href="">
+                    <img src="/assets/img/logo.svg" alt="search icon">
+                </a>
+            </li>
+            <li><a href="{{ url('scrumbe_get_projects') }}">Projects</a></li>
+            <li><a href="">Learn</a></li>
+            <li>
+                <a href="">
+                    <img src="/assets/img/icons/search-icon.svg" alt="search icon">
+                </a>
+            </li>
+        </ul>
+        <ul class="right-nav">
+            <li class="help">
+                <img src="/assets/img/icons/help-icon.svg" alt="help icon"/>
+            </li>
+            <li>
+                <div class="notif-ctn">
+                    <img src="/assets/img/icons/notification-icon.svg" alt="notification icon"/>
+                    <span class="notif-count">2</span>
+                </div>
+            </li>
+            <li>
+                <div class="avatar-ctn">
+                    <img src="/assets/img/Claude-Guglieri.png" alt="avatar">
+                </div>
+                <img src="/assets/img/icons/arrow-down-icon.svg" alt="arrown-down icon">
+            </li>
+        </ul>
+    </nav>
+    <div class="sub-nav-projects">
+        <span class="title">project.name{#{{ project.name }}#}</span>
+        <div class="divider"></div>
+        <ul class="sub-nav">
+            <li>
+                <a href="{{ url('sprint') }}">Sprint</a>
+            </li>
+            <li>
+                <a href="{#{{ url('project') }}#}">Kanban</a>
+            </li>
+            <li class="active">
+                <a href="{{ url('backlog') }}">Backlog</a>
+            </li>
+            <li>
+                <a href="{{ url('team') }}">Team</a>
+            </li>
+        </ul>
+        <div class="members right">
+            <div class="divider"></div>
+            <ul>
+                <li class="add-member">
+                    <a href="{#{{ path('scrumbe_add_user_project', {'projectId':project.id}) }}#}">+</a>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Claude-Guglieri.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Thomas-Sanson.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Anthony-Ribeiro.png" alt=""/>
+                    </div>
+                    <div class="connect disconnect"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Christophe-Tauziet.png" alt=""/>
+                    </div>
+                    <div class="connect innactive"></div>
+                </li>
+                <li>
+                    <div class="avatar-ctn">
+                        <img src="/assets/img/Jeremy-Thomas.png" alt=""/>
+                    </div>
+                    <div class="connect here"></div>
+                </li>
+            </ul>
+        </div>
+        <div class="sort-by hide">
+            <span class="title">Sort by</span>
+            <select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+        </div>
+        <a href="" class="add-project hide">
+            <img src="/assets/img/icons/add-project-icon.svg" alt="add project icon">
+        </a>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <section class="backlog">
+        <div class="user-stories">
+            <div class="header-col">User stories</div>
+            <span class="add-us">Ajouter +</span>
+            <ul class="user-stories-list">
+                <li class="form-add-us">
+                    <form action="">
+                        <textarea name="" id="" placeholder="Intitulé" rows="6"></textarea>
+                        <div class="footer">
+                            <select name="" id="">
+                                <option value="">Priorité</option>
+                                <option value="0">basse</option>
+                                <option value="1">moyenne</option>
+                                <option value="2">haute</option>
+                            </select>
+                            <span class="submit">Valider</span>
+                        </div>
+                    </form>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                    <div class="footer">
+                        <span class="tasks-count">2 tâches</span>
+                        <div class="priority-ctn">
+                            <span class="high">haute</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="tasks">
+            <div class="header-col">Tâches</div>
+            <span class="add-tasks">Ajouter +</span>
+            <ul class="tasks-list">
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+                <li>
+                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                </li>
+            </ul>
+        </div>
+        <div class="members">
+            <div class="header-col">Membres</div>
+            <ul class="members-list">
+                <li>
+                    <ul>
+                        <li>
+                            <img src="/assets/img/Kerem-Suer.png" alt=""/>
+                        </li>
+                        <li>
+                            <img src="/assets/img/Kerem-Suer.png" alt=""/>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="during">
+            <div class="header-col">Durée</div>
+            <ul class="during-list">
+                <li>
+                    <span>5</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+{% block script %}
+    <script>
+        $('.add-us').click(function(){
+            $('html, body').animate({scrollTop : 0},800);
+
+            $('.form-add-us').show();
+
+            $('.form-add-us textarea').focus();
+        });
+
+        $('.form-add-us .submit').click(function(){
+            $.ajax({
+                url: '',
+                method: ''
+            }).done(function(data){
+                console.log(data);
+                $('.form-add-us textarea, .form-add-us select').val('');
+                $('.form-add-us').hide();
+            })
+        })
+    </script>
+{% endblock %}
