@@ -38,6 +38,25 @@ class TaskService {
         return $tasksArray;
     }
 
+    public function getBacklogTasks($projectId)
+    {
+        $tasksArray = array();
+
+        $tasks = TaskQuery::create()
+            ->useUserStoryQuery()
+                ->filterByProjectId($projectId)
+            ->endUse()
+            ->orderByUserStoryId()
+            ->find();
+
+        foreach($tasks as $task)
+        {
+            $tasksArray[] = $task->toArray(BasePeer::TYPE_FIELDNAME);
+        }
+
+        return $tasksArray;
+    }
+
     public function getTask($usId, $taskId)
     {
         $task = TaskQuery::create()->filterByUserStoryId($usId)->findPk($taskId);

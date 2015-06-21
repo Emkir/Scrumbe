@@ -110,11 +110,10 @@ scrumbe_get_task:
         _method: GET
 
 scrumbe_post_task:
-   pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/create
+   pattern: /tasks/create
    defaults: {_controller: ScrumbeProjectBundle:Task:postTask}
    requirements:
-        projectId: \d+
-        userStoryId: \d+
+        _method: POST
 
 scrumbe_put_task:
    pattern: /projects/{projectId}/user-stories/{userStoryId}/tasks/{taskId}/update

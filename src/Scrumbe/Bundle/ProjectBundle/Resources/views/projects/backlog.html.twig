@@ -116,7 +116,19 @@
                         <input type="hidden" name="project_id" value="{{ project.id }}">
                         <textarea name="description" id="" placeholder="Intitulé" rows="6"></textarea>
                         <div class="footer">
-                            <select name="priority" id="">
+                            <select name="label" id="usColor">
+                                <option value="">Couleur</option>
+                                <option value="red">Rouge</option>
+                                <option value="blue">Bleu</option>
+                                <option value="yellow">Jaune</option>
+                                <option value="green">Vert</option>
+                                <option value="pink">Rose</option>
+                                <option value="brown">Marron</option>
+                                <option value="purple">Violet</option>
+                                <option value="black">Noir</option>
+                                <option value="white">Blanc</option>
+                            </select>
+                            <select name="priority" id="usPriority">
                                 <option value="">Priorité</option>
                                 <option value="0">Basse</option>
                                 <option value="1">Moyenne</option>
@@ -126,24 +138,17 @@
                         </div>
                     </form>
                 </li>
-                <li id="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                    <div class="footer">
-                        <span class="tasks-count">2 tâches</span>
-                        <div class="priority-ctn">
-                            <span class="high">haute</span>
+                {% for us in project.user_stories %}
+                    <li id="{{ us.id }}">
+                        <p class="title">{{ us.description }}</p>
+                        <div class="footer">
+                            <span class="tasks-count">{{ us.task_count }} tâches</span>
+                            <div class="priority-ctn">
+                                <span class="{{ us.priority }}">{{ ('user_story.priority.' ~ us.priority) |trans }}</span>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li id="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                    <div class="footer">
-                        <span class="tasks-count">2 tâches</span>
-                        <div class="priority-ctn">
-                            <span class="high">haute</span>
-                        </div>
-                    </div>
-                </li>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="tasks">
@@ -152,33 +157,17 @@
             <ul class="tasks-list">
                 <li class="form-add-tasks">
                     <form action="">
-                        <textarea name="" id="" placeholder="Intitulé" rows="6"></textarea>
+                        <textarea name="description" id="" placeholder="Intitulé" rows="6"></textarea>
                         <div class="footer">
                             <span class="submit">Valider</span>
                         </div>
                     </form>
                 </li>
-                <li class="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
+                {% for task in project.tasks %}
+                    <li class="{{ task.user_story_id }}">
+                        <p class="title">{{ task.description }}</p>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="members">
@@ -224,8 +213,14 @@
         // Submit user storie
         $('.form-add-us .submit').click(function(){
             $.ajax({
-                url: '',
-                method: ''
+                url: '{{ path('scrumbe_post_user_story') }}',
+                method: 'POST',
+                data: {
+                    'project_id': $('.user-stories-list input').val(),
+                    'description': $('.user-stories-list textarea').val(),
+                    'priority': $('.user-stories-list #usPriority').val(),
+                    'label': $('.user-stories-list #usColor').val()
+                }
             }).done(function(data){
                 console.log(data);
                 $('.form-add-us textarea, .form-add-us select').val('');
@@ -262,10 +257,11 @@
         // Submit tasks
         $('.form-add-tasks .submit').click(function(){
             $.ajax({
-                url: '',
-                method: '',
+                url: '{{ path('scrumbe_post_task') }}',
+                method: 'POST',
                 data: {
-                    'id': currentUsId
+                    'user_story_id': currentUsId,
+                    'description': $('.form-add-tasks textarea').val()
                 }
             }).done(function(data){
                 console.log(data);

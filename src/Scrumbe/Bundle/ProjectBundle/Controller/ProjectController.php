@@ -288,7 +288,7 @@ class ProjectController extends Controller
 
         $project = $projectService->getProject($projectId);
         $project['user_stories'] = $userStoryService->getBacklogUserStories($projectId);
-//        $project['tasks'] = $taskService->getBacklogTasks($projectId);
+        $project['tasks'] = $taskService->getBacklogTasks($projectId);
 
         return $this->render('ScrumbeProjectBundle:projects:backlog.html.twig',
             array('project' => $project)

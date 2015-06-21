@@ -43,19 +43,16 @@ class TaskController extends Controller
     }
 
 
-    public function postTaskAction($projectId, $userStoryId)
+    public function postTaskAction(Request $request)
     {
-        $taskService = $this->container->get('task_service');
-        $task = $taskService->createtask($userStoryId);
+        $data = $request->request->all();
 
-        if ($task instanceof task)
-        {
-            return $this->redirect($this->generateUrl('scrumbe_get_task',array('projectId' => $projectId, 'usId' => $userStoryId, 'taskId' => $task->getId())));
-        }
+        $task = new Task();
+        $task->setUserStoryId($data['user_story_id']);
+        $task->setDescription($data['description']);
+        $task->save();
 
-        return $this->render('ScrumbeProjectBundle:tasks:createTask.html.twig', array(
-            'form' => $task->createView()
-        ));    
+        return new JsonResponse(array('task' => $task), JsonResponse::HTTP_CREATED);
     }
 
 	public function putTaskAction($projectId, $userStoryId, $taskId)
