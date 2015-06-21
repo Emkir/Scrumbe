@@ -163,27 +163,11 @@
                         </div>
                     </form>
                 </li>
-                <li class="US1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="1">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
-                <li class="2">
-                    <p class="title">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </li>
+                {% for task in project.tasks %}
+                    <li class="{{ task.user_story_id }}">
+                        <p class="title">{{ task.description }}</p>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         <div class="members">
