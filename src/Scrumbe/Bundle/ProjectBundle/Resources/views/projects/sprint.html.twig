@@ -66,24 +66,7 @@
         <ul class="sprints-list">
             <li>
                 <div class="infos-ctn">
-                    <span class="option-btn">
-                        <img src="/assets/img/icons/opt-icon.svg" alt="option icon">
-                    </span>
-                    <div class="option-ctn">
-                        <span class="close-opt-btn">
-                            <img src="/assets/img/icons/close-opt-icon.svg" alt="close icon">
-                        </span>
-
-                        <span class="edit-btn">
-                            <img src="/assets/img/icons/edit-project-icon.svg" alt="Éditer">
-                        </span>
-                        <a href="">
-                            <span class="delete-btn">
-                                <img src="/assets/img/icons/delete-project-icon.svg" alt="Supprimer">
-                            </span>
-                        </a>
-                    </div>
-                    <span class="state now">En cours</span>
+                    <span class="state now"></span>
                     <h2>Phantom: Landing Page Redesign</h2>
                     <ul class="member-list">
                         <li>
@@ -113,10 +96,27 @@
                     </div>
                 </div>
                 <div class="date-ctn">
-                    <span class="start-date"></span>
+                    <span class="start-date">15/11/1987</span>
                     <img src="/assets/img/arrow.png" alt="arrow"/>
-                    <span class="end-date"></span>
+                    <span class="end-date">15/11/2015</span>
                 </div>
+            </li>
+            <li class="form-sprint">
+                <form action="">
+                    <div class="infos-ctn">
+                        <input type="text" placeholder="Nom de l'itération" class="title"/>
+                        <select name="" multiple class="us-list">
+                            <option value="1">US1</option>
+                            <option value="2">US2</option>
+                            <option value="3">US3</option>
+                            <option value="4">US4</option>
+                        </select>
+                        <input type="text" placeholder="Date de début" class="start-date-input"/>
+                        <img src="/assets/img/arrow.png" alt="arrow"/>
+                        <input type="text" placeholder="Date de fin" class="start-end-input"/>
+                        <span class="submit">Valider</span>
+                    </div>
+                </form>
             </li>
         </ul>
     </section>
@@ -124,29 +124,72 @@
 
 {% block script %}
     <script src="/assets/js/libs/gauge.min.js"></script>
+    <script src="/assets/js/libs/selectize.min.js"></script>
+    <script src="/assets/js/libs/jquery.datetimepicker.js"></script>
     <script>
+        // Gauge.js
         var opts = {
-            lines: 12, // The number of lines to draw
-            angle: 0.5, // The length of each line
-            lineWidth: 0.05, // The line thickness
+            lines: 12,
+            angle: 0.5,
+            lineWidth: 0.05,
             pointer: {
-                length: 1, // The radius of the inner circle
-                strokeWidth: 0.035, // The rotation offset
-                color: '#28CEE0' // Fill color
+                length: 1,
+                strokeWidth: 0.035,
+                color: '#28CEE0'
             },
-            limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
-            colorStart: '#28CEE0',   // Colors
-            colorStop: '#28CEE0',    // just experiment with them
-            strokeColor: '#E6EAEE',   // to see which ones work best for you
+            limitMax: 'false',
+            colorStart: '#28CEE0',
+            colorStop: '#28CEE0',
+            strokeColor: '#E6EAEE',
             generateGradient: true
         };
+        var target = document.getElementById('gauge');
+        var gauge = new Donut(target).setOptions(opts);
+        gauge.maxValue = 100;
+        gauge.set(90);
+        gauge.animationSpeed = 32;
 
-        var target = document.getElementById('gauge'); // your canvas element
-        var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+        // Add Sprint
+        $('.add-sprint').click(function(){
 
-        gauge.maxValue = 100; // set max gauge value
-        gauge.set(90); // set actual value
+        });
 
-        gauge.animationSpeed = 32; // set animation speed (32 is default value)
+        // List US Selectize.js
+        $('.us-list').selectize();
+
+        // Initiate Datetime picker
+        $('.start-date-input').datetimepicker({
+            lang:'fr',
+            timepicker:false,
+            format:'d/m/Y'
+        });
+        $('.start-end-input').datetimepicker({
+            lang:'fr',
+            timepicker:false,
+            format:'d/m/Y'
+        });
+
+        // Send new sprint
+        $('submit').click(function(){
+            var title = $('.title').val();
+            var startDate = $('.start-date-input').val();
+            var endDate = $('.start-end-input').val();
+            var us = $('.us-list').val();
+
+            $.ajax({
+                url: '',
+                method: 'PUT',
+                data: {
+                    'title': title,
+                    'us': us,
+                    'startDate': startDate,
+                    'endDate': endDate
+                }
+            }).done(function(data){
+                console.log(data)
+            }).fail(function(data){
+                console.log(data)
+            })
+        })
     </script>
 {% endblock %}
