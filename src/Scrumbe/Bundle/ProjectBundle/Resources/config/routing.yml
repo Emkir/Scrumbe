@@ -147,9 +147,12 @@ team:
 
 ###SPRINT###
 
-sprint:
-    pattern:  /sprint
+scrumbe_get_sprint:
+    pattern:  /{projectId}/{projectName}/sprint
     defaults: { _controller: ScrumbeProjectBundle:Project:sprint }
+    requirements:
+        projectId: \d+
+        _method: GET
 
 ###BACKLOG###
 

@@ -5,6 +5,8 @@ use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
 use BasePeer;
+use Scrumbe\Models\Sprint;
+use Scrumbe\Models\SprintQuery;
 
 class ProjectService {
 
@@ -61,5 +63,46 @@ class ProjectService {
     public function uploadCover($file)
     {
 
+    }
+
+    public function getSprints($projectId)
+    {
+        $sprints = SprintQuery::create()->filterByProjectId($projectId)->find();
+        $sprintArray = array();
+
+        foreach ($sprints as $key=>$sprint)
+        {
+            $totalTasks = 0;
+            $doneTasks = 0;
+
+            foreach ($sprint->getLinkUserStorySprintsJoinUserStory() as $linkUserStory)
+            {
+                $tasks = $linkUserStory->getUserStory()->getTasks();
+                $totalTasks += count($tasks);
+                foreach ($tasks as $task)
+                {
+                    if ($task->getProgress() == "done")
+                        $doneTasks ++;
+                }
+            }
+
+            $date = new \DateTime();
+            $startDate = $sprint->getStartDate();
+            $endDate = $sprint->getEndDate();
+
+            if ($date > $endDate)
+                $state = 'last';
+            elseif ($date < $startDate)
+                $state = 'next';
+            else
+                $state = 'now';
+
+            $sprintArray[$key] = $sprint->toArray(BasePeer::TYPE_FIELDNAME);
+            $sprintArray[$key]['state'] = $state;
+            $sprintArray[$key]['total_tasks'] = $totalTasks;
+            $sprintArray[$key]['done_tasks'] = $doneTasks;
+        }
+
+        return $sprintArray;
     }
 } 

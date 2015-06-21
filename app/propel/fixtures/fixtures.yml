@@ -1,10 +1,10 @@
 Scrumbe\Models\Project:
     p1:
-        name: Projet Tous
-        url_name: projet_tous
-        description: Project accessible à tous
-        start_date: 2015-01-01
-        end_date: 2030-12-12
+        name: Scrumbe
+        url_name: scrumbe
+        description: Scrumbe est sur Scrumbe!
+        start_date: 2014-01-01
+        end_date: 2015-06-26
     p2:
         name: Projet Emmeric
         url_name: projet_emmeric
@@ -83,43 +83,43 @@ Scrumbe\Models\UserStory:
     us1:
         project_id: p1
         number: 1
-        description: US 1
+        description: Initialisation technique
         value: 42
         complexity: 42
         ratio: 1
         position: 1
-        priority: low
+        priority: high
         label: red
     us2:
         project_id: p1
         number: 2
-        description: US 2
+        description: En tant qu'utilisateur je veux voir la home page
         value: 42
         complexity: 42
         ratio: 1
         position: 2
         priority: high
-        label: red
+        label: blue
     us3:
         project_id: p1
         number: 3
-        description: US 3
+        description: En tant qu'utilisateur je veux être averti de la béta
         value: 42
         complexity: 42
         ratio: 1
         position: 3
-        priority: medium
-        label: red
+        priority: low
+        label: yellow
     us4:
         project_id: p1
         number: 4
-        description: US 4
+        description: En tant qu'utilisateur je veux m'inscrire à Scrumbe
         value: 42
         complexity: 42
         ratio: 1
         position: 4
-        priority: high
-        label: red
+        priority: medium
+        label: green
     us5:
         project_id: p2
         number: 1
@@ -244,9 +244,9 @@ Scrumbe\Models\UserStory:
 Scrumbe\Models\Task:
     t1:
         user_story_id: us1
-        description: TODO 1 (US1)
+        description: Créer le projet Symfony
         position: 1
-        progress: todo
+        progress: done
     t2:
         user_story_id: us2
         description: WIP 2 (US2)
@@ -342,3 +342,44 @@ Scrumbe\Models\Task:
         description: DONE 1 (US2)
         position: 1
         progress: done
+    t21:
+        user_story_id: us1
+        description: Créer le git
+        position: 2
+        progress: done
+    t22:
+        user_story_id: us1
+        description: Préparer le nécessaire pour le front
+        position: 3
+        progress: done
+
+Scrumbe\Models\Sprint:
+    s1:
+        project_id: p1
+        name: Sprint 1: Initialisation du projet
+        start_date: 2014-01-01
+        end_date: 2014-09-01
+    s2:
+        project_id: p1
+        name: Sprint 2: Reprise du projet
+        start_date: 2014-09-02
+        end_date: 2015-01-01
+    s3:
+        project_id: p1
+        name: Sprint 3: Fin du projet
+        start_date: 2015-01-02
+        end_date: 2015-07-31
+
+Scrumbe\Models\LinkUserStorySprint:
+    lus1:
+        user_story_id: us1
+        sprint_id: s1
+    lus2:
+        user_story_id: us2
+        sprint_id: s1
+    lus3:
+        user_story_id: us3
+        sprint_id: s1
+    lus4:
+        user_story_id: us4
+        sprint_id: s2

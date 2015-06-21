@@ -41,7 +41,7 @@
         <div class="divider"></div>
         <ul class="sub-nav">
             <li>
-                <a href="{{ path('sprint') }}">{{ "nav.project.sprint" | trans() }}</a>
+                <a href="{{ path('scrumbe_get_sprint', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.sprint" | trans() }}</a>
             </li>
             <li>
                 <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.kanban" | trans() }}</a>

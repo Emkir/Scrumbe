@@ -37,19 +37,17 @@
         </ul>
     </nav>
     <div class="sub-nav-projects">
-        <span class="title">LOL{#{{ project.name }}#}</span>
+        <span class="title">{{ project.name }}</span>
         <div class="divider"></div>
         <ul class="sub-nav">
             <li class="active">
-                <a href="{{ path('sprint') }}">{{ "nav.project.sprint" | trans() }}</a>
+                <a href="{{ path('scrumbe_get_sprint', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.sprint" | trans() }}</a>
             </li>
             <li>
-                {#<a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>#}
-                <a href="">{{ 'nav.project.kanban' | trans() }}</a>
+                <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>
             </li>
             <li>
-                {#<a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>#}
-                <a href="">{{ "nav.project.backlog" | trans() }}</a>
+                <a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>
             </li>
             <li>
                 <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
@@ -64,43 +62,45 @@
 {% block body %}
     <section class="sprint">
         <ul class="sprints-list">
-            <li>
-                <div class="infos-ctn">
-                    <span class="state now"></span>
-                    <h2>Phantom: Landing Page Redesign</h2>
-                    <ul class="member-list">
-                        <li>
-                            <div class="avatar-ctn">
-                                <img src="/assets/img/Claude-Guglieri.png" alt=""/>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="avatar-ctn">
-                                <img src="/assets/img/Thomas-Sanson.png" alt=""/>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="avatar-ctn">
-                                <img src="/assets/img/Anthony-Ribeiro.png" alt=""/>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="avatar-ctn">
-                                <img src="/assets/img/Christophe-Tauziet.png" alt=""/>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="task-count">
-                        <canvas id="gauge"></canvas>
-                        <span class="tasks">10/20</span>
+            {% for sprint in project.sprints %}
+                <li>
+                    <div class="infos-ctn">
+                        <span class="state {{ sprint.state }}"></span>
+                        <h2>{{ sprint.name }}</h2>
+                        <ul class="member-list">
+                            <li>
+                                <div class="avatar-ctn">
+                                    <img src="/assets/img/Claude-Guglieri.png" alt=""/>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="avatar-ctn">
+                                    <img src="/assets/img/Thomas-Sanson.png" alt=""/>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="avatar-ctn">
+                                    <img src="/assets/img/Anthony-Ribeiro.png" alt=""/>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="avatar-ctn">
+                                    <img src="/assets/img/Christophe-Tauziet.png" alt=""/>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="task-count">
+                            <canvas id="gauge"></canvas>
+                            <span class="tasks">{{ sprint.done_tasks }}/{{ sprint.total_tasks }}</span>
+                        </div>
                     </div>
-                </div>
-                <div class="date-ctn">
-                    <span class="start-date">15/11/1987</span>
-                    <img src="/assets/img/arrow.png" alt="arrow"/>
-                    <span class="end-date">15/11/2015</span>
-                </div>
-            </li>
+                    <div class="date-ctn">
+                        <span class="start-date">{{sprint.start_date.date| localizeddate('medium', 'none')}}</span>
+                        <img src="/assets/img/arrow.png" alt="arrow"/>
+                        <span class="end-date">{{sprint.end_date.date| localizeddate('medium', 'none')}}</span>
+                    </div>
+                </li>
+            {% endfor %}
             <li class="form-sprint">
                 <form action="">
                     <div class="infos-ctn">

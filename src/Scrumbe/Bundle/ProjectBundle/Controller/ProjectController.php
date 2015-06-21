@@ -253,10 +253,35 @@ class ProjectController extends Controller
     /**
      * Display sprint page
      *
+     * @param   Integer   $projectId      Project's Id
+     * @param   Integer   $projectName    Project's name
+     * @return  Response                  Twig view with the sprints
      */
-    public function sprintAction()
+    public function sprintAction($projectId, $projectName)
     {
-        return $this->render('ScrumbeProjectBundle:projects:sprint.html.twig');
+        $projectService     = $this->container->get('project_service');
+        $userStoryService   = $this->container->get('userstory_service');
+
+        $validatorService   = $this->container->get('scrumbe.validator_service');
+
+        $validatorService->objectExistsMultipleColumns(
+            array(
+                'Id' => $projectId,
+                'UrlName' => $projectName
+            ),
+            ProjectQuery::create(),
+            'project'
+        );
+
+        $validatorService->userAccessOnObject($projectId, $this->getUser(), new ProjectQuery(), 'project');
+
+        $project = $projectService->getProject($projectId);
+        $project['sprints'] = $projectService->getSprints($projectId);
+        $project['user_stories'] = $userStoryService->getBacklogUserStories($projectId);
+
+        return $this->render('ScrumbeProjectBundle:projects:sprint.html.twig',
+            array('project' => $project)
+        );
     }
 
     /**
