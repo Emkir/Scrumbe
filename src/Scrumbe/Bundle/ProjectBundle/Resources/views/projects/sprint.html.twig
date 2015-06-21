@@ -37,17 +37,19 @@
         </ul>
     </nav>
     <div class="sub-nav-projects">
-        <span class="title">{{ project.name }}</span>
+        <span class="title">LOL{#{{ project.name }}#}</span>
         <div class="divider"></div>
         <ul class="sub-nav">
             <li class="active">
                 <a href="{{ path('sprint') }}">{{ "nav.project.sprint" | trans() }}</a>
             </li>
             <li>
-                <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>
+                {#<a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>#}
+                <a href="">{{ 'nav.project.kanban' | trans() }}</a>
             </li>
             <li>
-                <a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>
+                {#<a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>#}
+                <a href="">{{ "nav.project.backlog" | trans() }}</a>
             </li>
             <li>
                 <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
@@ -106,13 +108,13 @@
                         </li>
                     </ul>
                     <div class="task-count">
-                        <div id="gauge"></div>
+                        <canvas id="gauge"></canvas>
                         <span class="tasks">10/20</span>
                     </div>
                 </div>
                 <div class="date-ctn">
                     <span class="start-date"></span>
-                    <img src="" alt="arrow"/>
+                    <img src="/assets/img/arrow.png" alt="arrow"/>
                     <span class="end-date"></span>
                 </div>
             </li>
@@ -121,27 +123,30 @@
 {% endblock %}
 
 {% block script %}
-    <script src="/web/assets/js/libs/gauge.min.js"></script>
+    <script src="/assets/js/libs/gauge.min.js"></script>
     <script>
         var opts = {
             lines: 12, // The number of lines to draw
             angle: 0.5, // The length of each line
             lineWidth: 0.05, // The line thickness
             pointer: {
-                length: 0.9, // The radius of the inner circle
+                length: 1, // The radius of the inner circle
                 strokeWidth: 0.035, // The rotation offset
-                color: '#000000' // Fill color
+                color: '#28CEE0' // Fill color
             },
             limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
             colorStart: '#28CEE0',   // Colors
-            colorStop: '#E6EAEE',    // just experiment with them
+            colorStop: '#28CEE0',    // just experiment with them
             strokeColor: '#E6EAEE',   // to see which ones work best for you
             generateGradient: true
         };
+
         var target = document.getElementById('gauge'); // your canvas element
         var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
-        gauge.maxValue = 3000; // set max gauge value
+
+        gauge.maxValue = 100; // set max gauge value
+        gauge.set(90); // set actual value
+
         gauge.animationSpeed = 32; // set animation speed (32 is default value)
-        gauge.set(1250); // set actual value
     </script>
 {% endblock %}

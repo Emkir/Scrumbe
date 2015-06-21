@@ -4577,6 +4577,32 @@ footer {
             .sprint .sprints-list > li .infos-ctn .member-list li .avatar-ctn img {
               width: 100%;
               background-color: #fff; }
+      .sprint .sprints-list > li .infos-ctn .task-count {
+        position: relative;
+        margin-top: 15px; }
+        .sprint .sprints-list > li .infos-ctn .task-count canvas {
+          -webkit-transform: rotateZ(180deg);
+          -ms-transform: rotateZ(180deg);
+          transform: rotateZ(180deg); }
+        .sprint .sprints-list > li .infos-ctn .task-count .tasks {
+          color: #7F8CA6;
+          font-family: "Open Sans", sans-serif;
+          font-size: 1.75rem;
+          font-weight: 700;
+          position: absolute;
+          top: 50px;
+          left: 50%;
+          margin-left: -38px; }
+          .sprint .sprints-list > li .infos-ctn .task-count .tasks:after {
+            content: "tâches";
+            display: block;
+            color: #7F8CA6;
+            font-family: "Open Sans", sans-serif;
+            font-size: 1.125rem;
+            font-weight: 300;
+            position: absolute;
+            top: 30px;
+            left: 11px; }
     .sprint .sprints-list > li .date-ctn {
       width: 300px;
       height: 367px;
