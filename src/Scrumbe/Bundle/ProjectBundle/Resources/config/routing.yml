@@ -154,6 +154,12 @@ scrumbe_get_sprint:
         projectId: \d+
         _method: GET
 
+scrumbe_post_sprint:
+   pattern: /sprints/create
+   defaults: {_controller: ScrumbeProjectBundle:Project:postSprint}
+   requirements:
+        _method: POST
+
 ###BACKLOG###
 
 scrumbe_get_backlog:

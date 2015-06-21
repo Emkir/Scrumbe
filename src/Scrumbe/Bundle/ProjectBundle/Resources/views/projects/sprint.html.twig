@@ -104,16 +104,16 @@
             <li class="form-sprint">
                 <form action="">
                     <div class="infos-ctn">
-                        <input type="text" placeholder="Nom de l'itération" class="title"/>
-                        <select name="" multiple class="us-list">
-                            <option value="1">US1</option>
-                            <option value="2">US2</option>
-                            <option value="3">US3</option>
-                            <option value="4">US4</option>
+                        <input type="hidden" name="project_id" value="{{ project.id }}" class="project-id">
+                        <input name="name" type="text" placeholder="Nom de l'itération" class="title"/>
+                        <select name="user_stories" multiple class="us-list">
+                            {% for user_story in project.user_stories %}
+                                <option value="{{ user_story.id }}">US{{ user_story.number }}: {{ user_story.description }}</option>
+                            {% endfor %}
                         </select>
-                        <input type="text" placeholder="Date de début" class="start-date-input"/>
+                        <input name="start_date" type="text" placeholder="Date de début" class="start-date-input"/>
                         <img src="/assets/img/arrow.png" alt="arrow"/>
-                        <input type="text" placeholder="Date de fin" class="start-end-input"/>
+                        <input name="end_date" type="text" placeholder="Date de fin" class="start-end-input"/>
                         <span class="submit">Valider</span>
                     </div>
                 </form>
@@ -170,20 +170,22 @@
         });
 
         // Send new sprint
-        $('submit').click(function(){
-            var title = $('.title').val();
-            var startDate = $('.start-date-input').val();
-            var endDate = $('.start-end-input').val();
-            var us = $('.us-list').val();
+        $('.form-sprint .submit').click(function(){
+            var project_id = $('.form-sprint .project-id').val();
+            var title = $('.form-sprint .title').val();
+            var startDate = $('.form-sprint .start-date-input').val();
+            var endDate = $('.form-sprint .start-end-input').val();
+            var us = $('.form-sprint .us-list').val();
 
             $.ajax({
-                url: '',
-                method: 'PUT',
+                url: '{{ path('scrumbe_post_sprint') }}',
+                method: 'POST',
                 data: {
-                    'title': title,
-                    'us': us,
-                    'startDate': startDate,
-                    'endDate': endDate
+                    'project_id': project_id,
+                    'name': title,
+                    'user_stories': us,
+                    'start_date': startDate,
+                    'end_date': endDate
                 }
             }).done(function(data){
                 console.log(data)

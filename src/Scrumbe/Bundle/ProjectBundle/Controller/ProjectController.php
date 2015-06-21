@@ -3,13 +3,16 @@ namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
 use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
 use Scrumbe\Models\LinkProjectUser;
+use Scrumbe\Models\LinkUserStorySprint;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
+use Scrumbe\Models\Sprint;
 use Scrumbe\Models\UserQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class ProjectController extends Controller
 {
@@ -282,6 +285,42 @@ class ProjectController extends Controller
         return $this->render('ScrumbeProjectBundle:projects:sprint.html.twig',
             array('project' => $project)
         );
+    }
+
+    /**
+     * Create a sprint
+     *
+     * @ JsonResponse
+     */
+    public function postSprintAction(Request $request)
+    {
+        $data = $request->request->all();
+
+        $splitStart = explode("/", $data['start_date']);
+        $splitEnd = explode("/", $data['end_date']);
+
+        $startDate = new \DateTime($splitStart[2].'-'.$splitStart[1].'-'.$splitStart[0]);
+        $endDate = new \DateTime($splitEnd[2].'-'.$splitEnd[1].'-'.$splitEnd[0]);
+
+        if ($startDate > $endDate)
+            return new JsonResponse(array('errors' => 'sprint.date'), JsonResponse::HTTP_BAD_REQUEST);
+
+        $sprint = new Sprint();
+        $sprint->setProjectId($data['project_id']);
+        $sprint->setName($data['name']);
+        $sprint->setStartDate($startDate);
+        $sprint->setEndDate($endDate);
+        $sprint->save();
+
+        foreach ($data['user_stories'] as $userStory)
+        {
+            $link = new LinkUserStorySprint();
+            $link->setSprintId($sprint->getId());
+            $link->setUserStoryId($userStory);
+            $link->save();
+        }
+
+        return new JsonResponse(array('sprint' => $sprint), JsonResponse::HTTP_CREATED);
     }
 
     /**
