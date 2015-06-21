@@ -157,7 +157,7 @@
             <ul class="tasks-list">
                 <li class="form-add-tasks">
                     <form action="">
-                        <textarea name="" id="" placeholder="Intitulé" rows="6"></textarea>
+                        <textarea name="description" id="" placeholder="Intitulé" rows="6"></textarea>
                         <div class="footer">
                             <span class="submit">Valider</span>
                         </div>
@@ -257,10 +257,11 @@
         // Submit tasks
         $('.form-add-tasks .submit').click(function(){
             $.ajax({
-                url: '',
-                method: '',
+                url: '{{ path('scrumbe_post_task') }}',
+                method: 'POST',
                 data: {
-                    'id': currentUsId
+                    'user_story_id': currentUsId,
+                    'description': $('.form-add-tasks textarea').val()
                 }
             }).done(function(data){
                 console.log(data);
