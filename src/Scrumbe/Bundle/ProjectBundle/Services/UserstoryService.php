@@ -18,17 +18,25 @@ class UserstoryService {
 
     public function getKanbanUserStories($projectId)
     {
-        $userStoriesArray = array();
+        $conn   = \Propel::getConnection();
+        $sql    = '
+                SELECT us.*, COUNT(t.id) as task_count
+                FROM user_story as us
+                LEFT JOIN task as t ON t.user_story_id = us.id
+                LEFT JOIN link_user_story_sprint as luss ON luss.user_story_id = us.id
+                LEFT JOIN sprint as s ON s.id = luss.sprint_id
+                WHERE us.project_id = :projectId
+                AND CURDATE() >= DATE(s.start_date)
+                AND CURDATE() <= DATE(s.end_date)
+                GROUP BY us.id
+                ORDER BY us.position ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':projectId', $projectId, \PDO::PARAM_INT);
+        $stmt->execute();
+        $userStories = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-        $userStories = UserStoryQuery::create()->filterByProjectId($projectId)->orderByPosition()->find();
-
-        foreach($userStories as $userStory)
-        {
-            $userStoriesArray[$userStory->getPosition()] = $userStory->toArray(BasePeer::TYPE_FIELDNAME);
-            $userStoriesArray[$userStory->getPosition()]['task_count'] = count($userStory->getTasks());
-        }
-
-        return $userStoriesArray;
+        return $userStories;
     }
 
     public function getBacklogUserStories($projectId)

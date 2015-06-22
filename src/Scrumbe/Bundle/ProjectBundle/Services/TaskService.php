@@ -20,20 +20,25 @@ class TaskService {
     {
         $tasksArray = array();
 
-        $tasks = TaskQuery::create()
-            ->useUserStoryQuery()
-                ->filterByProjectId($projectId)
-            ->endUse()
-            ->orderByPosition()
-            ->find();
+        $conn   = \Propel::getConnection();
+        $sql    = '
+                SELECT t.*, us.label as label, us.priority as priority, us.number as us_number
+                FROM task as t
+                LEFT JOIN user_story as us ON us.id = t.user_story_id
+                LEFT JOIN link_user_story_sprint as luss ON luss.user_story_id = us.id
+                LEFT JOIN sprint as s ON s.id = luss.sprint_id
+                WHERE us.project_id = :projectId
+                AND CURDATE() >= DATE(s.start_date)
+                AND CURDATE() <= DATE(s.end_date)
+                ORDER BY t.position ASC
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':projectId', $projectId, \PDO::PARAM_INT);
+        $stmt->execute();
+        $tasks = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
         foreach($tasks as $task)
-        {
-            $tasksArray[$task->getProgress()][$task->getPosition()] = $task->toArray(BasePeer::TYPE_FIELDNAME);
-            $userStory = $task->getUserStory();
-            $tasksArray[$task->getProgress()][$task->getPosition()]['label'] = $userStory->getLabel();
-            $tasksArray[$task->getProgress()][$task->getPosition()]['priority'] = $userStory->getPriority();
-        }
+            $tasksArray[$task['progress']][$task['position']] = $task;
 
         return $tasksArray;
     }
