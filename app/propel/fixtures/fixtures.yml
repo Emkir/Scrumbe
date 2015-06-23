@@ -117,7 +117,7 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 4
+        position: 1
         priority: medium
         label: green
     us5:
@@ -240,6 +240,56 @@ Scrumbe\Models\UserStory:
         position: 4
         priority: high
         label: red
+    us17:
+        project_id: p1
+        number: 5
+        description: En tant qu'utilisateur je veux me connecter à Scrumbe
+        value: 42
+        complexity: 42
+        ratio: 1
+        position: 2
+        priority: low
+        label: blue
+    us18:
+        project_id: p1
+        number: 6
+        description: En tant qu'utilisateur je veux voir mes projets
+        value: 42
+        complexity: 42
+        ratio: 1
+        position: 3
+        priority: medium
+        label: red
+    us19:
+        project_id: p1
+        number: 7
+        description: En tant qu'utilisateur je veux créer un projet
+        value: 42
+        complexity: 42
+        ratio: 1
+        position: 4
+        priority: high
+        label: pink
+    us20:
+        project_id: p1
+        number: 8
+        description: En tant qu'utilisateur je veux éditer un projet
+        value: 42
+        complexity: 42
+        ratio: 1
+        position: 5
+        priority: low
+        label: yellow
+    us21:
+        project_id: p1
+        number: 9
+        description: En tant qu'utilisateur je veux supprimer un projet
+        value: 42
+        complexity: 42
+        ratio: 1
+        position: 6
+        priority: low
+        label: purple
 
 Scrumbe\Models\Task:
     t1:
@@ -249,14 +299,14 @@ Scrumbe\Models\Task:
         progress: done
     t2:
         user_story_id: us2
-        description: WIP 2 (US2)
+        description: Designer la home page
         position: 2
-        progress: wip
+        progress: done
     t3:
         user_story_id: us3
-        description: WIP 1 (US3)
-        position: 1
-        progress: wip
+        description: Créer le formulaire pour envoyer son email
+        position: 8
+        progress: done
     t4:
         user_story_id: us4
         description: TODO 2 (US4)
@@ -264,8 +314,8 @@ Scrumbe\Models\Task:
         progress: todo
     t5:
         user_story_id: us2
-        description: DONE 1 (US2)
-        position: 1
+        description: Développer le JS pour le texte qui défile
+        position: 7
         progress: done
     t6:
         user_story_id: us5
@@ -345,12 +395,27 @@ Scrumbe\Models\Task:
     t21:
         user_story_id: us1
         description: Créer le git
-        position: 2
+        position: 3
         progress: done
     t22:
         user_story_id: us1
         description: Préparer le nécessaire pour le front
-        position: 3
+        position: 5
+        progress: done
+    t23:
+        user_story_id: us2
+        description: Integrer la home page
+        position: 4
+        progress: done
+    t24:
+        user_story_id: us2
+        description: Definir le contenu
+        position: 6
+        progress: done
+    t25:
+        user_story_id: us3
+        description: Enregistrer l'email
+        position: 9
         progress: done
 
 Scrumbe\Models\Sprint:
@@ -382,4 +447,19 @@ Scrumbe\Models\LinkUserStorySprint:
         sprint_id: s1
     lus4:
         user_story_id: us4
+        sprint_id: s2
+    lus5:
+        user_story_id: us17
+        sprint_id: s2
+    lus6:
+        user_story_id: us18
+        sprint_id: s2
+    lus7:
+        user_story_id: us19
+        sprint_id: s2
+    lus8:
+        user_story_id: us20
+        sprint_id: s2
+    lus9:
+        user_story_id: us21
         sprint_id: s2
