@@ -45,6 +45,7 @@ class LinkUserStorySprintTableMap extends TableMap
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addForeignKey('user_story_id', 'UserStoryId', 'INTEGER', 'user_story', 'id', false, null, null);
         $this->addForeignKey('sprint_id', 'SprintId', 'INTEGER', 'sprint', 'id', false, null, null);
+        $this->addColumn('user_story_position', 'UserStoryPosition', 'INTEGER', false, null, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);
         $this->addColumn('updated_at', 'UpdatedAt', 'TIMESTAMP', false, null, null);
         // validators

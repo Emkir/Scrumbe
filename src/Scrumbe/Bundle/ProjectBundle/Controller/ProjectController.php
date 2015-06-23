@@ -312,12 +312,15 @@ class ProjectController extends Controller
         $sprint->setEndDate($endDate);
         $sprint->save();
 
+        $i = 1;
         foreach ($data['user_stories'] as $userStory)
         {
             $link = new LinkUserStorySprint();
             $link->setSprintId($sprint->getId());
             $link->setUserStoryId($userStory);
+            $link->setUserStoryPosition($i);
             $link->save();
+            $i++;
         }
 
         return new JsonResponse(array('sprint' => $sprint), JsonResponse::HTTP_CREATED);

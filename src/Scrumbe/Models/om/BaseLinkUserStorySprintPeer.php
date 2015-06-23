@@ -31,13 +31,13 @@ abstract class BaseLinkUserStorySprintPeer
     const TM_CLASS = 'Scrumbe\\Models\\map\\LinkUserStorySprintTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /** the column name for the id field */
     const ID = 'link_user_story_sprint.id';
@@ -47,6 +47,9 @@ abstract class BaseLinkUserStorySprintPeer
 
     /** the column name for the sprint_id field */
     const SPRINT_ID = 'link_user_story_sprint.sprint_id';
+
+    /** the column name for the user_story_position field */
+    const USER_STORY_POSITION = 'link_user_story_sprint.user_story_position';
 
     /** the column name for the created_at field */
     const CREATED_AT = 'link_user_story_sprint.created_at';
@@ -73,12 +76,12 @@ abstract class BaseLinkUserStorySprintPeer
      * e.g. LinkUserStorySprintPeer::$fieldNames[LinkUserStorySprintPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'UserStoryId', 'SprintId', 'CreatedAt', 'UpdatedAt', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userStoryId', 'sprintId', 'createdAt', 'updatedAt', ),
-        BasePeer::TYPE_COLNAME => array (LinkUserStorySprintPeer::ID, LinkUserStorySprintPeer::USER_STORY_ID, LinkUserStorySprintPeer::SPRINT_ID, LinkUserStorySprintPeer::CREATED_AT, LinkUserStorySprintPeer::UPDATED_AT, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USER_STORY_ID', 'SPRINT_ID', 'CREATED_AT', 'UPDATED_AT', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'user_story_id', 'sprint_id', 'created_at', 'updated_at', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'UserStoryId', 'SprintId', 'UserStoryPosition', 'CreatedAt', 'UpdatedAt', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userStoryId', 'sprintId', 'userStoryPosition', 'createdAt', 'updatedAt', ),
+        BasePeer::TYPE_COLNAME => array (LinkUserStorySprintPeer::ID, LinkUserStorySprintPeer::USER_STORY_ID, LinkUserStorySprintPeer::SPRINT_ID, LinkUserStorySprintPeer::USER_STORY_POSITION, LinkUserStorySprintPeer::CREATED_AT, LinkUserStorySprintPeer::UPDATED_AT, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USER_STORY_ID', 'SPRINT_ID', 'USER_STORY_POSITION', 'CREATED_AT', 'UPDATED_AT', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'user_story_id', 'sprint_id', 'user_story_position', 'created_at', 'updated_at', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -88,12 +91,12 @@ abstract class BaseLinkUserStorySprintPeer
      * e.g. LinkUserStorySprintPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserStoryId' => 1, 'SprintId' => 2, 'CreatedAt' => 3, 'UpdatedAt' => 4, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userStoryId' => 1, 'sprintId' => 2, 'createdAt' => 3, 'updatedAt' => 4, ),
-        BasePeer::TYPE_COLNAME => array (LinkUserStorySprintPeer::ID => 0, LinkUserStorySprintPeer::USER_STORY_ID => 1, LinkUserStorySprintPeer::SPRINT_ID => 2, LinkUserStorySprintPeer::CREATED_AT => 3, LinkUserStorySprintPeer::UPDATED_AT => 4, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USER_STORY_ID' => 1, 'SPRINT_ID' => 2, 'CREATED_AT' => 3, 'UPDATED_AT' => 4, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_story_id' => 1, 'sprint_id' => 2, 'created_at' => 3, 'updated_at' => 4, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserStoryId' => 1, 'SprintId' => 2, 'UserStoryPosition' => 3, 'CreatedAt' => 4, 'UpdatedAt' => 5, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userStoryId' => 1, 'sprintId' => 2, 'userStoryPosition' => 3, 'createdAt' => 4, 'updatedAt' => 5, ),
+        BasePeer::TYPE_COLNAME => array (LinkUserStorySprintPeer::ID => 0, LinkUserStorySprintPeer::USER_STORY_ID => 1, LinkUserStorySprintPeer::SPRINT_ID => 2, LinkUserStorySprintPeer::USER_STORY_POSITION => 3, LinkUserStorySprintPeer::CREATED_AT => 4, LinkUserStorySprintPeer::UPDATED_AT => 5, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USER_STORY_ID' => 1, 'SPRINT_ID' => 2, 'USER_STORY_POSITION' => 3, 'CREATED_AT' => 4, 'UPDATED_AT' => 5, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_story_id' => 1, 'sprint_id' => 2, 'user_story_position' => 3, 'created_at' => 4, 'updated_at' => 5, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -170,12 +173,14 @@ abstract class BaseLinkUserStorySprintPeer
             $criteria->addSelectColumn(LinkUserStorySprintPeer::ID);
             $criteria->addSelectColumn(LinkUserStorySprintPeer::USER_STORY_ID);
             $criteria->addSelectColumn(LinkUserStorySprintPeer::SPRINT_ID);
+            $criteria->addSelectColumn(LinkUserStorySprintPeer::USER_STORY_POSITION);
             $criteria->addSelectColumn(LinkUserStorySprintPeer::CREATED_AT);
             $criteria->addSelectColumn(LinkUserStorySprintPeer::UPDATED_AT);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.user_story_id');
             $criteria->addSelectColumn($alias . '.sprint_id');
+            $criteria->addSelectColumn($alias . '.user_story_position');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
         }

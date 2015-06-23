@@ -49,7 +49,6 @@ class UserStoryTableMap extends TableMap
         $this->addColumn('value', 'Value', 'INTEGER', false, null, null);
         $this->addColumn('complexity', 'Complexity', 'INTEGER', false, null, null);
         $this->addColumn('ratio', 'Ratio', 'FLOAT', false, null, null);
-        $this->addColumn('position', 'Position', 'INTEGER', false, null, null);
         $this->addColumn('priority', 'Priority', 'VARCHAR', false, 255, null);
         $this->addColumn('label', 'Label', 'VARCHAR', false, 255, null);
         $this->addColumn('created_at', 'CreatedAt', 'TIMESTAMP', false, null, null);

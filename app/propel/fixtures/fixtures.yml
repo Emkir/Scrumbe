@@ -87,7 +87,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 1
         priority: high
         label: red
     us2:
@@ -97,7 +96,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 2
         priority: high
         label: blue
     us3:
@@ -107,7 +105,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 3
         priority: low
         label: yellow
     us4:
@@ -117,7 +114,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 1
         priority: medium
         label: green
     us5:
@@ -127,7 +123,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 1
         priority: low
         label: red
     us6:
@@ -137,7 +132,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 2
         priority: high
         label: red
     us7:
@@ -147,7 +141,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 3
         priority: medium
         label: red
     us8:
@@ -157,7 +150,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 4
         priority: high
         label: red
     us9:
@@ -167,7 +159,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 1
         priority: low
         label: red
     us10:
@@ -177,7 +168,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 2
         priority: high
         label: red
     us11:
@@ -187,7 +177,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 3
         priority: medium
         label: red
     us12:
@@ -197,7 +186,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 4
         priority: high
         label: red
     us13:
@@ -207,7 +195,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 1
         priority: low
         label: red
     us14:
@@ -217,7 +204,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 2
         priority: high
         label: red
     us15:
@@ -227,7 +213,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 3
         priority: medium
         label: red
     us16:
@@ -237,7 +222,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 4
         priority: high
         label: red
     us17:
@@ -247,7 +231,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 2
         priority: low
         label: blue
     us18:
@@ -257,7 +240,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 3
         priority: medium
         label: red
     us19:
@@ -267,7 +249,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 4
         priority: high
         label: pink
     us20:
@@ -277,7 +258,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 5
         priority: low
         label: yellow
     us21:
@@ -287,7 +267,6 @@ Scrumbe\Models\UserStory:
         value: 42
         complexity: 42
         ratio: 1
-        position: 6
         priority: low
         label: purple
 
@@ -439,27 +418,36 @@ Scrumbe\Models\LinkUserStorySprint:
     lus1:
         user_story_id: us1
         sprint_id: s1
+        user_story_position: 1
     lus2:
         user_story_id: us2
         sprint_id: s1
+        user_story_position: 2
     lus3:
         user_story_id: us3
         sprint_id: s1
+        user_story_position: 3
     lus4:
         user_story_id: us4
         sprint_id: s2
+        user_story_position: 1
     lus5:
         user_story_id: us17
         sprint_id: s2
+        user_story_position: 2
     lus6:
         user_story_id: us18
         sprint_id: s2
+        user_story_position: 3
     lus7:
         user_story_id: us19
         sprint_id: s2
+        user_story_position: 4
     lus8:
         user_story_id: us20
         sprint_id: s2
+        user_story_position: 5
     lus9:
         user_story_id: us21
         sprint_id: s2
+        user_story_position: 6
