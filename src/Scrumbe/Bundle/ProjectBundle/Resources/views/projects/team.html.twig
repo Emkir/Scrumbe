@@ -37,17 +37,17 @@
         </ul>
     </nav>
     <div class="sub-nav-projects">
-        <span class="title">{{ project.name }}</span>
+        <span class="title">knnonn{#{{ project.name }}#}</span>
         <div class="divider"></div>
         <ul class="sub-nav">
             <li>
-                <a href="{{ path('scrumbe_get_sprint', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.sprint" | trans() }}</a>
+                {#<a href="{{ path('scrumbe_get_sprint', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.sprint" | trans() }}</a>#}
             </li>
             <li>
-                <a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>
+                {#<a href="{{ path('scrumbe_get_project', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ 'nav.project.kanban' | trans() }}</a>#}
             </li>
             <li>
-                <a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>
+                {#<a href="{{ path('scrumbe_get_backlog', {'projectId':project.id, 'projectName':project.url_name}) }}">{{ "nav.project.backlog" | trans() }}</a>#}
             </li>
             <li class="active">
                 <a href="{{ path('team') }}">{{ "nav.project.team" | trans() }}</a>
