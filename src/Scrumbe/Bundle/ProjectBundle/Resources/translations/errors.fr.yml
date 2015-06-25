@@ -1,2 +1,3 @@
 sprint:
-    date: La date de début de projet ne peut être après la date de fin
+    date: La date de début d'itération ne peut être après la date de fin
+    inner: Une itération ne peut pas être inclus dans un autre

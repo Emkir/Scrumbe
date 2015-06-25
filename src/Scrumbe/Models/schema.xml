@@ -73,7 +73,6 @@
 
         <column name="time" type="varchar" size="255"/>
         <column name="description" type="longvarchar"/>
-        <column name="position" type="integer"/>
         <column name="progress" type="varchar" size="255"/>
         <behavior name="timestampable" />
     </table>
@@ -149,5 +148,25 @@
         </foreign-key>
         <column name="user_story_position" type="integer"/>
         <behavior name="timestampable" />
+    </table>
+
+    <table name="kanban_task">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+
+        <column name="task_id" type="integer"/>
+        <foreign-key foreignTable="task" onDelete="CASCADE">
+            <reference local="task_id" foreign="id" />
+        </foreign-key>
+
+        <column name="sprint_id" type="integer"/>
+        <foreign-key foreignTable="sprint" onDelete="CASCADE">
+            <reference local="sprint_id" foreign="id" />
+        </foreign-key>
+        <column name="task_position" type="integer"/>
     </table>
 </database>

@@ -9,6 +9,7 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
+use Scrumbe\Models\KanbanTaskPeer;
 use Scrumbe\Models\LinkUserStorySprintPeer;
 use Scrumbe\Models\ProjectPeer;
 use Scrumbe\Models\Sprint;
@@ -395,6 +396,9 @@ abstract class BaseSprintPeer
         // Invalidate objects in LinkUserStorySprintPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         LinkUserStorySprintPeer::clearInstancePool();
+        // Invalidate objects in KanbanTaskPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        KanbanTaskPeer::clearInstancePool();
     }
 
     /**

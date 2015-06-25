@@ -2,11 +2,14 @@
 namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
 use Scrumbe\Bundle\ProjectBundle\Form\Type\ProjectType;
+use Scrumbe\Models\KanbanTask;
 use Scrumbe\Models\LinkProjectUser;
 use Scrumbe\Models\LinkUserStorySprint;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Scrumbe\Models\Sprint;
+use Scrumbe\Models\SprintQuery;
+use Scrumbe\Models\TaskQuery;
 use Scrumbe\Models\UserQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -305,6 +308,19 @@ class ProjectController extends Controller
         if ($startDate > $endDate)
             return new JsonResponse(array('errors' => 'sprint.date'), JsonResponse::HTTP_BAD_REQUEST);
 
+        $projectSprints = SprintQuery::create()->filterByProjectId($data['project_id'])->find();
+        if (!$projectSprints->isEmpty())
+        {
+            foreach ($projectSprints as $projectSprint)
+            {
+                $sprintStart = $projectSprint->getStartDate();
+                $sprintEnd = $projectSprint->getEndDate();
+
+                if (($startDate >= $sprintStart && $startDate <= $sprintEnd) || ($endDate >= $sprintStart && $endDate <= $sprintEnd) || ($startDate < $sprintStart && $endDate > $sprintEnd))
+                    return new JsonResponse(array('errors' => 'sprint.inner'), JsonResponse::HTTP_BAD_REQUEST);
+            }
+        }
+
         $sprint = new Sprint();
         $sprint->setProjectId($data['project_id']);
         $sprint->setName($data['name']);
@@ -313,6 +329,9 @@ class ProjectController extends Controller
         $sprint->save();
 
         $i = 1;
+        $todo = 1;
+        $wip = 1;
+        $done = 1;
         foreach ($data['user_stories'] as $userStory)
         {
             $link = new LinkUserStorySprint();
@@ -320,10 +339,39 @@ class ProjectController extends Controller
             $link->setUserStoryId($userStory);
             $link->setUserStoryPosition($i);
             $link->save();
+
+            $tasks = TaskQuery::create()->filterByUserStoryId($userStory)->find();
+            foreach ($tasks as $task)
+            {
+                $kanbanTask = new KanbanTask();
+                $kanbanTask->setTaskId($task->getId());
+                $kanbanTask->setSprintId($sprint->getId());
+
+                if ($task->getProgress() == 'todo')
+                {
+                    $kanbanTask->setTaskPosition($todo);
+                    $todo++;
+                }
+                elseif ($task->getProgress() == 'wip')
+                {
+                    $kanbanTask->setTaskPosition($wip);
+                    $wip++;
+                }
+                elseif ($task->getProgress() == 'done')
+                {
+                    $kanbanTask->setTaskPosition($done);
+                    $done++;
+                }
+
+                $kanbanTask->save();
+            }
+
             $i++;
         }
 
-        return new JsonResponse(array('sprint' => $sprint), JsonResponse::HTTP_CREATED);
+
+
+        return new JsonResponse(array('sprint' => $sprint->toArray(\BasePeer::TYPE_FIELDNAME)), JsonResponse::HTTP_CREATED);
     }
 
     /**

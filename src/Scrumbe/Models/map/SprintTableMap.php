@@ -59,6 +59,7 @@ class SprintTableMap extends TableMap
     {
         $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), 'CASCADE', null);
         $this->addRelation('LinkUserStorySprint', 'Scrumbe\\Models\\LinkUserStorySprint', RelationMap::ONE_TO_MANY, array('id' => 'sprint_id', ), 'CASCADE', null, 'LinkUserStorySprints');
+        $this->addRelation('KanbanTask', 'Scrumbe\\Models\\KanbanTask', RelationMap::ONE_TO_MANY, array('id' => 'sprint_id', ), 'CASCADE', null, 'KanbanTasks');
     } // buildRelations()
 
     /**

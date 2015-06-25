@@ -269,133 +269,191 @@ Scrumbe\Models\UserStory:
         ratio: 1
         priority: low
         label: purple
+    us22:
+        project_id: p1
+        number: 10
+        description: En tant qu'utilisateur je veux créer un sprint
+        value: 42
+        complexity: 42
+        ratio: 1
+        priority: high
+        label: red
+    us23:
+        project_id: p1
+        number: 11
+        description: En tant qu'utilisateur je veux voir les sprints de mon projet
+        value: 42
+        complexity: 42
+        ratio: 1
+        priority: low
+        label: blue
+    us24:
+        project_id: p1
+        number: 12
+        description: En tant qu'utilisateur je veux voir le kanban du sprint en cours
+        complexity: 42
+        ratio: 1
+        priority: high
+        label: yellow
+    us25:
+        project_id: p1
+        number: 13
+        description: En tant qu'utilisateur je veux déplacer les cartes sur le kanban
+        value: 42
+        complexity: 42
+        ratio: 1
+        priority: medium
+        label: green
 
 Scrumbe\Models\Task:
     t1:
         user_story_id: us1
         description: Créer le projet Symfony
-        position: 1
         progress: done
     t2:
         user_story_id: us2
         description: Designer la home page
-        position: 2
         progress: done
     t3:
         user_story_id: us3
         description: Créer le formulaire pour envoyer son email
-        position: 8
         progress: done
     t4:
         user_story_id: us4
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t5:
         user_story_id: us2
         description: Développer le JS pour le texte qui défile
-        position: 7
         progress: done
     t6:
         user_story_id: us5
         description: TODO 1 (US1)
-        position: 1
         progress: todo
     t7:
         user_story_id: us6
         description: WIP 2 (US2)
-        position: 2
         progress: wip
     t8:
         user_story_id: us7
         description: WIP 1 (US3)
-        position: 1
         progress: wip
     t9:
         user_story_id: us8
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t10:
         user_story_id: us6
         description: DONE 1 (US2)
-        position: 1
         progress: done
     t11:
         user_story_id: us9
         description: TODO 1 (US1)
-        position: 1
         progress: todo
     t12:
         user_story_id: us10
         description: WIP 2 (US2)
-        position: 2
         progress: wip
     t13:
         user_story_id: us11
         description: WIP 1 (US3)
-        position: 1
         progress: wip
     t14:
         user_story_id: us12
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t15:
         user_story_id: us10
         description: DONE 1 (US2)
-        position: 1
         progress: done
     t16:
         user_story_id: us13
         description: TODO 1 (US1)
-        position: 1
         progress: todo
     t17:
         user_story_id: us14
         description: WIP 2 (US2)
-        position: 2
         progress: wip
     t18:
         user_story_id: us15
         description: WIP 1 (US3)
-        position: 1
         progress: wip
     t19:
         user_story_id: us16
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t20:
         user_story_id: us14
         description: DONE 1 (US2)
-        position: 1
         progress: done
     t21:
         user_story_id: us1
         description: Créer le git
-        position: 3
         progress: done
     t22:
         user_story_id: us1
         description: Préparer le nécessaire pour le front
-        position: 5
         progress: done
     t23:
         user_story_id: us2
         description: Integrer la home page
-        position: 4
         progress: done
     t24:
         user_story_id: us2
         description: Definir le contenu
-        position: 6
         progress: done
     t25:
         user_story_id: us3
         description: Enregistrer l'email
-        position: 9
         progress: done
+    t26:
+        user_story_id: us22
+        description: Créer le formulaire
+        progress: done
+    t27:
+        user_story_id: us22
+        description: Sauvegarder le sprint
+        progress: done
+    t28:
+        user_story_id: us22
+        description: Intégrer le formulaire
+        progress: wip
+    t29:
+        user_story_id: us23
+        description: Intégrer les cartes de visualisation
+        progress: wip
+    t30:
+        user_story_id: us23
+        description: Gérer la jauge de remplissage du sprint
+        progress: todo
+    t31:
+        user_story_id: us23
+        description: Récupérer les données du sprint
+        progress: done
+    t32:
+        user_story_id: us24
+        description: Intégrer le kanban
+        progress: todo
+    t33:
+        user_story_id: us24
+        description: Récupérer les US du sprint en cours
+        progress: wip
+    t34:
+        user_story_id: us24
+        description: Récupérer les taches du sprint en cours
+        progress: todo
+    t35:
+        user_story_id: us25
+        description: Gérer le drag and drop
+        progress: todo
+    t36:
+        user_story_id: us25
+        description: Sauvegarder le positionnement des US
+        progress: done
+    t37:
+        user_story_id: us25
+        description: Sauvegarder le positionnement des taches
+        progress: todo
 
 Scrumbe\Models\Sprint:
     s1:
@@ -451,3 +509,101 @@ Scrumbe\Models\LinkUserStorySprint:
         user_story_id: us21
         sprint_id: s2
         user_story_position: 6
+    lus10:
+        user_story_id: us22
+        sprint_id: s3
+        user_story_position: 1
+    lus11:
+        user_story_id: us23
+        sprint_id: s3
+        user_story_position: 3
+    lus12:
+        user_story_id: us24
+        sprint_id: s3
+        user_story_position: 2
+    lus13:
+        user_story_id: us25
+        sprint_id: s3
+        user_story_position: 4
+
+Scrumbe\Models\KanbanTask:
+    kt1:
+        task_id: t1
+        sprint_id: s1
+        task_position: 1
+    kt2:
+        task_id: t2
+        sprint_id: s1
+        task_position: 2
+    kt3:
+        task_id: t3
+        sprint_id: s1
+        task_position: 3
+    kt4:
+        task_id: t5
+        sprint_id: s1
+        task_position: 8
+    kt5:
+        task_id: t22
+        sprint_id: s1
+        task_position: 4
+    kt6:
+        task_id: t23
+        sprint_id: s1
+        task_position: 6
+    kt7:
+        task_id: t24
+        sprint_id: s1
+        task_position: 5
+    kt8:
+        task_id: t25
+        sprint_id: s1
+        task_position: 7
+    kt9:
+        task_id: t26
+        sprint_id: s3
+        task_position: 1
+    kt10:
+        task_id: t27
+        sprint_id: s3
+        task_position: 2
+    kt11:
+        task_id: t28
+        sprint_id: s3
+        task_position: 1
+    kt12:
+        task_id: t29
+        sprint_id: s3
+        task_position: 2
+    kt13:
+        task_id: t30
+        sprint_id: s3
+        task_position: 1
+    kt14:
+        task_id: t31
+        sprint_id: s3
+        task_position: 3
+    kt15:
+        task_id: t32
+        sprint_id: s3
+        task_position: 2
+    kt16:
+        task_id: t33
+        sprint_id: s3
+        task_position: 3
+    kt17:
+        task_id: t34
+        sprint_id: s3
+        task_position: 3
+    kt18:
+        task_id: t35
+        sprint_id: s3
+        task_position: 4
+    kt19:
+        task_id: t36
+        sprint_id: s3
+        task_position: 4
+    kt20:
+        task_id: t37
+        sprint_id: s3
+        task_position: 5

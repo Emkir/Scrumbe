@@ -12,6 +12,7 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\KanbanTask;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\TaskPeer;
 use Scrumbe\Models\TaskQuery;
@@ -22,7 +23,6 @@ use Scrumbe\Models\UserStory;
  * @method TaskQuery orderByUserStoryId($order = Criteria::ASC) Order by the user_story_id column
  * @method TaskQuery orderByTime($order = Criteria::ASC) Order by the time column
  * @method TaskQuery orderByDescription($order = Criteria::ASC) Order by the description column
- * @method TaskQuery orderByPosition($order = Criteria::ASC) Order by the position column
  * @method TaskQuery orderByProgress($order = Criteria::ASC) Order by the progress column
  * @method TaskQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method TaskQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
@@ -31,7 +31,6 @@ use Scrumbe\Models\UserStory;
  * @method TaskQuery groupByUserStoryId() Group by the user_story_id column
  * @method TaskQuery groupByTime() Group by the time column
  * @method TaskQuery groupByDescription() Group by the description column
- * @method TaskQuery groupByPosition() Group by the position column
  * @method TaskQuery groupByProgress() Group by the progress column
  * @method TaskQuery groupByCreatedAt() Group by the created_at column
  * @method TaskQuery groupByUpdatedAt() Group by the updated_at column
@@ -44,13 +43,16 @@ use Scrumbe\Models\UserStory;
  * @method TaskQuery rightJoinUserStory($relationAlias = null) Adds a RIGHT JOIN clause to the query using the UserStory relation
  * @method TaskQuery innerJoinUserStory($relationAlias = null) Adds a INNER JOIN clause to the query using the UserStory relation
  *
+ * @method TaskQuery leftJoinKanbanTask($relationAlias = null) Adds a LEFT JOIN clause to the query using the KanbanTask relation
+ * @method TaskQuery rightJoinKanbanTask($relationAlias = null) Adds a RIGHT JOIN clause to the query using the KanbanTask relation
+ * @method TaskQuery innerJoinKanbanTask($relationAlias = null) Adds a INNER JOIN clause to the query using the KanbanTask relation
+ *
  * @method Task findOne(PropelPDO $con = null) Return the first Task matching the query
  * @method Task findOneOrCreate(PropelPDO $con = null) Return the first Task matching the query, or a new Task object populated from the query conditions when no match is found
  *
  * @method Task findOneByUserStoryId(int $user_story_id) Return the first Task filtered by the user_story_id column
  * @method Task findOneByTime(string $time) Return the first Task filtered by the time column
  * @method Task findOneByDescription(string $description) Return the first Task filtered by the description column
- * @method Task findOneByPosition(int $position) Return the first Task filtered by the position column
  * @method Task findOneByProgress(string $progress) Return the first Task filtered by the progress column
  * @method Task findOneByCreatedAt(string $created_at) Return the first Task filtered by the created_at column
  * @method Task findOneByUpdatedAt(string $updated_at) Return the first Task filtered by the updated_at column
@@ -59,7 +61,6 @@ use Scrumbe\Models\UserStory;
  * @method array findByUserStoryId(int $user_story_id) Return Task objects filtered by the user_story_id column
  * @method array findByTime(string $time) Return Task objects filtered by the time column
  * @method array findByDescription(string $description) Return Task objects filtered by the description column
- * @method array findByPosition(int $position) Return Task objects filtered by the position column
  * @method array findByProgress(string $progress) Return Task objects filtered by the progress column
  * @method array findByCreatedAt(string $created_at) Return Task objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return Task objects filtered by the updated_at column
@@ -168,7 +169,7 @@ abstract class BaseTaskQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `user_story_id`, `time`, `description`, `position`, `progress`, `created_at`, `updated_at` FROM `task` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `user_story_id`, `time`, `description`, `progress`, `created_at`, `updated_at` FROM `task` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -402,48 +403,6 @@ abstract class BaseTaskQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query on the position column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByPosition(1234); // WHERE position = 1234
-     * $query->filterByPosition(array(12, 34)); // WHERE position IN (12, 34)
-     * $query->filterByPosition(array('min' => 12)); // WHERE position >= 12
-     * $query->filterByPosition(array('max' => 12)); // WHERE position <= 12
-     * </code>
-     *
-     * @param     mixed $position The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return TaskQuery The current query, for fluid interface
-     */
-    public function filterByPosition($position = null, $comparison = null)
-    {
-        if (is_array($position)) {
-            $useMinMax = false;
-            if (isset($position['min'])) {
-                $this->addUsingAlias(TaskPeer::POSITION, $position['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($position['max'])) {
-                $this->addUsingAlias(TaskPeer::POSITION, $position['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(TaskPeer::POSITION, $position, $comparison);
-    }
-
-    /**
      * Filter the query on the progress column
      *
      * Example usage:
@@ -632,6 +591,80 @@ abstract class BaseTaskQuery extends ModelCriteria
         return $this
             ->joinUserStory($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'UserStory', '\Scrumbe\Models\UserStoryQuery');
+    }
+
+    /**
+     * Filter the query by a related KanbanTask object
+     *
+     * @param   KanbanTask|PropelObjectCollection $kanbanTask  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 TaskQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByKanbanTask($kanbanTask, $comparison = null)
+    {
+        if ($kanbanTask instanceof KanbanTask) {
+            return $this
+                ->addUsingAlias(TaskPeer::ID, $kanbanTask->getTaskId(), $comparison);
+        } elseif ($kanbanTask instanceof PropelObjectCollection) {
+            return $this
+                ->useKanbanTaskQuery()
+                ->filterByPrimaryKeys($kanbanTask->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByKanbanTask() only accepts arguments of type KanbanTask or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the KanbanTask relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return TaskQuery The current query, for fluid interface
+     */
+    public function joinKanbanTask($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('KanbanTask');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'KanbanTask');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the KanbanTask relation KanbanTask object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \Scrumbe\Models\KanbanTaskQuery A secondary query class using the current class as primary query
+     */
+    public function useKanbanTaskQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinKanbanTask($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'KanbanTask', '\Scrumbe\Models\KanbanTaskQuery');
     }
 
     /**
