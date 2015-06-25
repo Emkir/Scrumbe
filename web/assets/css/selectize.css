@@ -243,6 +243,7 @@
 .selectize-dropdown [data-selectable] {
   cursor: pointer;
   overflow: hidden;
+    font-family: "Open Sans", sans-serif;
 }
 .selectize-dropdown [data-selectable] .highlight {
   background: rgba(255, 237, 40, 0.4);
@@ -387,6 +388,7 @@
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+    font-family: "Open Sans", sans-serif;
 }
 .form-control.selectize-control {
   padding: 0;
