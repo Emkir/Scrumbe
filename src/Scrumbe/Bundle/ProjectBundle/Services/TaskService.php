@@ -1,6 +1,8 @@
 <?php
 namespace Scrumbe\Bundle\ProjectBundle\Services;
 
+use Scrumbe\Models\KanbanTaskQuery;
+use Scrumbe\Models\SprintQuery;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\TaskQuery;
 use Scrumbe\Bundle\ProjectBundle\Form\Type\TaskType;
@@ -120,51 +122,71 @@ class TaskService {
     public function saveKanbanPosition($taskId, $taskPosition)
     {
         $task = TaskQuery::create()->findPk($taskId);
+
+        $conn   = \Propel::getConnection();
+        $sql    = '
+                SELECT s.id
+                FROM sprint as s
+                WHERE s.project_id = :projectId
+                AND CURDATE() >= DATE(s.start_date)
+                AND CURDATE() <= DATE(s.end_date)
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':projectId', $task->getUserStory()->getProjectId(), \PDO::PARAM_INT);
+        $stmt->execute();
+        $currentSprint= $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        $sprintId = $currentSprint['id'];
+        $kanbanTask = KanbanTaskQuery::create()->filterBySprintId($sprintId)->filterByTaskId($taskId)->findOne();
+
         $oldProgress = $task->getProgress();
-        $oldPosition = $task->getPosition();
+        $oldPosition = $kanbanTask->getTaskPosition();
         $newProgress = $taskPosition['progress'];
         $newPosition = $taskPosition['position'];
-        $task->setPosition($taskPosition['position']);
-        $task->setProgress($taskPosition['progress']);
+        $kanbanTask->setTaskPosition($newPosition);
+        $task->setProgress($newProgress);
         $task->save();
+        $kanbanTask->save();
+
+        $kanbanTaskId = $kanbanTask->getId();
 
         if ($oldProgress !== $newProgress)
         {
-            $tasksInNewProgress = TaskQuery::create()
-                ->useUserStoryQuery()
-                ->filterByProjectId($task->getUserStory()->getProjectId())
-                ->endUse()
+            $tasksInNewProgress = KanbanTaskQuery::create()
+                ->useTaskQuery()
                 ->filterByProgress($newProgress)
+                ->endUse()
+                ->filterBySprintId($sprintId)
                 ->find();
 
             if (!$tasksInNewProgress->isEmpty())
             {
                 foreach ($tasksInNewProgress as $taskInNewProgress)
                 {
-                    $position = $taskInNewProgress->getPosition();
-                    if ($position >= $newPosition && $taskInNewProgress->getId() != $taskId)
+                    $position = $taskInNewProgress->getTaskPosition();
+                    if ($position >= $newPosition && $taskInNewProgress->getId() != $kanbanTaskId)
                     {
-                        $taskInNewProgress->setPosition($position + 1);
+                        $taskInNewProgress->setTaskPosition($position + 1);
                         $taskInNewProgress->save();
                     }
                 }
             }
 
-            $tasksInOldProgress = TaskQuery::create()
-                ->useUserStoryQuery()
-                ->filterByProjectId($task->getUserStory()->getProjectId())
-                ->endUse()
+            $tasksInOldProgress = KanbanTaskQuery::create()
+                ->useTaskQuery()
                 ->filterByProgress($oldProgress)
+                ->endUse()
+                ->filterBySprintId($sprintId)
                 ->find();
 
             if (!$tasksInOldProgress->isEmpty())
             {
                 foreach ($tasksInOldProgress as $taskInOldProgress)
                 {
-                    $position = $taskInOldProgress->getPosition();
+                    $position = $taskInOldProgress->getTaskPosition();
                     if ($position > $oldPosition)
                     {
-                        $taskInOldProgress->setPosition($position - 1);
+                        $taskInOldProgress->setTaskPosition($position - 1);
                         $taskInOldProgress->save();
                     }
                 }
@@ -172,26 +194,26 @@ class TaskService {
         }
         else
         {
-            $tasksInProgress = TaskQuery::create()
-                ->useUserStoryQuery()
-                ->filterByProjectId($task->getUserStory()->getProjectId())
-                ->endUse()
+            $tasksInProgress = KanbanTaskQuery::create()
+                ->useTaskQuery()
                 ->filterByProgress($newProgress)
+                ->endUse()
+                ->filterBySprintId($sprintId)
                 ->find();
 
             if (!$tasksInProgress->isEmpty())
             {
                 foreach ($tasksInProgress as $taskInProgress)
                 {
-                    $position = $taskInProgress->getPosition();
-                    if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $taskInProgress->getId() != $task->getId())
+                    $position = $taskInProgress->getTaskPosition();
+                    if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $taskInProgress->getId() != $kanbanTaskId)
                     {
-                        $taskInProgress->setPosition($position - 1);
+                        $taskInProgress->setTaskPosition($position - 1);
                         $taskInProgress->save();
                     }
-                    elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $taskInProgress->getId() != $task->getId())
+                    elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $taskInProgress->getId() != $kanbanTaskId)
                     {
-                        $taskInProgress->setPosition($position + 1);
+                        $taskInProgress->setTaskPosition($position + 1);
                         $taskInProgress->save();
                     }
                 }
