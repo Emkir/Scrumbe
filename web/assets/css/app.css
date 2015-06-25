@@ -4547,7 +4547,7 @@ footer {
         margin-top: 15px; }
         .sprint .sprints-list > li .infos-ctn .task-count svg {
           width: 45%;
-          left: 26%;
+          left: 27%;
           margin-top: 2%;
           position: relative;
           -webkit-transform: rotateZ(-90deg) rotateX(190deg);
@@ -4560,21 +4560,25 @@ footer {
           position: absolute;
           top: 50px;
           left: 50%;
-          margin-left: -25px;
+          margin-left: -40px;
           color: #7F8CA6;
           font-family: "Open Sans", sans-serif;
           font-size: 1.75rem;
-          font-weight: 700; }
+          font-weight: 700;
+          text-align: center;
+          width: 80px; }
           .sprint .sprints-list > li .infos-ctn .task-count .tasks .done-tasks {
             color: #7F8CA6;
             font-family: "Open Sans", sans-serif;
             font-size: 1.75rem;
-            font-weight: 700; }
+            font-weight: 700;
+            display: inline-block; }
           .sprint .sprints-list > li .infos-ctn .task-count .tasks .total-tasks {
             color: #7F8CA6;
             font-family: "Open Sans", sans-serif;
             font-size: 1.75rem;
-            font-weight: 700; }
+            font-weight: 700;
+            display: inline-block; }
           .sprint .sprints-list > li .infos-ctn .task-count .tasks:after {
             content: "tâches";
             display: block;
@@ -4584,7 +4588,7 @@ footer {
             font-weight: 300;
             position: absolute;
             top: 30px;
-            left: -3px; }
+            left: 12px; }
     .sprint .sprints-list > li .date-ctn {
       -webkit-box-sizing: border-box;
       -moz-box-sizing: border-box;
