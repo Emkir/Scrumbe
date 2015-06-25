@@ -117,6 +117,7 @@
                                 <option value="{{ user_story.id }}">US{{ user_story.number }}: {{ user_story.description }}</option>
                             {% endfor %}
                         </select>
+                        <div id="sprint-error"></div>
                         <input name="start_date" type="text" placeholder="Date de début" class="start-date-input"/>
                         <img src="/assets/img/arrow.png" alt="arrow"/>
                         <input name="end_date" type="text" placeholder="Date de fin" class="start-end-input"/>
@@ -209,7 +210,8 @@
                 $('.form-sprint').hide();
                 location.reload();
             }).fail(function(data){
-                console.log(data)
+                console.log(data);
+                $('#sprint-error').append(data.responseJSON.errors).css( "color", "red" );
             })
         })
     </script>
