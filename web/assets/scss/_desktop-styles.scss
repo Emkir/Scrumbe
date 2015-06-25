@@ -2457,7 +2457,7 @@ footer {
         li {
             position: relative;
             height: 342px;
-            width: 300px;
+            width: 22%;
             background-color: #fff;
             border: 1px solid #E6EAEE;
             border-radius: 4px;
@@ -2648,9 +2648,14 @@ footer {
                         content: "En cours";
                         display: block;
                     }
-                    &.next {
+                    &.next:after {
                         color: $orange;
                         content: "Suivant";
+                        display: block;
+                    }
+                    &.last:after {
+                        color: $red;
+                        content: "Terminé";
                         display: block;
                     }
                 }
@@ -2694,18 +2699,42 @@ footer {
                     position: relative;
                     margin-top: 15px;
 
-                    canvas {
-                        transform: rotateZ(180deg);
+                    svg {
+                        width: 45%;
+                        left: 26%;
+                        margin-top: 2%;
+                        position: relative;
+                        transform: rotateZ(-90deg) rotateX(190deg);
+
+                        .gauge {
+                            stroke-dasharray: 350;
+                            stroke-dashoffset: 350;
+                        }
                     }
+
                     .tasks {
+                        position: absolute;
+                        top: 50px;
+                        left: 50%;
+                        margin-left: -25px;
                         color: #7F8CA6;
                         font-family: "Open Sans", sans-serif;
                         font-size: rem-calc(28px);
                         font-weight: 700;
-                        position: absolute;
-                        top: 50px;
-                        left: 50%;
-                        margin-left: -38px;
+
+                        .done-tasks {
+                            color: #7F8CA6;
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(28px);
+                            font-weight: 700;
+                        }
+
+                        .total-tasks {
+                            color: #7F8CA6;
+                            font-family: "Open Sans", sans-serif;
+                            font-size: rem-calc(28px);
+                            font-weight: 700;
+                        }
 
                         &:after {
                             content: "tâches";
@@ -2716,7 +2745,7 @@ footer {
                             font-weight: 300;
                             position: absolute;
                             top: 30px;
-                            left: 11px;
+                            left: -3px;
                         }
                     }
                 }
@@ -2749,6 +2778,7 @@ footer {
 
             &.form-sprint {
                 text-align: center;
+                display: none;
 
                 .title {
                     font-family: "Open Sans", sans-serif;
