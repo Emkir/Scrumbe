@@ -85,7 +85,6 @@ CREATE TABLE `task`
     `user_story_id` INTEGER,
     `time` VARCHAR(255),
     `description` TEXT,
-    `position` INTEGER,
     `progress` VARCHAR(255),
     `created_at` DATETIME,
     `updated_at` DATETIME,
@@ -173,6 +172,31 @@ CREATE TABLE `link_user_story_sprint`
         REFERENCES `user_story` (`id`)
         ON DELETE CASCADE,
     CONSTRAINT `link_user_story_sprint_FK_2`
+        FOREIGN KEY (`sprint_id`)
+        REFERENCES `sprint` (`id`)
+        ON DELETE CASCADE
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
+
+-- ---------------------------------------------------------------------
+-- kanban_task
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `kanban_task`;
+
+CREATE TABLE `kanban_task`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `task_id` INTEGER,
+    `sprint_id` INTEGER,
+    `task_position` INTEGER,
+    PRIMARY KEY (`id`),
+    INDEX `kanban_task_FI_1` (`task_id`),
+    INDEX `kanban_task_FI_2` (`sprint_id`),
+    CONSTRAINT `kanban_task_FK_1`
+        FOREIGN KEY (`task_id`)
+        REFERENCES `task` (`id`)
+        ON DELETE CASCADE,
+    CONSTRAINT `kanban_task_FK_2`
         FOREIGN KEY (`sprint_id`)
         REFERENCES `sprint` (`id`)
         ON DELETE CASCADE

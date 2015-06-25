@@ -2,6 +2,9 @@
 
 namespace Scrumbe\Bundle\ProjectBundle\Controller;
 
+use Scrumbe\Models\KanbanTask;
+use Scrumbe\Models\KanbanTaskQuery;
+use Scrumbe\Models\LinkUserStorySprintQuery;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\TaskQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,7 +53,27 @@ class TaskController extends Controller
         $task = new Task();
         $task->setUserStoryId($data['user_story_id']);
         $task->setDescription($data['description']);
+        $task->setProgress('todo');
         $task->save();
+
+        $sprints = LinkUserStorySprintQuery::create()->filterByUserStoryId($data['user_story_id'])->find();
+        if (!$sprints->isEmpty())
+        {
+            foreach ($sprints as $sprint)
+            {
+                $kanbanTask = new KanbanTask();
+                $kanbanTask->setSprintId($sprint->getId());
+                $kanbanTask->setTaskId($task->getId());
+
+                $lastTodo = KanbanTaskQuery::create()->filterBySprintId($sprint->getId())->useTaskQuery()->filterByProgress('todo')->endUse()->orderByTaskPosition('desc')->findOne();
+                if ($lastTodo === null)
+                    $kanbanTask->setTaskPosition(1);
+                else
+                    $kanbanTask->setTaskPosition($lastTodo->getTaskPosition() + 1);
+
+                $kanbanTask->save();
+            }
+        }
 
         return new JsonResponse(array('task' => $task), JsonResponse::HTTP_CREATED);
     }

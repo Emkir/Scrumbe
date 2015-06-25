@@ -9,6 +9,7 @@ use \PDOStatement;
 use \Propel;
 use \PropelException;
 use \PropelPDO;
+use Scrumbe\Models\KanbanTaskPeer;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\TaskPeer;
 use Scrumbe\Models\UserStoryPeer;
@@ -30,13 +31,13 @@ abstract class BaseTaskPeer
     const TM_CLASS = 'Scrumbe\\Models\\map\\TaskTableMap';
 
     /** The total number of columns. */
-    const NUM_COLUMNS = 8;
+    const NUM_COLUMNS = 7;
 
     /** The number of lazy-loaded columns. */
     const NUM_LAZY_LOAD_COLUMNS = 0;
 
     /** The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS) */
-    const NUM_HYDRATE_COLUMNS = 8;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /** the column name for the id field */
     const ID = 'task.id';
@@ -49,9 +50,6 @@ abstract class BaseTaskPeer
 
     /** the column name for the description field */
     const DESCRIPTION = 'task.description';
-
-    /** the column name for the position field */
-    const POSITION = 'task.position';
 
     /** the column name for the progress field */
     const PROGRESS = 'task.progress';
@@ -81,12 +79,12 @@ abstract class BaseTaskPeer
      * e.g. TaskPeer::$fieldNames[TaskPeer::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        BasePeer::TYPE_PHPNAME => array ('Id', 'UserStoryId', 'Time', 'Description', 'Position', 'Progress', 'CreatedAt', 'UpdatedAt', ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userStoryId', 'time', 'description', 'position', 'progress', 'createdAt', 'updatedAt', ),
-        BasePeer::TYPE_COLNAME => array (TaskPeer::ID, TaskPeer::USER_STORY_ID, TaskPeer::TIME, TaskPeer::DESCRIPTION, TaskPeer::POSITION, TaskPeer::PROGRESS, TaskPeer::CREATED_AT, TaskPeer::UPDATED_AT, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USER_STORY_ID', 'TIME', 'DESCRIPTION', 'POSITION', 'PROGRESS', 'CREATED_AT', 'UPDATED_AT', ),
-        BasePeer::TYPE_FIELDNAME => array ('id', 'user_story_id', 'time', 'description', 'position', 'progress', 'created_at', 'updated_at', ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+        BasePeer::TYPE_PHPNAME => array ('Id', 'UserStoryId', 'Time', 'Description', 'Progress', 'CreatedAt', 'UpdatedAt', ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id', 'userStoryId', 'time', 'description', 'progress', 'createdAt', 'updatedAt', ),
+        BasePeer::TYPE_COLNAME => array (TaskPeer::ID, TaskPeer::USER_STORY_ID, TaskPeer::TIME, TaskPeer::DESCRIPTION, TaskPeer::PROGRESS, TaskPeer::CREATED_AT, TaskPeer::UPDATED_AT, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID', 'USER_STORY_ID', 'TIME', 'DESCRIPTION', 'PROGRESS', 'CREATED_AT', 'UPDATED_AT', ),
+        BasePeer::TYPE_FIELDNAME => array ('id', 'user_story_id', 'time', 'description', 'progress', 'created_at', 'updated_at', ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -96,12 +94,12 @@ abstract class BaseTaskPeer
      * e.g. TaskPeer::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserStoryId' => 1, 'Time' => 2, 'Description' => 3, 'Position' => 4, 'Progress' => 5, 'CreatedAt' => 6, 'UpdatedAt' => 7, ),
-        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userStoryId' => 1, 'time' => 2, 'description' => 3, 'position' => 4, 'progress' => 5, 'createdAt' => 6, 'updatedAt' => 7, ),
-        BasePeer::TYPE_COLNAME => array (TaskPeer::ID => 0, TaskPeer::USER_STORY_ID => 1, TaskPeer::TIME => 2, TaskPeer::DESCRIPTION => 3, TaskPeer::POSITION => 4, TaskPeer::PROGRESS => 5, TaskPeer::CREATED_AT => 6, TaskPeer::UPDATED_AT => 7, ),
-        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USER_STORY_ID' => 1, 'TIME' => 2, 'DESCRIPTION' => 3, 'POSITION' => 4, 'PROGRESS' => 5, 'CREATED_AT' => 6, 'UPDATED_AT' => 7, ),
-        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_story_id' => 1, 'time' => 2, 'description' => 3, 'position' => 4, 'progress' => 5, 'created_at' => 6, 'updated_at' => 7, ),
-        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+        BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserStoryId' => 1, 'Time' => 2, 'Description' => 3, 'Progress' => 4, 'CreatedAt' => 5, 'UpdatedAt' => 6, ),
+        BasePeer::TYPE_STUDLYPHPNAME => array ('id' => 0, 'userStoryId' => 1, 'time' => 2, 'description' => 3, 'progress' => 4, 'createdAt' => 5, 'updatedAt' => 6, ),
+        BasePeer::TYPE_COLNAME => array (TaskPeer::ID => 0, TaskPeer::USER_STORY_ID => 1, TaskPeer::TIME => 2, TaskPeer::DESCRIPTION => 3, TaskPeer::PROGRESS => 4, TaskPeer::CREATED_AT => 5, TaskPeer::UPDATED_AT => 6, ),
+        BasePeer::TYPE_RAW_COLNAME => array ('ID' => 0, 'USER_STORY_ID' => 1, 'TIME' => 2, 'DESCRIPTION' => 3, 'PROGRESS' => 4, 'CREATED_AT' => 5, 'UPDATED_AT' => 6, ),
+        BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_story_id' => 1, 'time' => 2, 'description' => 3, 'progress' => 4, 'created_at' => 5, 'updated_at' => 6, ),
+        BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -179,7 +177,6 @@ abstract class BaseTaskPeer
             $criteria->addSelectColumn(TaskPeer::USER_STORY_ID);
             $criteria->addSelectColumn(TaskPeer::TIME);
             $criteria->addSelectColumn(TaskPeer::DESCRIPTION);
-            $criteria->addSelectColumn(TaskPeer::POSITION);
             $criteria->addSelectColumn(TaskPeer::PROGRESS);
             $criteria->addSelectColumn(TaskPeer::CREATED_AT);
             $criteria->addSelectColumn(TaskPeer::UPDATED_AT);
@@ -188,7 +185,6 @@ abstract class BaseTaskPeer
             $criteria->addSelectColumn($alias . '.user_story_id');
             $criteria->addSelectColumn($alias . '.time');
             $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.position');
             $criteria->addSelectColumn($alias . '.progress');
             $criteria->addSelectColumn($alias . '.created_at');
             $criteria->addSelectColumn($alias . '.updated_at');
@@ -396,6 +392,9 @@ abstract class BaseTaskPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in KanbanTaskPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        KanbanTaskPeer::clearInstancePool();
     }
 
     /**

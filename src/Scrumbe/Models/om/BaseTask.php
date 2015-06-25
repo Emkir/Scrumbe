@@ -10,9 +10,13 @@ use \Exception;
 use \PDO;
 use \Persistent;
 use \Propel;
+use \PropelCollection;
 use \PropelDateTime;
 use \PropelException;
+use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\KanbanTask;
+use Scrumbe\Models\KanbanTaskQuery;
 use Scrumbe\Models\Task;
 use Scrumbe\Models\TaskPeer;
 use Scrumbe\Models\TaskQuery;
@@ -65,12 +69,6 @@ abstract class BaseTask extends BaseObject implements Persistent
     protected $description;
 
     /**
-     * The value for the position field.
-     * @var        int
-     */
-    protected $position;
-
-    /**
      * The value for the progress field.
      * @var        string
      */
@@ -94,6 +92,12 @@ abstract class BaseTask extends BaseObject implements Persistent
     protected $aUserStory;
 
     /**
+     * @var        PropelObjectCollection|KanbanTask[] Collection to store aggregation of KanbanTask objects.
+     */
+    protected $collKanbanTasks;
+    protected $collKanbanTasksPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      * @var        boolean
@@ -112,6 +116,12 @@ abstract class BaseTask extends BaseObject implements Persistent
      * @var        boolean
      */
     protected $alreadyInClearAllReferencesDeep = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var		PropelObjectCollection
+     */
+    protected $kanbanTasksScheduledForDeletion = null;
 
     /**
      * Get the [id] column value.
@@ -155,17 +165,6 @@ abstract class BaseTask extends BaseObject implements Persistent
     {
 
         return $this->description;
-    }
-
-    /**
-     * Get the [position] column value.
-     *
-     * @return int
-     */
-    public function getPosition()
-    {
-
-        return $this->position;
     }
 
     /**
@@ -348,27 +347,6 @@ abstract class BaseTask extends BaseObject implements Persistent
     } // setDescription()
 
     /**
-     * Set the value of [position] column.
-     *
-     * @param  int $v new value
-     * @return Task The current object (for fluent API support)
-     */
-    public function setPosition($v)
-    {
-        if ($v !== null && is_numeric($v)) {
-            $v = (int) $v;
-        }
-
-        if ($this->position !== $v) {
-            $this->position = $v;
-            $this->modifiedColumns[] = TaskPeer::POSITION;
-        }
-
-
-        return $this;
-    } // setPosition()
-
-    /**
      * Set the value of [progress] column.
      *
      * @param  string $v new value
@@ -471,10 +449,9 @@ abstract class BaseTask extends BaseObject implements Persistent
             $this->user_story_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
             $this->time = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
             $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->position = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
-            $this->progress = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
-            $this->created_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
-            $this->updated_at = ($row[$startcol + 7] !== null) ? (string) $row[$startcol + 7] : null;
+            $this->progress = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+            $this->created_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
+            $this->updated_at = ($row[$startcol + 6] !== null) ? (string) $row[$startcol + 6] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -484,7 +461,7 @@ abstract class BaseTask extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 8; // 8 = TaskPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = TaskPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating Task object", $e);
@@ -550,6 +527,8 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($deep) {  // also de-associate any related objects?
 
             $this->aUserStory = null;
+            $this->collKanbanTasks = null;
+
         } // if (deep)
     }
 
@@ -697,6 +676,23 @@ abstract class BaseTask extends BaseObject implements Persistent
                 $this->resetModified();
             }
 
+            if ($this->kanbanTasksScheduledForDeletion !== null) {
+                if (!$this->kanbanTasksScheduledForDeletion->isEmpty()) {
+                    KanbanTaskQuery::create()
+                        ->filterByPrimaryKeys($this->kanbanTasksScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->kanbanTasksScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collKanbanTasks !== null) {
+                foreach ($this->collKanbanTasks as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             $this->alreadyInSave = false;
 
         }
@@ -735,9 +731,6 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($this->isColumnModified(TaskPeer::DESCRIPTION)) {
             $modifiedColumns[':p' . $index++]  = '`description`';
         }
-        if ($this->isColumnModified(TaskPeer::POSITION)) {
-            $modifiedColumns[':p' . $index++]  = '`position`';
-        }
         if ($this->isColumnModified(TaskPeer::PROGRESS)) {
             $modifiedColumns[':p' . $index++]  = '`progress`';
         }
@@ -769,9 +762,6 @@ abstract class BaseTask extends BaseObject implements Persistent
                         break;
                     case '`description`':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);
-                        break;
-                    case '`position`':
-                        $stmt->bindValue($identifier, $this->position, PDO::PARAM_INT);
                         break;
                     case '`progress`':
                         $stmt->bindValue($identifier, $this->progress, PDO::PARAM_STR);
@@ -893,6 +883,14 @@ abstract class BaseTask extends BaseObject implements Persistent
             }
 
 
+                if ($this->collKanbanTasks !== null) {
+                    foreach ($this->collKanbanTasks as $referrerFK) {
+                        if (!$referrerFK->validate($columns)) {
+                            $failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+                        }
+                    }
+                }
+
 
             $this->alreadyInValidation = false;
         }
@@ -941,15 +939,12 @@ abstract class BaseTask extends BaseObject implements Persistent
                 return $this->getDescription();
                 break;
             case 4:
-                return $this->getPosition();
-                break;
-            case 5:
                 return $this->getProgress();
                 break;
-            case 6:
+            case 5:
                 return $this->getCreatedAt();
                 break;
-            case 7:
+            case 6:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -985,10 +980,9 @@ abstract class BaseTask extends BaseObject implements Persistent
             $keys[1] => $this->getUserStoryId(),
             $keys[2] => $this->getTime(),
             $keys[3] => $this->getDescription(),
-            $keys[4] => $this->getPosition(),
-            $keys[5] => $this->getProgress(),
-            $keys[6] => $this->getCreatedAt(),
-            $keys[7] => $this->getUpdatedAt(),
+            $keys[4] => $this->getProgress(),
+            $keys[5] => $this->getCreatedAt(),
+            $keys[6] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -998,6 +992,9 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($includeForeignObjects) {
             if (null !== $this->aUserStory) {
                 $result['UserStory'] = $this->aUserStory->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collKanbanTasks) {
+                $result['KanbanTasks'] = $this->collKanbanTasks->toArray(null, true, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1046,15 +1043,12 @@ abstract class BaseTask extends BaseObject implements Persistent
                 $this->setDescription($value);
                 break;
             case 4:
-                $this->setPosition($value);
-                break;
-            case 5:
                 $this->setProgress($value);
                 break;
-            case 6:
+            case 5:
                 $this->setCreatedAt($value);
                 break;
-            case 7:
+            case 6:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -1085,10 +1079,9 @@ abstract class BaseTask extends BaseObject implements Persistent
         if (array_key_exists($keys[1], $arr)) $this->setUserStoryId($arr[$keys[1]]);
         if (array_key_exists($keys[2], $arr)) $this->setTime($arr[$keys[2]]);
         if (array_key_exists($keys[3], $arr)) $this->setDescription($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setPosition($arr[$keys[4]]);
-        if (array_key_exists($keys[5], $arr)) $this->setProgress($arr[$keys[5]]);
-        if (array_key_exists($keys[6], $arr)) $this->setCreatedAt($arr[$keys[6]]);
-        if (array_key_exists($keys[7], $arr)) $this->setUpdatedAt($arr[$keys[7]]);
+        if (array_key_exists($keys[4], $arr)) $this->setProgress($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setCreatedAt($arr[$keys[5]]);
+        if (array_key_exists($keys[6], $arr)) $this->setUpdatedAt($arr[$keys[6]]);
     }
 
     /**
@@ -1104,7 +1097,6 @@ abstract class BaseTask extends BaseObject implements Persistent
         if ($this->isColumnModified(TaskPeer::USER_STORY_ID)) $criteria->add(TaskPeer::USER_STORY_ID, $this->user_story_id);
         if ($this->isColumnModified(TaskPeer::TIME)) $criteria->add(TaskPeer::TIME, $this->time);
         if ($this->isColumnModified(TaskPeer::DESCRIPTION)) $criteria->add(TaskPeer::DESCRIPTION, $this->description);
-        if ($this->isColumnModified(TaskPeer::POSITION)) $criteria->add(TaskPeer::POSITION, $this->position);
         if ($this->isColumnModified(TaskPeer::PROGRESS)) $criteria->add(TaskPeer::PROGRESS, $this->progress);
         if ($this->isColumnModified(TaskPeer::CREATED_AT)) $criteria->add(TaskPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(TaskPeer::UPDATED_AT)) $criteria->add(TaskPeer::UPDATED_AT, $this->updated_at);
@@ -1174,7 +1166,6 @@ abstract class BaseTask extends BaseObject implements Persistent
         $copyObj->setUserStoryId($this->getUserStoryId());
         $copyObj->setTime($this->getTime());
         $copyObj->setDescription($this->getDescription());
-        $copyObj->setPosition($this->getPosition());
         $copyObj->setProgress($this->getProgress());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
@@ -1185,6 +1176,12 @@ abstract class BaseTask extends BaseObject implements Persistent
             $copyObj->setNew(false);
             // store object hash to prevent cycle
             $this->startCopy = true;
+
+            foreach ($this->getKanbanTasks() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addKanbanTask($relObj->copy($deepCopy));
+                }
+            }
 
             //unflag object copy
             $this->startCopy = false;
@@ -1288,6 +1285,272 @@ abstract class BaseTask extends BaseObject implements Persistent
         return $this->aUserStory;
     }
 
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName)
+    {
+        if ('KanbanTask' == $relationName) {
+            $this->initKanbanTasks();
+        }
+    }
+
+    /**
+     * Clears out the collKanbanTasks collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return Task The current object (for fluent API support)
+     * @see        addKanbanTasks()
+     */
+    public function clearKanbanTasks()
+    {
+        $this->collKanbanTasks = null; // important to set this to null since that means it is uninitialized
+        $this->collKanbanTasksPartial = null;
+
+        return $this;
+    }
+
+    /**
+     * reset is the collKanbanTasks collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartialKanbanTasks($v = true)
+    {
+        $this->collKanbanTasksPartial = $v;
+    }
+
+    /**
+     * Initializes the collKanbanTasks collection.
+     *
+     * By default this just sets the collKanbanTasks collection to an empty array (like clearcollKanbanTasks());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initKanbanTasks($overrideExisting = true)
+    {
+        if (null !== $this->collKanbanTasks && !$overrideExisting) {
+            return;
+        }
+        $this->collKanbanTasks = new PropelObjectCollection();
+        $this->collKanbanTasks->setModel('KanbanTask');
+    }
+
+    /**
+     * Gets an array of KanbanTask objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this Task is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @return PropelObjectCollection|KanbanTask[] List of KanbanTask objects
+     * @throws PropelException
+     */
+    public function getKanbanTasks($criteria = null, PropelPDO $con = null)
+    {
+        $partial = $this->collKanbanTasksPartial && !$this->isNew();
+        if (null === $this->collKanbanTasks || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collKanbanTasks) {
+                // return empty collection
+                $this->initKanbanTasks();
+            } else {
+                $collKanbanTasks = KanbanTaskQuery::create(null, $criteria)
+                    ->filterByTask($this)
+                    ->find($con);
+                if (null !== $criteria) {
+                    if (false !== $this->collKanbanTasksPartial && count($collKanbanTasks)) {
+                      $this->initKanbanTasks(false);
+
+                      foreach ($collKanbanTasks as $obj) {
+                        if (false == $this->collKanbanTasks->contains($obj)) {
+                          $this->collKanbanTasks->append($obj);
+                        }
+                      }
+
+                      $this->collKanbanTasksPartial = true;
+                    }
+
+                    $collKanbanTasks->getInternalIterator()->rewind();
+
+                    return $collKanbanTasks;
+                }
+
+                if ($partial && $this->collKanbanTasks) {
+                    foreach ($this->collKanbanTasks as $obj) {
+                        if ($obj->isNew()) {
+                            $collKanbanTasks[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collKanbanTasks = $collKanbanTasks;
+                $this->collKanbanTasksPartial = false;
+            }
+        }
+
+        return $this->collKanbanTasks;
+    }
+
+    /**
+     * Sets a collection of KanbanTask objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param PropelCollection $kanbanTasks A Propel collection.
+     * @param PropelPDO $con Optional connection object
+     * @return Task The current object (for fluent API support)
+     */
+    public function setKanbanTasks(PropelCollection $kanbanTasks, PropelPDO $con = null)
+    {
+        $kanbanTasksToDelete = $this->getKanbanTasks(new Criteria(), $con)->diff($kanbanTasks);
+
+
+        $this->kanbanTasksScheduledForDeletion = $kanbanTasksToDelete;
+
+        foreach ($kanbanTasksToDelete as $kanbanTaskRemoved) {
+            $kanbanTaskRemoved->setTask(null);
+        }
+
+        $this->collKanbanTasks = null;
+        foreach ($kanbanTasks as $kanbanTask) {
+            $this->addKanbanTask($kanbanTask);
+        }
+
+        $this->collKanbanTasks = $kanbanTasks;
+        $this->collKanbanTasksPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related KanbanTask objects.
+     *
+     * @param Criteria $criteria
+     * @param boolean $distinct
+     * @param PropelPDO $con
+     * @return int             Count of related KanbanTask objects.
+     * @throws PropelException
+     */
+    public function countKanbanTasks(Criteria $criteria = null, $distinct = false, PropelPDO $con = null)
+    {
+        $partial = $this->collKanbanTasksPartial && !$this->isNew();
+        if (null === $this->collKanbanTasks || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collKanbanTasks) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getKanbanTasks());
+            }
+            $query = KanbanTaskQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByTask($this)
+                ->count($con);
+        }
+
+        return count($this->collKanbanTasks);
+    }
+
+    /**
+     * Method called to associate a KanbanTask object to this object
+     * through the KanbanTask foreign key attribute.
+     *
+     * @param    KanbanTask $l KanbanTask
+     * @return Task The current object (for fluent API support)
+     */
+    public function addKanbanTask(KanbanTask $l)
+    {
+        if ($this->collKanbanTasks === null) {
+            $this->initKanbanTasks();
+            $this->collKanbanTasksPartial = true;
+        }
+
+        if (!in_array($l, $this->collKanbanTasks->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
+            $this->doAddKanbanTask($l);
+
+            if ($this->kanbanTasksScheduledForDeletion and $this->kanbanTasksScheduledForDeletion->contains($l)) {
+                $this->kanbanTasksScheduledForDeletion->remove($this->kanbanTasksScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param	KanbanTask $kanbanTask The kanbanTask object to add.
+     */
+    protected function doAddKanbanTask($kanbanTask)
+    {
+        $this->collKanbanTasks[]= $kanbanTask;
+        $kanbanTask->setTask($this);
+    }
+
+    /**
+     * @param	KanbanTask $kanbanTask The kanbanTask object to remove.
+     * @return Task The current object (for fluent API support)
+     */
+    public function removeKanbanTask($kanbanTask)
+    {
+        if ($this->getKanbanTasks()->contains($kanbanTask)) {
+            $this->collKanbanTasks->remove($this->collKanbanTasks->search($kanbanTask));
+            if (null === $this->kanbanTasksScheduledForDeletion) {
+                $this->kanbanTasksScheduledForDeletion = clone $this->collKanbanTasks;
+                $this->kanbanTasksScheduledForDeletion->clear();
+            }
+            $this->kanbanTasksScheduledForDeletion[]= $kanbanTask;
+            $kanbanTask->setTask(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Task is new, it will return
+     * an empty collection; or if this Task has previously
+     * been saved, it will retrieve related KanbanTasks from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Task.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param PropelPDO $con optional connection object
+     * @param string $join_behavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return PropelObjectCollection|KanbanTask[] List of KanbanTask objects
+     */
+    public function getKanbanTasksJoinSprint($criteria = null, $con = null, $join_behavior = Criteria::LEFT_JOIN)
+    {
+        $query = KanbanTaskQuery::create(null, $criteria);
+        $query->joinWith('Sprint', $join_behavior);
+
+        return $this->getKanbanTasks($query, $con);
+    }
+
     /**
      * Clears the current object and sets all attributes to their default values
      */
@@ -1297,7 +1560,6 @@ abstract class BaseTask extends BaseObject implements Persistent
         $this->user_story_id = null;
         $this->time = null;
         $this->description = null;
-        $this->position = null;
         $this->progress = null;
         $this->created_at = null;
         $this->updated_at = null;
@@ -1323,6 +1585,11 @@ abstract class BaseTask extends BaseObject implements Persistent
     {
         if ($deep && !$this->alreadyInClearAllReferencesDeep) {
             $this->alreadyInClearAllReferencesDeep = true;
+            if ($this->collKanbanTasks) {
+                foreach ($this->collKanbanTasks as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->aUserStory instanceof Persistent) {
               $this->aUserStory->clearAllReferences($deep);
             }
@@ -1330,6 +1597,10 @@ abstract class BaseTask extends BaseObject implements Persistent
             $this->alreadyInClearAllReferencesDeep = false;
         } // if ($deep)
 
+        if ($this->collKanbanTasks instanceof PropelCollection) {
+            $this->collKanbanTasks->clearIterator();
+        }
+        $this->collKanbanTasks = null;
         $this->aUserStory = null;
     }
 

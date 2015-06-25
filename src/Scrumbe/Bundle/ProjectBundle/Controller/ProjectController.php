@@ -7,6 +7,7 @@ use Scrumbe\Models\LinkUserStorySprint;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\ProjectQuery;
 use Scrumbe\Models\Sprint;
+use Scrumbe\Models\SprintQuery;
 use Scrumbe\Models\UserQuery;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -305,6 +306,19 @@ class ProjectController extends Controller
         if ($startDate > $endDate)
             return new JsonResponse(array('errors' => 'sprint.date'), JsonResponse::HTTP_BAD_REQUEST);
 
+        $projectSprints = SprintQuery::create()->filterByProjectId($data['project_id'])->find();
+        if (!$projectSprints->isEmpty())
+        {
+            foreach ($projectSprints as $projectSprint)
+            {
+                $sprintStart = $projectSprint->getStartDate();
+                $sprintEnd = $projectSprint->getEndDate();
+
+                if (($startDate >= $sprintStart && $startDate <= $sprintEnd) || ($endDate >= $sprintStart && $endDate <= $sprintEnd) || ($startDate < $sprintStart && $endDate > $sprintEnd))
+                    return new JsonResponse(array('errors' => 'sprint.inner'), JsonResponse::HTTP_BAD_REQUEST);
+            }
+        }
+
         $sprint = new Sprint();
         $sprint->setProjectId($data['project_id']);
         $sprint->setName($data['name']);
@@ -323,7 +337,7 @@ class ProjectController extends Controller
             $i++;
         }
 
-        return new JsonResponse(array('sprint' => $sprint), JsonResponse::HTTP_CREATED);
+        return new JsonResponse(array('sprint' => $sprint->toArray(\BasePeer::TYPE_FIELDNAME)), JsonResponse::HTTP_CREATED);
     }
 
     /**

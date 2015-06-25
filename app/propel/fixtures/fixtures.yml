@@ -274,127 +274,102 @@ Scrumbe\Models\Task:
     t1:
         user_story_id: us1
         description: Créer le projet Symfony
-        position: 1
         progress: done
     t2:
         user_story_id: us2
         description: Designer la home page
-        position: 2
         progress: done
     t3:
         user_story_id: us3
         description: Créer le formulaire pour envoyer son email
-        position: 8
         progress: done
     t4:
         user_story_id: us4
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t5:
         user_story_id: us2
         description: Développer le JS pour le texte qui défile
-        position: 7
         progress: done
     t6:
         user_story_id: us5
         description: TODO 1 (US1)
-        position: 1
         progress: todo
     t7:
         user_story_id: us6
         description: WIP 2 (US2)
-        position: 2
         progress: wip
     t8:
         user_story_id: us7
         description: WIP 1 (US3)
-        position: 1
         progress: wip
     t9:
         user_story_id: us8
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t10:
         user_story_id: us6
         description: DONE 1 (US2)
-        position: 1
         progress: done
     t11:
         user_story_id: us9
         description: TODO 1 (US1)
-        position: 1
         progress: todo
     t12:
         user_story_id: us10
         description: WIP 2 (US2)
-        position: 2
         progress: wip
     t13:
         user_story_id: us11
         description: WIP 1 (US3)
-        position: 1
         progress: wip
     t14:
         user_story_id: us12
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t15:
         user_story_id: us10
         description: DONE 1 (US2)
-        position: 1
         progress: done
     t16:
         user_story_id: us13
         description: TODO 1 (US1)
-        position: 1
         progress: todo
     t17:
         user_story_id: us14
         description: WIP 2 (US2)
-        position: 2
         progress: wip
     t18:
         user_story_id: us15
         description: WIP 1 (US3)
-        position: 1
         progress: wip
     t19:
         user_story_id: us16
         description: TODO 2 (US4)
-        position: 2
         progress: todo
     t20:
         user_story_id: us14
         description: DONE 1 (US2)
-        position: 1
         progress: done
     t21:
         user_story_id: us1
         description: Créer le git
-        position: 3
         progress: done
     t22:
         user_story_id: us1
         description: Préparer le nécessaire pour le front
-        position: 5
         progress: done
     t23:
         user_story_id: us2
         description: Integrer la home page
-        position: 4
         progress: done
     t24:
         user_story_id: us2
         description: Definir le contenu
-        position: 6
         progress: done
     t25:
         user_story_id: us3
         description: Enregistrer l'email
-        position: 9
         progress: done
 
 Scrumbe\Models\Sprint:
@@ -451,3 +426,37 @@ Scrumbe\Models\LinkUserStorySprint:
         user_story_id: us21
         sprint_id: s2
         user_story_position: 6
+
+Scrumbe\Models\KanbanTask:
+    kt1:
+        task_id: t1
+        sprint_id: s1
+        task_position: 1
+    kt2:
+        task_id: t2
+        sprint_id: s1
+        task_position: 2
+    kt3:
+        task_id: t3
+        sprint_id: s1
+        task_position: 3
+    kt4:
+        task_id: t5
+        sprint_id: s1
+        task_position: 8
+    kt5:
+        task_id: t22
+        sprint_id: s1
+        task_position: 4
+    kt6:
+        task_id: t23
+        sprint_id: s1
+        task_position: 6
+    kt7:
+        task_id: t24
+        sprint_id: s1
+        task_position: 5
+    kt8:
+        task_id: t25
+        sprint_id: s1
+        task_position: 7

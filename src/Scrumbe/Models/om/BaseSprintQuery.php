@@ -12,6 +12,7 @@ use \PropelCollection;
 use \PropelException;
 use \PropelObjectCollection;
 use \PropelPDO;
+use Scrumbe\Models\KanbanTask;
 use Scrumbe\Models\LinkUserStorySprint;
 use Scrumbe\Models\Project;
 use Scrumbe\Models\Sprint;
@@ -46,6 +47,10 @@ use Scrumbe\Models\SprintQuery;
  * @method SprintQuery leftJoinLinkUserStorySprint($relationAlias = null) Adds a LEFT JOIN clause to the query using the LinkUserStorySprint relation
  * @method SprintQuery rightJoinLinkUserStorySprint($relationAlias = null) Adds a RIGHT JOIN clause to the query using the LinkUserStorySprint relation
  * @method SprintQuery innerJoinLinkUserStorySprint($relationAlias = null) Adds a INNER JOIN clause to the query using the LinkUserStorySprint relation
+ *
+ * @method SprintQuery leftJoinKanbanTask($relationAlias = null) Adds a LEFT JOIN clause to the query using the KanbanTask relation
+ * @method SprintQuery rightJoinKanbanTask($relationAlias = null) Adds a RIGHT JOIN clause to the query using the KanbanTask relation
+ * @method SprintQuery innerJoinKanbanTask($relationAlias = null) Adds a INNER JOIN clause to the query using the KanbanTask relation
  *
  * @method Sprint findOne(PropelPDO $con = null) Return the first Sprint matching the query
  * @method Sprint findOneOrCreate(PropelPDO $con = null) Return the first Sprint matching the query, or a new Sprint object populated from the query conditions when no match is found
@@ -693,6 +698,80 @@ abstract class BaseSprintQuery extends ModelCriteria
         return $this
             ->joinLinkUserStorySprint($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'LinkUserStorySprint', '\Scrumbe\Models\LinkUserStorySprintQuery');
+    }
+
+    /**
+     * Filter the query by a related KanbanTask object
+     *
+     * @param   KanbanTask|PropelObjectCollection $kanbanTask  the related object to use as filter
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return                 SprintQuery The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
+     */
+    public function filterByKanbanTask($kanbanTask, $comparison = null)
+    {
+        if ($kanbanTask instanceof KanbanTask) {
+            return $this
+                ->addUsingAlias(SprintPeer::ID, $kanbanTask->getSprintId(), $comparison);
+        } elseif ($kanbanTask instanceof PropelObjectCollection) {
+            return $this
+                ->useKanbanTaskQuery()
+                ->filterByPrimaryKeys($kanbanTask->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByKanbanTask() only accepts arguments of type KanbanTask or PropelCollection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the KanbanTask relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return SprintQuery The current query, for fluid interface
+     */
+    public function joinKanbanTask($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('KanbanTask');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'KanbanTask');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the KanbanTask relation KanbanTask object
+     *
+     * @see       useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return   \Scrumbe\Models\KanbanTaskQuery A secondary query class using the current class as primary query
+     */
+    public function useKanbanTaskQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinKanbanTask($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'KanbanTask', '\Scrumbe\Models\KanbanTaskQuery');
     }
 
     /**
