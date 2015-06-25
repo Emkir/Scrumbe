@@ -4608,49 +4608,60 @@ footer {
         margin-left: 5px; }
     .sprint .sprints-list > li.form-sprint {
       text-align: center;
-      display: none; }
-      .sprint .sprints-list > li.form-sprint .title {
-        font-family: "Open Sans", sans-serif;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #182740;
-        text-align: center;
-        display: block;
-        width: 70%;
-        margin: 48px auto 0;
-        border: none;
-        outline: none; }
-      .sprint .sprints-list > li.form-sprint .selectize-control {
-        width: 80%;
-        display: block;
-        margin: 21px auto 40px auto;
-        text-align: left; }
-      .sprint .sprints-list > li.form-sprint .start-date-input {
-        color: #7F8CA6;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 300;
-        font-size: 0.8125rem;
-        width: 104px; }
-      .sprint .sprints-list > li.form-sprint .start-end-input {
-        color: #7F8CA6;
-        font-family: "Open Sans", sans-serif;
-        font-weight: 300;
-        font-size: 0.8125rem;
-        width: 104px; }
-      .sprint .sprints-list > li.form-sprint .submit {
-        display: inline-block;
-        vertical-align: middle;
-        color: #fff;
-        font-family: "Open Sans", sans-serif;
-        font-size: 0.8125rem;
-        font-weight: 600;
-        padding: 6px 15px;
-        border-radius: 50px;
-        text-decoration: none;
-        background-color: #7ABE6F;
-        border: none;
-        cursor: pointer;
-        margin-top: 20px; }
+      display: none;
+      min-height: 367px;
+      height: 100%; }
+      .sprint .sprints-list > li.form-sprint form {
+        height: 100%;
+        min-height: 367px; }
+      .sprint .sprints-list > li.form-sprint .infos-ctn {
+        position: relative;
+        overflow: auto;
+        height: 100%;
+        min-height: 367px; }
+        .sprint .sprints-list > li.form-sprint .infos-ctn .title {
+          font-family: "Open Sans", sans-serif;
+          font-size: 1.25rem;
+          font-weight: 700;
+          color: #182740;
+          text-align: center;
+          display: block;
+          width: 70%;
+          margin: 48px auto 0;
+          border: none;
+          outline: none; }
+        .sprint .sprints-list > li.form-sprint .infos-ctn .selectize-control {
+          width: 80%;
+          display: block;
+          margin: 21px auto 40px auto;
+          text-align: left; }
+        .sprint .sprints-list > li.form-sprint .infos-ctn .start-date-input {
+          color: #7F8CA6;
+          font-family: "Open Sans", sans-serif;
+          font-weight: 300;
+          font-size: 0.8125rem;
+          width: 104px; }
+        .sprint .sprints-list > li.form-sprint .infos-ctn .start-end-input {
+          color: #7F8CA6;
+          font-family: "Open Sans", sans-serif;
+          font-weight: 300;
+          font-size: 0.8125rem;
+          width: 104px; }
+        .sprint .sprints-list > li.form-sprint .infos-ctn .submit {
+          display: inline-block;
+          vertical-align: middle;
+          color: #fff;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          padding: 6px 15px;
+          border-radius: 50px;
+          text-decoration: none;
+          background-color: #7ABE6F;
+          border: none;
+          cursor: pointer;
+          margin-top: 20px;
+          margin-bottom: 20px; }
 
 .backlog {
   margin-top: 130px; }
