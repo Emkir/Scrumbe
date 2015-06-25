@@ -306,7 +306,7 @@ class ProjectController extends Controller
         $endDate = new \DateTime($splitEnd[2].'-'.$splitEnd[1].'-'.$splitEnd[0]);
 
         if ($startDate > $endDate)
-            return new JsonResponse(array('errors' => 'sprint.date'), JsonResponse::HTTP_BAD_REQUEST);
+            return new JsonResponse(array('errors' => $this->get('translator')->trans('sprint.date', array(), 'errors')), JsonResponse::HTTP_BAD_REQUEST);
 
         $projectSprints = SprintQuery::create()->filterByProjectId($data['project_id'])->find();
         if (!$projectSprints->isEmpty())
@@ -317,7 +317,7 @@ class ProjectController extends Controller
                 $sprintEnd = $projectSprint->getEndDate();
 
                 if (($startDate >= $sprintStart && $startDate <= $sprintEnd) || ($endDate >= $sprintStart && $endDate <= $sprintEnd) || ($startDate < $sprintStart && $endDate > $sprintEnd))
-                    return new JsonResponse(array('errors' => 'sprint.inner'), JsonResponse::HTTP_BAD_REQUEST);
+                    return new JsonResponse(array('errors' => $this->get('translator')->trans('sprint.inner', array(), 'errors')), JsonResponse::HTTP_BAD_REQUEST);
             }
         }
 

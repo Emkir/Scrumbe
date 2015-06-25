@@ -60,7 +60,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
     /**
      * The value for the number field.
-     * @var        string
+     * @var        int
      */
     protected $number;
 
@@ -186,7 +186,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     /**
      * Get the [number] column value.
      *
-     * @return string
+     * @return int
      */
     public function getNumber()
     {
@@ -389,13 +389,13 @@ abstract class BaseUserStory extends BaseObject implements Persistent
     /**
      * Set the value of [number] column.
      *
-     * @param  string $v new value
+     * @param  int $v new value
      * @return UserStory The current object (for fluent API support)
      */
     public function setNumber($v)
     {
-        if ($v !== null) {
-            $v = (string) $v;
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
         }
 
         if ($this->number !== $v) {
@@ -613,7 +613,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->project_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-            $this->number = ($row[$startcol + 2] !== null) ? (string) $row[$startcol + 2] : null;
+            $this->number = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
             $this->description = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
             $this->value = ($row[$startcol + 4] !== null) ? (int) $row[$startcol + 4] : null;
             $this->complexity = ($row[$startcol + 5] !== null) ? (int) $row[$startcol + 5] : null;
@@ -960,7 +960,7 @@ abstract class BaseUserStory extends BaseObject implements Persistent
                         $stmt->bindValue($identifier, $this->project_id, PDO::PARAM_INT);
                         break;
                     case '`number`':
-                        $stmt->bindValue($identifier, $this->number, PDO::PARAM_STR);
+                        $stmt->bindValue($identifier, $this->number, PDO::PARAM_INT);
                         break;
                     case '`description`':
                         $stmt->bindValue($identifier, $this->description, PDO::PARAM_STR);

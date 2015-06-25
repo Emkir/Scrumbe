@@ -64,7 +64,7 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStory findOneOrCreate(PropelPDO $con = null) Return the first UserStory matching the query, or a new UserStory object populated from the query conditions when no match is found
  *
  * @method UserStory findOneByProjectId(int $project_id) Return the first UserStory filtered by the project_id column
- * @method UserStory findOneByNumber(string $number) Return the first UserStory filtered by the number column
+ * @method UserStory findOneByNumber(int $number) Return the first UserStory filtered by the number column
  * @method UserStory findOneByDescription(string $description) Return the first UserStory filtered by the description column
  * @method UserStory findOneByValue(int $value) Return the first UserStory filtered by the value column
  * @method UserStory findOneByComplexity(int $complexity) Return the first UserStory filtered by the complexity column
@@ -76,7 +76,7 @@ use Scrumbe\Models\UserStoryQuery;
  *
  * @method array findById(int $id) Return UserStory objects filtered by the id column
  * @method array findByProjectId(int $project_id) Return UserStory objects filtered by the project_id column
- * @method array findByNumber(string $number) Return UserStory objects filtered by the number column
+ * @method array findByNumber(int $number) Return UserStory objects filtered by the number column
  * @method array findByDescription(string $description) Return UserStory objects filtered by the description column
  * @method array findByValue(int $value) Return UserStory objects filtered by the value column
  * @method array findByComplexity(int $complexity) Return UserStory objects filtered by the complexity column
@@ -370,24 +370,37 @@ abstract class BaseUserStoryQuery extends ModelCriteria
      *
      * Example usage:
      * <code>
-     * $query->filterByNumber('fooValue');   // WHERE number = 'fooValue'
-     * $query->filterByNumber('%fooValue%'); // WHERE number LIKE '%fooValue%'
+     * $query->filterByNumber(1234); // WHERE number = 1234
+     * $query->filterByNumber(array(12, 34)); // WHERE number IN (12, 34)
+     * $query->filterByNumber(array('min' => 12)); // WHERE number >= 12
+     * $query->filterByNumber(array('max' => 12)); // WHERE number <= 12
      * </code>
      *
-     * @param     string $number The value to use as filter.
-     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     mixed $number The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return UserStoryQuery The current query, for fluid interface
      */
     public function filterByNumber($number = null, $comparison = null)
     {
-        if (null === $comparison) {
-            if (is_array($number)) {
+        if (is_array($number)) {
+            $useMinMax = false;
+            if (isset($number['min'])) {
+                $this->addUsingAlias(UserStoryPeer::NUMBER, $number['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($number['max'])) {
+                $this->addUsingAlias(UserStoryPeer::NUMBER, $number['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
                 $comparison = Criteria::IN;
-            } elseif (preg_match('/[\%\*]/', $number)) {
-                $number = str_replace('*', '%', $number);
-                $comparison = Criteria::LIKE;
             }
         }
 

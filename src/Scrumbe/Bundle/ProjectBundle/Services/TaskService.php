@@ -53,8 +53,8 @@ class TaskService {
         $tasks = TaskQuery::create()
             ->useUserStoryQuery()
                 ->filterByProjectId($projectId)
+                ->orderByNumber()
             ->endUse()
-            ->orderByUserStoryId()
             ->find();
 
         foreach($tasks as $task)
