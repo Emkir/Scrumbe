@@ -30,83 +30,100 @@
 {% endblock %}
 
 {% block body %}
-     <header class="header-scrum" style="background-color:#F5F8F9">
+     <header class="header-offre">
         <div class="wrapper-header-fix">
             <div class="contain-title-fix">
                 <h1>{{ 'offres.title.word1'|trans }} <span class="openBold">{{ 'offres.title.lastword'|trans }}</span></h1>
                 <p>{{ 'offres.parag'|trans }}   {{ 'offres.parag2'|trans }}</p>
             </div>
         </div>
-        <div>
-            <div>
-                <div>{{'offres.block1.title'|trans}}</div>
-                <p>{{'offres.block1.till'|trans}}</p>
-                <p>{{'offres.block1.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block1.bestfor'|trans}}<br>
-                {{'offres.block1.type'|trans}}</p>
-                <span class="btn green rounded">{{ 'offres.subs'|trans}}</span>
-            </div>
-            <div>
-                <div>{{'offres.block2.title'|trans}}</div>
-                <p>{{'offres.block2.till'|trans}}</p>
-                <p>{{'offres.block2.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block2.bestfor'|trans}}<br>
-                {{'offres.block2.type'|trans}}</p>
-                <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
-            </div>
-            <div>
-                <div>{{'offres.block3.title'|trans}}</div>
-                <p>{{'offres.block3.till'|trans}}</p>
-                <p>{{'offres.block3.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block3.bestfor'|trans}}<br>
-                {{'offres.block3.type'|trans}}</p>
-                <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
-            </div>
-            <div>
-                <div>{{'offres.block4.title'|trans}}</div>
-                <p>{{'offres.block4.till'|trans}}</p>
-                <p>{{'offres.block4.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block4.bestfor'|trans}}<br>
-                {{'offres.block4.type'|trans}}</p>
-                <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
-            </div>
-            <div>
-                <p>{{'offres.block5.till'|trans}}</p>
-                <p>{{'offres.block5.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block5.bestfor'|trans}}<br>
-                <span class="btn grey rounded">{{ 'offres.longer'|trans}}</span>
-            </div>
-        </div>
+        <ul class="list-offre">
+            <li>
+                <div class="head">{{'offres.block1.title'|trans}}</div>
+                <div class="ctn">
+                    <span class="title1">{{'offres.block1.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block1.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2">{{'offres.block1.bestfor'|trans}}</span>
+                    <span class="bold">{{'offres.block1.type'|trans}}</span>
+                    <span class="btn green rounded">{{ 'offres.subs'|trans}}</span>
+                </div>
+            </li>
+            <li>
+                <div class="head">{{'offres.block2.title'|trans}}</div>
+                <div class="ctn">
+                    <span class="title1">{{'offres.block2.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block2.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2">{{'offres.block2.bestfor'|trans}}</span>
+                    <span class="bold">{{'offres.block2.type'|trans}}</span>
+                    <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
+                </div>
+            </li>
+            <li>
+                <div class="head">{{'offres.block3.title'|trans}}</div>
+                <div class="ctn">
+                    <span class="title1">{{'offres.block3.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block3.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2">{{'offres.block3.bestfor'|trans}}</span>
+                    <span class="bold">{{'offres.block3.type'|trans}}</span>
+                    <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
+                </div>
+            </li>
+            <li>
+                <div class="head">{{'offres.block4.title'|trans}}</div>
+                <div class="ctn">
+                    <span class="title1">{{'offres.block4.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block1.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2">{{'offres.block4.bestfor'|trans}}</span>
+                    <span class="bold">{{'offres.block4.type'|trans}}</span>
+                    <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
+                </div>
+            </li>
+            <li style="height: 272px">
+                <div class="ctn">
+                    <span class="title1" style="margin-top: 40px">{{'offres.block5.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block5.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2" style="margin-bottom: 48px">{{'offres.block5.bestfor'|trans}}</span>
+                    <span class="btn grey rounded">{{ 'offres.longer'|trans}}</span>
+                </div>
+            </li>
+        </ul>
+    </header>
 
+    <section class="study">
         <div class="wrapper-header-fix">
             <div class="contain-title-fix">
                 <h1>{{'offres.title2.word1'|trans}} <span class="openBold">{{ 'offres.title2.lastword'|trans}}</span></h1>
                 <p>{{'offres.parag3'|trans}}</p>
             </div>
         </div>
-        <div>
-            <div>
-                <div>{{'offres.block6.title'|trans}}</div>
-                <p>{{'offres.block6.till'|trans}}</p>
-                <p>{{'offres.block6.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block6.bestfor'|trans}}<br>
-                {{'offres.block6.type'|trans}}</p>
-                <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
-            </div>
-            <div>
-                <div>{{'offres.block7.title'|trans}}</div>
-                <p>{{'offres.block7.till'|trans}}</p>
-                <p>{{'offres.block7.tasks'|trans}}</p>
-                <br><br>
-                <p>{{'offres.block7.type'|trans}}<br>{{'offres.block7.bestfor'|trans}}</p>
-                <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
-            </div>
-        </div>
-    </header>   
+        <ul>
+            <li>
+                <div class="head">{{'offres.block6.title'|trans}}</div>
+                <div class="ctn">
+                    <span class="title1">{{'offres.block6.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block6.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2">{{'offres.block6.bestfor'|trans}}</span>
+                    <span class="bold">{{'offres.block6.type'|trans}}</span>
+                    <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
+                </div>
+            </li>
+            <li>
+                <div class="head">{{'offres.block7.title'|trans}}</div>
+                <div class="ctn">
+                    <span class="title1">{{'offres.block7.till'|trans}}</span>
+                    <span class="tasks">{{'offres.block7.tasks'|trans}}</span>
+                    <div class="divider"></div>
+                    <span class="title2">{{'offres.block7.bestfor'|trans}}</span>
+                    <span class="bold">{{'offres.block7.type'|trans}}</span>
+                    <span class="btn blue rounded">{{ 'offres.subs'|trans}}</span>
+                </div>
+            </li>
+        </ul>
+    </section>
 {% endblock %}

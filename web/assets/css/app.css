@@ -3104,6 +3104,211 @@ footer {
       color: #636875;
       text-align: justify; }
 
+.header-offre {
+  width: 100%;
+  position: relative;
+  z-index: 5;
+  background-color: #F5F8F9;
+  padding-bottom: 100px; }
+  .header-offre .wrapper-header-fix {
+    max-width: 960px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    font-family: "proxima_novalight", sans-serif;
+    color: #fff;
+    line-height: 430px;
+    height: 350px; }
+    .header-offre .wrapper-header-fix .contain-title-fix {
+      vertical-align: middle;
+      display: inline-block; }
+      .header-offre .wrapper-header-fix .contain-title-fix h1 {
+        font-size: 2.3125rem;
+        font-weight: 300;
+        line-height: normal;
+        color: #6c7180; }
+        .header-offre .wrapper-header-fix .contain-title-fix h1 .openBold {
+          font-family: "proxima_nova_rgbold", sans-serif; }
+      .header-offre .wrapper-header-fix .contain-title-fix p {
+        font-family: "Open Sans", sans-serif;
+        font-weight: 300;
+        font-size: 0.875rem;
+        line-height: 28px;
+        margin: 20px auto 0 auto;
+        width: 60%;
+        position: relative;
+        color: #636875; }
+  .header-offre .list-offre {
+    display: block;
+    overflow: hidden; }
+    .header-offre .list-offre li {
+      display: inline-block;
+      background-color: #fff;
+      text-align: center;
+      width: 18%;
+      margin: 0 1%;
+      float: left; }
+      .header-offre .list-offre li .head {
+        background-color: #172641;
+        color: #fff;
+        font-family: "Open Sans", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 10px 0;
+        width: 100%; }
+      .header-offre .list-offre li .ctn {
+        background-color: #fff;
+        width: 100%;
+        padding: 20px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box; }
+        .header-offre .list-offre li .ctn .title1 {
+          color: #6C7180;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.875rem;
+          font-weight: 400;
+          display: block;
+          margin: 0 auto 10px auto; }
+        .header-offre .list-offre li .ctn .tasks {
+          color: #172641;
+          font-family: "Open Sans", sans-serif;
+          font-size: 1.75rem;
+          font-weight: 600;
+          display: block;
+          margin: 0 auto; }
+        .header-offre .list-offre li .ctn .divider {
+          width: 50%;
+          height: 1px;
+          background-color: rgba(0, 0, 0, 0.1);
+          display: block;
+          margin: 20px auto; }
+        .header-offre .list-offre li .ctn .title2 {
+          color: #6C7180;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.875rem;
+          font-weight: 400;
+          display: block;
+          margin: 0 auto 5px auto; }
+        .header-offre .list-offre li .ctn .bold {
+          color: #172641;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.875rem;
+          font-weight: 600;
+          display: block;
+          margin: 0 auto 30px auto; }
+        .header-offre .list-offre li .ctn .btn {
+          color: #fff;
+          display: inline-block; }
+          .header-offre .list-offre li .ctn .btn.green {
+            background-color: #41CF75; }
+          .header-offre .list-offre li .ctn .btn.blue {
+            background-color: #28CEE0; }
+          .header-offre .list-offre li .ctn .btn.grey {
+            background-color: #6C7180; }
+
+.study {
+  position: relative;
+  width: 100%;
+  background-color: #fff; }
+  .study .wrapper-header-fix {
+    max-width: 960px;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    font-family: "proxima_novalight", sans-serif;
+    color: #fff;
+    line-height: 300px;
+    height: 280px; }
+    .study .wrapper-header-fix .contain-title-fix {
+      vertical-align: middle;
+      display: inline-block; }
+      .study .wrapper-header-fix .contain-title-fix h1 {
+        font-size: 2.3125rem;
+        font-weight: 300;
+        line-height: normal;
+        color: #6c7180; }
+        .study .wrapper-header-fix .contain-title-fix h1 .openBold {
+          font-family: "proxima_nova_rgbold", sans-serif; }
+      .study .wrapper-header-fix .contain-title-fix p {
+        font-family: "Open Sans", sans-serif;
+        font-weight: 300;
+        font-size: 0.875rem;
+        line-height: 28px;
+        margin: 20px auto 0 auto;
+        width: 60%;
+        position: relative;
+        color: #636875; }
+  .study ul {
+    display: block;
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 100px; }
+    .study ul li {
+      display: inline-block;
+      background-color: #fff;
+      text-align: center;
+      width: 18%;
+      margin: 0 1%; }
+      .study ul li .head {
+        background-color: #172641;
+        color: #fff;
+        font-family: "Open Sans", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        padding: 10px 0;
+        width: 100%; }
+      .study ul li .ctn {
+        background-color: #F5F8F9;
+        width: 100%;
+        padding: 20px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box; }
+        .study ul li .ctn .title1 {
+          color: #6C7180;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.875rem;
+          font-weight: 400;
+          display: block;
+          margin: 0 auto 10px auto; }
+        .study ul li .ctn .tasks {
+          color: #172641;
+          font-family: "Open Sans", sans-serif;
+          font-size: 1.75rem;
+          font-weight: 600;
+          display: block;
+          margin: 0 auto; }
+        .study ul li .ctn .divider {
+          width: 50%;
+          height: 1px;
+          background-color: rgba(0, 0, 0, 0.1);
+          display: block;
+          margin: 20px auto; }
+        .study ul li .ctn .title2 {
+          color: #6C7180;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.875rem;
+          font-weight: 400;
+          display: block;
+          margin: 0 auto 5px auto; }
+        .study ul li .ctn .bold {
+          color: #172641;
+          font-family: "Open Sans", sans-serif;
+          font-size: 0.875rem;
+          font-weight: 600;
+          display: block;
+          margin: 0 auto 30px auto; }
+        .study ul li .ctn .btn {
+          color: #fff;
+          display: inline-block; }
+          .study ul li .ctn .btn.green {
+            background-color: #41CF75; }
+          .study ul li .ctn .btn.blue {
+            background-color: #28CEE0; }
+          .study ul li .ctn .btn.grey {
+            background-color: #6C7180; }
+
 .project {
   background-color: #F6F7F9; }
 
