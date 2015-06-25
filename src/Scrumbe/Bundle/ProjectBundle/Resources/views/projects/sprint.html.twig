@@ -107,7 +107,7 @@
                     </div>
                 </li>
             {% endfor %}
-            <li class="form-sprint">
+            <li class="form-sprint" id="form-sprint">
                 <form action="">
                     <div class="infos-ctn">
                         <input type="hidden" name="project_id" value="{{ project.id }}" class="project-id">
@@ -139,21 +139,16 @@
                 total = $(el).find('.total-tasks').text(),
                 calc;
 
-            console.log(done);
-            console.log(total);
-
             if (done == 0 || total == 0){
                 calc = 350
             }
             else {
-                calc = ((done / total * 100) * 700 ) / 100
+                calc = (( done * 350 ) / total ) + 350
             }
 
             var target = $(el).find('.gauge');
 
-            console.log(calc);
-
-            target.css('stroke-dashoffset', ''+calc+'')
+            target.css('stroke-dashoffset', calc)
         }
 
         $(document).ready(function(){
@@ -163,8 +158,13 @@
         });
 
         // Add Sprint
-        $('.add-sprint').click(function(){
-
+        $('.add-sprint').click(function(event){
+            event.preventDefault();
+            $('.form-sprint').css('display','inline-block');
+            $('.form-sprint .title').focus();
+            $('html,body').animate({
+                scrollTop: $('#form-sprint').offset().top
+            }, 1000);
         });
 
         // List US Selectize.js
@@ -201,7 +201,13 @@
                     'end_date': endDate
                 }
             }).done(function(data){
-                console.log(data)
+                $('.form-sprint .project-id').val('');
+                $('.form-sprint .title').val('');
+                $('.form-sprint .start-date-input').val('');
+                $('.form-sprint .start-end-input').val('');
+                $('.form-sprint .us-list').val('');
+                $('.form-sprint').hide();
+                location.reload();
             }).fail(function(data){
                 console.log(data)
             })

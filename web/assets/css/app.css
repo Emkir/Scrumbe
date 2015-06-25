@@ -4607,7 +4607,8 @@ footer {
         font-size: 0.8125rem;
         margin-left: 5px; }
     .sprint .sprints-list > li.form-sprint {
-      text-align: center; }
+      text-align: center;
+      display: none; }
       .sprint .sprints-list > li.form-sprint .title {
         font-family: "Open Sans", sans-serif;
         font-size: 1.25rem;
