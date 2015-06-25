@@ -22,15 +22,16 @@ class TaskService {
 
         $conn   = \Propel::getConnection();
         $sql    = '
-                SELECT t.*, us.label as label, us.priority as priority, us.number as us_number
+                SELECT t.*, us.label as label, us.priority as priority, us.number as us_number, kt.task_position as position
                 FROM task as t
                 LEFT JOIN user_story as us ON us.id = t.user_story_id
                 LEFT JOIN link_user_story_sprint as luss ON luss.user_story_id = us.id
                 LEFT JOIN sprint as s ON s.id = luss.sprint_id
+                LEFT JOIN kanban_task as kt ON kt.task_id = t.id
                 WHERE us.project_id = :projectId
                 AND CURDATE() >= DATE(s.start_date)
                 AND CURDATE() <= DATE(s.end_date)
-                ORDER BY t.position ASC
+                ORDER BY kt.task_position ASC
             ';
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':projectId', $projectId, \PDO::PARAM_INT);
