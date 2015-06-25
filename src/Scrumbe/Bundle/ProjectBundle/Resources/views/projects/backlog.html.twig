@@ -233,6 +233,7 @@
             if( $(this).hasClass('selected') ){
                 $(this).removeClass('selected');
                 $('.add-tasks').hide();
+                $('.form-add-tasks').hide();
             }
             else if ( $('.form-add-us').is(':visible') ) {
                 return false
@@ -269,5 +270,35 @@
                 $('.form-add-tasks').hide();
             })
         });
+
+        // Set height
+        function setHeight (us) {
+            var name = $(us).attr('id');
+            var hUS = $(us).height() + 63;
+            var hTS = 0;
+
+            $('.tasks-list > li:not([class=form-add-tasks])').each(function(){
+                if ($(this).attr('class') == name){
+                    var tmp = $(this).height() + 41;
+                    hTS = hTS + tmp;
+                }
+            });
+
+            if (hTS < hUS) {
+                return false
+            }
+            else {
+                var calc = hTS - hUS;
+                $(us).css('margin-bottom', calc);
+            }
+
+            name = null;
+            hUS = 0;
+            hTS = 0;
+        }
+
+        $('.user-stories-list > li:not([class=form-add-us])').each(function(){
+            setHeight(this);
+        })
     </script>
 {% endblock %}
