@@ -61,6 +61,12 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
     protected $sprint_id;
 
     /**
+     * The value for the user_story_position field.
+     * @var        int
+     */
+    protected $user_story_position;
+
+    /**
      * The value for the created_at field.
      * @var        string
      */
@@ -133,6 +139,17 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
     {
 
         return $this->sprint_id;
+    }
+
+    /**
+     * Get the [user_story_position] column value.
+     *
+     * @return int
+     */
+    public function getUserStoryPosition()
+    {
+
+        return $this->user_story_position;
     }
 
     /**
@@ -287,6 +304,27 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
     } // setSprintId()
 
     /**
+     * Set the value of [user_story_position] column.
+     *
+     * @param  int $v new value
+     * @return LinkUserStorySprint The current object (for fluent API support)
+     */
+    public function setUserStoryPosition($v)
+    {
+        if ($v !== null && is_numeric($v)) {
+            $v = (int) $v;
+        }
+
+        if ($this->user_story_position !== $v) {
+            $this->user_story_position = $v;
+            $this->modifiedColumns[] = LinkUserStorySprintPeer::USER_STORY_POSITION;
+        }
+
+
+        return $this;
+    } // setUserStoryPosition()
+
+    /**
      * Sets the value of [created_at] column to a normalized version of the date/time value specified.
      *
      * @param mixed $v string, integer (timestamp), or DateTime value.
@@ -367,8 +405,9 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
             $this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
             $this->user_story_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
             $this->sprint_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
-            $this->created_at = ($row[$startcol + 3] !== null) ? (string) $row[$startcol + 3] : null;
-            $this->updated_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+            $this->user_story_position = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
+            $this->created_at = ($row[$startcol + 4] !== null) ? (string) $row[$startcol + 4] : null;
+            $this->updated_at = ($row[$startcol + 5] !== null) ? (string) $row[$startcol + 5] : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -378,7 +417,7 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
             }
             $this->postHydrate($row, $startcol, $rehydrate);
 
-            return $startcol + 5; // 5 = LinkUserStorySprintPeer::NUM_HYDRATE_COLUMNS.
+            return $startcol + 6; // 6 = LinkUserStorySprintPeer::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException("Error populating LinkUserStorySprint object", $e);
@@ -637,6 +676,9 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
         if ($this->isColumnModified(LinkUserStorySprintPeer::SPRINT_ID)) {
             $modifiedColumns[':p' . $index++]  = '`sprint_id`';
         }
+        if ($this->isColumnModified(LinkUserStorySprintPeer::USER_STORY_POSITION)) {
+            $modifiedColumns[':p' . $index++]  = '`user_story_position`';
+        }
         if ($this->isColumnModified(LinkUserStorySprintPeer::CREATED_AT)) {
             $modifiedColumns[':p' . $index++]  = '`created_at`';
         }
@@ -662,6 +704,9 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
                         break;
                     case '`sprint_id`':
                         $stmt->bindValue($identifier, $this->sprint_id, PDO::PARAM_INT);
+                        break;
+                    case '`user_story_position`':
+                        $stmt->bindValue($identifier, $this->user_story_position, PDO::PARAM_INT);
                         break;
                     case '`created_at`':
                         $stmt->bindValue($identifier, $this->created_at, PDO::PARAM_STR);
@@ -831,9 +876,12 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
                 return $this->getSprintId();
                 break;
             case 3:
-                return $this->getCreatedAt();
+                return $this->getUserStoryPosition();
                 break;
             case 4:
+                return $this->getCreatedAt();
+                break;
+            case 5:
                 return $this->getUpdatedAt();
                 break;
             default:
@@ -868,8 +916,9 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
             $keys[0] => $this->getId(),
             $keys[1] => $this->getUserStoryId(),
             $keys[2] => $this->getSprintId(),
-            $keys[3] => $this->getCreatedAt(),
-            $keys[4] => $this->getUpdatedAt(),
+            $keys[3] => $this->getUserStoryPosition(),
+            $keys[4] => $this->getCreatedAt(),
+            $keys[5] => $this->getUpdatedAt(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -927,9 +976,12 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
                 $this->setSprintId($value);
                 break;
             case 3:
-                $this->setCreatedAt($value);
+                $this->setUserStoryPosition($value);
                 break;
             case 4:
+                $this->setCreatedAt($value);
+                break;
+            case 5:
                 $this->setUpdatedAt($value);
                 break;
         } // switch()
@@ -959,8 +1011,9 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
         if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
         if (array_key_exists($keys[1], $arr)) $this->setUserStoryId($arr[$keys[1]]);
         if (array_key_exists($keys[2], $arr)) $this->setSprintId($arr[$keys[2]]);
-        if (array_key_exists($keys[3], $arr)) $this->setCreatedAt($arr[$keys[3]]);
-        if (array_key_exists($keys[4], $arr)) $this->setUpdatedAt($arr[$keys[4]]);
+        if (array_key_exists($keys[3], $arr)) $this->setUserStoryPosition($arr[$keys[3]]);
+        if (array_key_exists($keys[4], $arr)) $this->setCreatedAt($arr[$keys[4]]);
+        if (array_key_exists($keys[5], $arr)) $this->setUpdatedAt($arr[$keys[5]]);
     }
 
     /**
@@ -975,6 +1028,7 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
         if ($this->isColumnModified(LinkUserStorySprintPeer::ID)) $criteria->add(LinkUserStorySprintPeer::ID, $this->id);
         if ($this->isColumnModified(LinkUserStorySprintPeer::USER_STORY_ID)) $criteria->add(LinkUserStorySprintPeer::USER_STORY_ID, $this->user_story_id);
         if ($this->isColumnModified(LinkUserStorySprintPeer::SPRINT_ID)) $criteria->add(LinkUserStorySprintPeer::SPRINT_ID, $this->sprint_id);
+        if ($this->isColumnModified(LinkUserStorySprintPeer::USER_STORY_POSITION)) $criteria->add(LinkUserStorySprintPeer::USER_STORY_POSITION, $this->user_story_position);
         if ($this->isColumnModified(LinkUserStorySprintPeer::CREATED_AT)) $criteria->add(LinkUserStorySprintPeer::CREATED_AT, $this->created_at);
         if ($this->isColumnModified(LinkUserStorySprintPeer::UPDATED_AT)) $criteria->add(LinkUserStorySprintPeer::UPDATED_AT, $this->updated_at);
 
@@ -1042,6 +1096,7 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
     {
         $copyObj->setUserStoryId($this->getUserStoryId());
         $copyObj->setSprintId($this->getSprintId());
+        $copyObj->setUserStoryPosition($this->getUserStoryPosition());
         $copyObj->setCreatedAt($this->getCreatedAt());
         $copyObj->setUpdatedAt($this->getUpdatedAt());
 
@@ -1214,6 +1269,7 @@ abstract class BaseLinkUserStorySprint extends BaseObject implements Persistent
         $this->id = null;
         $this->user_story_id = null;
         $this->sprint_id = null;
+        $this->user_story_position = null;
         $this->created_at = null;
         $this->updated_at = null;
         $this->alreadyInSave = false;

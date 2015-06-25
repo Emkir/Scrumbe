@@ -1,6 +1,8 @@
 <?php
 namespace Scrumbe\Bundle\ProjectBundle\Services;
 
+use Scrumbe\Models\LinkUserStorySprint;
+use Scrumbe\Models\LinkUserStorySprintQuery;
 use Scrumbe\Models\UserStory;
 use Scrumbe\Models\UserStoryQuery;
 use Scrumbe\Bundle\ProjectBundle\Form\Type\UserStoryType;
@@ -20,7 +22,7 @@ class UserstoryService {
     {
         $conn   = \Propel::getConnection();
         $sql    = '
-                SELECT us.*, COUNT(t.id) as task_count
+                SELECT us.*, COUNT(t.id) as task_count, luss.user_story_position as position
                 FROM user_story as us
                 LEFT JOIN task as t ON t.user_story_id = us.id
                 LEFT JOIN link_user_story_sprint as luss ON luss.user_story_id = us.id
@@ -29,7 +31,7 @@ class UserstoryService {
                 AND CURDATE() >= DATE(s.start_date)
                 AND CURDATE() <= DATE(s.end_date)
                 GROUP BY us.id
-                ORDER BY us.position ASC
+                ORDER BY luss.user_story_position ASC
             ';
         $stmt = $conn->prepare($sql);
         $stmt->bindValue(':projectId', $projectId, \PDO::PARAM_INT);
@@ -111,28 +113,56 @@ class UserstoryService {
 
     public function saveKanbanPosition($userStoryId, $newPosition)
     {
-        $userStory = UserStoryQuery::create()->findPk($userStoryId);
-        $oldPosition = $userStory->getPosition();
+        $conn   = \Propel::getConnection();
+        $sql    = '
+                SELECT luss.*
+                FROM link_user_story_sprint as luss
+                LEFT JOIN sprint as s ON s.id = luss.sprint_id
+                WHERE luss.user_story_id = :userStoryId
+                AND CURDATE() >= DATE(s.start_date)
+                AND CURDATE() <= DATE(s.end_date)
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':userStoryId', $userStoryId, \PDO::PARAM_INT);
+        $stmt->execute();
+        $linkUserStorySprint = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        $linkUserStorySprintObj = LinkUserStorySprintQuery::create()->findPk($linkUserStorySprint['id']);
+        $oldPosition = $linkUserStorySprint['user_story_position'];
         $newPosition = $newPosition['position'];
 
-        $userStory->setPosition($newPosition);
-        $userStory->save();
+        $linkUserStorySprintObj->setUserStoryPosition($newPosition);
+        $linkUserStorySprintObj->save();
 
-        $userStoriesInSprint = UserStoryQuery::create()->filterByProjectId($userStory->getProjectId())->find();
-        if (!$userStoriesInSprint->isEmpty())
+        $sql    = '
+                SELECT us.id as user_story_id, luss.user_story_position as position, luss.id as link_id
+                FROM user_story as us
+                LEFT JOIN link_user_story_sprint as luss ON luss.user_story_id = us.id
+                LEFT JOIN sprint as s ON s.id = luss.sprint_id
+                WHERE luss.sprint_id = :sprintId
+                AND CURDATE() >= DATE(s.start_date)
+                AND CURDATE() <= DATE(s.end_date)
+            ';
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(':sprintId', $linkUserStorySprint['sprint_id'], \PDO::PARAM_INT);
+        $stmt->execute();
+        $userStoriesInSprint = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        if (!empty($userStoriesInSprint))
         {
-            foreach ($userStoriesInSprint as $userStoryInSprint)
+            foreach ($userStoriesInSprint as $userStoryInSprintArr)
             {
-                $position = $userStoryInSprint->getPosition();
-                if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $userStoryInSprint->getId() != $userStoryId)
+                $linkSprint = LinkUserStorySprintQuery::create()->findPk($userStoryInSprintArr['link_id']);
+                $position = $userStoryInSprintArr['position'];
+                if ($oldPosition < $newPosition && $position > $oldPosition && $position <= $newPosition && $userStoryInSprintArr['user_story_id'] != $userStoryId)
                 {
-                    $userStoryInSprint->setPosition($position - 1);
-                    $userStoryInSprint->save();
+                    $linkSprint->setUserStoryPosition($position - 1);
+                    $linkSprint->save();
                 }
-                elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $userStoryInSprint->getId() != $userStoryId)
+                elseif ($oldPosition > $newPosition && $position < $oldPosition && $position >= $newPosition && $userStoryInSprintArr['user_story_id'] != $userStoryId)
                 {
-                    $userStoryInSprint->setPosition($position + 1);
-                    $userStoryInSprint->save();
+                    $linkSprint->setUserStoryPosition($position + 1);
+                    $linkSprint->save();
                 }
             }
         }

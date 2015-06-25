@@ -27,7 +27,6 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStoryQuery orderByValue($order = Criteria::ASC) Order by the value column
  * @method UserStoryQuery orderByComplexity($order = Criteria::ASC) Order by the complexity column
  * @method UserStoryQuery orderByRatio($order = Criteria::ASC) Order by the ratio column
- * @method UserStoryQuery orderByPosition($order = Criteria::ASC) Order by the position column
  * @method UserStoryQuery orderByPriority($order = Criteria::ASC) Order by the priority column
  * @method UserStoryQuery orderByLabel($order = Criteria::ASC) Order by the label column
  * @method UserStoryQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
@@ -40,7 +39,6 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStoryQuery groupByValue() Group by the value column
  * @method UserStoryQuery groupByComplexity() Group by the complexity column
  * @method UserStoryQuery groupByRatio() Group by the ratio column
- * @method UserStoryQuery groupByPosition() Group by the position column
  * @method UserStoryQuery groupByPriority() Group by the priority column
  * @method UserStoryQuery groupByLabel() Group by the label column
  * @method UserStoryQuery groupByCreatedAt() Group by the created_at column
@@ -71,7 +69,6 @@ use Scrumbe\Models\UserStoryQuery;
  * @method UserStory findOneByValue(int $value) Return the first UserStory filtered by the value column
  * @method UserStory findOneByComplexity(int $complexity) Return the first UserStory filtered by the complexity column
  * @method UserStory findOneByRatio(double $ratio) Return the first UserStory filtered by the ratio column
- * @method UserStory findOneByPosition(int $position) Return the first UserStory filtered by the position column
  * @method UserStory findOneByPriority(string $priority) Return the first UserStory filtered by the priority column
  * @method UserStory findOneByLabel(string $label) Return the first UserStory filtered by the label column
  * @method UserStory findOneByCreatedAt(string $created_at) Return the first UserStory filtered by the created_at column
@@ -84,7 +81,6 @@ use Scrumbe\Models\UserStoryQuery;
  * @method array findByValue(int $value) Return UserStory objects filtered by the value column
  * @method array findByComplexity(int $complexity) Return UserStory objects filtered by the complexity column
  * @method array findByRatio(double $ratio) Return UserStory objects filtered by the ratio column
- * @method array findByPosition(int $position) Return UserStory objects filtered by the position column
  * @method array findByPriority(string $priority) Return UserStory objects filtered by the priority column
  * @method array findByLabel(string $label) Return UserStory objects filtered by the label column
  * @method array findByCreatedAt(string $created_at) Return UserStory objects filtered by the created_at column
@@ -194,7 +190,7 @@ abstract class BaseUserStoryQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `project_id`, `number`, `description`, `value`, `complexity`, `ratio`, `position`, `priority`, `label`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `project_id`, `number`, `description`, `value`, `complexity`, `ratio`, `priority`, `label`, `created_at`, `updated_at` FROM `user_story` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -551,48 +547,6 @@ abstract class BaseUserStoryQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UserStoryPeer::RATIO, $ratio, $comparison);
-    }
-
-    /**
-     * Filter the query on the position column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByPosition(1234); // WHERE position = 1234
-     * $query->filterByPosition(array(12, 34)); // WHERE position IN (12, 34)
-     * $query->filterByPosition(array('min' => 12)); // WHERE position >= 12
-     * $query->filterByPosition(array('max' => 12)); // WHERE position <= 12
-     * </code>
-     *
-     * @param     mixed $position The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return UserStoryQuery The current query, for fluid interface
-     */
-    public function filterByPosition($position = null, $comparison = null)
-    {
-        if (is_array($position)) {
-            $useMinMax = false;
-            if (isset($position['min'])) {
-                $this->addUsingAlias(UserStoryPeer::POSITION, $position['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($position['max'])) {
-                $this->addUsingAlias(UserStoryPeer::POSITION, $position['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(UserStoryPeer::POSITION, $position, $comparison);
     }
 
     /**

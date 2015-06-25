@@ -22,12 +22,14 @@ use Scrumbe\Models\UserStory;
  * @method LinkUserStorySprintQuery orderById($order = Criteria::ASC) Order by the id column
  * @method LinkUserStorySprintQuery orderByUserStoryId($order = Criteria::ASC) Order by the user_story_id column
  * @method LinkUserStorySprintQuery orderBySprintId($order = Criteria::ASC) Order by the sprint_id column
+ * @method LinkUserStorySprintQuery orderByUserStoryPosition($order = Criteria::ASC) Order by the user_story_position column
  * @method LinkUserStorySprintQuery orderByCreatedAt($order = Criteria::ASC) Order by the created_at column
  * @method LinkUserStorySprintQuery orderByUpdatedAt($order = Criteria::ASC) Order by the updated_at column
  *
  * @method LinkUserStorySprintQuery groupById() Group by the id column
  * @method LinkUserStorySprintQuery groupByUserStoryId() Group by the user_story_id column
  * @method LinkUserStorySprintQuery groupBySprintId() Group by the sprint_id column
+ * @method LinkUserStorySprintQuery groupByUserStoryPosition() Group by the user_story_position column
  * @method LinkUserStorySprintQuery groupByCreatedAt() Group by the created_at column
  * @method LinkUserStorySprintQuery groupByUpdatedAt() Group by the updated_at column
  *
@@ -48,12 +50,14 @@ use Scrumbe\Models\UserStory;
  *
  * @method LinkUserStorySprint findOneByUserStoryId(int $user_story_id) Return the first LinkUserStorySprint filtered by the user_story_id column
  * @method LinkUserStorySprint findOneBySprintId(int $sprint_id) Return the first LinkUserStorySprint filtered by the sprint_id column
+ * @method LinkUserStorySprint findOneByUserStoryPosition(int $user_story_position) Return the first LinkUserStorySprint filtered by the user_story_position column
  * @method LinkUserStorySprint findOneByCreatedAt(string $created_at) Return the first LinkUserStorySprint filtered by the created_at column
  * @method LinkUserStorySprint findOneByUpdatedAt(string $updated_at) Return the first LinkUserStorySprint filtered by the updated_at column
  *
  * @method array findById(int $id) Return LinkUserStorySprint objects filtered by the id column
  * @method array findByUserStoryId(int $user_story_id) Return LinkUserStorySprint objects filtered by the user_story_id column
  * @method array findBySprintId(int $sprint_id) Return LinkUserStorySprint objects filtered by the sprint_id column
+ * @method array findByUserStoryPosition(int $user_story_position) Return LinkUserStorySprint objects filtered by the user_story_position column
  * @method array findByCreatedAt(string $created_at) Return LinkUserStorySprint objects filtered by the created_at column
  * @method array findByUpdatedAt(string $updated_at) Return LinkUserStorySprint objects filtered by the updated_at column
  */
@@ -161,7 +165,7 @@ abstract class BaseLinkUserStorySprintQuery extends ModelCriteria
      */
     protected function findPkSimple($key, $con)
     {
-        $sql = 'SELECT `id`, `user_story_id`, `sprint_id`, `created_at`, `updated_at` FROM `link_user_story_sprint` WHERE `id` = :p0';
+        $sql = 'SELECT `id`, `user_story_id`, `sprint_id`, `user_story_position`, `created_at`, `updated_at` FROM `link_user_story_sprint` WHERE `id` = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -378,6 +382,48 @@ abstract class BaseLinkUserStorySprintQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(LinkUserStorySprintPeer::SPRINT_ID, $sprintId, $comparison);
+    }
+
+    /**
+     * Filter the query on the user_story_position column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUserStoryPosition(1234); // WHERE user_story_position = 1234
+     * $query->filterByUserStoryPosition(array(12, 34)); // WHERE user_story_position IN (12, 34)
+     * $query->filterByUserStoryPosition(array('min' => 12)); // WHERE user_story_position >= 12
+     * $query->filterByUserStoryPosition(array('max' => 12)); // WHERE user_story_position <= 12
+     * </code>
+     *
+     * @param     mixed $userStoryPosition The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return LinkUserStorySprintQuery The current query, for fluid interface
+     */
+    public function filterByUserStoryPosition($userStoryPosition = null, $comparison = null)
+    {
+        if (is_array($userStoryPosition)) {
+            $useMinMax = false;
+            if (isset($userStoryPosition['min'])) {
+                $this->addUsingAlias(LinkUserStorySprintPeer::USER_STORY_POSITION, $userStoryPosition['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($userStoryPosition['max'])) {
+                $this->addUsingAlias(LinkUserStorySprintPeer::USER_STORY_POSITION, $userStoryPosition['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(LinkUserStorySprintPeer::USER_STORY_POSITION, $userStoryPosition, $comparison);
     }
 
     /**

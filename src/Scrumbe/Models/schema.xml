@@ -53,7 +53,6 @@
         <column name="value" type="integer"/>
         <column name="complexity" type="integer"/>
         <column name="ratio" type="float"/>
-        <column name="position" type="integer"/>
         <column name="priority" type="varchar" size="255"/>
         <column name="label" type="varchar" size="255"/>
         <behavior name="timestampable" />
@@ -148,6 +147,7 @@
         <foreign-key foreignTable="sprint" onDelete="CASCADE">
             <reference local="sprint_id" foreign="id" />
         </foreign-key>
+        <column name="user_story_position" type="integer"/>
         <behavior name="timestampable" />
     </table>
 </database>
