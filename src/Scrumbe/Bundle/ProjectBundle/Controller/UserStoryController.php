@@ -69,6 +69,8 @@ class UserStoryController extends Controller
         $userStory->setLabel($data['label']);
         if ($lastUserStory !== null)
             $userStory->setNumber($lastUserStory->getNumber() + 1);
+        else
+            $userStory->setNumber(1);
         $userStory->save();
 
         return new JsonResponse(array('user_story' => $userStory), JsonResponse::HTTP_CREATED);
