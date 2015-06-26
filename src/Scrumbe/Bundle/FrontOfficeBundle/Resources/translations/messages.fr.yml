@@ -153,42 +153,42 @@ scrum:
         title:
             word1: Qu'est ce que
             lastword: la méthode SCRUM?
-        parag: Curabitur blandit tempus porttitor. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec id elit non mi porta gravida at eget metus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
+        parag: SCRUM est une méthode de gestion de projet agile. Cette méthode repose sur le découpage d'un projet en plusieurs périodes appelés "sprints". Si ces sprints durent souvent deux semaines, SCRUMBE propose une flexibilité totale, afin que vous puissiez gérer vos projets comme vous le souhaitez, et adapter l'interface à votre rythme de travail. Chaque sprint s'achève sur ue retrospective, permettant à votre équipe de rester à jour, d'identifier les problèmes, d'ajuster, de vérifier, de recommencer, de continuer. SCRUM est la méthode idéale pour le suivi d'un projet.
     item1:
         title:
-            word1: Time
-            lastword: Saving
-        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+            word1: Un gain de
+            lastword: temps
+        parag: Scrumbe vous permet de garder un oeil sur tout afin d’avoir une longueur d’avance sur votre projet. Une bonne gestion de temps est une des clés de la réussite d’un projet.
 
     item2:
         title:
-            word1: Better
-            lastword: Workflow
-        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+            word1: Une meilleure
+            lastword: productivité
+        parag: Vous allez booster votre équipe ! Adaptez vos sprints et bien répartir les tâches permet à chaque membre de gérer son rythme au sein d’une période afin de tenir les objectifs.
 
     item3:
         title:
-            word1: Permanent
-            lastword: Follow
-        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+            word1: Un suivi
+            lastword: régulier
+        parag: Contrôler votre avancement et identifier les points de blocage constitue une force pour mener à bien votre idée. Planifiez des réunions, dialoguez, motivez votre équipe !
 
     item4:
         title:
-            word1: Secure
-            lastword: Advancement
-        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+            word1: Votre travail
+            lastword: protégé
+        parag: Un plantage, une panne technique, quoi de plus frustrant pendant l’avancement de votre projet ? Nous travaillons avec Google Drive, pour vous permettre de protéger votre progression.
 
     item5:
         title:
-            word1: Predict
-            lastword: Risks
-        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+            word1: Prévenir plutôt que
+            lastword: guérir
+        parag: Nous mettons un point d’honneur à ce que vous puissiez avoir une vue d’ensemble de votre projet et de votre progression pour ne pas être pris au dépourvu à la veille d’une deadline.
 
     item6:
         title:
-            word1: Quick
-            lastword: Progression
-        parag: Etiam porta sem malesuada magna mollis euismod. Nullam quis risus eget urna mollis ornare vel eu leo. Donec id elit non mi porta gravida.
+            word1: Une progression
+            lastword: rapide
+        parag: Une équipe organisée est une équipe efficace, et la réussite de votre projet dépend de la façon de le gérer. Répartissez les tâches, ajustez vos budgets temps, et atteignez vos objectifs !
 #NOS OFFRES
 offres:
     title:
