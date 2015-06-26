@@ -41,6 +41,11 @@ signup:
         word3: and
         lastword: Privacy Policy
 
+beta:
+    title: ÊTRE AVERTI DU LANCEMENT DE LA BÉTA
+    footer: Vous recevrez un email lorsque la version béta de Scrumbe sera lancée.
+    email: Email
+    button: VALIDER
 #HOME
 home:
     header:
@@ -84,9 +89,9 @@ home:
         title:
             word1: Venez
             word2: l'essayer
-            lastword: maintenant
-        parag: Remplissez le formulaire et commencez à utiliser Scrumbe.
-        button: COMMENCER
+            lastword: avant les autres
+        parag: Remplissez le formulaire et soyez averti du lancement de la béta.
+        button: ÊTRE AVERTI DU LANCEMENT DE LA BÉTA
 
 
 #ABOUT-US

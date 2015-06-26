@@ -169,4 +169,14 @@
         </foreign-key>
         <column name="task_position" type="integer"/>
     </table>
+
+    <table name="beta">
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB" />
+            <parameter name="Charset" value="utf8"/>
+            <parameter name="Collate" value="utf8_bin"/>
+        </vendor>
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="email" type="varchar" size="255"/>
+    </table>
 </database>

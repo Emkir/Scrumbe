@@ -202,5 +202,18 @@ CREATE TABLE `kanban_task`
         ON DELETE CASCADE
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
+-- ---------------------------------------------------------------------
+-- beta
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `beta`;
+
+CREATE TABLE `beta`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(255),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

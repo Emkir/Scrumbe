@@ -3,6 +3,7 @@
 namespace Scrumbe\Bundle\FrontOfficeBundle\Controller;
 
 use Scrumbe\Bundle\UserBundle\Form\Type\UserType;
+use Scrumbe\Models\Beta;
 use Scrumbe\Models\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,5 +96,16 @@ class HomeController extends Controller
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'signinForm'    => $signinForm->createView()
         ));
+    }
+
+    public function betaAction(Request $request)
+    {
+        $data = $request->request->all();
+
+        $beta = new Beta();
+        $beta->setEmail($data['email']);
+        $beta->save();
+
+        return $this->redirect($this->generateUrl('index'));
     }
 }

@@ -17,3 +17,9 @@ offres:
 contact:
     pattern: /contact
     defaults: { _controller: ScrumbeFrontOfficeBundle:Home:contact }
+
+beta_signin:
+    pattern: /beta
+    defaults: { _controller: ScrumbeFrontOfficeBundle:Home:beta }
+    requirements:
+        _method: POST
