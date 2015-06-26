@@ -4,6 +4,7 @@ namespace Scrumbe\Bundle\FrontOfficeBundle\Controller;
 
 use Scrumbe\Bundle\UserBundle\Form\Type\UserType;
 use Scrumbe\Models\Beta;
+use Scrumbe\Models\Contact;
 use Scrumbe\Models\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -105,6 +106,19 @@ class HomeController extends Controller
         $beta = new Beta();
         $beta->setEmail($data['email']);
         $beta->save();
+
+        return $this->redirect($this->generateUrl('index'));
+    }
+
+    public function postContactAction(Request $request)
+    {
+        $data = $request->request->all();
+
+        $contact = new Contact();
+        $contact->setEmail($data['email']);
+        $contact->setName($data['name']);
+        $contact->setMessage($data['message']);
+        $contact->save();
 
         return $this->redirect($this->generateUrl('index'));
     }

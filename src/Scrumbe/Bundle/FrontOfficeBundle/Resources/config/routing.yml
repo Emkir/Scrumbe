@@ -23,3 +23,9 @@ beta_signin:
     defaults: { _controller: ScrumbeFrontOfficeBundle:Home:beta }
     requirements:
         _method: POST
+
+post_contact:
+    pattern: /post-contact
+    defaults: { _controller: ScrumbeFrontOfficeBundle:Home:postContact }
+    requirements:
+        _method: POST

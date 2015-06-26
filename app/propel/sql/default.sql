@@ -215,5 +215,20 @@ CREATE TABLE `beta`
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
+-- ---------------------------------------------------------------------
+-- contact
+-- ---------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `contact`;
+
+CREATE TABLE `contact`
+(
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255),
+    `email` VARCHAR(255),
+    `message` TEXT,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

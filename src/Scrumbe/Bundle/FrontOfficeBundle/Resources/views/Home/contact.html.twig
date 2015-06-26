@@ -34,10 +34,10 @@
         <section class="contact">
             <h1>{{ 'contact.title'|trans }}</h1>
             <p>{{ 'contact.parag'|trans }}<br>{{ 'contact.parag2'|trans }}</p>
-            <form action="#" method="post">
-                <input type="text" placeholder="{{ 'contact.fullname'|trans }}">
-                <input type="email" placeholder="{{ 'contact.email'|trans }}">
-                <textarea placeholder="{{ 'contact.message'|trans }}" rows="10"></textarea>
+            <form action="{{ path('post_contact') }}" method="post">
+                <input type="text" placeholder="{{ 'contact.fullname'|trans }}" name="name">
+                <input type="email" placeholder="{{ 'contact.email'|trans }}" name="email">
+                <textarea placeholder="{{ 'contact.message'|trans }}" rows="10" name="message"></textarea>
                 <input type="submit" value="{{ 'contact.button'|trans }}">
             </form>
         </section>
