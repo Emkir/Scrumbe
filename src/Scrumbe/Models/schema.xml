@@ -67,7 +67,7 @@
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
 
         <column name="user_story_id" type="integer"/>
-        <foreign-key foreignTable="user_story">
+        <foreign-key foreignTable="user_story" onDelete="CASCADE">
             <reference local="user_story_id" foreign="id" />
         </foreign-key>
 

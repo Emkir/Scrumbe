@@ -62,7 +62,7 @@ class UserStoryTableMap extends TableMap
     public function buildRelations()
     {
         $this->addRelation('Project', 'Scrumbe\\Models\\Project', RelationMap::MANY_TO_ONE, array('project_id' => 'id', ), 'CASCADE', null);
-        $this->addRelation('Task', 'Scrumbe\\Models\\Task', RelationMap::ONE_TO_MANY, array('id' => 'user_story_id', ), null, null, 'Tasks');
+        $this->addRelation('Task', 'Scrumbe\\Models\\Task', RelationMap::ONE_TO_MANY, array('id' => 'user_story_id', ), 'CASCADE', null, 'Tasks');
         $this->addRelation('LinkUserStorySprint', 'Scrumbe\\Models\\LinkUserStorySprint', RelationMap::ONE_TO_MANY, array('id' => 'user_story_id', ), 'CASCADE', null, 'LinkUserStorySprints');
     } // buildRelations()
 

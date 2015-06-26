@@ -57,7 +57,7 @@ class TaskTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::MANY_TO_ONE, array('user_story_id' => 'id', ), null, null);
+        $this->addRelation('UserStory', 'Scrumbe\\Models\\UserStory', RelationMap::MANY_TO_ONE, array('user_story_id' => 'id', ), 'CASCADE', null);
         $this->addRelation('KanbanTask', 'Scrumbe\\Models\\KanbanTask', RelationMap::ONE_TO_MANY, array('id' => 'task_id', ), 'CASCADE', null, 'KanbanTasks');
     } // buildRelations()
 
