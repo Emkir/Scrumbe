@@ -850,10 +850,9 @@ abstract class BaseUserStory extends BaseObject implements Persistent
 
             if ($this->tasksScheduledForDeletion !== null) {
                 if (!$this->tasksScheduledForDeletion->isEmpty()) {
-                    foreach ($this->tasksScheduledForDeletion as $task) {
-                        // need to save related object because we set the relation to null
-                        $task->save($con);
-                    }
+                    TaskQuery::create()
+                        ->filterByPrimaryKeys($this->tasksScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
                     $this->tasksScheduledForDeletion = null;
                 }
             }

@@ -93,6 +93,7 @@ CREATE TABLE `task`
     CONSTRAINT `task_FK_1`
         FOREIGN KEY (`user_story_id`)
         REFERENCES `user_story` (`id`)
+        ON DELETE CASCADE
 ) ENGINE=InnoDB CHARACTER SET='utf8' COLLATE='utf8_bin';
 
 -- ---------------------------------------------------------------------

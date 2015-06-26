@@ -11,6 +11,7 @@ use \PropelException;
 use \PropelPDO;
 use Scrumbe\Models\LinkUserStorySprintPeer;
 use Scrumbe\Models\ProjectPeer;
+use Scrumbe\Models\TaskPeer;
 use Scrumbe\Models\UserStory;
 use Scrumbe\Models\UserStoryPeer;
 use Scrumbe\Models\map\UserStoryTableMap;
@@ -412,6 +413,9 @@ abstract class BaseUserStoryPeer
      */
     public static function clearRelatedInstancePool()
     {
+        // Invalidate objects in TaskPeer instance pool,
+        // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
+        TaskPeer::clearInstancePool();
         // Invalidate objects in LinkUserStorySprintPeer instance pool,
         // since one or more of them may be deleted by ON DELETE CASCADE/SETNULL rule.
         LinkUserStorySprintPeer::clearInstancePool();
