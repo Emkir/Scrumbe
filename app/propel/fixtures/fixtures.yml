@@ -110,11 +110,11 @@ Scrumbe\Models\UserStory:
     us4:
         project_id: p1
         number: 4
-        description: En tant qu'utilisateur je veux m'inscrire à Scrumbe
+        description: En tant qu'utilisateur je veux contacter l'équipe de Scrumbe
         value: 42
         complexity: 42
         ratio: 1
-        priority: medium
+        priority: low
         label: green
     us5:
         project_id: p2
@@ -268,7 +268,7 @@ Scrumbe\Models\UserStory:
         complexity: 42
         ratio: 1
         priority: low
-        label: purple
+        label: black
     us22:
         project_id: p1
         number: 10
@@ -320,8 +320,8 @@ Scrumbe\Models\Task:
         progress: done
     t4:
         user_story_id: us4
-        description: TODO 2 (US4)
-        progress: todo
+        description: Créer le formulaire de contact
+        progress: done
     t5:
         user_story_id: us2
         description: Développer le JS pour le texte qui défile
@@ -454,6 +454,58 @@ Scrumbe\Models\Task:
         user_story_id: us25
         description: Sauvegarder le positionnement des taches
         progress: todo
+    t38:
+        user_story_id: us4
+        description: Enregistrer le message reçu
+        progress: done
+    t39:
+        user_story_id: us17
+        description: Afficher la pop-up de connexion
+        progress: done
+    t40:
+        user_story_id: us17
+        description: Créer le formulaire de connexion
+        progress: done
+    t41:
+        user_story_id: us17
+        description: Gestion de la validation de connexion
+        progress: done
+    t42:
+        user_story_id: us18
+        description: Intégrer la page de visualisation des projets
+        progress: done
+    t43:
+        user_story_id: us18
+        description: Récupérer les projets de l'utilisateur connecté
+        progress: done
+    t44:
+        user_story_id: us19
+        description: Intégrer le formulaire d'ajout
+        progress: done
+    t45:
+        user_story_id: us19
+        description: Enregistrer le projet
+        progress: done
+    t46:
+        user_story_id: us20
+        description: Récupérer les données du projet à éditer
+        progress: done
+    t47:
+        user_story_id: us20
+        description: Enregistrer l'edition du projet
+        progress: done
+    t48:
+        user_story_id: us20
+        description: Faire apparaitre le formulaire d'édition
+        progress: done
+    t49:
+        user_story_id: us21
+        description: Supprimer le projet
+        progress: done
+    t50:
+        user_story_id: us21
+        description: Afficher la confirmation de suppression
+        progress: done
 
 Scrumbe\Models\Sprint:
     s1:
@@ -607,3 +659,59 @@ Scrumbe\Models\KanbanTask:
         task_id: t37
         sprint_id: s3
         task_position: 5
+    kt21:
+        task_id: t4
+        sprint_id: s2
+        task_position: 1
+    kt22:
+        task_id: t38
+        sprint_id: s2
+        task_position: 2
+    kt23:
+        task_id: t39
+        sprint_id: s2
+        task_position: 3
+    kt24:
+        task_id: t40
+        sprint_id: s2
+        task_position: 4
+    kt25:
+        task_id: t41
+        sprint_id: s2
+        task_position: 5
+    kt26:
+        task_id: t42
+        sprint_id: s2
+        task_position: 6
+    kt27:
+        task_id: t43
+        sprint_id: s2
+        task_position: 7
+    kt28:
+        task_id: t44
+        sprint_id: s2
+        task_position: 8
+    kt29:
+        task_id: t45
+        sprint_id: s2
+        task_position: 9
+    kt30:
+        task_id: t46
+        sprint_id: s2
+        task_position: 10
+    kt31:
+        task_id: t47
+        sprint_id: s2
+        task_position: 11
+    kt32:
+        task_id: t48
+        sprint_id: s2
+        task_position: 12
+    kt33:
+        task_id: t49
+        sprint_id: s2
+        task_position: 13
+    kt34:
+        task_id: t50
+        sprint_id: s2
+        task_position: 14
