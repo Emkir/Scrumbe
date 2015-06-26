@@ -175,9 +175,9 @@
                     <span class="close-sign-up"><img src="/assets/img/Close_icon.png"></span>
                 </div>
                 <div class="contain-sign-up">
-                    <form action="{{ path('beta_signin') }}" method="post">
+                    <form action="{{ path('beta_signin') }}" method="post" class="form-beta">
                         <input type="email" id="email" placeholder="{{ 'beta.email'|trans }}" name="email" autofocus="autofocus">
-                        <input type="submit" value="{{ 'beta.button'|trans }}">
+                        <input type="submit" value="{{ 'beta.button'|trans }}" class="submit-beta">
                     </form>
                 </div>
                 <div class="footer-sign-up">
@@ -191,5 +191,15 @@
         <script src="/assets/js/libs/selectordie.min.js"></script>
         <script src="/assets/js/libs/typed.min.js"></script>
         <script src="/assets/js/script.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('.submit-beta').click(function(event){
+                    event.preventDefault();
+                    $('.contain-sign-up').hide();
+                    $('.contain-sign-up').htm("<p>Merci de votre inscription. Un email vous sera envoyé quand le beta se disponible.</p>");
+                    $('.form-beta').submit();
+                })
+            })
+        </script>
     </body>
 </html>
