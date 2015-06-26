@@ -67,7 +67,10 @@ class UserStoryController extends Controller
         $userStory->setDescription($data['description']);
         $userStory->setPriority($priority[$data['priority']]);
         $userStory->setLabel($data['label']);
-        $userStory->setNumber($lastUserStory->getNumber() + 1);
+        if ($lastUserStory !== null)
+            $userStory->setNumber($lastUserStory->getNumber() + 1);
+        else
+            $userStory->setNumber(1);
         $userStory->save();
 
         return new JsonResponse(array('user_story' => $userStory), JsonResponse::HTTP_CREATED);
